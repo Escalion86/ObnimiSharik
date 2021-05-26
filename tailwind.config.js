@@ -50,6 +50,15 @@ module.exports = {
         // 8: '2rem',
         // 12: '3rem',
         // 16: '4rem',
+        40: '10rem',
+        48: '12rem',
+      },
+      maxWidth: {
+        // 4: '1rem',
+        // 8: '2rem',
+        // 12: '3rem',
+        // 16: '4rem',
+        40: '10rem',
         48: '12rem',
       },
       cursor: {
@@ -62,6 +71,11 @@ module.exports = {
       },
       spacing: {
         90: '22.5rem',
+        100: '25rem',
+      },
+      height: {
+        88: '22rem',
+        100: '25rem',
       },
     },
   },

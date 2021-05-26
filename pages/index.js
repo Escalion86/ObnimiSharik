@@ -2,25 +2,122 @@ import Block from '../components/Block'
 import MainLayout from '../components/MainLayout'
 import Link from 'next/link'
 // const background = require('../public/img/bg.jpg')
+import Title from '../components/Title'
+import HorizontalSeparator from '../components/HorizontalSeparator'
+import Card from '../components/Card'
+import BlockOfCards from '../components/BlockOfCards'
 
-const HorizontalSeparator = ({ white = true }) => (
-  <div className={'w-12 h-2 my-6 ' + (white ? 'bg-white' : 'bg-gray-600')} />
-)
+const catalogData = [
+  {
+    title: 'Обычные шарики',
+    desc: ['большой выбор, в наличии все цвета'],
+    href: '/',
+    src: 'img/catalog/standart.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Шарики с рисунком',
+    desc: ['большой выбор на любой праздник'],
+    href: '/',
+    src: 'img/catalog/withpicture.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Цифры',
+    desc: ['большой выбор'],
+    href: '/',
+    src: 'img/catalog/numbers.webp',
+    size: 'small',
+  },
+  {
+    title: 'Фигуры',
+    desc: ['большой выбор'],
+    href: '/',
+    src: 'img/catalog/figures.png',
+    size: 'small',
+  },
+]
 
-const Title = ({ title, white = false, small = false }) => (
-  <div>
-    <h3
-      className={
-        'font-futuraDemi ' +
-        (small ? 'text-4xl' : 'text-5xl') +
-        (white ? '' : ' text-gray-600')
-      }
-    >
-      {title}
-    </h3>
-    <HorizontalSeparator white={white} />
-  </div>
-)
+const setsData = [
+  {
+    title: 'Для ребенка',
+    desc: ['- Мульт. персонаж', '- Скидка в день рождения'],
+    href: '/',
+    src: 'img/set/forkids.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Для девушки',
+    desc: ['- С перьями, конфети', '- Надпись на шарике'],
+    href: '/',
+    src: 'img/set/forgirl.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Для парня/мужчины',
+    desc: ['- Красивые композиции', '- Надписьна шарике'],
+    href: '/',
+    src: 'img/set/forboys.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Gender Party',
+    desc: ['- Шары с сухой краской', '- Шарики внутри шара'],
+    href: '/',
+    src: 'img/set/forgenderparty.png',
+    size: 'normal',
+  },
+  {
+    title: 'На выписку',
+    desc: ['- Для мальчика и девочки'],
+    href: '/',
+    src: 'img/set/forborn.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Большие подарочные коробки с шарами',
+    desc: [
+      '- Коробки 60*60*60 см',
+      '- Цвета на выбор',
+      '- Индивидуальная надпись',
+    ],
+    href: '/',
+    src: 'img/set/boxes.webp',
+    size: 'big',
+  },
+  {
+    title: 'Гигантские прозрачные шары Bubbles',
+    desc: [
+      '- Шары размером 46, 51 и 81 см',
+      '- Наполнение перьями, конфети',
+      '- Украшение лентами',
+    ],
+    href: '/',
+    src: 'img/set/gigant.webp',
+    size: 'big',
+  },
+  {
+    title: 'Для мамы и папы',
+    desc: ['- На юбилей и годовщину', '- Надпись на шарике'],
+    href: '/',
+    src: 'img/set/forparents.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Для молодоженов',
+    desc: ['- Красивые композиции', '- Надпись на шарике'],
+    href: '/',
+    src: 'img/set/forwedding.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Дарим шарик с гелием',
+    desc: ['за ответ на 3 вопроса'],
+    href: '/',
+    src: 'img/1.png',
+    size: 'normal',
+  },
+]
 
 const SpecialCard = ({ src }) => (
   <img
@@ -29,70 +126,6 @@ const SpecialCard = ({ src }) => (
     className="w-48 shadow-sm rounded-xl cursor-zoom-in"
   />
 )
-
-const CatalogCardStandart = ({ src, title = '', desc, href }) => (
-  <div className="flex px-5 mb-20 text-black shadow-light rounded-xl w-90">
-    <img src={src} alt="catalog_item" className="h-40" />
-    <div className="flex flex-col h-full mb-6 ml-5">
-      <h4 className="mb-1 text-xl font-futuraDemi">{title}</h4>
-      <p className="text-lg leading-tight font-futura">{desc}</p>
-      <Link href={href}>
-        <a className="w-full font-futuraDemi mt-6 flex justify-center items-center px-4 py-1.5 text-white bg-primary rounded-xl">
-          Каталог
-        </a>
-      </Link>
-    </div>
-  </div>
-)
-
-const CatalogCardSmall = ({ src, title = '', desc, href }) => (
-  <div className="w-40 px-5 mb-20 text-black flexflex-column shadow-light rounded-xl">
-    <div className="flex">
-      <div className="flex flex-col h-full mb-6">
-        <h4 className="mb-1 text-xl font-futuraDemi">{title}</h4>
-        <p className="text-lg leading-tight font-futura">{desc}</p>
-      </div>
-      <img src={src} alt="catalog_item" className="h-24 transform rotate-6" />
-    </div>
-    <Link href={href}>
-      <a className="w-full font-futuraDemi flex justify-center items-center px-4 py-1.5 text-white bg-primary rounded-xl">
-        Каталог
-      </a>
-    </Link>
-  </div>
-)
-
-const CatalogCardBig = ({ src, title = '', desc, href }) => (
-  <div className="flex px-5 mb-20 text-black shadow-light rounded-xl w-90">
-    <img src={src} alt="catalog_item" height={162} />
-    <div className="flex flex-col h-full mb-6 ml-5">
-      <h4 className="text-xl font-futuraDemi">{title}</h4>
-      <p className="text-lg font-futura">{desc}</p>
-      <Link href={href}>
-        <a className="w-full font-futuraDemi mt-4 flex justify-center items-center px-4 py-1.5 text-white bg-primary rounded-xl">
-          Каталог
-        </a>
-      </Link>
-    </div>
-  </div>
-)
-
-const CatalogCard = ({
-  src,
-  title = '',
-  desc,
-  href,
-  small = false,
-  big = false,
-}) => {
-  const Catalog = small
-    ? CatalogCardSmall
-    : big
-    ? CatalogCardBig
-    : CatalogCardStandart
-
-  return <Catalog src={src} title={title} desc={desc} href={href} />
-}
 
 export default function Home() {
   return (
@@ -147,29 +180,39 @@ export default function Home() {
               <SpecialCard src="img/special/5.png" />
             </div>
           </div>
-          <div className="mt-36">
+          <BlockOfCards
+            title="Каталог шаров"
+            data={catalogData}
+            columnsCount={4}
+          />
+          <BlockOfCards
+            title="Готовые наборы"
+            data={setsData}
+            columnsCount={3}
+          />
+          {/* <div className="mt-36">
             <Title title="Каталог шаров" />
             <div className="flex flex-wrap justify-center space-x-5">
-              <CatalogCard
+              <Card
                 title="Обычные шарики"
                 desc="большой выбор, в наличии все цвета"
                 href="/"
                 src="img/catalog/standart.webp"
               />
-              <CatalogCard
+              <Card
                 title="Шарики с рисунком"
                 desc="большой выбор на любой праздник"
                 href="/"
                 src="img/catalog/withpicture.webp"
               />
-              <CatalogCard
+              <Card
                 title="Цифры"
                 desc="большой выбор"
                 href="/"
                 src="img/catalog/numbers.webp"
                 small
               />
-              <CatalogCard
+              <Card
                 title="Фигуры"
                 desc="большой выбор"
                 href="/"
@@ -177,7 +220,7 @@ export default function Home() {
                 small
               />
             </div>
-          </div>
+          </div> */}
         </Block>
       </div>
     </MainLayout>

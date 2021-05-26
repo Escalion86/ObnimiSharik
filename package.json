@@ -12,10 +12,15 @@
     "next-images": "^1.7.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-icons": "^4.2.0"
+    "react-grid-layout": "^1.2.5",
+    "react-icons": "^4.2.0",
+    "react-masonry-layout": "^0.4.0",
+    "react-packery-component": "^1.0.2",
+    "react-responsive-masonry": "^2.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.4",
+    "autoresponsive-react": "^1.1.31",
     "postcss": "^8.1.10",
     "tailwindcss": "^2.1.1"
   }
