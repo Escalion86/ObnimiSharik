@@ -9,6 +9,8 @@ module.exports = {
         primary: '#26A3D4',
         secondary: '#4C8BF7',
         third: '#176D8F',
+        bg: '#54889A',
+        toxic: '#6ad424',
       },
       fontFamily: {
         futuraDemi: ['Futura PT Demi', 'sans-serif'],
@@ -61,6 +63,10 @@ module.exports = {
         40: '10rem',
         48: '12rem',
       },
+      minHeight: {
+        100: '25rem',
+        192: '46rem',
+      },
       cursor: {
         'zoom-in': 'zoom-in',
       },
@@ -76,6 +82,15 @@ module.exports = {
       height: {
         88: '22rem',
         100: '25rem',
+      },
+      wight: {
+        84: '21rem',
+        88: '22rem',
+        100: '25rem',
+        184: '',
+      },
+      opacity: {
+        15: '15%',
       },
     },
   },

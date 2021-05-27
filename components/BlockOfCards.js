@@ -1,6 +1,6 @@
 import Title from './Title'
 import Card from './Card'
-import useWindowDimensions from '../helpers/useWindowDimensions'
+// import useWindowDimensions from '../helpers/useWindowDimensions'
 // import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 // import MasonryLayout from 'react-masonry-layout'
 // import AutoResponsive from 'autoresponsive-react'
@@ -8,8 +8,8 @@ import useWindowDimensions from '../helpers/useWindowDimensions'
 // import { Responsive as GridLayout } from 'react-grid-layout'
 
 const BlockOfCards = ({ data, title }) => {
-  const { height, width } = useWindowDimensions()
-  console.log('width', width)
+  // const { height, width } = useWindowDimensions()
+  const width = 1200
   const haveSmall = !!data.find((card) => card.size === 'small')
   // console.log(`haveSmall`, haveSmall)
   // const smallCards = data.filter((card) => card.size ==='small')
@@ -58,6 +58,7 @@ const BlockOfCards = ({ data, title }) => {
                 src={card.src}
                 small={card.size === 'small'}
                 big={card.size === 'big'}
+                active={card.active}
               />
             ))}
           </div>

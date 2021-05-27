@@ -114,8 +114,9 @@ const setsData = [
     title: 'Дарим шарик с гелием',
     desc: ['за ответ на 3 вопроса'],
     href: '/',
-    src: 'img/1.png',
+    src: 'img/30sm.png',
     size: 'normal',
+    active: true,
   },
 ]
 
@@ -125,6 +126,18 @@ const SpecialCard = ({ src }) => (
     alt="special"
     className="w-48 shadow-sm rounded-xl cursor-zoom-in"
   />
+)
+
+const Button = ({ name, onClick, className = '' }) => (
+  <button
+    onClick={onClick}
+    className={
+      'h-12 py-2 text-2xl bg-white border border-white shadow font-futuraDemi animate-pulse-light px-9 rounded-2xl text-primary' +
+      (className ? ' ' + className : '')
+    }
+  >
+    {name}
+  </button>
 )
 
 export default function Home() {
@@ -159,14 +172,9 @@ export default function Home() {
               за ответ на 3 простых вопроса
             </div>
             <div className="relative ml-6 font-futuraDemi">
-              <button className="py-2 text-2xl bg-white border border-white shadow animate-pulse-light px-9 rounded-2xl text-primary">
-                Получить шарик
-              </button>
-              <div className="absolute -right-18 -top-7">
-                <img src="img/1.png" alt="balloon" width={115} height={134} />
-                <div className="absolute text-lg transform top-8 left-8 text-third -rotate-15">
-                  30 см
-                </div>
+              <Button name="Получить шарик" />
+              <div className="absolute -right-12 -top-5">
+                <img src="img/30sm.png" alt="balloon" width={70} height={110} />
               </div>
             </div>
           </div>
@@ -222,6 +230,62 @@ export default function Home() {
             </div>
           </div> */}
         </Block>
+        <div className="relative min-h-192 bg-bg">
+          <div className="absolute top-0 w-full overflow-hidden">
+            <svg
+              style={{
+                width: '150%',
+                height: '0.75vw',
+                fill: 'rgb(255, 255, 255)',
+                transform: 'scaleY(-1)',
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1000 10"
+              preserveAspectRatio="none"
+            >
+              <path d="M992 8.2L983.8 0l-8.2 8.2-8.2-8.2-8.2 8.2L951 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L869 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L787 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L705 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L623 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L541 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L459 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L377 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L295 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L213 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L131 0l-8.2 8.2-8.2-8.2-8.2 8.2L98.2 0 90 8.2 81.8 0l-8.2 8.2L65.4 0l-8.2 8.2L49 0l-8.2 8.2L32.6 0l-8.2 8.2L16.2 0 8 8.2-.2 0v10h1000.4V0"></path>
+            </svg>
+          </div>
+          <div className="absolute bottom-0 w-full overflow-hidden">
+            <svg
+              style={{
+                width: '150%',
+                height: '0.75vw',
+                fill: 'rgb(255, 255, 255)',
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1000 10"
+              preserveAspectRatio="none"
+            >
+              <path d="M992 8.2L983.8 0l-8.2 8.2-8.2-8.2-8.2 8.2L951 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L869 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L787 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L705 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L623 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L541 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L459 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L377 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L295 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L213 0l-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2-8.2-8.2-8.2 8.2L131 0l-8.2 8.2-8.2-8.2-8.2 8.2L98.2 0 90 8.2 81.8 0l-8.2 8.2L65.4 0l-8.2 8.2L49 0l-8.2 8.2L32.6 0l-8.2 8.2L16.2 0 8 8.2-.2 0v10h1000.4V0"></path>
+            </svg>
+          </div>
+          <img
+            className="absolute opacity-15"
+            src="img/map.png"
+            alt="map"
+            // width={100}
+            height="100%"
+          />
+          <Block className="py-36 ">
+            <div className="flex justify-between">
+              <Title title="Почему Красноярцы выбирают нас" white />
+              <Button name="Каталог шаров" className="mt-6" />
+            </div>
+          </Block>
+        </div>
+        <div>
+          <Block className="py-32">
+            <Title title="Стоимость доставки" />
+            <img
+              className="w-full"
+              src="img/delivery_map.jpg"
+              alt="delivery_map"
+              // width="100%"
+              // height="100%"
+            />
+          </Block>
+        </div>
       </div>
     </MainLayout>
   )

@@ -4,7 +4,7 @@ const Title = ({ title, white = false, small = false }) => (
   <div>
     <h3
       className={
-        'font-futuraDemi ' +
+        'font-futuraDemi max-w-md ' +
         (small ? 'text-4xl' : 'text-5xl') +
         (white ? '' : ' text-gray-600')
       }
