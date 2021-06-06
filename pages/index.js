@@ -7,6 +7,8 @@ import HorizontalSeparator from '../components/HorizontalSeparator'
 import Card from '../components/Card'
 import BlockOfCards from '../components/BlockOfCards'
 import ImageZoom from 'react-medium-image-zoom'
+import { motion } from 'framer-motion'
+import useWindowDimensions from '../helpers/useWindowDimensions'
 
 const catalogData = [
   {
@@ -145,7 +147,7 @@ const Button = ({ name, onClick, className = '' }) => (
   <button
     onClick={onClick}
     className={
-      'h-12 py-2 text-2xl bg-white border border-white shadow font-futuraDemi animate-pulse-light px-9 rounded-2xl text-primary' +
+      'whitespace-nowrap h-12 py-2 text-2xl bg-white border border-white shadow font-futuraDemi animate-pulse-light px-9 rounded-2xl text-primary' +
       (className ? ' ' + className : '')
     }
   >
@@ -176,6 +178,45 @@ const DeliveryPriceItem = ({ color, price, text, text2 }) => (
 )
 
 export default function Home() {
+  const { height, width } = useWindowDimensions()
+
+  const deliveryBalloons = {
+    truck: {
+      initial: { left: '100%' },
+      left: [
+        'calc(0%- 170px)',
+        'calc(100% - 170px)',
+        'calc(100% - 170px)',
+        'calc(130% - 170px)',
+      ],
+      // ease: ['backIn', 'easeOut', 'easeOut', 'easeOut'],
+      transition: {
+        // delay: 5,
+        duration: 8,
+        repeat: Infinity,
+        // repeatDelay: 5,
+        times: [0, 0.6, 0.75, 1],
+      },
+    },
+    balloons: {
+      opacity: [0, 0, 1, 1, 0],
+      bottom: [0, 0, 70, 70, 100],
+      transition: {
+        // delay: 5,
+        duration: 8,
+        repeat: Infinity,
+        // repeatDelay: 5,
+        times: [0, 0.6, 0.7, 0.8, 1],
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 2,
+        ease: 'easeInOut',
+      },
+    },
+  }
   return (
     <MainLayout title="Обними шарик - Главная">
       <div
@@ -232,41 +273,10 @@ export default function Home() {
             columnsCount={4}
           />
           <BlockOfCards
-            title="Готовые на*боры"
+            title="Готовые наборы"
             data={setsData}
             columnsCount={3}
           />
-          {/* <div className="mt-36">
-            <Title title="Каталог шаров" />
-            <div className="flex flex-wrap justify-center space-x-5">
-              <Card
-                title="Обычные шарики"
-                desc="большой выбор, в наличии все цвета"
-                href="/"
-                src="img/catalog/standart.webp"
-              />
-              <Card
-                title="Шарики с рисунком"
-                desc="большой выбор на любой праздник"
-                href="/"
-                src="img/catalog/withpicture.webp"
-              />
-              <Card
-                title="Цифры"
-                desc="большой выбор"
-                href="/"
-                src="img/catalog/numbers.webp"
-                small
-              />
-              <Card
-                title="Фигуры"
-                desc="большой выбор"
-                href="/"
-                src="img/catalog/figures.png"
-                small
-              />
-            </div>
-          </div> */}
         </Block>
         <div className="relative bg-bg">
           <div className="absolute top-0 w-full overflow-hidden">
@@ -376,7 +386,7 @@ export default function Home() {
               text="Зона доставки №4"
               color="#D19D9D"
             />
-            <div className="relative flex items-center pl-5 text-gray-600 rounded-lg shadow-lg h-22">
+            <div className="relative flex items-center pl-5 ml-1 text-gray-600 rounded-lg shadow-lg h-22">
               <img
                 className="absolute -left-4 top-1"
                 src="img/crescent-moon.webp"
@@ -395,6 +405,37 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="relative overflow-hidden border-b h-36 border-primary">
+            <motion.img
+              variants={deliveryBalloons}
+              initial="initial"
+              animate="truck"
+              exit="exit"
+              className="absolute -bottom-2.5 z-10"
+              src="img/animation/delivery-truck_3_.png"
+              alt="truck"
+              width="70px"
+              height="70px"
+            />
+            <img
+              className="absolute bottom-0 right-4"
+              src="img/animation/house.png"
+              alt="house"
+              width="90px"
+              height="90px"
+            />
+            <motion.img
+              variants={deliveryBalloons}
+              // initial="initial"
+              animate="balloons"
+              exit="exit"
+              className="absolute bottom-0 transform opacity-0 right-6 -rotate-15"
+              src="img/animation/balloons.png"
+              alt="balloons"
+              width="65px"
+              height="65px"
+            />
           </div>
         </Block>
         {/* </div> */}
