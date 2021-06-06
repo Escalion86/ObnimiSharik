@@ -36,7 +36,10 @@ const CardStandart = ({ src, title = '', desc, href, active = false }) => (
 )
 
 const CardSmall = ({ src, title = '', desc, href, active = false }) => (
-  <div className="flex flex-col justify-between w-32 h-36 max-h-36">
+  <div
+    className="flex flex-col justify-between w-34 h-36 max-h-36"
+    style={{ width: '8.25rem' }}
+  >
     <div className="flex">
       <div className="flex flex-col h-full mb-6">
         <h4 className="my-1 text-xl font-futuraDemi">{title}</h4>

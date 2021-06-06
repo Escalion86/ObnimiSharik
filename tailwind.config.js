@@ -52,6 +52,8 @@ module.exports = {
         // 8: '2rem',
         // 12: '3rem',
         // 16: '4rem',
+        32: '8rem',
+        36: '9rem',
         40: '10rem',
         48: '12rem',
       },
@@ -60,6 +62,7 @@ module.exports = {
         // 8: '2rem',
         // 12: '3rem',
         // 16: '4rem',
+        // 32: '8rem',
         40: '10rem',
         48: '12rem',
       },
@@ -80,14 +83,15 @@ module.exports = {
         100: '25rem',
       },
       height: {
+        22: '5.5rem',
         88: '22rem',
         100: '25rem',
       },
       wight: {
+        34: '8.25rem',
         84: '21rem',
         88: '22rem',
         100: '25rem',
-        184: '',
       },
       opacity: {
         15: '15%',

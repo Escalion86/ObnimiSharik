@@ -6,6 +6,7 @@ import Title from '../components/Title'
 import HorizontalSeparator from '../components/HorizontalSeparator'
 import Card from '../components/Card'
 import BlockOfCards from '../components/BlockOfCards'
+import ImageZoom from 'react-medium-image-zoom'
 
 const catalogData = [
   {
@@ -121,11 +122,23 @@ const setsData = [
 ]
 
 const SpecialCard = ({ src }) => (
-  <img
-    src={src}
-    alt="special"
-    className="w-48 shadow-sm rounded-xl cursor-zoom-in"
+  <ImageZoom
+    image={{
+      src: src,
+      alt: 'special',
+      className: 'w-48 shadow-sm rounded-xl cursor-zoom-in',
+      // style: { width: '50em' }
+    }}
+    zoomImage={{
+      src: src,
+      alt: 'special',
+    }}
   />
+  // <img
+  //   src={src}
+  //   alt="special"
+  //   className="w-48 shadow-sm rounded-xl cursor-zoom-in"
+  // />
 )
 
 const Button = ({ name, onClick, className = '' }) => (
@@ -138,6 +151,28 @@ const Button = ({ name, onClick, className = '' }) => (
   >
     {name}
   </button>
+)
+
+const InfoItem = ({ src, text }) => (
+  <div className="flex items-center justify-center">
+    <div className="flex items-center justify-between space-x-2 w-80">
+      <img src={src} alt="info" className="w-14 h-14" />
+      <div className="text-base font-light text-white">{text}</div>
+    </div>
+  </div>
+)
+
+const DeliveryPriceItem = ({ color, price, text, text2 }) => (
+  <div className="flex justify-center flex-1 min-w-36">
+    <div className="flex flex-col items-center justify-center">
+      <div className="text-4xl font-bold text-gray-600">{price}₽</div>
+      <div className="text-base font-light text-black">{text}</div>
+      {text2 && <div className="text-base font-light text-black">{text2}</div>}
+      {color && (
+        <div className="w-full h-3 mt-2" style={{ backgroundColor: color }} />
+      )}
+    </div>
+  </div>
 )
 
 export default function Home() {
@@ -178,9 +213,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="px-10 pt-6 pb-8 bg-white shadow-medium rounded-2xl mt-52">
+          <div className="px-10 pt-6 pb-8 overflow-hidden overflow-x-auto bg-white shadow-medium rounded-2xl mt-52">
             <Title title="Акции и скидки" small />
-            <div className="flex justify-between">
+            <div
+              className="flex justify-between space-x-2 min-w-min"
+              // style={{ width: 950 }}
+            >
               <SpecialCard src="img/special/1.png" />
               <SpecialCard src="img/special/2.png" />
               <SpecialCard src="img/special/3.png" />
@@ -194,7 +232,7 @@ export default function Home() {
             columnsCount={4}
           />
           <BlockOfCards
-            title="Готовые наборы"
+            title="Готовые на*боры"
             data={setsData}
             columnsCount={3}
           />
@@ -230,7 +268,7 @@ export default function Home() {
             </div>
           </div> */}
         </Block>
-        <div className="relative min-h-192 bg-bg">
+        <div className="relative bg-bg">
           <div className="absolute top-0 w-full overflow-hidden">
             <svg
               style={{
@@ -261,31 +299,105 @@ export default function Home() {
             </svg>
           </div>
           <img
-            className="absolute opacity-15"
+            className="absolute h-full bg-cover opacity-15"
             src="img/map.png"
             alt="map"
             // width={100}
             height="100%"
           />
-          <Block className="py-36 ">
+          <Block className="z-10 py-36">
             <div className="flex justify-between">
               <Title title="Почему Красноярцы выбирают нас" white />
               <Button name="Каталог шаров" className="mt-6" />
             </div>
+            <div className="grid justify-around grid-cols-1 mt-8 gap-y-16 tablet:grid-cols-2 laptop:grid-cols-3 gap-x-4">
+              {/* <div className="flex justify-around grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-x-1 gap-y-2"> */}
+              <InfoItem
+                text="У нас большой выбор шаров на любой вкус и цвет, для любого события"
+                src="icons/ballons_1.png"
+              />
+              <InfoItem
+                text="Мы НЕ используем дешёвые китайские шары, которые могут вызвать аллергию"
+                src="icons/cancel.png"
+              />
+              <InfoItem
+                text="Мы обрабатываем шары специальным составом, чтобы они летали дольше"
+                src="icons/paint-spray.webp"
+              />
+              <InfoItem
+                text="Мы привозим качественные шары из Колумбии, Турции, Малайзии и Испании"
+                src="icons/earth.png"
+              />
+              <InfoItem
+                text="Перед доставкой клиентам мы проверяем каждый шарик на наличие брака"
+                src="icons/check_1.png"
+              />
+              <InfoItem
+                text="Мы круглосуточно доставляем шары по Красноярску нашим клиентам"
+                src="icons/delivery-truck_2_.png"
+              />
+            </div>
           </Block>
         </div>
-        <div>
-          <Block className="py-32">
-            <Title title="Стоимость доставки" />
-            <img
-              className="w-full"
-              src="img/delivery_map.jpg"
-              alt="delivery_map"
-              // width="100%"
-              // height="100%"
+        {/* <div> */}
+        <Block className="py-32">
+          <Title title="Стоимость доставки" />
+          <img
+            className="w-full"
+            src="img/delivery_map.jpg"
+            alt="delivery_map"
+            // width="100%"
+            // height="100%"
+          />
+          <div className="flex flex-wrap justify-center mt-10 space-x-2">
+            <DeliveryPriceItem
+              price="0"
+              text="Самовывоз шариков"
+              text2="с 9:00 до 21:00"
+              color={null}
             />
-          </Block>
-        </div>
+            <DeliveryPriceItem
+              price="99"
+              text="Зона доставки №1"
+              color="#B9E6E3"
+            />
+            <DeliveryPriceItem
+              price="149"
+              text="Зона доставки №2"
+              color="#8BB4F0"
+            />
+            <DeliveryPriceItem
+              price="199"
+              text="Зона доставки №3"
+              color="#D9A1ED"
+            />
+            <DeliveryPriceItem
+              price="249"
+              text="Зона доставки №4"
+              color="#D19D9D"
+            />
+            <div className="relative flex items-center pl-5 text-gray-600 rounded-lg shadow-lg h-22">
+              <img
+                className="absolute -left-4 top-1"
+                src="img/crescent-moon.webp"
+                alt="night moon"
+                // width="100%"
+                // height="100%"
+              />
+              <div className="p-4">
+                <div>
+                  <span className="text-base font-bold">Ночная доставка</span>
+                  <span className="text-sm"> с 22:00 до 9:00</span>
+                </div>
+                <div className="ml-8">
+                  <span className="text-base font-bold">+250₽</span>
+                  <span className="text-sm"> к зоне доставки</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Block>
+        {/* </div> */}
       </div>
     </MainLayout>
   )
