@@ -1,5 +1,6 @@
 import Title from './Title'
 import Card from './Card'
+import { v4 as uuid } from 'uuid'
 // import useWindowDimensions from '../helpers/useWindowDimensions'
 // import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 // import MasonryLayout from 'react-masonry-layout'
@@ -47,20 +48,22 @@ const BlockOfCards = ({ data, title }) => {
     return (
       <div className="flex justify-around">
         {/* <div className="grid w-full grid-cols-3"> */}
-        {resGrids.map((grid, index) => (
-          <div key={index}>
-            {grid.map((card) => (
-              <Card
-                key={card.title}
-                title={card.title}
-                desc={card.desc}
-                href={card.href}
-                src={card.src}
-                small={card.size === 'small'}
-                big={card.size === 'big'}
-                active={card.active}
-              />
-            ))}
+        {resGrids.map((grid) => (
+          <div key={'grid' + uuid()}>
+            {grid.map((card) => {
+              return (
+                <Card
+                  key={'card' + uuid()}
+                  title={card.title}
+                  desc={card.desc}
+                  href={card.href}
+                  src={card.src}
+                  small={card.size === 'small'}
+                  big={card.size === 'big'}
+                  active={card.active}
+                />
+              )
+            })}
           </div>
         ))}
       </div>
@@ -73,9 +76,9 @@ const BlockOfCards = ({ data, title }) => {
 
       {haveSmall ? (
         <div className="flex flex-wrap justify-between">
-          {data.map((card, index) => (
+          {data.map((card) => (
             <Card
-              key={card.title}
+              key={'card' + uuid()}
               title={card.title}
               desc={card.desc}
               href={card.href}

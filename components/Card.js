@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { v4 as uuid } from 'uuid'
 
 const Button = ({ name, href, active }) => (
   <Link href={href}>
@@ -24,7 +25,9 @@ const CardStandart = ({ src, title = '', desc, href, active = false }) => (
       <div>
         <h4 className="my-1 text-xl leading-tight font-futuraDemi">{title}</h4>
         {desc.map((descItem) => (
-          <p className="text-base font-futura">{descItem}</p>
+          <p key={uuid()} className="text-base font-futura">
+            {descItem}
+          </p>
         ))}
       </div>
       <Button name="Каталог" href={href} active={active} />
@@ -38,7 +41,9 @@ const CardSmall = ({ src, title = '', desc, href, active = false }) => (
       <div className="flex flex-col h-full mb-6">
         <h4 className="my-1 text-xl font-futuraDemi">{title}</h4>
         {desc.map((descItem) => (
-          <p className="text-base font-futura">{descItem}</p>
+          <p key={uuid()} className="text-base font-futura">
+            {descItem}
+          </p>
         ))}
       </div>
       <img
@@ -57,7 +62,9 @@ const CardBig = ({ src, title = '', desc, href, active = false }) => (
       <div>
         <h4 className="text-xl font-futuraDemi">{title}</h4>
         {desc.map((descItem) => (
-          <p className="text-base font-futura">{descItem}</p>
+          <p key={uuid()} className="text-base font-futura">
+            {descItem}
+          </p>
         ))}
       </div>
       <Button name="Каталог" href={href} active={active} />
