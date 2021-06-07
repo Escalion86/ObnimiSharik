@@ -50,16 +50,7 @@ const BlockOfCards = ({ data, title }) => {
           {resCols.map((col) => (
             <div key={'col' + uuid()}>
               {col.map((card) => (
-                <Card
-                  key={'card' + uuid()}
-                  title={card.title}
-                  desc={card.desc}
-                  href={card.href}
-                  src={card.src}
-                  small={card.size === 'small'}
-                  big={card.size === 'big'}
-                  active={card.active}
-                />
+                <Card key={'card' + uuid()} card={card} />
               ))}
             </div>
           ))}
@@ -110,16 +101,7 @@ const BlockOfCards = ({ data, title }) => {
           {rows.map((row) => (
             <div key={'row' + uuid()} className="flex justify-center space-x-6">
               {row.map((card) => (
-                <Card
-                  key={'card' + uuid()}
-                  title={card.title}
-                  desc={card.desc}
-                  href={card.href}
-                  src={card.src}
-                  small={card.size === 'small'}
-                  big={card.size === 'big'}
-                  active={card.active}
-                />
+                <Card key={'card' + uuid()} card={card} />
               ))}
             </div>
           ))}

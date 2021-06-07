@@ -90,16 +90,17 @@ const CardBig = ({ src, title = '', desc, href, active = false }) => (
   </div>
 )
 
-const Card = ({
-  src,
-  title = '',
-  desc,
-  href,
-  small = false,
-  big = false,
-  active = false,
-}) => {
-  const CardType = small ? CardSmall : big ? CardBig : CardStandart
+const Card = ({ card }) => {
+  const {
+    src = '',
+    title = '',
+    desc = '',
+    href = null,
+    size = 'normal',
+    active = false,
+  } = card
+  const CardComponent =
+    size === 'small' ? CardSmall : size === 'big' ? CardBig : CardStandart
 
   return (
     // <div className="flex justify-center mb-4">
@@ -109,7 +110,7 @@ const Card = ({
         (active ? 'bg-red-100' : 'bg-white')
       }
     >
-      <CardType
+      <CardComponent
         src={src}
         title={title}
         desc={desc}
