@@ -11,7 +11,7 @@ import useWindowDimensions from '../helpers/useWindowDimensions'
 const BlockOfCards = ({ data, title }) => {
   const { height, width } = useWindowDimensions()
   // const width = 1200
-  const haveSmall = !!data.find((card) => card.size === 'small')
+
   // console.log(`haveSmall`, haveSmall)
   // const smallCards = data.filter((card) => card.size ==='small')
   // const normalCards = data.filter((card) => card.size ==='normal')
@@ -111,28 +111,19 @@ const BlockOfCards = ({ data, title }) => {
     return null
   }
 
+  const Masonry = ({ data }) => {
+    const haveSmall = !!data.find((card) => card.size === 'small')
+    if (haveSmall) {
+      return <MasonryNoBig data={data} />
+    } else {
+      return <MasonryNoSmall data={data} />
+    }
+  }
+
   return (
     <div className="mt-8">
       <Title title={title} />
-
-      {haveSmall ? (
-        // <div className="flex flex-wrap justify-between">
-        //   {/* {data.map((card) => (
-        //     <Card
-        //       key={'card' + uuid()}
-        //       title={card.title}
-        //       desc={card.desc}
-        //       href={card.href}
-        //       src={card.src}
-        //       small={card.size === 'small'}
-        //       big={card.size === 'big'}
-        //     />
-        //   ))} */}
-        <MasonryNoBig data={data} />
-      ) : (
-        // </div>
-        <MasonryNoSmall data={data} />
-      )}
+      <Masonry data={data} />
     </div>
   )
 }
