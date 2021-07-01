@@ -8,7 +8,7 @@ import useWindowDimensions from '../helpers/useWindowDimensions'
 // import Packery from 'react-packery-component'
 // import { Responsive as GridLayout } from 'react-grid-layout'
 
-const BlockOfCards = ({ data, title }) => {
+const BlockOfCards = ({ data, title, className = '' }) => {
   const { height, width } = useWindowDimensions()
   // const width = 1200
 
@@ -121,7 +121,7 @@ const BlockOfCards = ({ data, title }) => {
   }
 
   return (
-    <div className="mt-8">
+    <div className={'mt-32' + (className ? ' ' + className : '')}>
       <Title title={title} />
       <Masonry data={data} />
     </div>
