@@ -1,0 +1,112 @@
+export const catalogData = [
+  {
+    title: 'Обычные шарики',
+    desc: ['большой выбор, в наличии все цвета'],
+    href: '/',
+    src: 'img/catalog/standart.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Шарики с рисунком',
+    desc: ['большой выбор на любой праздник'],
+    href: '/',
+    src: 'img/catalog/withpicture.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Цифры',
+    desc: ['большой выбор'],
+    href: '/',
+    src: 'img/catalog/numbers.webp',
+    size: 'small',
+  },
+  {
+    title: 'Фигуры',
+    desc: ['большой выбор'],
+    href: '/',
+    src: 'img/catalog/figures.png',
+    size: 'small',
+  },
+]
+
+export const setsData = [
+  {
+    title: 'Для ребенка',
+    desc: ['- Мульт. персонаж', '- Скидка в день рождения'],
+    href: '/',
+    src: 'img/set/forkids.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Для девушки',
+    desc: ['- С перьями, конфети', '- Надпись на шарике'],
+    href: '/',
+    src: 'img/set/forgirl.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Для парня/мужчины',
+    desc: ['- Красивые композиции', '- Надписьна шарике'],
+    href: '/',
+    src: 'img/set/forboys.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Gender Party',
+    desc: ['- Шары с сухой краской', '- Шарики внутри шара'],
+    href: '/',
+    src: 'img/set/forgenderparty.png',
+    size: 'normal',
+  },
+  {
+    title: 'На выписку',
+    desc: ['- Для мальчика и девочки'],
+    href: '/',
+    src: 'img/set/forborn.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Большие подарочные коробки с шарами',
+    desc: [
+      '- Коробки 60*60*60 см',
+      '- Цвета на выбор',
+      '- Индивидуальная надпись',
+    ],
+    href: '/',
+    src: 'img/set/boxes.webp',
+    size: 'big',
+  },
+  {
+    title: 'Гигантские прозрачные шары Bubbles',
+    desc: [
+      '- Шары размером 46, 51 и 81 см',
+      '- Наполнение перьями, конфети',
+      '- Украшение лентами',
+    ],
+    href: '/',
+    src: 'img/set/gigant.webp',
+    size: 'big',
+  },
+  {
+    title: 'Для мамы и папы',
+    desc: ['- На юбилей и годовщину', '- Надпись на шарике'],
+    href: '/',
+    src: 'img/set/forparents.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Для молодоженов',
+    desc: ['- Красивые композиции', '- Надпись на шарике'],
+    href: '/',
+    src: 'img/set/forwedding.webp',
+    size: 'normal',
+  },
+  {
+    title: 'Дарим шарик с гелием',
+    desc: ['за ответ на 3 вопроса'],
+    href: '/',
+    src: 'img/30sm.png',
+    size: 'normal',
+    active: true,
+  },
+]
