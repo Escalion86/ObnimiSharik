@@ -1,5 +1,5 @@
-import dbConnect from '../../../utils/dbConnect'
-import Balloons from '../../../models/Balloons'
+import dbConnect from '@utils/dbConnect'
+import Balloons from '@models/Balloons'
 
 export default async function handler(req, res) {
   const { method } = req

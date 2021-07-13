@@ -5,7 +5,7 @@ import HeadPanel from './HeadPanel'
 // import { Fab, Action } from 'react-tiny-fab'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
-import Fab from '../components/Fab'
+import Fab from '@components/Fab'
 
 function MainLayout({ title = '', children = null }) {
   return (

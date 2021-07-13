@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
 
-import Button from '../components/Button'
+import Button from '@components/Button'
 
 const Spinner = () => {
   return (
@@ -48,12 +48,12 @@ export default function Admin() {
 
   return (
     <>
-      {!session && (
+      {(!session || loading) && (
         <div className="flex items-center justify-center h-screen">
           <Spinner />
         </div>
       )}
-      {session && (
+      {session && !loading && (
         <>
           {session.user.role === 'admin' && (
             <>

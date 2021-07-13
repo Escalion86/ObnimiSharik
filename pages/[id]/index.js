@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import dbConnect from '../../utils/dbConnect'
-import Balloons from '../../models/Balloons'
+import dbConnect from '@utils/dbConnect'
+import Balloons from '@models/Balloons'
 
 /* Allows you to view baloon card info and delete baloon card*/
 const BaloonPage = ({ baloon }) => {

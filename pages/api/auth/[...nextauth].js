@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import dbConnect from '../../../utils/dbConnect'
-import Users from '../../../models/Users'
+import dbConnect from '@utils/dbConnect'
+import Users from '@models/Users'
 
 export default NextAuth({
   // Configure one or more authentication providers

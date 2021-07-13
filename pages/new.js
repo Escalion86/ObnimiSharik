@@ -1,7 +1,7 @@
-import Form from '../components/Form'
-import dbConnect from '../utils/dbConnect'
-import Types from '../models/Types'
-import Sets from '../models/Sets'
+import Form from '@components/Form'
+import dbConnect from '@utils/dbConnect'
+import Types from '@models/Types'
+import Sets from '@models/Sets'
 
 const NewBalloon = ({ types, sets }) => {
   const balloonForm = {
