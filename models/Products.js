@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
-const BalloonsSchema = new mongoose.Schema({
+const ProductsSchema = new mongoose.Schema({
   name: {
     /* The name of this pet */
 
@@ -72,5 +72,5 @@ const BalloonsSchema = new mongoose.Schema({
   // },
 })
 
-export default mongoose.models.Balloons ||
-  mongoose.model('Balloons', BalloonsSchema)
+export default mongoose.models.Products ||
+  mongoose.model('Products', ProductsSchema)
