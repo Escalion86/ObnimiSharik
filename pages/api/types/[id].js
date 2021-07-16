@@ -1,5 +1,5 @@
 import dbConnect from '@utils/dbConnect'
-import balloons from '@models/balloons'
+import Types from '@models/Types'
 
 export default async function handler(req, res) {
   const {
@@ -12,11 +12,11 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET' /* Get a model by its ID */:
       try {
-        const baloon = await balloons.findById(id)
-        if (!baloon) {
+        const type = await Types.findById(id)
+        if (!type) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json({ success: true, data: baloon })
+        res.status(200).json({ success: true, data: type })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -24,14 +24,14 @@ export default async function handler(req, res) {
 
     case 'PUT' /* Edit a model by its ID */:
       try {
-        const baloon = await balloons.findByIdAndUpdate(id, req.body, {
+        const type = await Types.findByIdAndUpdate(id, req.body, {
           new: true,
           runValidators: true,
         })
-        if (!baloon) {
+        if (!type) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json({ success: true, data: baloon })
+        res.status(200).json({ success: true, data: type })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -39,8 +39,8 @@ export default async function handler(req, res) {
 
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        const deletedBaloon = await balloons.deleteOne({ _id: id })
-        if (!deletedBaloon) {
+        const deletedType = await Types.deleteOne({ _id: id })
+        if (!deletedType) {
           return res.status(400).json({ success: false })
         }
         res.status(200).json({ success: true, data: {} })
