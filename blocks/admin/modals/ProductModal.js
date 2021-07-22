@@ -1,4 +1,4 @@
-import ProductForm from '@admincomponents/ProductForm'
+import { ProductForm } from '@admincomponents/Forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const ProductModal = ({

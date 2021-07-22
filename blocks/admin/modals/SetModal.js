@@ -1,7 +1,7 @@
-import SetForm from '@admincomponents/SetForm'
+import { SetForm } from '@admincomponents/Forms'
 import Modal from '@adminblocks/modals/Modal'
 
-const ProductModal = ({
+const SetModal = ({
   set,
   setTypes,
   onClose = () => {},
@@ -21,4 +21,4 @@ const ProductModal = ({
   )
 }
 
-export default ProductModal
+export default SetModal
