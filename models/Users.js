@@ -3,30 +3,33 @@ import mongoose from 'mongoose'
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const UsersSchema = new mongoose.Schema({
   name: {
-    /* The name of this pet */
-
     type: String,
-    required: [true, 'Please provide a name for this type'],
-    maxlength: [20, 'Name cannot be more than 60 characters'],
+    maxlength: [80, 'Имя не может быть больше 80 символов'],
+    default: 'Шарик Обнимашкин',
   },
   email: {
     type: String,
-    // required: [false, 'Please provide a description for this baloon.'],
-    maxlength: [400, 'Description cannot be more than 400 characters'],
+    required: [true, 'Введите почту'],
   },
-  image: {
+  image_url: {
     type: String,
-    // required: [false, 'Please provide a description for this baloon.'],
-    // maxlength: [400, 'Description cannot be more than 400 characters'],
+    default: '',
   },
-  createdAt: {
-    type: String,
-  },
-  updatedAt: {
-    type: String,
+  phone: {
+    type: Number,
+    default: 0,
   },
   role: {
     type: String,
+    default: 'client',
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now,
   },
 })
 

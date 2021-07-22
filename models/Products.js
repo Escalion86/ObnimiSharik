@@ -2,74 +2,48 @@ import mongoose from 'mongoose'
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const ProductsSchema = new mongoose.Schema({
-  name: {
-    /* The name of this pet */
-
+  article: {
     type: String,
-    required: [true, 'Please provide a name for this baloon.'],
-    maxlength: [20, 'Name cannot be more than 60 characters'],
+    maxlength: [20, 'Длинна артикула товара не может превышать 20 смволов'],
+    default: '',
+  },
+  name: {
+    type: String,
+    required: [true, 'Введите название товара'],
+    maxlength: [80, 'Название товара не может превышать 80 смволов'],
+    default: '',
   },
   description: {
     type: String,
-    // required: [false, 'Please provide a description for this baloon.'],
-    maxlength: [400, 'Name cannot be more than 400 characters'],
+    maxlength: [600, 'Описание не может превышать 600 символов'],
+    default: '',
   },
   price: {
     type: Number,
     required: [true, 'Пожалуйста укажите стоимость'],
     maxlength: [8, 'Стоимость не может превышать 999999,99 руб'],
+    default: 0,
   },
-  // owner_name: {
-  //   /* The owner of this pet */
-
-  //   type: String,
-  //   required: [true, "Please provide the pet owner's name"],
-  //   maxlength: [20, "Owner's Name cannot be more than 60 characters"],
-  // },
-  // species: {
-  //   /* The species of your pet */
-
-  //   type: String,
-  //   required: [true, 'Please specify the species of your pet.'],
-  //   maxlength: [30, 'Species specified cannot be more than 40 characters'],
-  // },
-  // age: {
-  //   /* Pet's age, if applicable */
-
-  //   type: Number,
-  // },
-  // poddy_trained: {
-  //   /* Boolean poddy_trained value, if applicable */
-
-  //   type: Boolean,
-  // },
-  // diet: {
-  //   /* List of dietary needs, if applicable */
-
-  //   type: Array,
-  // },
-  image_url: {
-    /* Url to pet image */
-
-    required: [true, 'Пожалуйта укажите ссылу на картинку'],
-    type: String,
-  },
-  types: {
+  image_urls: {
     type: Array,
+    default: [],
   },
-  sets: {
+  types_id: {
     type: Array,
+    default: [],
   },
-  // likes: {
-  //   /* List of things your pet likes to do */
-
-  //   type: Array,
-  // },
-  // dislikes: {
-  //   /* List of things your pet does not like to do */
-
-  //   type: Array,
-  // },
+  archive: {
+    type: Boolean,
+    default: false,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 export default mongoose.models.Products ||

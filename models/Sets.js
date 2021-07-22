@@ -2,17 +2,51 @@ import mongoose from 'mongoose'
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const SetsSchema = new mongoose.Schema({
-  name: {
-    /* The name of this pet */
-
+  article: {
     type: String,
-    required: [true, 'Please provide a name for this set'],
-    maxlength: [20, 'Name cannot be more than 60 characters'],
+    maxlength: [20, 'Длинна артикула набора не может превышать 20 смволов'],
+    default: '',
+  },
+  name: {
+    type: String,
+    required: [true, 'Введите название набора'],
+    maxlength: [80, 'Название набора не может превышать 80 смволов'],
+    default: '',
   },
   description: {
     type: String,
-    // required: [false, 'Please provide a description for this baloon.'],
-    maxlength: [400, 'Description cannot be more than 400 characters'],
+    maxlength: [600, 'Описание не может превышать 600 символов'],
+    default: '',
+  },
+  price: {
+    type: Number,
+    required: [true, 'Пожалуйста укажите стоимость'],
+    maxlength: [8, 'Стоимость не может превышать 999999,99 руб'],
+    dafeult: 0,
+  },
+  image_urls: {
+    type: Array,
+    default: [],
+  },
+  products_id: {
+    type: Array,
+    default: [],
+  },
+  types_id: {
+    type: Array,
+    default: [],
+  },
+  archive: {
+    type: Boolean,
+    default: false,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now,
   },
 })
 
