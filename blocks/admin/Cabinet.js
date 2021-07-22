@@ -45,7 +45,9 @@ const Cabinet = ({
           closeMenu={closeMenu}
           onSignOut={onSignOut}
         />
-        <main className="flex flex-col flex-1 px-3 pb-3">{children}</main>
+        <main className="flex flex-col flex-1 px-3 pb-3 overflow-y-scroll">
+          {children}
+        </main>
       </div>
     </div>
   )
