@@ -1,7 +1,8 @@
 import dbConnect from '@utils/dbConnect'
 import Products from '@models/Products'
-import Types from '@models/Types'
+import ProductTypes from '@models/ProductTypes'
 import Sets from '@models/Sets'
+import SetTypes from '@models/SetTypes'
 
 export default async function handler(req, res) {
   const { method } = req
@@ -12,9 +13,13 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const products = await Products.find({})
-        const types = await Types.find({})
+        const productTypes = await ProductTypes.find({})
         const sets = await Sets.find({})
-        res.status(200).json({ success: true, data: { products, types, sets } })
+        const setTypes = await SetTypes.find({})
+        res.status(200).json({
+          success: true,
+          data: { products, productTypes, sets, setTypes },
+        })
       } catch (error) {
         res.status(400).json({ success: false })
       }

@@ -1,5 +1,5 @@
 import dbConnect from '@utils/dbConnect'
-import Types from '@models/Types'
+import SetTypes from '@models/v'
 
 export default async function handler(req, res) {
   const {
@@ -12,11 +12,11 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET' /* Get a model by its ID */:
       try {
-        const type = await Types.findById(id)
-        if (!type) {
+        const setType = await SetTypes.findById(id)
+        if (!setType) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json({ success: true, data: type })
+        res.status(200).json({ success: true, data: setType })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -24,14 +24,14 @@ export default async function handler(req, res) {
 
     case 'PUT' /* Edit a model by its ID */:
       try {
-        const type = await Types.findByIdAndUpdate(id, req.body, {
+        const setType = await SetTypes.findByIdAndUpdate(id, req.body, {
           new: true,
           runValidators: true,
         })
-        if (!type) {
+        if (!setType) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json({ success: true, data: type })
+        res.status(200).json({ success: true, data: setType })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -39,8 +39,8 @@ export default async function handler(req, res) {
 
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        const deletedType = await Types.deleteOne({ _id: id })
-        if (!deletedType) {
+        const deletedSetType = await SetTypes.deleteOne({ _id: id })
+        if (!deletedSetType) {
           return res.status(400).json({ success: false })
         }
         res.status(200).json({ success: true, data: {} })
