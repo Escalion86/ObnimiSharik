@@ -34,6 +34,7 @@ const SetsContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
                 />
               ))
             }
+            onTypeClick={(type) => console.log(`type`, type)}
           />
         )
       })}

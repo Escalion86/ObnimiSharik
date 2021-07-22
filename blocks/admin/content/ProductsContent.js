@@ -31,6 +31,7 @@ const ProductsContent = ({
                 />
               ))
             }
+            onTypeClick={(type) => console.log(`type`, type)}
           />
         )
       })}
