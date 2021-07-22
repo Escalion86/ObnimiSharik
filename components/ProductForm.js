@@ -6,40 +6,7 @@ import Button from '@components/Button'
 
 import { DEFAULT_PRODUCT } from '@helpers/constants'
 
-const MultiselectCheckbox = ({ title = '', options, onChange }) => {
-  const [data, setData] = useState(options)
-  console.log(`options`, options)
-
-  const toggle = (index) => {
-    const newData = [...data]
-    newData.splice(index, 1, {
-      id: data[index].id,
-      label: data[index].label,
-      checked: !data[index].checked,
-    })
-    setData(newData)
-    onChange(newData.filter((x) => x.checked))
-  }
-
-  return (
-    <div>
-      <div className="">{title}</div>
-      <div className="overflow-y-scroll max-h-40">
-        {data.map((item, index) => (
-          <label key={item.label} className="flex items-center">
-            <input
-              readOnly
-              type="checkbox"
-              checked={item.checked || false}
-              onClick={() => toggle(index)}
-            />
-            <div className="ml-2">{item.label}</div>
-          </label>
-        ))}
-      </div>
-    </div>
-  )
-}
+import MultiselectCheckbox from '@components/MultiselectCheckbox'
 
 const Input = ({
   label = '',
@@ -66,9 +33,6 @@ const Input = ({
 
 const ProductForm = ({
   product = DEFAULT_PRODUCT,
-  // title = '',
-  // btnName = 'Применить',
-  // forNew = true,
   productTypes = [],
   afterConfirm = () => {},
 }) => {
