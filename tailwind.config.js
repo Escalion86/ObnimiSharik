@@ -83,7 +83,8 @@ module.exports = {
       },
       boxShadow: {
         light: '0 5px 10px 0 rgba(0, 0, 0, 0.20)',
-        medium: '0 3px 15px 0 rgba(43, 43, 43, 0.50)',
+        medium: '0 4px 12px 0 rgba(0, 0, 0, 0.30)',
+        large: '0 3px 15px 0 rgba(0, 0, 0, 0.40)',
         // sm: '0 3px 15px 0 rgba(0, 0, 0, 0.10)',
         active:
           '0 1px 3px 1px rgba(76, 29, 149, 0.4), 0 1px 2px 1px rgba(76, 29, 149, 0.3)',

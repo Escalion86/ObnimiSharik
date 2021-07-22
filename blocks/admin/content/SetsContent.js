@@ -1,27 +1,43 @@
-import React, { useState } from 'react'
+import React from 'react'
+import SetModal from '../modals/SetModal'
+import { fetchingSets } from '@helpers/fetchers'
+import { SetCard } from '@admincomponents/Cards'
 
-const SetCard = ({ set }) => (
-  <div className="flex items-center p-2 mx-1 my-2 bg-white shadow-md">
-    <div className="flex-1 ml-3">
-      <div className="flex justify-between space-x-2">
-        <div className="w-3/12 font-semibold cursor-pointer text-primary hover:text-toxic">
-          {set.name}
-        </div>
-        <div className="flex-1 italic">{set.description}</div>
-      </div>
-    </div>
-  </div>
-)
-
-const SetsContent = ({ data }) => {
+const SetsContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
   const { sets } = data
 
+  console.log(`data`, data)
+
   return (
-    <div>
-      {sets.map((set) => (
-        <SetCard key={set._id} set={set} />
-      ))}
-    </div>
+    // <div>
+    //   {sets.map((set) => (
+    //     <SetCard key={set._id} set={set} />
+    //   ))}
+    // </div>
+    <>
+      {sets.map((set) => {
+        const types = set.types_id.map((type_id) =>
+          data.setTypes.find((typeCheck) => typeCheck._id === type_id)
+        )
+        if (types[0] === undefined) types.length = 0
+        return (
+          <SetCard
+            key={set._id}
+            set={{ ...set, types }}
+            onClick={() =>
+              setModal(() => (
+                <SetModal
+                  set={set}
+                  setTypes={data.setTypes}
+                  onClose={() => setModal(null)}
+                  afterConfirm={() => fetchingSets(updateData)}
+                />
+              ))
+            }
+          />
+        )
+      })}
+    </>
   )
 }
 

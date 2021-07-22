@@ -1,4 +1,4 @@
-import Form from '@components/ProductForm'
+import Form from '@admincomponents/ProductForm'
 import dbConnect from '@utils/dbConnect'
 import Types from '@models/ProductTypes'
 import Sets from '@models/Sets'

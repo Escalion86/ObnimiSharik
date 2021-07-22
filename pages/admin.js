@@ -4,25 +4,25 @@ import React, { useEffect, useState } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/client'
 
 import Button from '@components/Button'
-import Cabinet from '@blocks/admin/Cabinet'
+import Cabinet from '@adminblocks/Cabinet'
 
-import Spinner from '@components/Spinner'
-// import PageContent from '@blocks/admin/PageContent'
-import Title from '@blocks/admin/Title'
-import ProductsContent from '@blocks/admin/content/ProductsContent'
-import TypesContent from '@blocks/admin/content/TypesContent'
-import SetsContent from '@blocks/admin/content/SetsContent'
-import Form from '@components/ProductForm'
+import Spinner from '@admincomponents/Spinner'
+// import PageContent from '@adminblocks/PageContent'
+import Title from '@adminblocks/Title'
+import ProductsContent from '@adminblocks/content/ProductsContent'
+import TypesContent from '@adminblocks/content/TypesContent'
+import SetsContent from '@adminblocks/content/SetsContent'
+
 import IconButton from '@components/IconButton'
 
 import { faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
-import { DEFAULT_PRODUCT } from '@helpers/constants'
 
-import ProductModal from '@blocks/admin/modals/ProductModal'
+import ProductModal from '@adminblocks/modals/ProductModal'
+import SetModal from '@adminblocks/modals/SetModal'
 
 import { fetchingAll } from '@helpers/fetchers'
 
-import TildaImportModal from '@blocks/admin/modals/TildaImportModal'
+import TildaImportModal from '@adminblocks/modals/TildaImportModal'
 
 // import dbConnect from '@utils/dbConnect'
 // import Balloons from '@models/Balloons'
@@ -30,6 +30,19 @@ import TildaImportModal from '@blocks/admin/modals/TildaImportModal'
 // import Sets from '@models/Sets'
 
 // import useSWR from 'swr'
+
+const BtnAddSet = ({ data, setModal, key }) => (
+  <IconButton
+    key={key}
+    onClick={() =>
+      setModal(() => (
+        <SetModal setTypes={data.setTypes} onClose={() => setModal(null)} />
+      ))
+    }
+    inverse
+    icon={faPlus}
+  />
+)
 
 const BtnAddProduct = ({ data, setModal, key }) => (
   <IconButton
@@ -93,7 +106,7 @@ const pages = [
     name: 'Наборы',
     header: 'Наборы',
     pageContent: SetsContent,
-    pageButtons: [],
+    pageButtons: [BtnAddSet],
     backToPageId: null,
   }, // 2
   {
@@ -148,7 +161,7 @@ export default function Admin() {
   })
   const [Modal, setModal] = useState(null)
 
-  console.log(`data`, data)
+  // console.log(`data`, data)
   const updateData = (newData) => {
     setData({ ...data, ...newData })
   }

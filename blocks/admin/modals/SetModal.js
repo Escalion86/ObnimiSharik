@@ -1,17 +1,17 @@
-import ProductForm from '@admincomponents/ProductForm'
+import SetForm from '@admincomponents/SetForm'
 import Modal from '@adminblocks/modals/Modal'
 
 const ProductModal = ({
-  product,
-  productTypes,
+  set,
+  setTypes,
   onClose = () => {},
   afterConfirm = () => {},
 }) => {
   return (
     <Modal onClose={onClose}>
-      <ProductForm
-        product={product}
-        productTypes={productTypes}
+      <SetForm
+        set={set}
+        setTypes={setTypes}
         afterConfirm={(data) => {
           afterConfirm(data)
           onClose()

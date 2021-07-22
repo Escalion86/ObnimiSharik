@@ -6,7 +6,7 @@ import Button from '@components/Button'
 
 import { DEFAULT_PRODUCT } from '@helpers/constants'
 
-import MultiselectCheckbox from '@components/MultiselectCheckbox'
+import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 
 const Input = ({
   label = '',
@@ -43,11 +43,13 @@ const ProductForm = ({
   // console.log(`types`, types)
 
   const [form, setForm] = useState({
+    article: product.article,
     name: product.name,
     description: product.description,
     price: product.price,
     image_urls: product.image_urls,
     types_id: product.types_id,
+    archive: product.archive,
   })
 
   const forNew = product._id === undefined

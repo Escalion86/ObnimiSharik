@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Modal from '@blocks/admin/modals/Modal'
+import Modal from '@adminblocks/modals/Modal'
 import Button from '@components/Button'
 const csv = require('csvtojson')
 import Papa from 'papaparse'

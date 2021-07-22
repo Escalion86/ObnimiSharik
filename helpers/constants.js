@@ -7,11 +7,22 @@ export const DEFAULT_USER = {
 }
 
 export const DEFAULT_PRODUCT = {
-  name: '',
   article: '',
+  name: '',
   description: '',
   price: 0,
   image_urls: [],
   types_id: [],
+  archive: false,
+}
+
+export const DEFAULT_SET = {
+  article: '',
+  name: '',
+  description: '',
+  price: 0,
+  image_urls: [],
+  types_id: [],
+  products_id: [],
   archive: false,
 }
