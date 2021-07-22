@@ -14,12 +14,11 @@ const TypeCard = ({ type }) => (
 )
 
 const TypesContent = ({ data }) => {
-  console.log(`data.types`, data.types)
-  const { types } = data
+  const { productTypes } = data
 
   return (
-    <div className="h-screen">
-      {types.map((type) => (
+    <div>
+      {productTypes.map((type) => (
         <TypeCard key={type._id} type={type} />
       ))}
     </div>

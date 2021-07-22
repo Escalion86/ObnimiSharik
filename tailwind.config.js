@@ -1,6 +1,10 @@
 module.exports = {
   mode: 'jit',
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  purge: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './blocks/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -11,6 +15,7 @@ module.exports = {
         third: '#176D8F',
         bg: '#54889A',
         toxic: '#6ad424',
+        hover: '#C8E3F4',
       },
       fontFamily: {
         futuraDemi: ['Futura PT Demi', 'sans-serif'],
@@ -31,8 +36,11 @@ module.exports = {
         desktop: '1200px',
       },
       inset: {
+        menu: '3.70rem',
+        title: '3.80rem',
         18: '4.5rem',
         '-18': '-4.5rem',
+        15: '3.75rem',
       },
       rotate: {
         '-15': '-15deg',
@@ -77,6 +85,8 @@ module.exports = {
         light: '0 5px 10px 0 rgba(0, 0, 0, 0.20)',
         medium: '0 3px 15px 0 rgba(43, 43, 43, 0.50)',
         // sm: '0 3px 15px 0 rgba(0, 0, 0, 0.10)',
+        active:
+          '0 1px 3px 1px rgba(76, 29, 149, 0.4), 0 1px 2px 1px rgba(76, 29, 149, 0.3)',
       },
       spacing: {
         90: '22.5rem',
@@ -99,7 +109,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: { overflow: ['hover', 'focus'] },
+    // boxShadow: ['responsive', 'hover', 'focus'],
+    // transform: ['hover', 'responsive'],
   },
   plugins: [],
 }

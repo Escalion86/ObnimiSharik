@@ -14,11 +14,10 @@ const SetCard = ({ set }) => (
 )
 
 const SetsContent = ({ data }) => {
-  console.log(`data.sets`, data.sets)
   const { sets } = data
 
   return (
-    <div className="h-screen">
+    <div>
       {sets.map((set) => (
         <SetCard key={set._id} set={set} />
       ))}

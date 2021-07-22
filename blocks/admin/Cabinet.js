@@ -28,7 +28,7 @@ const Cabinet = ({
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen max-h-screen">
       <SidePanel
         menuCfg={menuCfg}
         menuOpen={menuOpen}
@@ -36,7 +36,7 @@ const Cabinet = ({
         activePageId={page.id}
         closeMenu={closeMenu}
       />
-      <div className="relative flex-1 min-w-0">
+      <div className="relative flex flex-col flex-1 min-w-0">
         <Header
           user={user}
           menuOpen={menuOpen}
@@ -45,7 +45,7 @@ const Cabinet = ({
           closeMenu={closeMenu}
           onSignOut={onSignOut}
         />
-        <main className="px-3 pb-3">{children}</main>
+        <main className="flex flex-col flex-1 px-3 pb-3">{children}</main>
       </div>
     </div>
   )
