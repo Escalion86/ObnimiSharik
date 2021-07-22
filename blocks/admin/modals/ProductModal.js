@@ -3,21 +3,18 @@ import Modal from '@blocks/admin/modals/Modal'
 
 const ProductModal = ({
   product,
-  types,
+  productTypes,
   onClose = () => {},
   afterConfirm = () => {},
 }) => {
   return (
     <Modal onClose={onClose}>
       <ProductForm
-        forNew={!product}
-        title={product ? 'Редактирование товара' : 'Создние товара'}
-        btnName={product ? 'Применить' : 'Создать'}
         product={product}
-        types={types}
+        productTypes={productTypes}
         afterConfirm={(data) => {
           afterConfirm(data)
-          onClocse()
+          onClose()
         }}
       />
     </Modal>

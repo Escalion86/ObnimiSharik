@@ -3,20 +3,27 @@ import React, { useState } from 'react'
 import ProductModal from '../modals/ProductModal'
 import { fetchingProducts } from '@helpers/fetchers'
 
-const Types = ({ types, onClick }) => (
-  <div className="flex mt-1 space-x-2 text-sm">
-    <div>Тип:</div>
-    {types.map((type, index) => (
-      <div
-        key={'type' + index}
-        className="cursor-pointer text-primary hover:text-toxic"
-        onClick={() => onClick(type)}
-      >
-        {type.name}
-      </div>
-    ))}
-  </div>
-)
+const Types = ({ types, onClick }) => {
+  if (types[0] === undefined) types.length = 0
+  return (
+    <div className="flex mt-1 space-x-2 text-sm">
+      <div>Тип:</div>
+      {types.length > 0 ? (
+        types.map((type, index) => (
+          <div
+            key={'type' + index}
+            className="cursor-pointer text-primary hover:text-toxic"
+            onClick={() => onClick(type)}
+          >
+            {type.name}
+          </div>
+        ))
+      ) : (
+        <div>не установлено</div>
+      )}
+    </div>
+  )
+}
 
 const ProductCard = ({
   product,
@@ -26,7 +33,7 @@ const ProductCard = ({
   <div className="flex items-center p-2 mx-1 my-2 bg-white shadow-md">
     <img
       className="w-12 h-12"
-      src="/img/product.webp"
+      src={product.image_urls[0]}
       alt="product"
       width={48}
       height={48}
@@ -44,8 +51,8 @@ const ProductCard = ({
       <Types types={product.types} onClick={onTypeClick} />
     </div>
     <div className="w-1/12 text-right">
-      <div className="font-bold">{product.price} ₽</div>
-      <div className="">{product.price} ₽</div>
+      <div className="font-bold">{product.price / 100} ₽</div>
+      {/* <div className="">{products.price} ₽</div> */}
     </div>
   </div>
 )
@@ -54,16 +61,15 @@ const ProductsContent = ({
   setModal = () => {},
   updateData = () => {},
 }) => {
-  console.log(`data.products`, data.products)
   const { products } = data
 
   return (
-    <div>
+    <>
       {products.map((product) => {
-        const types = product.types.map((type) =>
-          data.types.find((typeCheck) => typeCheck._id === type)
+        const types = product.types_id.map((type_id) =>
+          data.productTypes.find((typeCheck) => typeCheck._id === type_id)
         )
-        console.log(`types`, types)
+        if (types[0] === undefined) types.length = 0
         return (
           <ProductCard
             key={product._id}
@@ -72,7 +78,7 @@ const ProductsContent = ({
               setModal(() => (
                 <ProductModal
                   product={product}
-                  types={data.types}
+                  productTypes={data.productTypes}
                   onClose={() => setModal(null)}
                   afterConfirm={() => fetchingProducts(updateData)}
                 />
@@ -81,7 +87,7 @@ const ProductsContent = ({
           />
         )
       })}
-    </div>
+    </>
   )
 }
 
