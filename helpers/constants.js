@@ -26,3 +26,11 @@ export const DEFAULT_SET = {
   products_id: [],
   archive: false,
 }
+
+export const DEFAULT_PRODUCT_TYPE = {
+  name: '',
+}
+
+export const DEFAULT_SET_TYPE = {
+  name: '',
+}

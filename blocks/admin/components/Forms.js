@@ -4,7 +4,12 @@ import { mutate } from 'swr'
 
 import Button from '@components/Button'
 
-import { DEFAULT_PRODUCT, DEFAULT_SET } from '@helpers/constants'
+import {
+  DEFAULT_PRODUCT,
+  DEFAULT_SET,
+  DEFAULT_PRODUCT_TYPE,
+  DEFAULT_SET_TYPE,
+} from '@helpers/constants'
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 
@@ -54,8 +59,6 @@ const putData = async (url, form, afterConfirm, setMessage) => {
     const { data } = await res.json()
 
     mutate(url, data, false) // Update the local data without a revalidation
-    // router.push('/admin')
-    // router.reload()
     afterConfirm()
   } catch (error) {
     setMessage('Failed to update on ' + url)
@@ -79,8 +82,6 @@ const postData = async (url, form, afterConfirm, setMessage) => {
       throw new Error(res.status)
     }
 
-    // router.push('/admin')
-    // router.reload()
     afterConfirm()
   } catch (error) {
     setMessage('Failed to add on ' + url)
@@ -92,7 +93,6 @@ export const ProductForm = ({
   productTypes = [],
   afterConfirm = () => {},
 }) => {
-  // const router = useRouter()
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
   // console.log(`types`, types)
@@ -161,7 +161,7 @@ export const ProductForm = ({
           key="name"
           label="Название"
           type="text"
-          maxLength="20"
+          maxLength="80"
           name="name"
           value={form.name}
           onChange={handleChange}
@@ -171,7 +171,7 @@ export const ProductForm = ({
           key="description"
           label="Описание"
           type="text"
-          maxLength="20"
+          maxLength="600"
           name="description"
           value={form.description}
           onChange={handleChange}
@@ -297,7 +297,7 @@ export const SetForm = ({
           key="name"
           label="Название"
           type="text"
-          maxLength="20"
+          maxLength="80"
           name="name"
           value={form.name}
           onChange={handleChange}
@@ -307,7 +307,7 @@ export const SetForm = ({
           key="description"
           label="Описание"
           type="text"
-          maxLength="20"
+          maxLength="600"
           name="description"
           value={form.description}
           onChange={handleChange}
@@ -346,6 +346,184 @@ export const SetForm = ({
             })
             // console.log('checked', data)
           }}
+        />
+        <Button
+          onClick={handleSubmit}
+          name={forNew ? 'Создать' : 'Применить'}
+          small
+          inverse
+        />
+      </div>
+      <p>{message}</p>
+      <div>
+        {Object.keys(errors).map((err, index) => (
+          <li key={index}>{err}</li>
+        ))}
+      </div>
+    </>
+  )
+}
+
+export const ProductTypeForm = ({
+  producttype = DEFAULT_PRODUCT_TYPE,
+  afterConfirm = () => {},
+}) => {
+  const [errors, setErrors] = useState({})
+  const [message, setMessage] = useState('')
+  // console.log(`types`, types)
+
+  const [form, setForm] = useState({
+    name: producttype.name,
+  })
+
+  const forNew = producttype._id === undefined
+
+  const handleChange = (e) => {
+    const target = e.target
+    const value =
+      target.name === 'price'
+        ? target.value * 100
+        : target.name === 'image_urls'
+        ? [target.value]
+        : target.value
+    const name = target.name
+
+    setForm({
+      ...form,
+      [name]: value,
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const errs = formValidate()
+    if (Object.keys(errs).length === 0) {
+      forNew
+        ? postData('/api/producttypes', form, afterConfirm, setMessage)
+        : putData(
+            `/api/producttypes/${producttype._id}`,
+            form,
+            afterConfirm,
+            setMessage
+          )
+    } else {
+      setErrors({ errs })
+    }
+  }
+
+  /* Makes sure baloon info is filled for baloon name, owner name, species, and image url*/
+  const formValidate = () => {
+    let err = {}
+    if (!form.name) err.name = 'Name is required'
+    // if (!form.price) err.price = 'Price is required'
+    // if (!form.image_urls) err.image_url = 'Image URL is required'
+    return err
+  }
+
+  return (
+    <>
+      <div className="flex flex-col space-y-2">
+        <div className="text-lg font-semibold text-center">
+          {forNew ? 'Создние типа' : 'Редактирование типа'}
+        </div>
+        <Input
+          key="name"
+          label="Название"
+          type="text"
+          maxLength="80"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+        <Button
+          onClick={handleSubmit}
+          name={forNew ? 'Создать' : 'Применить'}
+          small
+          inverse
+        />
+      </div>
+      <p>{message}</p>
+      <div>
+        {Object.keys(errors).map((err, index) => (
+          <li key={index}>{err}</li>
+        ))}
+      </div>
+    </>
+  )
+}
+
+export const SetTypeForm = ({
+  settype = DEFAULT_SET_TYPE,
+  afterConfirm = () => {},
+}) => {
+  const [errors, setErrors] = useState({})
+  const [message, setMessage] = useState('')
+  // console.log(`types`, types)
+
+  const [form, setForm] = useState({
+    name: settype.name,
+  })
+
+  const forNew = settype._id === undefined
+
+  const handleChange = (e) => {
+    const target = e.target
+    const value =
+      target.name === 'price'
+        ? target.value * 100
+        : target.name === 'image_urls'
+        ? [target.value]
+        : target.value
+    const name = target.name
+
+    setForm({
+      ...form,
+      [name]: value,
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const errs = formValidate()
+    if (Object.keys(errs).length === 0) {
+      forNew
+        ? postData('/api/settypes', form, afterConfirm, setMessage)
+        : putData(
+            `/api/settypes/${settype._id}`,
+            form,
+            afterConfirm,
+            setMessage
+          )
+    } else {
+      setErrors({ errs })
+    }
+  }
+
+  /* Makes sure baloon info is filled for baloon name, owner name, species, and image url*/
+  const formValidate = () => {
+    let err = {}
+    if (!form.name) err.name = 'Name is required'
+    // if (!form.price) err.price = 'Price is required'
+    // if (!form.image_urls) err.image_url = 'Image URL is required'
+    return err
+  }
+
+  return (
+    <>
+      <div className="flex flex-col space-y-2">
+        <div className="text-lg font-semibold text-center">
+          {forNew ? 'Создние типа' : 'Редактирование типа'}
+        </div>
+        <Input
+          key="name"
+          label="Название"
+          type="text"
+          maxLength="80"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          required
         />
         <Button
           onClick={handleSubmit}

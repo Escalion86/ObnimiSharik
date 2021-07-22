@@ -10,7 +10,8 @@ import Spinner from '@admincomponents/Spinner'
 // import PageContent from '@adminblocks/PageContent'
 import Title from '@adminblocks/Title'
 import ProductsContent from '@adminblocks/content/ProductsContent'
-import TypesContent from '@adminblocks/content/TypesContent'
+import ProductTypesContent from '@adminblocks/content/ProductTypesContent'
+import SetTypesContent from '@adminblocks/content/SetTypesContent'
 import SetsContent from '@adminblocks/content/SetsContent'
 
 import IconButton from '@components/IconButton'
@@ -19,6 +20,8 @@ import { faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 import ProductModal from '@adminblocks/modals/ProductModal'
 import SetModal from '@adminblocks/modals/SetModal'
+import ProductTypeModal from '@adminblocks/modals/ProductTypeModal'
+import SetTypeModal from '@adminblocks/modals/SetTypeModal'
 
 import { fetchingAll } from '@helpers/fetchers'
 
@@ -44,9 +47,30 @@ const BtnAddSet = ({ data, setModal, key }) => (
   />
 )
 
+const BtnAddProductType = ({ data, setModal, key }) => (
+  <IconButton
+    key={key}
+    onClick={() =>
+      setModal(() => <ProductTypeModal onClose={() => setModal(null)} />)
+    }
+    inverse
+    icon={faPlus}
+  />
+)
+
+const BtnAddSetType = ({ data, setModal, key }) => (
+  <IconButton
+    key={key}
+    onClick={() =>
+      setModal(() => <SetTypeModal onClose={() => setModal(null)} />)
+    }
+    inverse
+    icon={faPlus}
+  />
+)
+
 const BtnAddProduct = ({ data, setModal, key }) => (
   <IconButton
-    // name="Добавить"
     key={key}
     onClick={() =>
       setModal(() => (
@@ -96,8 +120,8 @@ const pages = [
     group: 1,
     name: 'Типы шариков',
     header: 'Типы шариков',
-    pageContent: TypesContent,
-    pageButtons: [],
+    pageContent: ProductTypesContent,
+    pageButtons: [BtnAddProductType],
     backToPageId: null,
   }, // 1
   {
@@ -111,6 +135,15 @@ const pages = [
   }, // 2
   {
     id: 4,
+    group: 1,
+    name: 'Типы наборов',
+    header: 'Типы наборов',
+    pageContent: SetTypesContent,
+    pageButtons: [BtnAddSetType],
+    backToPageId: null,
+  }, // 1
+  {
+    id: 5,
     group: null,
     name: 'Параметры',
     header: 'Параметры учетной записи',
