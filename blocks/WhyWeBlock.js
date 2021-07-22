@@ -1,4 +1,4 @@
-import Block from '@scomponents/Block'
+import Block from '@components/Block'
 import Title from '@components/Title'
 import Button from '@components/Button'
 import InfoItem from '@components/InfoItem'

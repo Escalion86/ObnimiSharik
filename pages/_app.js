@@ -1,5 +1,6 @@
 import 'tailwindcss/tailwind.css'
 import '../styles/fonts/FuturaPT.css'
+import '../styles/global.css'
 import Head from 'next/head'
 
 function MyApp({ Component, pageProps }) {

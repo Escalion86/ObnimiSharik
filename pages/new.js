@@ -1,26 +1,19 @@
-import Form from '@components/Form'
+import Form from '@components/ProductForm'
 import dbConnect from '@utils/dbConnect'
-import Types from '@models/Types'
+import Types from '@models/ProductTypes'
 import Sets from '@models/Sets'
 
-const NewBalloon = ({ types, sets }) => {
-  const balloonForm = {
+const NewProduct = ({ types = [], sets = [] }) => {
+  const productForm = {
     name: '',
     description: '',
     price: 0,
     image_url: '',
-    types: [],
-    sets: [],
+    types,
+    sets,
   }
 
-  return (
-    <Form
-      formId="add-balloon-form"
-      balloonForm={balloonForm}
-      types={types}
-      sets={sets}
-    />
-  )
+  return <Form productForm={productForm} types={types} sets={sets} />
 }
 
 export async function getServerSideProps() {
@@ -44,4 +37,4 @@ export async function getServerSideProps() {
   return { props: { types: types, sets: sets } }
 }
 
-export default NewBalloon
+export default NewProduct

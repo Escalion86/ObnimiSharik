@@ -25,8 +25,8 @@ import DeliveryBlock from '@blocks/DeliveryBlock'
 import { catalogData, setsData } from '@utils/temp_db'
 
 import dbConnect from '@utils/dbConnect'
-import Balloons from '@models/Balloons'
-import Types from '@models/Types'
+import Products from '@models/Products'
+import ProductTypes from '@models/ProductTypes'
 import Sets from '@models/Sets'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
@@ -50,13 +50,13 @@ import { signIn, signOut, useSession } from 'next-auth/client'
 //   // console.log(`json`, js`on)
 // }
 
-export default function Home({ balloons, sets, types }) {
+export default function Home({ products, sets, types }) {
   const { height, width } = useWindowDimensions()
   const [session, loading] = useSession()
 
   // if (session) console.log(`session`, session)
 
-  // console.log(`balloons`, balloons)
+  // console.log(`products`, products)
 
   return (
     <MainLayout title="Обними шарик - Главная">
@@ -107,27 +107,33 @@ export default function Home({ balloons, sets, types }) {
 export async function getServerSideProps() {
   await dbConnect()
 
-  let result = await Types.find({})
-  const types = result.map((doc) => {
+  let result = await ProductTypes.find({})
+  const productTypes = result.map((doc) => {
+    const type = doc.toObject()
+    type._id = type._id.toString()
+    return type
+  })
+
+  result = await SetTypes.find({})
+  const setTypes = result.map((doc) => {
     const type = doc.toObject()
     type._id = type._id.toString()
     return type
   })
 
   result = await Sets.find({})
-  const sets = result.map((doc) => {
+  const set = result.map((doc) => {
     const set = doc.toObject()
     set._id = set._id.toString()
     return set
   })
 
-  /* find all the data in our database */
-  result = await Balloons.find({})
-  const balloons = result.map((doc) => {
-    const baloon = doc.toObject()
-    baloon._id = baloon._id.toString()
-    return baloon
+  result = await Products.find({})
+  const products = result.map((doc) => {
+    const product = doc.toObject()
+    product._id = product._id.toString()
+    return product
   })
 
-  return { props: { balloons: balloons, types: types, sets: sets } }
+  return { props: { products, productTypes, sets, setTypes } }
 }
