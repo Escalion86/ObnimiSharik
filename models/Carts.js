@@ -25,6 +25,17 @@ const CartsSchema = new mongoose.Schema({
     maxlength: [8, 'Стоимость не может превышать 999999,99 руб'],
   },
   delivery_adress: [DeliveryAdressesSchema],
+  delivery_date_from: {
+    type: Date,
+    default: Date.now,
+  },
+  delivery_date_to: {
+    type: Date,
+    default: Date.now,
+  },
+  deliver_id: {
+    type: String,
+  },
   created_at: {
     type: Date,
     default: Date.now,
