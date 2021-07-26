@@ -13,6 +13,36 @@ import {
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 
+const Form = ({
+  handleSubmit = () => {},
+  title = '',
+  forNew = false,
+  message = '',
+  errors = {},
+  children,
+}) => {
+  return (
+    <>
+      <div className="flex flex-col space-y-2">
+        <div className="text-lg font-semibold text-center">{title}</div>
+        {children}
+        <Button
+          onClick={handleSubmit}
+          name={forNew ? 'Создать' : 'Применить'}
+          small
+          inverse
+        />
+      </div>
+      <p>{message}</p>
+      <div>
+        {Object.keys(errors).map((err, index) => (
+          <li key={index}>{err}</li>
+        ))}
+      </div>
+    </>
+  )
+}
+
 const Input = ({
   label = '',
   type,
@@ -95,7 +125,6 @@ export const ProductForm = ({
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
-  // console.log(`types`, types)
 
   const [form, setForm] = useState({
     article: product.article,
@@ -142,7 +171,6 @@ export const ProductForm = ({
     }
   }
 
-  /* Makes sure baloon info is filled for baloon name, owner name, species, and image url*/
   const formValidate = () => {
     let err = {}
     if (!form.name) err.name = 'Name is required'
@@ -152,79 +180,67 @@ export const ProductForm = ({
   }
 
   return (
-    <>
-      <div className="flex flex-col space-y-2">
-        <div className="text-lg font-semibold text-center">
-          {forNew ? 'Создние товара' : 'Редактирование товара'}
-        </div>
-        <Input
-          key="name"
-          label="Название"
-          type="text"
-          maxLength="80"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          key="description"
-          label="Описание"
-          type="text"
-          maxLength="600"
-          name="description"
-          value={form.description}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          key="price"
-          label="Стоимость"
-          type="number"
-          name="price"
-          value={form.price / 100}
-          onChange={handleChange}
-        />
-        <Input
-          key="image_urls"
-          label="Ссылка на картинку"
-          type="url"
-          name="image_urls"
-          value={form.image_urls[0]}
-          onChange={handleChange}
-          required
-        />
-        <MultiselectCheckbox
-          title="Типы"
-          options={productTypes.map((type) => {
-            return {
-              label: type.name,
-              id: type._id,
-              checked: form.types_id.includes(type._id),
-            }
-          })}
-          onChange={(data) => {
-            setForm({
-              ...form,
-              types_id: data.map((type) => type.id),
-            })
-            // console.log('checked', data)
-          }}
-        />
-        <Button
-          onClick={handleSubmit}
-          name={forNew ? 'Создать' : 'Применить'}
-          small
-          inverse
-        />
-      </div>
-      <p>{message}</p>
-      <div>
-        {Object.keys(errors).map((err, index) => (
-          <li key={index}>{err}</li>
-        ))}
-      </div>
-    </>
+    <Form
+      handleSubmit={handleSubmit}
+      title={forNew ? 'Создние товара' : 'Редактирование товара'}
+      forNew={forNew}
+      message={message}
+      errors={errors}
+    >
+      <Input
+        key="name"
+        label="Название"
+        type="text"
+        maxLength="80"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
+      <Input
+        key="description"
+        label="Описание"
+        type="text"
+        maxLength="600"
+        name="description"
+        value={form.description}
+        onChange={handleChange}
+        required
+      />
+      <Input
+        key="price"
+        label="Стоимость"
+        type="number"
+        name="price"
+        value={form.price / 100}
+        onChange={handleChange}
+      />
+      <Input
+        key="image_urls"
+        label="Ссылка на картинку"
+        type="url"
+        name="image_urls"
+        value={form.image_urls[0]}
+        onChange={handleChange}
+        required
+      />
+      <MultiselectCheckbox
+        title="Типы"
+        options={productTypes.map((type) => {
+          return {
+            label: type.name,
+            id: type._id,
+            checked: form.types_id.includes(type._id),
+          }
+        })}
+        onChange={(data) => {
+          setForm({
+            ...form,
+            types_id: data.map((type) => type.id),
+          })
+        }}
+      />
+    </Form>
   )
 }
 
@@ -278,7 +294,6 @@ export const SetForm = ({
     }
   }
 
-  /* Makes sure baloon info is filled for baloon name, owner name, species, and image url*/
   const formValidate = () => {
     let err = {}
     if (!form.name) err.name = 'Name is required'
@@ -288,79 +303,68 @@ export const SetForm = ({
   }
 
   return (
-    <>
-      <div className="flex flex-col space-y-2">
-        <div className="text-lg font-semibold text-center">
-          {forNew ? 'Создние набора' : 'Редактирование набора'}
-        </div>
-        <Input
-          key="name"
-          label="Название"
-          type="text"
-          maxLength="80"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          key="description"
-          label="Описание"
-          type="text"
-          maxLength="600"
-          name="description"
-          value={form.description}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          key="price"
-          label="Стоимость"
-          type="number"
-          name="price"
-          value={form.price / 100}
-          onChange={handleChange}
-        />
-        <Input
-          key="image_urls"
-          label="Ссылка на картинку"
-          type="url"
-          name="image_urls"
-          value={form.image_urls[0]}
-          onChange={handleChange}
-          required
-        />
-        <MultiselectCheckbox
-          title="Типы"
-          options={setTypes.map((type) => {
-            return {
-              label: type.name,
-              id: type._id,
-              checked: form.types_id.includes(type._id),
-            }
-          })}
-          onChange={(data) => {
-            setForm({
-              ...form,
-              types_id: data.map((type) => type.id),
-            })
-            // console.log('checked', data)
-          }}
-        />
-        <Button
-          onClick={handleSubmit}
-          name={forNew ? 'Создать' : 'Применить'}
-          small
-          inverse
-        />
-      </div>
-      <p>{message}</p>
-      <div>
-        {Object.keys(errors).map((err, index) => (
-          <li key={index}>{err}</li>
-        ))}
-      </div>
-    </>
+    <Form
+      handleSubmit={handleSubmit}
+      title={forNew ? 'Создние набора' : 'Редактирование набора'}
+      forNew={forNew}
+      message={message}
+      errors={errors}
+    >
+      <Input
+        key="name"
+        label="Название"
+        type="text"
+        maxLength="80"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
+      <Input
+        key="description"
+        label="Описание"
+        type="text"
+        maxLength="600"
+        name="description"
+        value={form.description}
+        onChange={handleChange}
+        required
+      />
+      <Input
+        key="price"
+        label="Стоимость"
+        type="number"
+        name="price"
+        value={form.price / 100}
+        onChange={handleChange}
+      />
+      <Input
+        key="image_urls"
+        label="Ссылка на картинку"
+        type="url"
+        name="image_urls"
+        value={form.image_urls[0]}
+        onChange={handleChange}
+        required
+      />
+      <MultiselectCheckbox
+        title="Типы"
+        options={setTypes.map((type) => {
+          return {
+            label: type.name,
+            id: type._id,
+            checked: form.types_id.includes(type._id),
+          }
+        })}
+        onChange={(data) => {
+          setForm({
+            ...form,
+            types_id: data.map((type) => type.id),
+          })
+          // console.log('checked', data)
+        }}
+      />
+    </Form>
   )
 }
 
@@ -370,7 +374,6 @@ export const ProductTypeForm = ({
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
-  // console.log(`types`, types)
 
   const [form, setForm] = useState({
     name: producttype.name,
@@ -411,45 +414,31 @@ export const ProductTypeForm = ({
     }
   }
 
-  /* Makes sure baloon info is filled for baloon name, owner name, species, and image url*/
   const formValidate = () => {
     let err = {}
     if (!form.name) err.name = 'Name is required'
-    // if (!form.price) err.price = 'Price is required'
-    // if (!form.image_urls) err.image_url = 'Image URL is required'
     return err
   }
 
   return (
-    <>
-      <div className="flex flex-col space-y-2">
-        <div className="text-lg font-semibold text-center">
-          {forNew ? 'Создние типа' : 'Редактирование типа'}
-        </div>
-        <Input
-          key="name"
-          label="Название"
-          type="text"
-          maxLength="80"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <Button
-          onClick={handleSubmit}
-          name={forNew ? 'Создать' : 'Применить'}
-          small
-          inverse
-        />
-      </div>
-      <p>{message}</p>
-      <div>
-        {Object.keys(errors).map((err, index) => (
-          <li key={index}>{err}</li>
-        ))}
-      </div>
-    </>
+    <Form
+      handleSubmit={handleSubmit}
+      title={forNew ? 'Создние типа товара' : 'Редактирование типа товара'}
+      forNew={forNew}
+      message={message}
+      errors={errors}
+    >
+      <Input
+        key="name"
+        label="Название"
+        type="text"
+        maxLength="80"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
+    </Form>
   )
 }
 
@@ -459,7 +448,6 @@ export const SetTypeForm = ({
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
-  // console.log(`types`, types)
 
   const [form, setForm] = useState({
     name: settype.name,
@@ -500,44 +488,30 @@ export const SetTypeForm = ({
     }
   }
 
-  /* Makes sure baloon info is filled for baloon name, owner name, species, and image url*/
   const formValidate = () => {
     let err = {}
     if (!form.name) err.name = 'Name is required'
-    // if (!form.price) err.price = 'Price is required'
-    // if (!form.image_urls) err.image_url = 'Image URL is required'
     return err
   }
 
   return (
-    <>
-      <div className="flex flex-col space-y-2">
-        <div className="text-lg font-semibold text-center">
-          {forNew ? 'Создние типа' : 'Редактирование типа'}
-        </div>
-        <Input
-          key="name"
-          label="Название"
-          type="text"
-          maxLength="80"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <Button
-          onClick={handleSubmit}
-          name={forNew ? 'Создать' : 'Применить'}
-          small
-          inverse
-        />
-      </div>
-      <p>{message}</p>
-      <div>
-        {Object.keys(errors).map((err, index) => (
-          <li key={index}>{err}</li>
-        ))}
-      </div>
-    </>
+    <Form
+      handleSubmit={handleSubmit}
+      title={forNew ? 'Создние типа набора' : 'Редактирование типа набора'}
+      forNew={forNew}
+      message={message}
+      errors={errors}
+    >
+      <Input
+        key="name"
+        label="Название"
+        type="text"
+        maxLength="80"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
+    </Form>
   )
 }
