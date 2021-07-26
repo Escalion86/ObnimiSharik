@@ -74,11 +74,6 @@ export default function Home({ products, sets, types }) {
         }}
       >
         <div className="w-full h-20" />
-        <div className="w-full h-40 pt-20">
-          <Link href="/new">
-            <a>Add Baloon</a>
-          </Link>
-        </div>
         {/* <div className="absolute bottom-0 w-full bg-white h-80" /> */}
         <div className="z-10 w-full mt-40">
           <TitleBlock2 />
