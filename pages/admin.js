@@ -147,7 +147,7 @@ const pages = [
     group: null,
     name: 'Параметры',
     header: 'Параметры учетной записи',
-    pageContent: ProductsContent,
+    pageContent: null,
     pageButtons: [],
     backToPageId: null,
   }, // 3
@@ -231,7 +231,9 @@ export default function Admin() {
     page?.pageContent ? (
       page.pageContent(data)
     ) : (
-      <div>Страница в разработке</div>
+      <div className="flex items-center justify-center h-full text-xl">
+        Страница в разработке
+      </div>
     )
 
   return (
@@ -266,16 +268,16 @@ export default function Admin() {
                 menuCfg={menuCfg(pages, pagesGroups)}
                 user={session.user}
                 // setUser={setUserState}
-                onSignOut={() => {}}
+                onSignOut={signOut}
               >
-                <div className="relative flex flex-col flex-1 flex-grow-0 flex-shrink-0 ">
+                <div className="relative flex flex-col flex-1">
                   <Title
                     text={page.header}
                     buttons={page.pageButtons.map((button, index) =>
                       button({ data, setModal, key: 'titleButton' + index })
                     )}
                   />
-                  <div className="flex-1">
+                  <div className="flex-1 h-full">
                     <PageContent
                       data={data}
                       setModal={setModal}
