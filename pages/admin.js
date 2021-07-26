@@ -199,14 +199,6 @@ export default function Admin() {
     setData({ ...data, ...newData })
   }
 
-  // const { data = { balloons: [], types: [], sets: [] }, error } = useSWR(
-  //   `/api/admin`,
-  //   fetcher
-  // )
-  // console.log(`data`, data)
-  // const { balloons, types, sets } = data
-  // console.log(`session`, session)
-  // console.log(`loading`, loading)
   // const router = useRouter()
   const [page, setPage] = useState(pages[0])
 
