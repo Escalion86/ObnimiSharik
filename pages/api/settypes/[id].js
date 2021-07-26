@@ -1,5 +1,5 @@
 import dbConnect from '@utils/dbConnect'
-import SetTypes from '@models/v'
+import SetTypes from '@models/SetTypes'
 
 export default async function handler(req, res) {
   const {
