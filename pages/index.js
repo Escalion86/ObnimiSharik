@@ -27,9 +27,11 @@ import { catalogData, setsData } from '@utils/temp_db'
 import dbConnect from '@utils/dbConnect'
 import Products from '@models/Products'
 import ProductTypes from '@models/ProductTypes'
+import SetTypes from '@models/SetTypes'
 import Sets from '@models/Sets'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
+import prepareFetchProps from '@helpers/prepareFetchProps'
 
 // import csv from '../tilda.csv'
 
@@ -107,33 +109,10 @@ export default function Home({ products, sets, types }) {
 export async function getServerSideProps() {
   await dbConnect()
 
-  let result = await ProductTypes.find({})
-  const productTypes = result.map((doc) => {
-    const type = doc.toObject()
-    type._id = type._id.toString()
-    return type
-  })
-
-  result = await SetTypes.find({})
-  const setTypes = result.map((doc) => {
-    const type = doc.toObject()
-    type._id = type._id.toString()
-    return type
-  })
-
-  result = await Sets.find({})
-  const set = result.map((doc) => {
-    const set = doc.toObject()
-    set._id = set._id.toString()
-    return set
-  })
-
-  result = await Products.find({})
-  const products = result.map((doc) => {
-    const product = doc.toObject()
-    product._id = product._id.toString()
-    return product
-  })
+  const productTypes = prepareFetchProps(await ProductTypes.find({}))
+  const setTypes = prepareFetchProps(await SetTypes.find({}))
+  const sets = prepareFetchProps(await Sets.find({}))
+  const products = prepareFetchProps(await Products.find({}))
 
   return { props: { products, productTypes, sets, setTypes } }
 }
