@@ -54,3 +54,12 @@
 .menu-btn.open .menu-btn__burger:after {
   transform: rotate(-45deg) translate(35px, 35px)
 }
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
