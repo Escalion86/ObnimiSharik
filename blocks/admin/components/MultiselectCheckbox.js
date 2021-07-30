@@ -17,18 +17,20 @@ const MultiselectCheckbox = ({ title = '', options, onChange }) => {
   return (
     <div>
       <div className="">{title}</div>
-      <div className="overflow-y-scroll max-h-40">
-        {data.map((item, index) => (
-          <label key={item.label} className="flex items-center">
-            <input
-              readOnly
-              type="checkbox"
-              checked={item.checked || false}
-              onClick={() => toggle(index)}
-            />
-            <div className="ml-2">{item.label}</div>
-          </label>
-        ))}
+      <div className="overflow-hidden bg-gray-200 border border-gray-700 rounded-lg max-h-40">
+        <div className="px-2 py-1 overflow-y-scroll max-h-40">
+          {data.map((item, index) => (
+            <label key={item.label} className="flex items-center">
+              <input
+                readOnly
+                type="checkbox"
+                checked={item.checked || false}
+                onClick={() => toggle(index)}
+              />
+              <div className="ml-2">{item.label}</div>
+            </label>
+          ))}
+        </div>
       </div>
     </div>
   )
