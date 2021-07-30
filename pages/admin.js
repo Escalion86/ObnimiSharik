@@ -99,7 +99,7 @@ const BtnImport = ({ setModal, key }) => (
 const pages = [
   {
     id: 0,
-    group: 0,
+    group: null,
     name: 'Обзор',
     header: 'Обзор',
     pageContent: null,
