@@ -96,15 +96,22 @@ export const ProductCard = ({
   </div>
 )
 
-export const TypeCard = ({ type }) => (
+export const TypeCard = ({ onClick = () => {}, type, count = null }) => (
   <div className="flex items-center p-2 mx-1 my-2 bg-white shadow-md">
-    <div className="flex-1 ml-3">
+    <div className="flex-1">
       <div className="flex justify-between space-x-2">
-        <div className="w-3/12 font-semibold cursor-pointer text-primary hover:text-toxic">
+        <div
+          className="w-3/12 font-semibold cursor-pointer text-primary hover:text-toxic"
+          onClick={() => onClick(type)}
+        >
           {type.name}
         </div>
         {/* <div className="flex-1 italic">{type.description}</div> */}
       </div>
+    </div>
+    <div className="w-1/12 text-right">
+      <div className="font-bold">{count !== null ? count : '0'} шт.</div>
+      {/* <div className="">{products.price} ₽</div> */}
     </div>
   </div>
 )

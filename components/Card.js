@@ -14,63 +14,53 @@ const Button = ({ name, href, active }) => (
   </Link>
 )
 
-const CardStandart = ({ src, title = '', desc, href, active = false }) => (
+const CardStandart = ({ card }) => (
   <div className="flex items-center justify-between space-x-1 h-36 max-h-36 w-80">
     <img
-      src={src}
+      src={card.src}
       alt="catalog_item"
       className="object-contain -mt-4 -mb-5 h-44 w-36"
     />
     <div className="flex flex-col justify-between h-full">
       <div>
-        <h4 className="my-1 text-xl leading-tight font-futuraDemi">{title}</h4>
-        {desc.map((descItem) => (
-          <p key={uuid()} className="text-base font-futura">
-            {descItem}
-          </p>
-        ))}
+        <h4 className="my-1 text-xl leading-tight font-futuraDemi">
+          {card.title}
+        </h4>
+        <p className="text-base font-futura">{card.description}</p>
       </div>
-      <Button name="Каталог" href={href} active={active} />
+      <Button name="Каталог" href={card.href} active={card.active} />
     </div>
   </div>
 )
 
-const CardSmall = ({ src, title = '', desc, href, active = false }) => (
+const CardSmall = ({ card }) => (
   <div
     className="flex flex-col justify-between w-34 h-36 max-h-36"
     style={{ width: '8.25rem' }}
   >
     <div className="flex">
       <div className="flex flex-col h-full mb-6">
-        <h4 className="my-1 text-xl font-futuraDemi">{title}</h4>
-        {desc.map((descItem) => (
-          <p key={uuid()} className="text-base font-futura">
-            {descItem}
-          </p>
-        ))}
+        <h4 className="my-1 text-xl font-futuraDemi">{card.title}</h4>
+        <p className="text-base font-futura">{card.description}</p>
       </div>
       <img
-        src={src}
+        src={card.src}
         alt="catalog_item"
         className="object-contain h-24 transform rotate-6"
       />
     </div>
-    <Button name="Каталог" href={href} active={active} />
+    <Button name="Каталог" href={card.href} active={card.active} />
   </div>
 )
 
-const CardBig = ({ src, title = '', desc, href, active = false }) => (
+const CardBig = ({ card }) => (
   <div className="relative w-80 max-h-88 h-88">
     <div className="absolute z-10 flex flex-col w-56 h-full gap-4 top-2 left-2">
       <div>
-        <h4 className="text-xl font-futuraDemi">{title}</h4>
-        {desc.map((descItem) => (
-          <p key={uuid()} className="text-base font-futura">
-            {descItem}
-          </p>
-        ))}
+        <h4 className="text-xl font-futuraDemi">{card.title}</h4>
+        <p className="text-base font-futura">{card.description}</p>
       </div>
-      <Button name="Каталог" href={href} active={active} />
+      <Button name="Каталог" href={card.href} active={card.active} />
     </div>
     <div
       className="absolute w-60 -bottom-2 -right-2 h-88"
@@ -81,42 +71,22 @@ const CardBig = ({ src, title = '', desc, href, active = false }) => (
         backgroundSize: 'contain',
       }}
     />
-    {/* <img
-      src={src}
-      alt="catalog_item"
-      className="absolute object-contain w-60 bottom-2 right-2 h-80"
-      align="right"
-    /> */}
   </div>
 )
 
 const Card = ({ card }) => {
-  const {
-    src = '',
-    title = '',
-    desc = '',
-    href = null,
-    size = 'normal',
-    active = false,
-  } = card
+  const { size = 'normal', active = false } = card
   const CardComponent =
     size === 'small' ? CardSmall : size === 'big' ? CardBig : CardStandart
 
   return (
-    // <div className="flex justify-center mb-4">
     <div
       className={
         'px-4 py-5 mb-6 overflow-hidden text-black shadow-light rounded-xl ' +
         (active ? 'bg-red-100' : 'bg-white')
       }
     >
-      <CardComponent
-        src={src}
-        title={title}
-        desc={desc}
-        href={href}
-        active={active}
-      />
+      <CardComponent card={card} />
     </div>
   )
 }
