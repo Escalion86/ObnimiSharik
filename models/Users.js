@@ -11,7 +11,7 @@ const UsersSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Введите почту'],
   },
-  image_url: {
+  image: {
     type: String,
     default: '',
   },
@@ -23,11 +23,11 @@ const UsersSchema = new mongoose.Schema({
     type: String,
     default: 'client',
   },
-  created_at: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
-  updated_at: {
+  updatedAt: {
     type: Date,
     default: Date.now,
   },

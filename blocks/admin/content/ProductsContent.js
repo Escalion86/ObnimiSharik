@@ -13,7 +13,7 @@ const ProductsContent = ({
   return (
     <>
       {products.map((product) => {
-        const types = product.types_id.map((type_id) =>
+        const types = product.typesId.map((type_id) =>
           data.productTypes.find((typeCheck) => typeCheck._id === type_id)
         )
         if (types[0] === undefined) types.length = 0

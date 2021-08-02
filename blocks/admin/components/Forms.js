@@ -118,7 +118,7 @@ const PriceInput = ({ value, onChange, required = false }) => {
 }
 
 const InputImages = ({
-  image_urls = [],
+  images = [],
   onChange = () => {},
   onAddImage = () => {},
 }) => {
@@ -135,17 +135,17 @@ const InputImages = ({
     <div className="flex flex-col">
       <label>Картинки</label>
       <div className="flex flex-wrap w-full gap-2 px-1.5 py-1 bg-gray-200 border border-gray-700 rounded-lg">
-        {image_urls.map((image_url, index) => (
+        {images.map((image, index) => (
           <div key={index} className="relative">
             <ImageZoom
               image={{
-                src: image_url,
+                src: image,
                 alt: 'special',
                 className: 'w-20 h-20',
                 // style: { width: '50em' }
               }}
               zoomImage={{
-                src: image_url,
+                src: image,
                 alt: 'product_image',
               }}
             />
@@ -154,13 +154,13 @@ const InputImages = ({
               icon={faTrash}
               size="1x"
               onClick={() => {
-                // image_urls.splice(index, 1)
-                onChange(image_urls.filter((image_url, i) => i !== index))
+                // images.splice(index, 1)
+                onChange(images.filter((image, i) => i !== index))
               }}
             />
           </div>
         ))}
-        {image_urls.length < 4 ? (
+        {images.length < 4 ? (
           <div
             onClick={addImageClick}
             className="flex items-center justify-center w-20 h-20 bg-white border-2 border-gray-500 cursor-pointer rounded-xl"
@@ -171,8 +171,8 @@ const InputImages = ({
                 icon={faPlus}
                 size="2x"
                 // onClick={() => {
-                //   image_urls.splice(index, 1)
-                //   onChange(image_urls)
+                //   images.splice(index, 1)
+                //   onChange(images)
                 // }}
               />
               <input
@@ -296,7 +296,7 @@ const sendImage = async (image, form, setForm) => {
     formData.append('file', image)
     formData.append('upload_preset', 'obnimisharik')
 
-    const image_url = await fetch(
+    const image = await fetch(
       'https://api.cloudinary.com/v1_1/escalion-ru/image/upload',
       {
         method: 'POST',
@@ -312,7 +312,7 @@ const sendImage = async (image, form, setForm) => {
       .catch((err) => console.error(err))
     setForm({
       ...form,
-      image_urls: [...form.image_urls, image_url],
+      images: [...form.images, image],
     })
   }
 }
@@ -330,13 +330,13 @@ export const ProductForm = ({
     name: product.name,
     description: product.description,
     price: product.price,
-    image_urls: product.image_urls,
-    types_id: product.types_id,
+    images: product.images,
+    typesId: product.typesId,
     archive: product.archive,
   })
 
   const afterConfirmUpd = (data) => {
-    deleteImages(compareArrays(product.image_urls, form.image_urls))
+    deleteImages(compareArrays(product.images, form.images))
     afterConfirm(data)
   }
 
@@ -352,7 +352,7 @@ export const ProductForm = ({
     const value =
       name === 'price'
         ? target.value * 100
-        : // : name === 'image_urls'
+        : // : name === 'images'
           // ? [target.value]
           target.value
     setForm({
@@ -363,7 +363,7 @@ export const ProductForm = ({
   }
 
   // const sendImages = async (images) => {
-  //   const image_urls = await Promise.all(
+  //   const images = await Promise.all(
   //     images.map(async (file) => {
   //       const formData = new FormData()
   //       formData.append('file', file)
@@ -387,7 +387,7 @@ export const ProductForm = ({
   //     })
   //   )
 
-  //   return image_urls
+  //   return images
   // }
 
   const sendForm = async () => {
@@ -415,7 +415,7 @@ export const ProductForm = ({
     let err = {}
     if (!form.name) err.name = 'Name is required'
     if (!form.price) err.price = 'Price is required'
-    // if (!form.image_urls) err.image_url = 'Image URL is required'
+    // if (!form.images) err.image = 'Image URL is required'
     return err
   }
 
@@ -450,11 +450,11 @@ export const ProductForm = ({
       />
       <PriceInput value={form.price / 100} onChange={handleChange} />
       {/* <Input
-        key="image_urls"
+        key="images"
         label="Ссылка на картинку"
         type="url"
-        name="image_urls"
-        value={form.image_urls[0]}
+        name="images"
+        value={form.images[0]}
         onChange={handleChange}
         required
       /> */}
@@ -464,22 +464,22 @@ export const ProductForm = ({
           return {
             label: type.name,
             id: type._id,
-            checked: form.types_id.includes(type._id),
+            checked: form.typesId.includes(type._id),
           }
         })}
         onChange={(data) => {
           setForm({
             ...form,
-            types_id: data.map((type) => type.id),
+            typesId: data.map((type) => type.id),
           })
         }}
       />
       <InputImages
-        image_urls={form.image_urls}
-        onChange={(image_urls) =>
+        images={form.images}
+        onChange={(images) =>
           setForm({
             ...form,
-            image_urls,
+            images,
           })
         }
         onAddImage={(image) => sendImage(image, form, setForm)}
@@ -511,14 +511,14 @@ export const SetForm = ({
     name: set.name,
     description: set.description,
     price: set.price,
-    image_urls: set.image_urls,
-    types_id: set.types_id,
-    products_id: set.products_id,
+    images: set.images,
+    typesId: set.typesId,
+    productsId: set.productsId,
     archive: set.archive,
   })
 
   const afterConfirmUpd = (data) => {
-    deleteImages(compareArrays(set.image_urls, form.image_urls))
+    deleteImages(compareArrays(set.images, form.images))
     afterConfirm(data)
   }
 
@@ -529,7 +529,7 @@ export const SetForm = ({
     const value =
       target.name === 'price'
         ? target.value * 100
-        : target.name === 'image_urls'
+        : target.name === 'images'
         ? [target.value]
         : target.value
     const name = target.name
@@ -557,7 +557,7 @@ export const SetForm = ({
     let err = {}
     if (!form.name) err.name = 'Name is required'
     if (!form.price) err.price = 'Price is required'
-    // if (!form.image_urls) err.image_url = 'Image URL is required'
+    // if (!form.images) err.image = 'Image URL is required'
     return err
   }
 
@@ -604,23 +604,23 @@ export const SetForm = ({
           return {
             label: type.name,
             id: type._id,
-            checked: form.types_id.includes(type._id),
+            checked: form.typesId.includes(type._id),
           }
         })}
         onChange={(data) => {
           setForm({
             ...form,
-            types_id: data.map((type) => type.id),
+            typesId: data.map((type) => type.id),
           })
           // console.log('checked', data)
         }}
       />
       <InputImages
-        image_urls={form.image_urls}
-        onChange={(image_urls) =>
+        images={form.images}
+        onChange={(images) =>
           setForm({
             ...form,
-            image_urls,
+            images,
           })
         }
         onAddImage={(image) => sendImage(image, form, setForm)}
@@ -647,7 +647,7 @@ export const ProductTypeForm = ({
     const value =
       target.name === 'price'
         ? target.value * 100
-        : target.name === 'image_urls'
+        : target.name === 'images'
         ? [target.value]
         : target.value
     const name = target.name
@@ -721,7 +721,7 @@ export const SetTypeForm = ({
     const value =
       target.name === 'price'
         ? target.value * 100
-        : target.name === 'image_urls'
+        : target.name === 'images'
         ? [target.value]
         : target.value
     const name = target.name

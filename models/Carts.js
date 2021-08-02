@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import DeliveryAdressesSchema from './DeliveryAdresses'
 
 const CartsSchema = new mongoose.Schema({
-  user_id: {
+  userId: {
     type: String,
     required: [true, 'Необходимо указать id пользователя'],
   },
@@ -19,28 +19,28 @@ const CartsSchema = new mongoose.Schema({
     default: 0,
     maxlength: [8, 'Скидка не может превышать 999999,99 руб'],
   },
-  full_price: {
+  fullPrice: {
     type: Number,
     required: [true, 'Пожалуйста укажите стоимость за штуку'],
     maxlength: [8, 'Стоимость не может превышать 999999,99 руб'],
   },
-  delivery_adress: [DeliveryAdressesSchema],
-  delivery_date_from: {
+  deliverySdress: [DeliveryAdressesSchema],
+  deliveryDateFrom: {
     type: Date,
     default: Date.now,
   },
-  delivery_date_to: {
+  deliveryDateTo: {
     type: Date,
     default: Date.now,
   },
-  deliver_id: {
+  deliverId: {
     type: String,
   },
-  created_at: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
-  updated_at: {
+  updatedAt: {
     type: Date,
     default: Date.now,
   },

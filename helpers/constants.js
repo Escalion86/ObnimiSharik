@@ -2,7 +2,7 @@ export const DEFAULT_USER = {
   name: 'Гость',
   email: '',
   phone: 0,
-  image_url: null,
+  image: null,
   role: 'client',
 }
 
@@ -11,8 +11,8 @@ export const DEFAULT_PRODUCT = {
   name: '',
   description: '',
   price: 0,
-  image_urls: [],
-  types_id: [],
+  images: [],
+  typesId: [],
   archive: false,
 }
 
@@ -21,9 +21,9 @@ export const DEFAULT_SET = {
   name: '',
   description: '',
   price: 0,
-  image_urls: [],
-  types_id: [],
-  products_id: [],
+  images: [],
+  typesId: [],
+  productsId: [],
   archive: false,
 }
 

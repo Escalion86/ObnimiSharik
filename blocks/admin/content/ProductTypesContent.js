@@ -14,7 +14,7 @@ const ProductTypesContent = ({
     <div>
       {productTypes.map((producttype) => {
         const count = products.filter((product) =>
-          product.types_id.includes(producttype._id)
+          product.typesId.includes(producttype._id)
         ).length
         return (
           <TypeCard

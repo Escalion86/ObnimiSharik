@@ -13,7 +13,7 @@ const SetTypesContent = ({
     <div>
       {setTypes.map((settype) => {
         const count = sets.filter((set) =>
-          set.types_id.includes(settype._id)
+          set.typesId.includes(settype._id)
         ).length
         return (
           <TypeCard

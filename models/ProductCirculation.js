@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const ProductCirculationSchema = new mongoose.Schema({
-  product_id: {
+  productId: {
     type: String,
     required: [true, 'Необходимо указать id продукта'],
   },
@@ -16,15 +16,15 @@ const ProductCirculationSchema = new mongoose.Schema({
     maxlength: [6, 'Количество не может превышать 999999 шт'],
     default: 1,
   },
-  cart_id: {
+  cartId: {
     type: String,
     required: [true, 'Необходимо указать id корзины'],
   },
-  created_at: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
-  updated_at: {
+  updatedAt: {
     type: Date,
     default: Date.now,
   },

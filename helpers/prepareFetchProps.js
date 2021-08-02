@@ -1,4 +1,4 @@
-const keys = ['_id', 'created_at', 'updated_at']
+const keys = ['_id', 'createdAt', 'updatedAt']
 
 const prepareFetchProps = (fetchResult) => {
   const props = fetchResult.map((doc) => {

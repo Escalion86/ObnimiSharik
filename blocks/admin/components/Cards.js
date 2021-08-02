@@ -13,16 +13,16 @@ export const SetCard = ({
   onTypeClick = () => {},
 }) => (
   <div className="flex items-center p-2 mx-1 my-2 bg-white rounded-lg shadow-medium">
-    {set.image_urls[0] ? (
+    {set.images[0] ? (
       <ImageZoom
         image={{
-          src: set.image_urls[0],
+          src: set.images[0],
           alt: 'set',
           className: 'w-14 h-14',
           // style: { width: '50em' }
         }}
         zoomImage={{
-          src: set.image_urls[0],
+          src: set.images[0],
           alt: 'set',
         }}
       />
@@ -56,21 +56,21 @@ export const ProductCard = ({
   <div className="flex items-center p-2 mx-1 my-2 bg-white rounded-lg shadow-medium">
     {/* <img
       className="w-14 h-14"
-      src={product.image_urls[0]}
+      src={product.images[0]}
       alt="product"
       width={56}
       height={56}
     /> */}
-    {product.image_urls[0] ? (
+    {product.images[0] ? (
       <ImageZoom
         image={{
-          src: product.image_urls[0],
+          src: product.images[0],
           alt: 'product',
           className: 'w-14 h-14',
           // style: { width: '50em' }
         }}
         zoomImage={{
-          src: product.image_urls[0],
+          src: product.images[0],
           alt: 'product',
         }}
       />

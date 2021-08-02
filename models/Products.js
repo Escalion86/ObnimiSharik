@@ -24,11 +24,11 @@ const ProductsSchema = new mongoose.Schema({
     maxlength: [8, 'Стоимость не может превышать 999999,99 руб'],
     default: 0,
   },
-  image_urls: {
+  images: {
     type: Array,
     default: [],
   },
-  types_id: {
+  typesId: {
     type: Array,
     default: [],
   },
@@ -36,11 +36,11 @@ const ProductsSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  created_at: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
-  updated_at: {
+  updatedAt: {
     type: Date,
     default: Date.now,
   },

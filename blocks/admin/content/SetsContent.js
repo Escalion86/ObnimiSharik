@@ -16,7 +16,7 @@ const SetsContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
     // </div>
     <>
       {sets.map((set) => {
-        const types = set.types_id.map((type_id) =>
+        const types = set.typesId.map((type_id) =>
           data.setTypes.find((typeCheck) => typeCheck._id === type_id)
         )
         if (types[0] === undefined) types.length = 0

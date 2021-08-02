@@ -65,8 +65,8 @@ function changeHandler(evt, onClose, afterConfirm) {
           .replace(/(<([^>]+)>)/gi, ``)
           .replace(/&nbsp;/gi, ` `),
         price: product['Price'] * 100,
-        image_urls: product['Photo'].split(' '),
-        types_id: product['Category'].split(';'),
+        images: product['Photo'].split(' '),
+        typesId: product['Category'].split(';'),
       }
     }
 
@@ -90,11 +90,11 @@ function changeHandler(evt, onClose, afterConfirm) {
     console.log(`parsedSets`, parsedSets)
     const productTypes = []
     parsedProducts.forEach((product) =>
-      concatArrays(productTypes, product.types_id)
+      concatArrays(productTypes, product.typesId)
     )
 
     const setTypes = []
-    parsedSets.forEach((set) => concatArrays(setTypes, set.types_id))
+    parsedSets.forEach((set) => concatArrays(setTypes, set.typesId))
 
     console.log(`productTypes`, productTypes)
     console.log(`setTypes`, setTypes)
@@ -198,7 +198,7 @@ const sendImport = async (
     const newProducts = products.map((product) => {
       return {
         ...product,
-        types_id: product.types_id.map(
+        typesId: product.typesId.map(
           (type) =>
             newProductTypes.find((productType) => productType.name === type)._id
         ),
@@ -210,7 +210,7 @@ const sendImport = async (
     const newSets = sets.map((set) => {
       return {
         ...set,
-        types_id: set.types_id.map(
+        typesId: set.typesId.map(
           (type) => newSetTypes.find((setType) => setType.name === type)._id
         ),
       }
