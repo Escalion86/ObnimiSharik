@@ -12,7 +12,7 @@ export const SetCard = ({
   onClick = () => {},
   onTypeClick = () => {},
 }) => (
-  <div className="flex items-center p-2 mx-1 my-2 bg-white rounded-lg shadow-medium">
+  <Card>
     {set.images[0] ? (
       <ImageZoom
         image={{
@@ -45,7 +45,7 @@ export const SetCard = ({
       <div className="font-bold">{set.price / 100} ₽</div>
       {/* <div className="">{products.price} ₽</div> */}
     </div>
-  </div>
+  </Card>
 )
 
 export const ProductCard = ({
@@ -53,7 +53,7 @@ export const ProductCard = ({
   onClick = () => {},
   onTypeClick = () => {},
 }) => (
-  <div className="flex items-center p-2 mx-1 my-2 bg-white rounded-lg shadow-medium">
+  <Card>
     {/* <img
       className="w-14 h-14"
       src={product.images[0]}
@@ -93,11 +93,11 @@ export const ProductCard = ({
       <div className="font-bold">{product.price / 100} ₽</div>
       {/* <div className="">{products.price} ₽</div> */}
     </div>
-  </div>
+  </Card>
 )
 
 export const TypeCard = ({ onClick = () => {}, type, count = null }) => (
-  <div className="flex items-center p-2 mx-1 my-2 bg-white shadow-md">
+  <Card>
     <div className="flex-1">
       <div className="flex justify-between space-x-2">
         <div
@@ -113,7 +113,59 @@ export const TypeCard = ({ onClick = () => {}, type, count = null }) => (
       <div className="font-bold">{count !== null ? count : '0'} шт.</div>
       {/* <div className="">{products.price} ₽</div> */}
     </div>
-  </div>
+  </Card>
 )
+
+export const InvitationCard = ({ invitation }) => {
+  let role
+  let status
+  switch (invitation.role) {
+    case 'admin':
+      role = 'Администратор'
+      break
+    case 'aerodesigner':
+      role = 'Аэродизайнер'
+      break
+    case 'deliver':
+      role = 'Курьер'
+      break
+    default:
+      role = 'Клиент'
+      break
+  }
+  switch (invitation.status) {
+    case 'created':
+      status = 'Создано'
+      break
+    // case 'sended':
+    //   status = 'Отправлено'
+    //   break
+    case 'confirmed':
+      status = 'Принято'
+      break
+    default:
+      status = '?'
+      break
+  }
+
+  return (
+    <Card>
+      <div className="flex-1">
+        <div className="flex justify-between space-x-2">
+          <div
+            className="w-3/12 font-semibold"
+            // onClick={() => onClick(invitation)}
+          >
+            {invitation.email}
+          </div>
+          <div className="flex-1 italic">{role}</div>
+        </div>
+      </div>
+      <div className="w-1/12 text-right">
+        <div className="font-bold">{status}</div>
+      </div>
+    </Card>
+  )
+}
 
 export default Card

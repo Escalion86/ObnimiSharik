@@ -14,6 +14,7 @@ import {
   DEFAULT_SET,
   DEFAULT_PRODUCT_TYPE,
   DEFAULT_SET_TYPE,
+  DEFAULT_INVITATION,
 } from '@helpers/constants'
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
@@ -22,22 +23,17 @@ import { resolveMotionValue } from 'framer-motion'
 const Form = ({
   handleSubmit = () => {},
   title = '',
-  forNew = false,
   message = '',
   errors = {},
   children,
+  buttonName = 'Создать',
 }) => {
   return (
     <>
       <div className="flex flex-col space-y-2">
         <div className="text-lg font-semibold text-center">{title}</div>
         {children}
-        <Button
-          onClick={handleSubmit}
-          name={forNew ? 'Создать' : 'Применить'}
-          small
-          inverse
-        />
+        <Button onClick={handleSubmit} name={buttonName} small inverse />
       </div>
       <p>{message}</p>
       <div>
@@ -423,7 +419,7 @@ export const ProductForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={forNew ? 'Создние товара' : 'Редактирование товара'}
-      forNew={forNew}
+      buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
     >
@@ -565,7 +561,7 @@ export const SetForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={forNew ? 'Создние набора' : 'Редактирование набора'}
-      forNew={forNew}
+      buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
     >
@@ -685,7 +681,7 @@ export const ProductTypeForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={forNew ? 'Создние типа товара' : 'Редактирование типа товара'}
-      forNew={forNew}
+      buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
     >
@@ -759,7 +755,7 @@ export const SetTypeForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={forNew ? 'Создние типа набора' : 'Редактирование типа набора'}
-      forNew={forNew}
+      buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
     >
@@ -773,6 +769,88 @@ export const SetTypeForm = ({
         onChange={handleChange}
         required
       />
+    </Form>
+  )
+}
+
+export const InvitationForm = ({
+  invitation = DEFAULT_INVITATION,
+  afterConfirm = () => {},
+}) => {
+  const [errors, setErrors] = useState({})
+  const [message, setMessage] = useState('')
+
+  const [form, setForm] = useState({
+    email: invitation.email,
+    status: invitation.status,
+    role: invitation.role,
+  })
+  console.log(`form`, form)
+
+  const handleChange = (e) => {
+    const target = e.target
+    const value =
+      target.name === 'price'
+        ? target.value * 100
+        : target.name === 'images'
+        ? [target.value]
+        : target.value
+    const name = target.name
+
+    setForm({
+      ...form,
+      [name]: value,
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const errs = formValidate()
+    if (Object.keys(errs).length === 0) {
+      postData('/api/users/invitations', form, afterConfirm, setMessage)
+    } else {
+      setErrors({ errs })
+    }
+  }
+
+  const formValidate = () => {
+    let err = {}
+    if (!form.email) err.email = 'Email is required'
+    if (!form.role) err.role = 'Role is required'
+    return err
+  }
+
+  return (
+    <Form
+      handleSubmit={handleSubmit}
+      title="Создние приглашения"
+      buttonName="Создать и отправить"
+      message={message}
+      errors={errors}
+    >
+      <Input
+        key="email"
+        label="EMail сотрудника"
+        type="text"
+        maxLength="80"
+        name="email"
+        value={form.email}
+        onChange={handleChange}
+        required
+      />
+      <div className="flex flex-col">
+        <label htmlFor="role">Должность</label>
+        <select
+          name="role"
+          className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
+          onChange={handleChange}
+        >
+          <option>Выберите должность</option>
+          <option value="admin">Администратор</option>
+          <option value="aerodesigner">Аэродизайнер</option>
+          <option value="deliver">Курьер</option>
+        </select>
+      </div>
     </Form>
   )
 }

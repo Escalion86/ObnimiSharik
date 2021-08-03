@@ -34,3 +34,9 @@ export const DEFAULT_PRODUCT_TYPE = {
 export const DEFAULT_SET_TYPE = {
   name: '',
 }
+
+export const DEFAULT_INVITATION = {
+  email: '',
+  role: '',
+  status: 'created',
+}

@@ -26,6 +26,8 @@ import SetTypeModal from '@adminblocks/modals/SetTypeModal'
 import { fetchingAll } from '@helpers/fetchers'
 
 import TildaImportModal from '@adminblocks/modals/TildaImportModal'
+import UsersInvitationsContent from '@adminblocks/content/UsersInvitationsContent'
+import InvitationModal from '@adminblocks/modals/InvitationModal'
 
 // import dbConnect from '@utils/dbConnect'
 // import Balloons from '@models/Balloons'
@@ -96,6 +98,17 @@ const BtnImport = ({ setModal, key }) => (
   />
 )
 
+const BtnAddInvitation = ({ data, setModal, key }) => (
+  <IconButton
+    key={key}
+    onClick={() =>
+      setModal(() => <InvitationModal onClose={() => setModal(null)} />)
+    }
+    inverse
+    icon={faPlus}
+  />
+)
+
 const pages = [
   {
     id: 0,
@@ -145,10 +158,28 @@ const pages = [
   {
     id: 5,
     group: null,
-    name: 'Параметры',
+    name: 'Параметры учетной записи',
     header: 'Параметры учетной записи',
     pageContent: null,
     pageButtons: [],
+    backToPageId: null,
+  }, // 3
+  {
+    id: 6,
+    group: 3,
+    name: 'Сотрудники',
+    header: 'Сотрудники',
+    pageContent: null,
+    pageButtons: [],
+    backToPageId: null,
+  }, // 3
+  {
+    id: 7,
+    group: 3,
+    name: 'Приглашения',
+    header: 'Приглашения',
+    pageContent: UsersInvitationsContent,
+    pageButtons: [BtnAddInvitation],
     backToPageId: null,
   }, // 3
   // {
@@ -165,6 +196,7 @@ const pagesGroups = [
   { id: 0, name: '' },
   { id: 1, name: 'Продукция' },
   { id: 2, name: 'Склад' },
+  { id: 3, name: 'Пользователи' },
 ]
 
 const menuCfg = (pages, pagesGroups) => {
