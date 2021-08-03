@@ -13,6 +13,7 @@ import ProductsContent from '@adminblocks/content/ProductsContent'
 import ProductTypesContent from '@adminblocks/content/ProductTypesContent'
 import SetTypesContent from '@adminblocks/content/SetTypesContent'
 import SetsContent from '@adminblocks/content/SetsContent'
+import UsersContent from '@adminblocks/content/UsersContent'
 
 import IconButton from '@components/IconButton'
 
@@ -169,7 +170,7 @@ const pages = [
     group: 3,
     name: 'Сотрудники',
     header: 'Сотрудники',
-    pageContent: null,
+    pageContent: UsersContent,
     pageButtons: [],
     backToPageId: null,
   }, // 3

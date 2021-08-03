@@ -51,3 +51,11 @@ export async function fetchingUsersInvitations(updateData = () => {}) {
   updateData({ usersInvitations: resp })
   return resp
 }
+
+export async function fetchingUsers(updateData = () => {}) {
+  const resp = await fetch('/api/users')
+    .then((res) => res.json())
+    .then((json) => json.data)
+  updateData({ users: resp })
+  return resp
+}

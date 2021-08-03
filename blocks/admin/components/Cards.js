@@ -151,9 +151,9 @@ export const InvitationCard = ({ invitation }) => {
   return (
     <Card>
       <div className="flex-1">
-        <div className="flex justify-between space-x-2">
+        <div className="flex justify-between space-x-4">
           <div
-            className="w-3/12 font-semibold"
+            className="font-semibold"
             // onClick={() => onClick(invitation)}
           >
             {invitation.email}
@@ -161,8 +161,45 @@ export const InvitationCard = ({ invitation }) => {
           <div className="flex-1 italic">{role}</div>
         </div>
       </div>
-      <div className="w-1/12 text-right">
+      <div className="text-right">
         <div className="font-bold">{status}</div>
+      </div>
+    </Card>
+  )
+}
+
+export const UserCard = ({ user }) => {
+  let role
+  switch (user.role) {
+    case 'admin':
+      role = 'Администратор'
+      break
+    case 'aerodesigner':
+      role = 'Аэродизайнер'
+      break
+    case 'deliver':
+      role = 'Курьер'
+      break
+    default:
+      role = 'Клиент'
+      break
+  }
+
+  return (
+    <Card>
+      <div className="flex-1">
+        <div className="flex justify-between space-x-4">
+          <div
+            className="font-semibold"
+            // onClick={() => onClick(invitation)}
+          >
+            {user.name}
+          </div>
+          <div className="flex-1 italic">{user.email}</div>
+        </div>
+      </div>
+      <div className="text-right">
+        <div className="font-bold">{role}</div>
       </div>
     </Card>
   )
