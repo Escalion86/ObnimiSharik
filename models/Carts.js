@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import DeliveryAdressesSchema from './DeliveryAdresses'
+import DeliveryAddressesSchema from './DeliveryAddresses'
 
 const CartsSchema = new mongoose.Schema({
   userId: {
@@ -24,7 +24,7 @@ const CartsSchema = new mongoose.Schema({
     required: [true, 'Пожалуйста укажите стоимость за штуку'],
     maxlength: [8, 'Стоимость не может превышать 999999,99 руб'],
   },
-  deliverySdress: [DeliveryAdressesSchema],
+  deliveryAddress: [DeliveryAddressesSchema],
   deliveryDateFrom: {
     type: Date,
     default: Date.now,

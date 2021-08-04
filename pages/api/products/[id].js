@@ -24,7 +24,9 @@ export default async function handler(req, res) {
 
     case 'PUT' /* Edit a model by its ID */:
       try {
-        const product = await Products.findByIdAndUpdate(id, req.body, {
+        const body = { ...req.body, updatedAt: Date.now() }
+        console.log(`body`, body)
+        const product = await Products.findByIdAndUpdate(id, body, {
           new: true,
           runValidators: true,
         })

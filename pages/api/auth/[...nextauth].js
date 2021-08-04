@@ -26,35 +26,27 @@ export default NextAuth({
       })
       session.user.role = result[0].role
       session.user.phone = result[0].phone
-      console.log(`result`, result)
+
       if (result && result[0].role === 'client') {
-        // } else {
         const invitation = await UsersInvitations.find({
           email: user.email,
           status: 'created',
         })
-        console.log(`invitation`, invitation)
+
         if (invitation && invitation.length === 1) {
           await Users.findOneAndUpdate(
             { email: user.email },
-            { role: invitation[0].role }
+            { role: invitation[0].role, updatedAt: Date.now() }
           )
           await UsersInvitations.findOneAndUpdate(
             { email: user.email, status: 'created' },
-            { status: 'confirmed' }
+            { status: 'confirmed', updatedAt: Date.now() }
           )
           session.user.role = invitation[0].role
         }
         // session.user.role = 'client'
         // session.user.phone = 0
-        // const user = await Users.findOneAndUpdate(
-        //   { email: session.user.email },
-        //   { role: 'client', phone: 0 }
-        // )
-        // console.log(`user`, user)
       }
-      // session.user.result = result
-
       return Promise.resolve(session)
     },
   },

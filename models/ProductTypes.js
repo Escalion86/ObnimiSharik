@@ -8,6 +8,14 @@ const ProductTypesSchema = new mongoose.Schema({
     maxlength: [80, 'Название типа товара не может превышать 80 смволов'],
     default: '',
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 export default mongoose.models.ProductTypes ||
