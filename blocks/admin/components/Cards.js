@@ -1,5 +1,6 @@
 import TypesInCard from '@admincomponents/TypesInCard'
 import ImageZoom from 'react-medium-image-zoom'
+import roleRus from '@helpers/roleRus'
 
 const Card = ({ children }) => (
   <div className="flex items-center p-2 mx-1 my-2 bg-white rounded-lg shadow-medium ">
@@ -168,41 +169,23 @@ export const InvitationCard = ({ invitation }) => {
   )
 }
 
-export const UserCard = ({ user }) => {
-  let role
-  switch (user.role) {
-    case 'admin':
-      role = 'Администратор'
-      break
-    case 'aerodesigner':
-      role = 'Аэродизайнер'
-      break
-    case 'deliver':
-      role = 'Курьер'
-      break
-    default:
-      role = 'Клиент'
-      break
-  }
-
-  return (
-    <Card>
-      <div className="flex-1">
-        <div className="flex justify-between space-x-4">
-          <div
-            className="font-semibold"
-            // onClick={() => onClick(invitation)}
-          >
-            {user.name}
-          </div>
-          <div className="flex-1 italic">{user.email}</div>
+export const UserCard = ({ user }) => (
+  <Card>
+    <div className="flex-1">
+      <div className="flex justify-between space-x-4">
+        <div
+          className="font-semibold"
+          // onClick={() => onClick(invitation)}
+        >
+          {user.name}
         </div>
+        <div className="flex-1 italic">{user.email}</div>
       </div>
-      <div className="text-right">
-        <div className="font-bold">{role}</div>
-      </div>
-    </Card>
-  )
-}
+    </div>
+    <div className="text-right">
+      <div className="font-bold">{roleRus(user.role)}</div>
+    </div>
+  </Card>
+)
 
 export default Card
