@@ -7,11 +7,6 @@ const SetsContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
   const { sets } = data
 
   return (
-    // <div>
-    //   {sets.map((set) => (
-    //     <SetCard key={set._id} set={set} />
-    //   ))}
-    // </div>
     <>
       {sets.map((set) => {
         const types = set.typesId.map((type_id) =>
