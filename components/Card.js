@@ -65,7 +65,7 @@ const CardBig = ({ card }) => (
     <div
       className="absolute w-60 -bottom-2 -right-2 h-88"
       style={{
-        backgroundImage: `url('${src}')`,
+        backgroundImage: `url('${card.src}')`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'right bottom',
         backgroundSize: 'contain',
@@ -78,7 +78,7 @@ const Card = ({ card }) => {
   const { size = 'normal', active = false } = card
   const CardComponent =
     size === 'small' ? CardSmall : size === 'big' ? CardBig : CardStandart
-
+  console.log(`card`, card)
   return (
     <div
       className={
