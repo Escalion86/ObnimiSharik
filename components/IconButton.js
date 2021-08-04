@@ -13,16 +13,20 @@ const IconButton = ({
   <button
     onClick={onClick}
     className={
-      (small ? 'text-base h-8 w-8' : 'text-lg h-10 w-10') +
+      (small ? 'text-base h-8' : 'text-lg h-10') +
       (inverse
         ? ' bg-primary text-white'
         : ' bg-white border-white text-primary') +
       ' border whitespace-nowrap shadow font-futuraDemi rounded-xl flex items-center justify-center hover:bg-toxic' +
       (animation ? ' animate-pulse-light' : '') +
-      (className ? ' ' + className : '')
+      (className ? ' ' + className : '') +
+      (name === '' ? (small ? ' w-8' : ' w-10') : ' px-3')
     }
   >
-    <FontAwesomeIcon className="w-5 h-5 text-white" icon={icon} />
+    <FontAwesomeIcon
+      className={'w-5 h-5 text-white' + (name === '' ? '' : ' mr-2')}
+      icon={icon}
+    />
     {name}
   </button>
 )

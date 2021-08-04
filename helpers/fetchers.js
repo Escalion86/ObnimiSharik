@@ -9,6 +9,7 @@ export async function fetchingAll(setState = () => {}) {
     })
   )
   setState(result[0])
+  console.log('Запущен fetchingAll')
   return result[0]
 }
 
@@ -17,6 +18,7 @@ export async function fetchingProducts(updateData = () => {}) {
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ products: resp })
+  console.log('Запущен fetchingProducts')
   return resp
 }
 
@@ -25,6 +27,7 @@ export async function fetchingSets(updateData = () => {}) {
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ sets: resp })
+  console.log('Запущен fetchingSets')
   return resp
 }
 
@@ -33,6 +36,7 @@ export async function fetchingProductTypes(updateData = () => {}) {
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ productTypes: resp })
+  console.log('Запущен fetchingProductTypes')
   return resp
 }
 
@@ -41,6 +45,7 @@ export async function fetchingSetTypes(updateData = () => {}) {
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ setTypes: resp })
+  console.log('Запущен fetchingSetTypes')
   return resp
 }
 
@@ -49,6 +54,7 @@ export async function fetchingUsersInvitations(updateData = () => {}) {
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ usersInvitations: resp })
+  console.log('Запущен fetchingUsersInvitations')
   return resp
 }
 
@@ -57,5 +63,6 @@ export async function fetchingUsers(updateData = () => {}) {
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ users: resp })
+  console.log('Запущен fetchingUsers')
   return resp
 }

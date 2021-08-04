@@ -24,11 +24,19 @@ import SetModal from '@adminblocks/modals/SetModal'
 import ProductTypeModal from '@adminblocks/modals/ProductTypeModal'
 import SetTypeModal from '@adminblocks/modals/SetTypeModal'
 
-import { fetchingAll } from '@helpers/fetchers'
+import {
+  fetchingAll,
+  fetchingProducts,
+  fetchingProductTypes,
+  fetchingSets,
+  fetchingSetTypes,
+  fetchingUsersInvitations,
+} from '@helpers/fetchers'
 
-import TildaImportModal from '@adminblocks/modals/TildaImportModal'
+// import TildaImportModal from '@adminblocks/modals/TildaImportModal'
 import UsersInvitationsContent from '@adminblocks/content/UsersInvitationsContent'
 import InvitationModal from '@adminblocks/modals/InvitationModal'
+import SettingsContent from '@adminblocks/content/SettingsContent'
 
 // import dbConnect from '@utils/dbConnect'
 // import Balloons from '@models/Balloons'
@@ -37,76 +45,87 @@ import InvitationModal from '@adminblocks/modals/InvitationModal'
 
 // import useSWR from 'swr'
 
-const BtnAddSet = ({ data, setModal, key }) => (
-  <IconButton
-    key={key}
-    onClick={() =>
-      setModal(() => (
-        <SetModal setTypes={data.setTypes} onClose={() => setModal(null)} />
-      ))
-    }
-    inverse
+const TitleBtn = ({ data, setModal, modal, icon = faPlus, afterConfirm }) => {
+  const Modal = modal
+  return (
+    <IconButton
+      onClick={() =>
+        setModal(() => (
+          <Modal
+            {...data}
+            onClose={() => setModal(null)}
+            afterConfirm={afterConfirm}
+          />
+        ))
+      }
+      inverse
+      icon={icon}
+    />
+  )
+}
+
+const BtnAddSet = ({ data, setModal, updateData, key }) => (
+  <TitleBtn
+    data={data}
+    setModal={setModal}
+    modal={SetModal}
     icon={faPlus}
+    afterConfirm={() => fetchingSets(updateData)}
+    key={key}
   />
 )
 
-const BtnAddProductType = ({ data, setModal, key }) => (
-  <IconButton
-    key={key}
-    onClick={() =>
-      setModal(() => <ProductTypeModal onClose={() => setModal(null)} />)
-    }
-    inverse
+const BtnAddProductType = ({ data, setModal, updateData, key }) => (
+  <TitleBtn
+    data={data}
+    setModal={setModal}
+    modal={ProductTypeModal}
     icon={faPlus}
+    afterConfirm={() => fetchingProductTypes(updateData)}
+    key={key}
   />
 )
 
-const BtnAddSetType = ({ data, setModal, key }) => (
-  <IconButton
-    key={key}
-    onClick={() =>
-      setModal(() => <SetTypeModal onClose={() => setModal(null)} />)
-    }
-    inverse
+const BtnAddSetType = ({ data, setModal, updateData, key }) => (
+  <TitleBtn
+    data={data}
+    setModal={setModal}
+    modal={SetTypeModal}
     icon={faPlus}
+    afterConfirm={() => fetchingSetTypes(updateData)}
+    key={key}
   />
 )
 
-const BtnAddProduct = ({ data, setModal, key }) => (
-  <IconButton
-    key={key}
-    onClick={() =>
-      setModal(() => (
-        <ProductModal
-          productTypes={data.productTypes}
-          onClose={() => setModal(null)}
-        />
-      ))
-    }
-    inverse
+const BtnAddProduct = ({ data, setModal, updateData, key }) => (
+  <TitleBtn
+    data={data}
+    setModal={setModal}
+    modal={ProductModal}
     icon={faPlus}
+    afterConfirm={() => fetchingProducts(updateData)}
+    key={key}
   />
 )
 
-const BtnImport = ({ setModal, key }) => (
-  <IconButton
-    key={key}
-    onClick={() =>
-      setModal(() => <TildaImportModal onClose={() => setModal(null)} />)
-    }
-    inverse
-    icon={faDownload}
-  />
-)
+// const BtnImport = ({ data, setModal, key }) => (
+//   <TitleBtn
+//     data={data}
+//     setModal={setModal}
+//     key={key}
+//     modal={TildaImportModal}
+//     icon={faDownload}
+//   />
+// )
 
-const BtnAddInvitation = ({ data, setModal, key }) => (
-  <IconButton
-    key={key}
-    onClick={() =>
-      setModal(() => <InvitationModal onClose={() => setModal(null)} />)
-    }
-    inverse
+const BtnAddInvitation = ({ data, setModal, updateData, key }) => (
+  <TitleBtn
+    data={data}
+    setModal={setModal}
+    modal={InvitationModal}
     icon={faPlus}
+    afterConfirm={() => fetchingUsersInvitations(updateData)}
+    key={key}
   />
 )
 
@@ -119,6 +138,7 @@ const pages = [
     pageContent: null,
     pageButtons: [],
     backToPageId: null,
+    accessRoles: ['admin'],
   }, // 3
   {
     id: 1,
@@ -126,8 +146,9 @@ const pages = [
     name: 'Товары',
     header: 'Товары',
     pageContent: ProductsContent,
-    pageButtons: [BtnImport, BtnAddProduct],
+    pageButtons: [BtnAddProduct],
     backToPageId: null,
+    accessRoles: ['admin', 'operator', 'aerodesigner'],
   }, // 0
   {
     id: 2,
@@ -137,6 +158,7 @@ const pages = [
     pageContent: ProductTypesContent,
     pageButtons: [BtnAddProductType],
     backToPageId: null,
+    accessRoles: ['admin'],
   }, // 1
   {
     id: 3,
@@ -146,6 +168,7 @@ const pages = [
     pageContent: SetsContent,
     pageButtons: [BtnAddSet],
     backToPageId: null,
+    accessRoles: ['admin', 'operator', 'aerodesigner'],
   }, // 2
   {
     id: 4,
@@ -155,6 +178,7 @@ const pages = [
     pageContent: SetTypesContent,
     pageButtons: [BtnAddSetType],
     backToPageId: null,
+    accessRoles: ['admin'],
   }, // 1
   {
     id: 5,
@@ -173,6 +197,7 @@ const pages = [
     pageContent: UsersContent,
     pageButtons: [],
     backToPageId: null,
+    accessRoles: ['admin'],
   }, // 3
   {
     id: 7,
@@ -182,15 +207,18 @@ const pages = [
     pageContent: UsersInvitationsContent,
     pageButtons: [BtnAddInvitation],
     backToPageId: null,
-  }, // 3
-  // {
-  //   id: 4,
-  //   group: null,
-  //   name: 'Урок',
-  //   header: 'Урок',
-  //   pageContent: Lesson,
-  //   backToPageId: 0,
-  // },
+    accessRoles: ['admin'],
+  },
+  {
+    id: 8,
+    group: 4,
+    name: 'Настройки',
+    header: 'Настройки',
+    pageContent: SettingsContent,
+    pageButtons: [],
+    backToPageId: 0,
+    accessRoles: ['admin'],
+  },
 ]
 
 const pagesGroups = [
@@ -198,14 +226,16 @@ const pagesGroups = [
   { id: 1, name: 'Продукция' },
   { id: 2, name: 'Склад' },
   { id: 3, name: 'Пользователи' },
+  { id: 4, name: 'Настройки' },
 ]
 
-const menuCfg = (pages, pagesGroups) => {
+const menuCfg = (pages, pagesGroups, userRole) => {
   let result = []
   pagesGroups.forEach((group) => {
     let items = []
     pages.forEach((page) => {
-      if (page.group === group.id) items.push(page)
+      if (page.group === group.id && page.accessRoles.includes(userRole))
+        items.push(page)
     })
     if (items.length > 0) result.push({ name: group.name, items })
   })
@@ -270,7 +300,10 @@ export default function Admin() {
       )}
       {session && !loading && (
         <>
-          {session.user.role === 'admin' && (
+          {(session.user.role === 'admin' ||
+            session.user.role === 'aerodesigner' ||
+            session.user.role === 'deliver' ||
+            session.user.role === 'operator') && (
             // <>
             //   Signed in as {session.user.email} <br />
             //   Вы администратор
@@ -290,7 +323,7 @@ export default function Admin() {
                 page={page}
                 setPageId={setPageId}
                 // courses={courses}
-                menuCfg={menuCfg(pages, pagesGroups)}
+                menuCfg={menuCfg(pages, pagesGroups, session.user.role)}
                 user={session.user}
                 // setUser={setUserState}
                 onSignOut={signOut}
@@ -298,9 +331,18 @@ export default function Admin() {
                 <div className="relative flex flex-col flex-1">
                   <Title
                     text={page.header}
-                    buttons={page.pageButtons.map((button, index) =>
-                      button({ data, setModal, key: 'titleButton' + index })
-                    )}
+                    buttons={
+                      page.pageButtons
+                        ? page.pageButtons.map((button, index) =>
+                            button({
+                              data,
+                              setModal,
+                              key: 'titleButton' + index,
+                              updateData: updateData,
+                            })
+                          )
+                        : null
+                    }
                   />
                   <div className="flex-1 h-full">
                     <PageContent
