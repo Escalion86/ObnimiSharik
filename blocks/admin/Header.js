@@ -7,6 +7,7 @@ import { Fragment } from 'react'
 
 // import SearchInput from '../Components/SearchInput'
 import { DEFAULT_USER } from '@helpers/constants'
+import roleRus from '@helpers/roleRus'
 
 const UserMenu = ({
   user = DEFAULT_USER,
@@ -45,7 +46,7 @@ const UserMenu = ({
                   {user.name}
                 </div>
                 <div className="flex items-center pb-1 pl-3 pr-6 text-xs italic font-semibold text-gray-900 min-h-11">
-                  {user.role === 'admin' ? 'Администратор' : 'Аэродизайнер'}
+                  {roleRus(user.role)}
                 </div>
                 <div className="px-1">
                   <Menu.Item>
