@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Title = ({ text = '', btnOnClick = null, buttons = [] }) => {
+const Title = ({ text = '', btnOnClick = null, buttons = null }) => {
   return (
     <div className="sticky top-0 flex items-center justify-center bg-white border-b border-gray-200">
       {btnOnClick !== null && btnOnClick !== undefined && (

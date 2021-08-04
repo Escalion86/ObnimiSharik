@@ -280,6 +280,7 @@ const postData = async (url, form, afterConfirm, setMessage) => {
     }
     // const { data } = await res.json()
     // mutate(url, data, false)
+    // console.log(`data`, data)
     afterConfirm()
   } catch (error) {
     setMessage('Failed to add on ' + url)
@@ -785,7 +786,6 @@ export const InvitationForm = ({
     status: invitation.status,
     role: invitation.role,
   })
-  console.log(`form`, form)
 
   const handleChange = (e) => {
     const target = e.target
