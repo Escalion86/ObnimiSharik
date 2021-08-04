@@ -6,8 +6,6 @@ import { SetCard } from '@admincomponents/Cards'
 const SetsContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
   const { sets } = data
 
-  console.log(`data`, data)
-
   return (
     // <div>
     //   {sets.map((set) => (
