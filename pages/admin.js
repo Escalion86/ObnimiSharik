@@ -108,16 +108,6 @@ const BtnAddProduct = ({ data, setModal, updateData, key }) => (
   />
 )
 
-// const BtnImport = ({ data, setModal, key }) => (
-//   <TitleBtn
-//     data={data}
-//     setModal={setModal}
-//     key={key}
-//     modal={TildaImportModal}
-//     icon={faDownload}
-//   />
-// )
-
 const BtnAddInvitation = ({ data, setModal, updateData, key }) => (
   <TitleBtn
     data={data}
