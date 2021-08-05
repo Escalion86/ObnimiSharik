@@ -4,7 +4,7 @@ import DeliveryAddressesSchema from './DeliveryAddresses'
 const CartsSchema = new mongoose.Schema({
   userId: {
     type: String,
-    required: [true, 'Необходимо указать id пользователя'],
+    // required: [true, 'Необходимо указать id пользователя'],
   },
   products: {
     type: Array,

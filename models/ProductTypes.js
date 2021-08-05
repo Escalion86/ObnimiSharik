@@ -5,7 +5,7 @@ const ProductTypesSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Введите название типа товара'],
-    maxlength: [80, 'Название типа товара не может превышать 80 смволов'],
+    maxlength: [100, 'Название типа товара не может превышать 100 смволов'],
     default: '',
   },
   createdAt: {

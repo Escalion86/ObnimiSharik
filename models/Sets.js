@@ -4,13 +4,13 @@ import mongoose from 'mongoose'
 const SetsSchema = new mongoose.Schema({
   article: {
     type: String,
-    maxlength: [20, 'Длинна артикула набора не может превышать 20 смволов'],
+    // maxlength: [20, 'Длинна артикула набора не может превышать 20 смволов'],
     default: '',
   },
   name: {
     type: String,
     required: [true, 'Введите название набора'],
-    maxlength: [80, 'Название набора не может превышать 80 смволов'],
+    maxlength: [100, 'Название набора не может превышать 100 смволов'],
     default: '',
   },
   description: {

@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 const UsersSchema = new mongoose.Schema({
   name: {
     type: String,
-    maxlength: [80, 'Имя не может быть больше 80 символов'],
+    maxlength: [100, 'Имя не может быть больше 100 символов'],
     default: 'Шарик Обнимашкин',
   },
   email: {

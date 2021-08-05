@@ -4,13 +4,13 @@ import mongoose from 'mongoose'
 const ProductsSchema = new mongoose.Schema({
   article: {
     type: String,
-    maxlength: [20, 'Длинна артикула товара не может превышать 20 смволов'],
+    // maxlength: [20, 'Длинна артикула товара не может превышать 20 смволов'],
     default: '',
   },
   name: {
     type: String,
     required: [true, 'Введите название товара'],
-    maxlength: [80, 'Название товара не может превышать 80 смволов'],
+    maxlength: [100, 'Название товара не может превышать 100 смволов'],
     default: '',
   },
   description: {

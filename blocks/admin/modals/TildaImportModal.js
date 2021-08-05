@@ -67,6 +67,7 @@ function changeHandler(evt, onClose, afterConfirm) {
         price: product['Price'] * 100,
         images: product['Photo'].split(' '),
         typesId: product['Category'].split(';'),
+        article: product['SKU'],
       }
     }
 
