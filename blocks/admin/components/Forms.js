@@ -445,6 +445,16 @@ export const ProductForm = ({
         required
         textarea
       />
+      <Input
+        key="article"
+        label="Артикул"
+        type="text"
+        maxLength="100"
+        name="article"
+        value={form.article}
+        onChange={handleChange}
+        required
+      />
       <PriceInput value={form.price / 100} onChange={handleChange} />
       {/* <Input
         key="images"
@@ -586,6 +596,16 @@ export const SetForm = ({
         onChange={handleChange}
         required
         textarea
+      />
+      <Input
+        key="article"
+        label="Артикул"
+        type="text"
+        maxLength="100"
+        name="article"
+        value={form.article}
+        onChange={handleChange}
+        required
       />
       <Input
         key="price"
