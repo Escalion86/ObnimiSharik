@@ -787,6 +787,8 @@ export const InvitationForm = ({
     role: invitation.role,
   })
 
+  const forNew = invitation._id === undefined
+
   const handleChange = (e) => {
     const target = e.target
     const value =
@@ -807,7 +809,14 @@ export const InvitationForm = ({
     e.preventDefault()
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
-      postData('/api/users/invitations', form, afterConfirm, setMessage)
+      forNew
+        ? postData('/api/users/invitations', form, afterConfirm, setMessage)
+        : putData(
+            `/api/users/invitations/${invitation._id}`,
+            form,
+            afterConfirm,
+            setMessage
+          )
     } else {
       setErrors({ errs })
     }
@@ -823,8 +832,8 @@ export const InvitationForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title="Создние приглашения"
-      buttonName="Создать и отправить"
+      title={forNew ? 'Создние приглашения' : 'Редактирование приглашения'}
+      buttonName={forNew ? 'Создать и отправить' : 'Применить'}
       message={message}
       errors={errors}
     >
@@ -844,6 +853,7 @@ export const InvitationForm = ({
           name="role"
           className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
           onChange={handleChange}
+          defaultValue={form.role}
         >
           <option>Выберите должность</option>
           <option value="admin">Администратор</option>

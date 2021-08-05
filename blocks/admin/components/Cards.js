@@ -12,6 +12,7 @@ export const SetCard = ({
   set,
   onClick = () => {},
   onTypeClick = () => {},
+  onDelete = null,
 }) => (
   <Card>
     {set.images[0] ? (
@@ -53,6 +54,7 @@ export const ProductCard = ({
   product,
   onClick = () => {},
   onTypeClick = () => {},
+  onDelete = null,
 }) => (
   <Card>
     {/* <img
@@ -97,7 +99,12 @@ export const ProductCard = ({
   </Card>
 )
 
-export const TypeCard = ({ onClick = () => {}, type, count = null }) => (
+export const TypeCard = ({
+  onClick = () => {},
+  type,
+  count = null,
+  onDelete = null,
+}) => (
   <Card>
     <div className="flex-1">
       <div className="flex justify-between space-x-2">
@@ -117,7 +124,11 @@ export const TypeCard = ({ onClick = () => {}, type, count = null }) => (
   </Card>
 )
 
-export const InvitationCard = ({ invitation }) => {
+export const InvitationCard = ({
+  invitation,
+  onClick = () => {},
+  onDelete = null,
+}) => {
   let role
   let status
   switch (invitation.role) {
@@ -154,8 +165,8 @@ export const InvitationCard = ({ invitation }) => {
       <div className="flex-1">
         <div className="flex justify-between space-x-4">
           <div
-            className="font-semibold"
-            // onClick={() => onClick(invitation)}
+            className="w-3/12 font-semibold cursor-pointer text-primary hover:text-toxic"
+            onClick={() => onClick(invitation)}
           >
             {invitation.email}
           </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import ProductModal from '../modals/ProductModal'
 import { fetchingProducts } from '@helpers/fetchers'
 import { ProductCard } from '@admincomponents/Cards'
+import deleteData from '@helpers/deleteData'
 
 const ProductsContent = ({
   data,

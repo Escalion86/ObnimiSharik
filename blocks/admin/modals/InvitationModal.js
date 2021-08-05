@@ -1,5 +1,6 @@
 import { InvitationForm } from '@admincomponents/Forms'
 import Modal from '@adminblocks/modals/Modal'
+import deleteData from '@helpers/deleteData'
 
 const InvitationModal = ({
   invitation,
@@ -7,7 +8,18 @@ const InvitationModal = ({
   afterConfirm = () => {},
 }) => {
   return (
-    <Modal onClose={onClose}>
+    <Modal
+      onClose={onClose}
+      onDelete={
+        invitation?._id
+          ? () => {
+              deleteData('/api/users/invitations/' + invitation._id)
+              afterConfirm()
+              onClose()
+            }
+          : null
+      }
+    >
       <InvitationForm
         invitation={invitation}
         afterConfirm={(data) => {

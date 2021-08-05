@@ -20,6 +20,15 @@ const UsersInvitationsContent = ({
           <InvitationCard
             key={userInvitation._id}
             invitation={userInvitation}
+            onClick={() =>
+              setModal(() => (
+                <InvitationModal
+                  invitation={userInvitation}
+                  onClose={() => setModal(null)}
+                  afterConfirm={() => fetchingUsersInvitations(updateData)}
+                />
+              ))
+            }
           />
         )
       })}

@@ -122,7 +122,7 @@ const BtnAddInvitation = ({ data, setModal, updateData, key }) => (
 const pages = [
   {
     id: 0,
-    group: null,
+    group: 0,
     name: 'Обзор',
     header: 'Обзор',
     pageContent: null,

@@ -1,5 +1,5 @@
 import dbConnect from '@utils/dbConnect'
-import Products from '@models/Products'
+import UsersInvitations from '@models/UsersInvitations'
 
 export default async function handler(req, res) {
   const {
@@ -12,11 +12,11 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET' /* Get a model by its ID */:
       try {
-        const product = await Products.findById(id)
-        if (!product) {
+        const userInvitation = await UsersInvitations.findById(id)
+        if (!userInvitation) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json({ success: true, data: product })
+        res.status(200).json({ success: true, data: userInvitation })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -25,14 +25,18 @@ export default async function handler(req, res) {
     case 'PUT' /* Edit a model by its ID */:
       try {
         const body = { ...req.body, updatedAt: Date.now() }
-        const product = await Products.findByIdAndUpdate(id, body, {
-          new: true,
-          runValidators: true,
-        })
-        if (!product) {
+        const userInvitation = await UsersInvitations.findByIdAndUpdate(
+          id,
+          body,
+          {
+            new: true,
+            runValidators: true,
+          }
+        )
+        if (!userInvitation) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json({ success: true, data: product })
+        res.status(200).json({ success: true, data: userInvitation })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -40,8 +44,10 @@ export default async function handler(req, res) {
 
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        const deletedProduct = await Products.deleteOne({ _id: id })
-        if (!deletedProduct) {
+        const deletedUserInvitation = await UsersInvitations.deleteOne({
+          _id: id,
+        })
+        if (!deletedUserInvitation) {
           return res.status(400).json({ success: false })
         }
         res.status(200).json({ success: true, data: {} })

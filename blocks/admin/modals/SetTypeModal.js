@@ -1,5 +1,6 @@
 import { SetTypeForm } from '@admincomponents/Forms'
 import Modal from '@adminblocks/modals/Modal'
+import deleteData from '@helpers/deleteData'
 
 const SetTypeModal = ({
   settype,
@@ -7,7 +8,18 @@ const SetTypeModal = ({
   afterConfirm = () => {},
 }) => {
   return (
-    <Modal onClose={onClose}>
+    <Modal
+      onClose={onClose}
+      onDelete={
+        settype?._id
+          ? () => {
+              deleteData('/api/settypes/' + settype._id)
+              afterConfirm()
+              onClose()
+            }
+          : null
+      }
+    >
       <SetTypeForm
         settype={settype}
         afterConfirm={(data) => {
