@@ -2,8 +2,19 @@ export const DEFAULT_USER = {
   name: 'Гость',
   email: '',
   phone: 0,
+  whatsapp: 0,
+  birthday: null,
   image: null,
   role: 'client',
+}
+
+export const CLIENT = {
+  name: 'Гость',
+  email: '',
+  phone: 0,
+  whatsapp: 0,
+  birthday: null,
+  image: null,
 }
 
 export const DEFAULT_PRODUCT = {

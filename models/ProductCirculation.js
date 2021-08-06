@@ -16,7 +16,7 @@ const ProductCirculationSchema = new mongoose.Schema({
     maxlength: [6, 'Количество не может превышать 999999 шт'],
     default: 1,
   },
-  cartId: {
+  orderId: {
     type: String,
     required: [true, 'Необходимо указать id корзины'],
   },

@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 import DeliveryAddressesSchema from './DeliveryAddresses'
 
-const CartsSchema = new mongoose.Schema({
-  userId: {
+const OrdersSchema = new mongoose.Schema({
+  clientId: {
     type: String,
-    // required: [true, 'Необходимо указать id пользователя'],
+    required: [true, 'Необходимо указать id клиента'],
   },
   products: {
     type: Array,
@@ -46,4 +46,4 @@ const CartsSchema = new mongoose.Schema({
   },
 })
 
-export default mongoose.models.Carts || mongoose.model('Carts', CartsSchema)
+export default mongoose.models.Orders || mongoose.model('Orders', OrdersSchema)
