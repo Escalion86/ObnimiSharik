@@ -129,22 +129,7 @@ export const InvitationCard = ({
   onClick = () => {},
   onDelete = null,
 }) => {
-  let role
   let status
-  switch (invitation.role) {
-    case 'admin':
-      role = 'Администратор'
-      break
-    case 'aerodesigner':
-      role = 'Аэродизайнер'
-      break
-    case 'deliver':
-      role = 'Курьер'
-      break
-    default:
-      role = 'Клиент'
-      break
-  }
   switch (invitation.status) {
     case 'created':
       status = 'Создано'
@@ -170,7 +155,7 @@ export const InvitationCard = ({
           >
             {invitation.email}
           </div>
-          <div className="flex-1 italic">{role}</div>
+          <div className="flex-1 italic">{roleRus(invitation.role)}</div>
         </div>
       </div>
       <div className="text-right">
