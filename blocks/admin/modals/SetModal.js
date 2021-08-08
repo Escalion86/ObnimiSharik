@@ -5,6 +5,7 @@ import deleteData from '@helpers/deleteData'
 const SetModal = ({
   set,
   setTypes,
+  products,
   onClose = () => {},
   afterConfirm = () => {},
 }) => {
@@ -24,6 +25,7 @@ const SetModal = ({
       <SetForm
         set={set}
         setTypes={setTypes}
+        products={products}
         afterConfirm={(data) => {
           afterConfirm(data)
           onClose()

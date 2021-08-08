@@ -4,6 +4,7 @@ import deleteData from '@helpers/deleteData'
 
 const ProductModal = ({
   product,
+  products,
   productTypes,
   onClose = () => {},
   afterConfirm = () => {},
@@ -23,6 +24,7 @@ const ProductModal = ({
     >
       <ProductForm
         product={product}
+        products={products}
         productTypes={productTypes}
         afterConfirm={() => {
           afterConfirm()

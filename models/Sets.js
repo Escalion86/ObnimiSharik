@@ -28,7 +28,7 @@ const SetsSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  productsId: {
+  productsIdCount: {
     type: Array,
     default: [],
   },

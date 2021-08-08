@@ -15,10 +15,13 @@ import {
   DEFAULT_PRODUCT_TYPE,
   DEFAULT_SET_TYPE,
   DEFAULT_INVITATION,
+  ROLES,
 } from '@helpers/constants'
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 import { resolveMotionValue } from 'framer-motion'
+
+import ProductList from './forForms/ProductList'
 
 const Form = ({
   handleSubmit = () => {},
@@ -55,6 +58,34 @@ const InputComponent = (props) => {
   )
 }
 
+const ComboBox = ({
+  name,
+  title,
+  defaultValue,
+  handleChange,
+  placeholder,
+  items,
+}) => (
+  <div className="flex flex-col">
+    <label htmlFor={name}>{title}</label>
+    <select
+      name={name}
+      className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
+      onChange={handleChange}
+      defaultValue={defaultValue}
+    >
+      <option disabled selected>
+        {placeholder}
+      </option>
+      {items.map((item, index) => (
+        <option key={'combo' + index} value={item.value}>
+          {item.name}
+        </option>
+      ))}
+    </select>
+  </div>
+)
+
 const Input = ({
   label = '',
   type,
@@ -65,9 +96,10 @@ const Input = ({
   required = false,
   textarea,
   accept,
+  className,
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className={'flex flex-col' + (className ? ' ' + className : '')}>
       <label htmlFor={name}>{label}</label>
       <InputComponent
         className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
@@ -84,10 +116,10 @@ const Input = ({
   )
 }
 
-const PriceInput = ({ value, onChange, required = false }) => {
+const PriceInput = ({ value, onChange, required = false, className }) => {
   if (!parseInt(value)) value = 0
   return (
-    <div className="flex flex-col w-32">
+    <div className={'flex flex-col w-32' + (className ? ' ' + className : '')}>
       <label htmlFor="price">Стоимость</label>
       <div className="flex w-full border border-gray-700 rounded-lg flex-nowrap">
         <input
@@ -316,6 +348,7 @@ const sendImage = async (image, form, setForm) => {
 
 export const ProductForm = ({
   product = DEFAULT_PRODUCT,
+  products = [],
   productTypes = [],
   afterConfirm = () => {},
 }) => {
@@ -445,17 +478,24 @@ export const ProductForm = ({
         required
         textarea
       />
-      <Input
-        key="article"
-        label="Артикул"
-        type="text"
-        maxLength="100"
-        name="article"
-        value={form.article}
-        onChange={handleChange}
-        required
-      />
-      <PriceInput value={form.price / 100} onChange={handleChange} />
+      <div className="flex">
+        <div className="flex-1">
+          <Input
+            key="article"
+            label="Артикул"
+            type="text"
+            maxLength="100"
+            name="article"
+            value={form.article}
+            onChange={handleChange}
+            required
+            className="w-40"
+          />
+        </div>
+        <div className="flex-1">
+          <PriceInput value={form.price / 100} onChange={handleChange} />
+        </div>
+      </div>
       {/* <Input
         key="images"
         label="Ссылка на картинку"
@@ -507,6 +547,7 @@ export const ProductForm = ({
 
 export const SetForm = ({
   set = DEFAULT_SET,
+  products = [],
   setTypes = [],
   afterConfirm = () => {},
 }) => {
@@ -520,7 +561,7 @@ export const SetForm = ({
     price: set.price,
     images: set.images,
     typesId: set.typesId,
-    productsId: set.productsId,
+    productsIdCount: set.productsIdCount,
     archive: set.archive,
   })
 
@@ -597,24 +638,24 @@ export const SetForm = ({
         required
         textarea
       />
-      <Input
-        key="article"
-        label="Артикул"
-        type="text"
-        maxLength="100"
-        name="article"
-        value={form.article}
-        onChange={handleChange}
-        required
-      />
-      <Input
-        key="price"
-        label="Стоимость"
-        type="number"
-        name="price"
-        value={form.price / 100}
-        onChange={handleChange}
-      />
+      <div className="flex">
+        <div className="flex-1">
+          <Input
+            key="article"
+            label="Артикул"
+            type="text"
+            maxLength="100"
+            name="article"
+            value={form.article}
+            onChange={handleChange}
+            required
+            className="w-40"
+          />
+        </div>
+        <div className="flex-1">
+          <PriceInput value={form.price / 100} onChange={handleChange} />
+        </div>
+      </div>
       <MultiselectCheckbox
         title="Типы"
         options={setTypes.map((type) => {
@@ -632,6 +673,39 @@ export const SetForm = ({
           // console.log('checked', data)
         }}
       />
+      <ProductList
+        products={products}
+        // productsIdCount={[
+        //   { id: '610bc814cab8460eb0ffc858', count: 1 },
+        //   { id: '610bc814cab8460eb0ffc85c', count: 2 },
+        //   { id: '610bc814cab8460eb0ffc857', count: 3 },
+        // ]}
+        productsIdCount={form.productsIdCount}
+        onChange={(newProductsIdCount) =>
+          setForm({
+            ...form,
+            productsIdCount: newProductsIdCount,
+          })
+        }
+      />
+      {/* <SelectProductModal products={products} /> */}
+      {/* <MultiselectCheckbox
+        title="Товары в наборе"
+        options={products.map((product) => {
+          return {
+            label: product.name,
+            id: product._id,
+            checked: form.productsId.includes(product._id),
+          }
+        })}
+        onChange={(data) => {
+          setForm({
+            ...form,
+            productsId: data.map((product) => product.id),
+          })
+          // console.log('checked', data)
+        }}
+      /> */}
       <InputImages
         images={form.images}
         onChange={(images) =>
@@ -867,7 +941,15 @@ export const InvitationForm = ({
         onChange={handleChange}
         required
       />
-      <div className="flex flex-col">
+      <ComboBox
+        name="role"
+        title="Должность"
+        handleChange={handleChange}
+        defaultValue={form.role}
+        placeholder="Выберите должность"
+        items={ROLES}
+      />
+      {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>
         <select
           name="role"
@@ -880,7 +962,91 @@ export const InvitationForm = ({
           <option value="aerodesigner">Аэродизайнер</option>
           <option value="deliver">Курьер</option>
         </select>
-      </div>
+      </div> */}
+    </Form>
+  )
+}
+
+export const SelectProductForm = ({
+  products = [],
+  productTypes = [],
+  onChoose = () => {},
+}) => {
+  const [errors, setErrors] = useState({})
+  const [message, setMessage] = useState('')
+
+  const [form, setForm] = useState({
+    productId: null,
+    count: 1,
+  })
+
+  const handleChange = (e) => {
+    const target = e.target
+    const value =
+      target.name === 'price'
+        ? target.value * 100
+        : target.name === 'images'
+        ? [target.value]
+        : target.value
+    const name = target.name
+
+    setForm({
+      ...form,
+      [name]: value,
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const errs = formValidate()
+    if (Object.keys(errs).length === 0) {
+      // forNew
+      //   ? postData('/api/users/invitations', form, afterConfirm, setMessage)
+      //   : putData(
+      //       `/api/users/invitations/${invitation._id}`,
+      //       form,
+      //       afterConfirm,
+      //       setMessage
+      //     )
+      console.log(`form`, form)
+    } else {
+      setErrors({ errs })
+    }
+  }
+
+  const formValidate = () => {
+    let err = {}
+    // if (!form.product) err.productId = 'Product is required'
+    // if (!form.role) err.role = 'Role is required'
+    return err
+  }
+
+  return (
+    <Form
+      handleSubmit={handleSubmit}
+      title="Выбор продукта"
+      buttonName="Выбрать"
+      message={message}
+      errors={errors}
+    >
+      <ComboBox
+        name="productId"
+        handleChange={handleChange}
+        defaultValue={form.role}
+        placeholder="Выберите товар"
+        items={products.map((product) => {
+          return { name: product.name, value: product._id }
+        })}
+      />
+      <Input
+        key="count"
+        label="Количество"
+        type="number"
+        name="count"
+        value={form.count}
+        onChange={handleChange}
+        required
+      />
     </Form>
   )
 }

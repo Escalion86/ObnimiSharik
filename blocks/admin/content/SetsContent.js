@@ -22,6 +22,7 @@ const SetsContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
                 <SetModal
                   set={set}
                   setTypes={data.setTypes}
+                  products={data.products}
                   onClose={() => setModal(null)}
                   afterConfirm={() => fetchingSets(updateData)}
                 />
