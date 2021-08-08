@@ -117,7 +117,7 @@ export const TypeCard = ({
     <div className="flex-1">
       <div className="flex justify-between space-x-2">
         <div
-          className="w-3/12 font-semibold cursor-pointer text-primary hover:text-toxic"
+          className="font-semibold cursor-pointer text-primary hover:text-toxic"
           onClick={() => onClick(type)}
         >
           {type.name}
