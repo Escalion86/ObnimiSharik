@@ -34,7 +34,7 @@ export const DEFAULT_SET = {
   price: 0,
   images: [],
   typesId: [],
-  productsId: [],
+  productsIdCount: [],
   archive: false,
 }
 
@@ -51,3 +51,10 @@ export const DEFAULT_INVITATION = {
   role: '',
   status: 'created',
 }
+
+export const ROLES = [
+  { name: 'Администратор', value: 'admin' },
+  { name: 'Аэродизайнер', value: 'aerodesigner' },
+  { name: 'Курьер', value: 'deliver' },
+  { name: 'Оператор', value: 'operator' },
+]

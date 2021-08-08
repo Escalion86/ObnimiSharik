@@ -1,16 +1,7 @@
+import { ROLES } from './constants'
+
 const roleRus = (role) => {
-  switch (role) {
-    case 'admin':
-      return 'Администратор'
-    case 'aerodesigner':
-      return 'Аэродизайнер'
-    case 'deliver':
-      return 'Курьер'
-    case 'operator':
-      return 'Оператор'
-    default:
-      return 'Клиент'
-  }
+  return ROLES.find((roleRes) => roleRes.value === role).name
 }
 
 export default roleRus
