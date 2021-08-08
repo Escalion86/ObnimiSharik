@@ -252,6 +252,50 @@ export default function Admin() {
     setData({ ...data, ...newData })
   }
 
+  const modals = {
+    openSetModal: (set) =>
+      setModal(() => (
+        <SetModal
+          set={set}
+          setTypes={data.setTypes}
+          products={data.products}
+          onClose={() => setModal(null)}
+          afterConfirm={() => fetchingSets(updateData)}
+        />
+      )),
+    openProductModal: (product) =>
+      setModal(() => (
+        <ProductModal
+          product={product}
+          productTypes={data.productTypes}
+          onClose={() => setModal(null)}
+          afterConfirm={() => fetchingProducts(updateData)}
+        />
+      )),
+    openProductTypeModal: (producttype) =>
+      setModal(() => (
+        <ProductTypeModal
+          producttype={producttype}
+          onClose={() => setModal(null)}
+          afterConfirm={() => fetchingProductTypes(updateData)}
+        />
+      )),
+    openSetTypeModal: (settype) =>
+      setModal(() => (
+        <SetTypeModal
+          settype={settype}
+          onClose={() => setModal(null)}
+          afterConfirm={() => fetchingSetTypes(updateData)}
+        />
+      )),
+    openTildaImportModal: () =>
+      setModal(() => (
+        <TildaImportModal {...data} onClose={() => setModal(null)} />
+      )),
+    openUserModal: () =>
+      setModal(() => <UserModal {...data} onClose={() => setModal(null)} />),
+  }
+
   // const router = useRouter()
   const [page, setPage] = useState(pages[0])
 
@@ -339,6 +383,7 @@ export default function Admin() {
                       data={data}
                       setModal={setModal}
                       updateData={updateData}
+                      modals={modals}
                     />
                   </div>
                 </div>

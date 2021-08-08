@@ -1,9 +1,7 @@
 import React from 'react'
-import SetModal from '../modals/SetModal'
-import { fetchingSets } from '@helpers/fetchers'
 import { SetCard } from '@admincomponents/Cards'
 
-const SetsContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
+const SetsContent = ({ data, modals }) => {
   const { sets } = data
 
   return (
@@ -17,18 +15,10 @@ const SetsContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
           <SetCard
             key={set._id}
             set={{ ...set, types }}
-            onClick={() =>
-              setModal(() => (
-                <SetModal
-                  set={set}
-                  setTypes={data.setTypes}
-                  products={data.products}
-                  onClose={() => setModal(null)}
-                  afterConfirm={() => fetchingSets(updateData)}
-                />
-              ))
-            }
-            onTypeClick={(type) => console.log(`type`, type)}
+            products={data.products}
+            onClick={() => modals.openSetModal(set)}
+            onTypeClick={(settype) => modals.openSetTypeModal(settype)}
+            onProductClick={(product) => modals.openProductModal(product)}
           />
         )
       })}

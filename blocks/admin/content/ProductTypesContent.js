@@ -1,13 +1,7 @@
 import React from 'react'
 import { TypeCard } from '@admincomponents/Cards'
-import ProductTypeModal from '@adminblocks/modals/ProductTypeModal'
-import { fetchingProductTypes } from '@helpers/fetchers'
 
-const ProductTypesContent = ({
-  data,
-  setModal = () => {},
-  updateData = () => {},
-}) => {
+const ProductTypesContent = ({ data, modals }) => {
   const { productTypes, products } = data
 
   return (
@@ -21,15 +15,7 @@ const ProductTypesContent = ({
             key={producttype._id}
             type={producttype}
             count={count}
-            onClick={() =>
-              setModal(() => (
-                <ProductTypeModal
-                  producttype={producttype}
-                  onClose={() => setModal(null)}
-                  afterConfirm={() => fetchingProductTypes(updateData)}
-                />
-              ))
-            }
+            onClick={() => modals.openProductTypeModal(producttype)}
           />
         )
       })}

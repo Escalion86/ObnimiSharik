@@ -1,13 +1,7 @@
 import React from 'react'
 import { TypeCard } from '@admincomponents/Cards'
-import SetTypeModal from '@adminblocks/modals/SetTypeModal'
-import { fetchingSetTypes } from '@helpers/fetchers'
 
-const SetTypesContent = ({
-  data,
-  setModal = () => {},
-  updateData = () => {},
-}) => {
+const SetTypesContent = ({ data, modals }) => {
   const { setTypes, sets } = data
   return (
     <div>
@@ -20,15 +14,7 @@ const SetTypesContent = ({
             key={settype._id}
             type={settype}
             count={count}
-            onClick={() =>
-              setModal(() => (
-                <SetTypeModal
-                  settype={settype}
-                  onClose={() => setModal(null)}
-                  afterConfirm={() => fetchingSetTypes(updateData)}
-                />
-              ))
-            }
+            onClick={() => modals.openSetTypeModal(settype)}
           />
         )
       })}

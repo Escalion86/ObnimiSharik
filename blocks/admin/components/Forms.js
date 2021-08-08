@@ -16,6 +16,7 @@ import {
   DEFAULT_SET_TYPE,
   DEFAULT_INVITATION,
   ROLES,
+  DEFAULT_USER,
 } from '@helpers/constants'
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
@@ -61,7 +62,7 @@ const InputComponent = (props) => {
 const ComboBox = ({
   name,
   title,
-  defaultValue,
+  defaultValue = '',
   handleChange,
   placeholder,
   items,
@@ -74,7 +75,7 @@ const ComboBox = ({
       onChange={handleChange}
       defaultValue={defaultValue}
     >
-      <option disabled selected>
+      <option disabled value="">
         {placeholder}
       </option>
       {items.map((item, index) => (
@@ -967,18 +968,19 @@ export const InvitationForm = ({
   )
 }
 
-export const SelectProductForm = ({
-  products = [],
-  productTypes = [],
-  onChoose = () => {},
-}) => {
+export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
   const [form, setForm] = useState({
-    productId: null,
-    count: 1,
+    email: user.email,
+    name: user.name,
+    phone: user.phone,
+    whatsapp: user.whatsapp,
+    role: user.role,
   })
+
+  const forNew = user._id === undefined
 
   const handleChange = (e) => {
     const target = e.target
@@ -1000,15 +1002,9 @@ export const SelectProductForm = ({
     e.preventDefault()
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
-      // forNew
-      //   ? postData('/api/users/invitations', form, afterConfirm, setMessage)
-      //   : putData(
-      //       `/api/users/invitations/${invitation._id}`,
-      //       form,
-      //       afterConfirm,
-      //       setMessage
-      //     )
-      console.log(`form`, form)
+      forNew
+        ? postData('/api/users', form, afterConfirm, setMessage)
+        : putData(`/api/users/${user._id}`, form, afterConfirm, setMessage)
     } else {
       setErrors({ errs })
     }
@@ -1016,37 +1012,61 @@ export const SelectProductForm = ({
 
   const formValidate = () => {
     let err = {}
-    // if (!form.product) err.productId = 'Product is required'
-    // if (!form.role) err.role = 'Role is required'
+    if (!form.email) err.email = 'Email is required'
+    if (!form.name) err.name = 'Name is required'
     return err
   }
 
   return (
     <Form
       handleSubmit={handleSubmit}
-      title="Выбор продукта"
-      buttonName="Выбрать"
+      title={forNew ? 'Создние пользователя' : 'Редактирование пользователя'}
+      buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
     >
-      <ComboBox
-        name="productId"
-        handleChange={handleChange}
-        defaultValue={form.role}
-        placeholder="Выберите товар"
-        items={products.map((product) => {
-          return { name: product.name, value: product._id }
-        })}
-      />
       <Input
-        key="count"
-        label="Количество"
-        type="number"
-        name="count"
-        value={form.count}
+        key="email"
+        label="EMail"
+        type="text"
+        maxLength="80"
+        name="email"
+        value={form.email}
         onChange={handleChange}
         required
       />
+      <Input
+        key="name"
+        label="Имя"
+        type="text"
+        maxLength="80"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
+      <ComboBox
+        name="role"
+        title="Должность"
+        handleChange={handleChange}
+        defaultValue={form.role}
+        placeholder="Выберите должность"
+        items={ROLES}
+      />
+      {/* <div className="flex flex-col">
+        <label htmlFor="role">Должность</label>
+        <select
+          name="role"
+          className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
+          onChange={handleChange}
+          defaultValue={form.role}
+        >
+          <option>Выберите должность</option>
+          <option value="admin">Администратор</option>
+          <option value="aerodesigner">Аэродизайнер</option>
+          <option value="deliver">Курьер</option>
+        </select>
+      </div> */}
     </Form>
   )
 }

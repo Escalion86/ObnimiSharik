@@ -1,6 +1,7 @@
 import TypesInCard from '@admincomponents/TypesInCard'
 import ImageZoom from 'react-medium-image-zoom'
 import roleRus from '@helpers/roleRus'
+import ProductsInCard from './ProductsInCard'
 
 const Card = ({ children }) => (
   <div className="flex items-center p-2 mx-1 my-2 bg-white rounded-lg shadow-medium ">
@@ -10,8 +11,10 @@ const Card = ({ children }) => (
 
 export const SetCard = ({
   set,
+  products,
   onClick = () => {},
   onTypeClick = () => {},
+  onProductClick = () => {},
   onDelete = null,
 }) => (
   <Card>
@@ -41,6 +44,11 @@ export const SetCard = ({
         </div>
         <div className="flex-1 text-sm italic">{set.description}</div>
       </div>
+      <ProductsInCard
+        productsIdCount={set.productsIdCount}
+        products={products}
+        onClick={onProductClick}
+      />
       <TypesInCard types={set.types} onClick={onTypeClick} />
     </div>
     <div className="w-1/12 text-right">

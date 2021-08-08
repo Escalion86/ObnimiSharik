@@ -1,14 +1,7 @@
 import React from 'react'
-import ProductModal from '../modals/ProductModal'
-import { fetchingProducts } from '@helpers/fetchers'
 import { ProductCard } from '@admincomponents/Cards'
-import deleteData from '@helpers/deleteData'
 
-const ProductsContent = ({
-  data,
-  setModal = () => {},
-  updateData = () => {},
-}) => {
+const ProductsContent = ({ data, modals }) => {
   const { products } = data
 
   return (
@@ -22,17 +15,10 @@ const ProductsContent = ({
           <ProductCard
             key={product._id}
             product={{ ...product, types }}
-            onClick={() =>
-              setModal(() => (
-                <ProductModal
-                  product={product}
-                  productTypes={data.productTypes}
-                  onClose={() => setModal(null)}
-                  afterConfirm={() => fetchingProducts(updateData)}
-                />
-              ))
+            onClick={() => modals.openProductModal(product)}
+            onTypeClick={(producttype) =>
+              modals.openProductTypeModal(producttype)
             }
-            onTypeClick={(type) => console.log(`type`, type)}
           />
         )
       })}

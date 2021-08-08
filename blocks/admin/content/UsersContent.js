@@ -1,9 +1,8 @@
 import React from 'react'
 import { UserCard } from '@admincomponents/Cards'
-// import UserModal from '@adminblocks/modals/UserModal'
 import { fetchingUsers } from '@helpers/fetchers'
 
-const UsersContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
+const UsersContent = ({ data, modals }) => {
   const { users } = data
 
   return (
@@ -12,7 +11,13 @@ const UsersContent = ({ data, setModal = () => {}, updateData = () => {} }) => {
         // const count = sets.filter((set) =>
         //   set.typesId.includes(settype._id)
         // ).length
-        return <UserCard key={user._id} user={user} />
+        return (
+          <UserCard
+            key={user._id}
+            user={user}
+            onClick={() => modals.openUserModal(user)}
+          />
+        )
       })}
     </div>
   )
