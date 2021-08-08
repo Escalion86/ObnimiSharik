@@ -3,21 +3,25 @@ import React, { useEffect, useState } from 'react'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
 
+import { faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
+
 import Button from '@components/Button'
+import IconButton from '@components/IconButton'
+
+import Title from '@adminblocks/Title'
 import Cabinet from '@adminblocks/Cabinet'
 
 import Spinner from '@admincomponents/Spinner'
-// import PageContent from '@adminblocks/PageContent'
-import Title from '@adminblocks/Title'
-import ProductsContent from '@adminblocks/content/ProductsContent'
-import ProductTypesContent from '@adminblocks/content/ProductTypesContent'
-import SetTypesContent from '@adminblocks/content/SetTypesContent'
-import SetsContent from '@adminblocks/content/SetsContent'
-import UsersContent from '@adminblocks/content/UsersContent'
 
-import IconButton from '@components/IconButton'
-
-import { faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
+import {
+  ProductsContent,
+  ProductTypesContent,
+  SetTypesContent,
+  SetsContent,
+  UsersContent,
+  UsersInvitationsContent,
+  SettingsContent,
+} from '@adminblocks/content'
 
 import {
   ProductModal,
@@ -37,17 +41,6 @@ import {
   fetchingSetTypes,
   fetchingUsersInvitations,
 } from '@helpers/fetchers'
-
-// import TildaImportModal from '@adminblocks/modals/TildaImportModal'
-import UsersInvitationsContent from '@adminblocks/content/UsersInvitationsContent'
-import SettingsContent from '@adminblocks/content/SettingsContent'
-
-// import dbConnect from '@utils/dbConnect'
-// import Balloons from '@models/Balloons'
-// import Types from '@models/Types'
-// import Sets from '@models/Sets'
-
-// import useSWR from 'swr'
 
 const TitleBtn = ({ data, setModal, modal, icon = faPlus, afterConfirm }) => {
   const Modal = modal

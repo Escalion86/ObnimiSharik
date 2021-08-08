@@ -1,0 +1,7 @@
+export { default as ProductsContent } from '@adminblocks/content/ProductsContent'
+export { default as ProductTypesContent } from '@adminblocks/content/ProductTypesContent'
+export { default as SetTypesContent } from '@adminblocks/content/SetTypesContent'
+export { default as SetsContent } from '@adminblocks/content/SetsContent'
+export { default as UsersContent } from '@adminblocks/content/UsersContent'
+export { default as UsersInvitationsContent } from '@adminblocks/content/UsersInvitationsContent'
+export { default as SettingsContent } from '@adminblocks/content/SettingsContent'
