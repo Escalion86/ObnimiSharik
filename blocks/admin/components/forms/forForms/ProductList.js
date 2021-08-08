@@ -3,7 +3,6 @@ import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const СomboList = ({ onChange, selectedId, products }) => (
   <select
-    // name={name}
     className="w-full px-2 py-1 text-sm bg-gray-200 rounded-l-lg"
     onChange={onChange}
     defaultValue={selectedId ? selectedId : '0'}
@@ -14,7 +13,6 @@ const СomboList = ({ onChange, selectedId, products }) => (
     {products.map((product, index) => (
       <option
         key={'combo' + product._id}
-        // selected={selectedItem === product._id}
         className="text-sm"
         value={product._id}
       >
@@ -64,7 +62,6 @@ const ProductList = ({ productsIdCount = [], products, onChange }) => {
   }
 
   const AddRow = () => {
-    console.log(`productsIdCount`, [...productsIdCount, { id: '0', count: 1 }])
     onChange([...productsIdCount, { id: '0', count: 1 }])
   }
 
@@ -96,10 +93,6 @@ const ProductList = ({ productsIdCount = [], products, onChange }) => {
               className="text-gray-700"
               icon={faPlus}
               size="1x"
-              // onClick={() => {
-              //   images.splice(index, 1)
-              //   onChange(images)
-              // }}
             />
           </div>
         </div>

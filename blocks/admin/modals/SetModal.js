@@ -1,6 +1,6 @@
-import { SetForm } from '@admincomponents/Forms'
+import { SetForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
-import deleteData from '@helpers/deleteData'
+import { deleteData } from '@helpers/CRUD'
 
 const SetModal = ({
   set,

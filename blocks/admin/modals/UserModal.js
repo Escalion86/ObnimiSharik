@@ -1,6 +1,6 @@
-import { UserForm } from '@admincomponents/Forms'
+import { UserForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
-import deleteData from '@helpers/deleteData'
+import { deleteData } from '@helpers/CRUD'
 
 const UserModal = ({ user, onClose = () => {}, afterConfirm = () => {} }) => {
   return (

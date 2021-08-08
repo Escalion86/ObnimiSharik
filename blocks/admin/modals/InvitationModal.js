@@ -1,6 +1,6 @@
-import { InvitationForm } from '@admincomponents/Forms'
+import { InvitationForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
-import deleteData from '@helpers/deleteData'
+import { deleteData } from '@helpers/CRUD'
 
 const InvitationModal = ({
   invitation,

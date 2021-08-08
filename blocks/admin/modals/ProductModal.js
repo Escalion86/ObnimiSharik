@@ -1,6 +1,6 @@
-import { ProductForm } from '@admincomponents/Forms'
+import { ProductForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
-import deleteData from '@helpers/deleteData'
+import { deleteData } from '@helpers/CRUD'
 
 const ProductModal = ({
   product,
