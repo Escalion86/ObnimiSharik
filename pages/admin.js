@@ -19,10 +19,15 @@ import IconButton from '@components/IconButton'
 
 import { faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
 
-import ProductModal from '@adminblocks/modals/ProductModal'
-import SetModal from '@adminblocks/modals/SetModal'
-import ProductTypeModal from '@adminblocks/modals/ProductTypeModal'
-import SetTypeModal from '@adminblocks/modals/SetTypeModal'
+import {
+  ProductModal,
+  SetModal,
+  ProductTypeModal,
+  SetTypeModal,
+  InvitationModal,
+  TildaImportModal,
+  UserModal,
+} from '@adminblocks/modals'
 
 import {
   fetchingAll,
@@ -35,7 +40,6 @@ import {
 
 // import TildaImportModal from '@adminblocks/modals/TildaImportModal'
 import UsersInvitationsContent from '@adminblocks/content/UsersInvitationsContent'
-import InvitationModal from '@adminblocks/modals/InvitationModal'
 import SettingsContent from '@adminblocks/content/SettingsContent'
 
 // import dbConnect from '@utils/dbConnect'
