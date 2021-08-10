@@ -53,8 +53,9 @@ export const DEFAULT_INVITATION = {
 }
 
 export const ROLES = [
-  { name: 'Администратор', value: 'admin' },
-  { name: 'Аэродизайнер', value: 'aerodesigner' },
-  { name: 'Курьер', value: 'deliver' },
-  { name: 'Оператор', value: 'operator' },
+  { name: 'Администратор', value: 'admin', hidden: false },
+  { name: 'Аэродизайнер', value: 'aerodesigner', hidden: false },
+  { name: 'Курьер', value: 'deliver', hidden: false },
+  { name: 'Оператор', value: 'operator', hidden: false },
+  { name: 'Разработчик', value: 'dev', hidden: true },
 ]

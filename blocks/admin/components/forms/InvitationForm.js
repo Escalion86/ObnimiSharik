@@ -87,7 +87,7 @@ const InvitationForm = ({
         handleChange={handleChange}
         defaultValue={form.role}
         placeholder="Выберите должность"
-        items={ROLES}
+        items={ROLES.filter((role) => !role.hidden)}
       />
       {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>
