@@ -192,7 +192,7 @@ export default function Admin() {
       name: 'Обзор',
       header: 'Обзор',
       pageContent: null,
-      pageButtons: [BtnToast],
+      pageButtons: [],
       backToPageId: null,
       accessRoles: ['admin'],
     }, // 3
