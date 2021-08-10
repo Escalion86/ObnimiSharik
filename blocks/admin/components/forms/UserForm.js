@@ -60,14 +60,15 @@ export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
             'Ошибка при редактировании пользователя "' + form.name + '"'
           )
     } else {
-      setErrors({ errs })
+      setErrors(errs)
     }
   }
 
   const formValidate = () => {
     let err = {}
-    if (!form.email) err.email = 'Email is required'
-    if (!form.name) err.name = 'Name is required'
+    if (!form.email) err.email = 'Введите Email'
+    if (!form.name) err.name = 'Введите Имя'
+    if (!form.role) err.role = 'Укажите должность'
     return err
   }
 
@@ -106,6 +107,7 @@ export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
         defaultValue={form.role}
         placeholder="Выберите должность"
         items={ROLES.filter((role) => !role.hidden)}
+        required
       />
       <InputMask
         className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"

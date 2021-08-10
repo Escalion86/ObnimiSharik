@@ -1,6 +1,11 @@
 import { useState } from 'react'
 
-const MultiselectCheckbox = ({ title = '', options, onChange }) => {
+const MultiselectCheckbox = ({
+  title = '',
+  options,
+  onChange,
+  required = false,
+}) => {
   const [data, setData] = useState(options)
 
   const toggle = (index) => {
@@ -16,7 +21,10 @@ const MultiselectCheckbox = ({ title = '', options, onChange }) => {
 
   return (
     <div>
-      <div className="">{title}</div>
+      <div className="">
+        {title}
+        {required ? <span className="text-red-700">*</span> : null}
+      </div>
       <div className="overflow-hidden bg-gray-200 border border-gray-700 rounded-lg max-h-40">
         <div className="px-2 py-1 overflow-y-scroll max-h-40">
           {data.map((item, index) => (

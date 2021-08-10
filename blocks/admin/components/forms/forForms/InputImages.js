@@ -8,6 +8,7 @@ const InputImages = ({
   images = [],
   onChange = () => {},
   onAddImage = () => {},
+  required = false,
 }) => {
   const hiddenFileInput = useRef(null)
   const addImageClick = (event) => {
@@ -20,8 +21,15 @@ const InputImages = ({
 
   return (
     <div className="flex flex-col">
-      <label>Картинки</label>
-      <div className="flex flex-wrap w-full gap-2 px-1.5 py-1 bg-gray-200 border border-gray-700 rounded-lg">
+      <label>
+        Картинки{required ? <span className="text-red-700">*</span> : null}
+      </label>
+      <div
+        className={
+          'flex flex-wrap w-full gap-2 px-1.5 py-1 bg-gray-200 border rounded-lg ' +
+          (required && !images?.length ? 'border-red-700' : 'border-gray-700')
+        }
+      >
         {images.map((image, index) => (
           <div key={index} className="relative">
             <ImageZoom

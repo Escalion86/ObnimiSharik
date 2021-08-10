@@ -112,14 +112,14 @@ const ProductForm = ({
     if (Object.keys(errs).length === 0) {
       sendForm()
     } else {
-      setErrors({ errs })
+      setErrors(errs)
     }
   }
 
   const formValidate = () => {
     let err = {}
-    if (!form.name) err.name = 'Name is required'
-    if (!form.price) err.price = 'Price is required'
+    if (!form.name) err.name = 'Введите название'
+    if (!form.price) err.price = 'Введите сумму'
     // if (!form.images) err.image = 'Image URL is required'
     return err
   }
@@ -150,7 +150,6 @@ const ProductForm = ({
         name="description"
         value={form.description}
         onChange={handleChange}
-        required
         textarea
       />
       <div className="flex">
@@ -163,12 +162,15 @@ const ProductForm = ({
             name="article"
             value={form.article}
             onChange={handleChange}
-            required
             className="w-40"
           />
         </div>
         <div className="flex-1">
-          <PriceInput value={form.price / 100} onChange={handleChange} />
+          <PriceInput
+            value={form.price / 100}
+            onChange={handleChange}
+            required
+          />
         </div>
       </div>
       {/* <Input

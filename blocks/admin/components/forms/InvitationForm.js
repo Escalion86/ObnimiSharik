@@ -59,7 +59,7 @@ const InvitationForm = ({
             'Ошибка при редактировании приглашения для "' + form.email + '"'
           )
     } else {
-      setErrors({ errs })
+      setErrors(errs)
     }
   }
 
@@ -95,6 +95,7 @@ const InvitationForm = ({
         defaultValue={form.role}
         placeholder="Выберите должность"
         items={ROLES.filter((role) => !role.hidden)}
+        required
       />
       {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>

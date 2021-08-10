@@ -57,13 +57,13 @@ const SetTypeForm = ({
             'Ошибка при редактировании типа набора "' + form.name + '"'
           )
     } else {
-      setErrors({ errs })
+      setErrors(errs)
     }
   }
 
   const formValidate = () => {
     let err = {}
-    if (!form.name) err.name = 'Name is required'
+    if (!form.name) err.name = 'Введите название'
     return err
   }
 

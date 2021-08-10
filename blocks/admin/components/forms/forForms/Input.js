@@ -22,9 +22,15 @@ const Input = ({
 }) => {
   return (
     <div className={'flex flex-col' + (className ? ' ' + className : '')}>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>
+        {label}
+        {required ? <span className="text-red-700">*</span> : null}
+      </label>
       <InputComponent
-        className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
+        className={
+          'px-2 py-1 bg-gray-200 border rounded-lg ' +
+          (required && !value ? 'border-red-700' : 'border-gray-700')
+        }
         type={type}
         maxLength={maxLength}
         name={name}

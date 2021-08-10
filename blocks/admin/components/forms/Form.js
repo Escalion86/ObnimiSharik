@@ -18,7 +18,9 @@ const Form = ({
       <p>{message}</p>
       <div>
         {Object.keys(errors).map((err, index) => (
-          <li key={index}>{err}</li>
+          <li className="text-red-700" key={index}>
+            {errors[err]}
+          </li>
         ))}
       </div>
     </>

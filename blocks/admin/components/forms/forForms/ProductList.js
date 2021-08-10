@@ -52,7 +52,12 @@ const ItemRow = ({ onChange, selectedId, count = 1, index, products }) => {
   )
 }
 
-const ProductList = ({ productsIdCount = [], products, onChange }) => {
+const ProductList = ({
+  productsIdCount = [],
+  products,
+  onChange,
+  required,
+}) => {
   const onChangeItemRow = (e) => {
     const newProductsIdCount = productsIdCount.map((item, index) => {
       if (index === e.index) return { id: e.id, count: e.count }
@@ -67,10 +72,18 @@ const ProductList = ({ productsIdCount = [], products, onChange }) => {
 
   return (
     <div className="flex flex-col">
-      <label htmlFor="productIds">Список товаров</label>
+      <label htmlFor="productIds">
+        Список товаров
+        {required ? <span className="text-red-700">*</span> : null}
+      </label>
       <div
         name="productIds"
-        className="flex flex-col bg-gray-200 border border-gray-700 rounded-lg"
+        className={
+          'flex flex-col bg-gray-200 border rounded-lg ' +
+          (required && !productsIdCount?.length
+            ? 'border-red-700'
+            : 'border-gray-700')
+        }
       >
         {productsIdCount
           ? productsIdCount.map((item, index) => (

@@ -5,12 +5,16 @@ const ComboBox = ({
   handleChange,
   placeholder,
   items,
+  required = false,
 }) => (
   <div className="flex flex-col">
     <label htmlFor={name}>{title}</label>
     <select
       name={name}
-      className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
+      className={
+        'px-2 py-1 bg-gray-200 border rounded-lg ' +
+        (required && !defaultValue ? 'border-red-700' : 'border-gray-700')
+      }
       onChange={handleChange}
       defaultValue={defaultValue}
     >

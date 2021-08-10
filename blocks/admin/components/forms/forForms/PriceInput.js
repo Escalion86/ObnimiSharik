@@ -2,8 +2,15 @@ const PriceInput = ({ value, onChange, required = false, className }) => {
   if (!parseInt(value)) value = 0
   return (
     <div className={'flex flex-col w-32' + (className ? ' ' + className : '')}>
-      <label htmlFor="price">Стоимость</label>
-      <div className="flex w-full border border-gray-700 rounded-lg flex-nowrap">
+      <label htmlFor="price">
+        Стоимость{required ? <span className="text-red-700">*</span> : null}
+      </label>
+      <div
+        className={
+          'flex w-full border rounded-lg flex-nowrap ' +
+          (required && !value ? 'border-red-700' : 'border-gray-700')
+        }
+      >
         <input
           className="flex-1 w-24 px-2 py-1 bg-gray-200 rounded-l-lg"
           type="text"
