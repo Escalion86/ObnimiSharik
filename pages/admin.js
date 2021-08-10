@@ -40,6 +40,7 @@ import {
   fetchingSets,
   fetchingSetTypes,
   fetchingUsersInvitations,
+  fetchingUsers,
 } from '@helpers/fetchers'
 
 const TitleBtn = ({ data, setModal, modal, icon = faPlus, afterConfirm }) => {
@@ -290,7 +291,13 @@ export default function Admin() {
         <TildaImportModal {...data} onClose={() => setModal(null)} />
       )),
     openUserModal: () =>
-      setModal(() => <UserModal {...data} onClose={() => setModal(null)} />),
+      setModal(() => (
+        <UserModal
+          {...data}
+          onClose={() => setModal(null)}
+          afterConfirm={() => fetchingUsers(updateData)}
+        />
+      )),
   }
 
   // const router = useRouter()
