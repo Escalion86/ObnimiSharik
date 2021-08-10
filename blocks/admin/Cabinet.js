@@ -7,6 +7,8 @@ import Header from '@adminblocks/Header'
 import { DEFAULT_USER } from '@helpers/constants'
 // import Account from './PageContent/Account'
 // import Title from './Components/Title'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Cabinet = ({
   page,
@@ -49,6 +51,7 @@ const Cabinet = ({
           {children}
         </main>
       </div>
+      <ToastContainer />
     </div>
   )
 }
