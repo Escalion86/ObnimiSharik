@@ -1,5 +1,5 @@
 import dbConnect from '@utils/dbConnect'
-import UsersInvitations from '@models/UsersInvitations'
+import Invitations from '@models/Invitations'
 
 export default async function handler(req, res) {
   const { method } = req
@@ -9,28 +9,28 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        const usersInvitations = await UsersInvitations.find(
+        const invitations = await Invitations.find(
           {}
         ) /* find all the data in our database */
-        res.status(200).json({ success: true, data: usersInvitations })
+        res.status(200).json({ success: true, data: invitations })
       } catch (error) {
         res.status(400).json({ success: false, error })
       }
       break
     case 'POST':
       try {
-        const userInvitation = await UsersInvitations.create(
+        const invitation = await Invitations.create(
           req.body
         ) /* create a new model in the database */
-        res.status(201).json({ success: true, data: userInvitation })
+        res.status(201).json({ success: true, data: invitation })
       } catch (error) {
         res.status(400).json({ success: false, error })
       }
       break
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        const deletedUserInvitation = await UsersInvitations.deleteMany({})
-        if (!deletedUserInvitation) {
+        const deletedInvitation = await Invitations.deleteMany({})
+        if (!deletedInvitation) {
           return res.status(400).json({ success: false })
         }
         res.status(200).json({ success: true, data: {} })

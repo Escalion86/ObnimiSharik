@@ -1,5 +1,5 @@
 import dbConnect from '@utils/dbConnect'
-import UsersInvitations from '@models/UsersInvitations'
+import Invitations from '@models/Invitations'
 
 export default async function handler(req, res) {
   const {
@@ -12,11 +12,11 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET' /* Get a model by its ID */:
       try {
-        const userInvitation = await UsersInvitations.findById(id)
-        if (!userInvitation) {
+        const invitation = await Invitations.findById(id)
+        if (!invitation) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json({ success: true, data: userInvitation })
+        res.status(200).json({ success: true, data: invitation })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -25,18 +25,14 @@ export default async function handler(req, res) {
     case 'PUT' /* Edit a model by its ID */:
       try {
         const body = { ...req.body, updatedAt: Date.now() }
-        const userInvitation = await UsersInvitations.findByIdAndUpdate(
-          id,
-          body,
-          {
-            new: true,
-            runValidators: true,
-          }
-        )
-        if (!userInvitation) {
+        const invitation = await Invitations.findByIdAndUpdate(id, body, {
+          new: true,
+          runValidators: true,
+        })
+        if (!invitation) {
           return res.status(400).json({ success: false })
         }
-        res.status(200).json({ success: true, data: userInvitation })
+        res.status(200).json({ success: true, data: invitation })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -44,10 +40,10 @@ export default async function handler(req, res) {
 
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        const deletedUserInvitation = await UsersInvitations.deleteOne({
+        const deletedInvitation = await Invitations.deleteOne({
           _id: id,
         })
-        if (!deletedUserInvitation) {
+        if (!deletedInvitation) {
           return res.status(400).json({ success: false })
         }
         res.status(200).json({ success: true, data: {} })

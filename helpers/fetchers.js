@@ -49,12 +49,12 @@ export async function fetchingSetTypes(updateData = () => {}) {
   return resp
 }
 
-export async function fetchingUsersInvitations(updateData = () => {}) {
+export async function fetchingInvitations(updateData = () => {}) {
   const resp = await fetch('/api/users/invitations')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ usersInvitations: resp })
-  console.log('Запущен fetchingUsersInvitations')
+  updateData({ invitations: resp })
+  console.log('Запущен fetchingInvitations')
   return resp
 }
 

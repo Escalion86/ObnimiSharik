@@ -2,7 +2,12 @@ import { mutate } from 'swr'
 
 const contentType = 'application/json'
 
-export const putData = async (url, form, callback, onError) => {
+export const putData = async (
+  url,
+  form,
+  callback = () => {},
+  onError = (error) => console.log(error)
+) => {
   // const { id } = router.query
 
   try {
@@ -30,7 +35,12 @@ export const putData = async (url, form, callback, onError) => {
 }
 
 /* The POST method adds a new entry in the mongodb database. */
-export const postData = async (url, form, callback, onError) => {
+export const postData = async (
+  url,
+  form,
+  callback = () => {},
+  onError = (error) => console.log(error)
+) => {
   try {
     const res = await fetch(url, {
       method: 'POST',
@@ -54,7 +64,11 @@ export const postData = async (url, form, callback, onError) => {
   }
 }
 
-export const deleteData = async (url, callback, onError) => {
+export const deleteData = async (
+  url,
+  callback = () => {},
+  onError = (error) => console.log(error)
+) => {
   try {
     const res = await fetch(url, {
       method: 'DELETE',

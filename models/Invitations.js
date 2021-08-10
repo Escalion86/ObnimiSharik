@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
-const UsersInvitationsSchema = new mongoose.Schema({
+const InvitationsSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Введите EMail'],
@@ -24,5 +24,5 @@ const UsersInvitationsSchema = new mongoose.Schema({
   },
 })
 
-export default mongoose.models.UsersInvitations ||
-  mongoose.model('UsersInvitations', UsersInvitationsSchema)
+export default mongoose.models.Invitations ||
+  mongoose.model('Invitations', InvitationsSchema)

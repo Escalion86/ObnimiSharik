@@ -3,7 +3,7 @@ import Products from '@models/Products'
 import ProductTypes from '@models/ProductTypes'
 import Sets from '@models/Sets'
 import SetTypes from '@models/SetTypes'
-import UsersInvitations from '@models/UsersInvitations'
+import Invitations from '@models/Invitations'
 import Users from '@models/Users'
 
 export default async function handler(req, res) {
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         const productTypes = await ProductTypes.find({})
         const sets = await Sets.find({})
         const setTypes = await SetTypes.find({})
-        const usersInvitations = await UsersInvitations.find({})
+        const invitations = await Invitations.find({})
         const users = await Users.find({})
 
         res.status(200).json({
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
             productTypes,
             sets,
             setTypes,
-            usersInvitations,
+            invitations,
             users,
           },
         })

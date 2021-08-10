@@ -19,7 +19,7 @@ import {
   SetTypesContent,
   SetsContent,
   UsersContent,
-  UsersInvitationsContent,
+  InvitationsContent,
   SettingsContent,
 } from '@adminblocks/content'
 
@@ -31,6 +31,7 @@ import {
   InvitationModal,
   TildaImportModal,
   UserModal,
+  MessageModal,
 } from '@adminblocks/modals'
 
 import {
@@ -39,7 +40,7 @@ import {
   fetchingProductTypes,
   fetchingSets,
   fetchingSetTypes,
-  fetchingUsersInvitations,
+  fetchingInvitations,
   fetchingUsers,
 } from '@helpers/fetchers'
 
@@ -112,7 +113,7 @@ const BtnAddInvitation = ({ data, setModal, updateData, key }) => (
     setModal={setModal}
     modal={InvitationModal}
     icon={faPlus}
-    afterConfirm={() => fetchingUsersInvitations(updateData)}
+    afterConfirm={() => fetchingInvitations(updateData)}
     key={key}
   />
 )
@@ -192,7 +193,7 @@ const pages = [
     group: 3,
     name: 'Приглашения',
     header: 'Приглашения',
-    pageContent: UsersInvitationsContent,
+    pageContent: InvitationsContent,
     pageButtons: [BtnAddInvitation],
     backToPageId: null,
     accessRoles: ['admin'],
@@ -242,6 +243,8 @@ export default function Admin() {
     productTypes: [],
     sets: [],
     setTypes: [],
+    users: [],
+    invitations: [],
   })
   const [Modal, setModal] = useState(null)
 
@@ -290,13 +293,25 @@ export default function Admin() {
       setModal(() => (
         <TildaImportModal {...data} onClose={() => setModal(null)} />
       )),
-    openUserModal: () =>
+    openUserModal: (user) =>
       setModal(() => (
         <UserModal
-          {...data}
+          user={user}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingUsers(updateData)}
         />
+      )),
+    openInvitationModal: (invitation) =>
+      setModal(() => (
+        <InvitationModal
+          invitation={invitation}
+          onClose={() => setModal(null)}
+          afterConfirm={() => fetchingInvitations(updateData)}
+        />
+      )),
+    openMessageModal: (message) =>
+      setModal(() => (
+        <MessageModal message={message} onClose={() => setModal(null)} />
       )),
   }
 

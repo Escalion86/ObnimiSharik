@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 import dbConnect from '@utils/dbConnect'
 import Users from '@models/Users'
-import UsersInvitations from '@models/UsersInvitations'
+import Invitations from '@models/Invitations'
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -28,7 +28,7 @@ export default NextAuth({
       session.user.phone = result[0].phone
 
       if (result && result[0].role === 'client') {
-        const invitation = await UsersInvitations.find({
+        const invitation = await Invitations.find({
           email: user.email,
           status: 'created',
         })
@@ -38,7 +38,7 @@ export default NextAuth({
             { email: user.email },
             { role: invitation[0].role, updatedAt: Date.now() }
           )
-          await UsersInvitations.findOneAndUpdate(
+          await Invitations.findOneAndUpdate(
             { email: user.email, status: 'created' },
             { status: 'confirmed', updatedAt: Date.now() }
           )
