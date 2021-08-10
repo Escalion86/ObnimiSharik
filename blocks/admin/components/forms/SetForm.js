@@ -61,8 +61,20 @@ const SetForm = ({
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
       forNew
-        ? postData('/api/sets', form, afterConfirmUpd, setMessage)
-        : putData(`/api/sets/${set._id}`, form, afterConfirmUpd, setMessage)
+        ? postData(
+            '/api/sets',
+            form,
+            afterConfirmUpd,
+            'Набор "' + form.name + '" создан',
+            'Ошибка при создании набора "' + form.name + '"'
+          )
+        : putData(
+            `/api/sets/${set._id}`,
+            form,
+            afterConfirmUpd,
+            'Набор "' + form.name + '" изменен',
+            'Ошибка при редактировании набора "' + form.name + '"'
+          )
     } else {
       setErrors({ errs })
       console.log(`errs`, errs)

@@ -6,6 +6,8 @@ import { ComboBox, Input } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
+import InputMask from 'react-input-mask'
+
 import Form from './Form'
 
 export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
@@ -43,8 +45,20 @@ export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
       forNew
-        ? postData('/api/users', form, afterConfirm, setMessage)
-        : putData(`/api/users/${user._id}`, form, afterConfirm, setMessage)
+        ? postData(
+            '/api/users',
+            form,
+            afterConfirm,
+            'Пользователь "' + form.name + '" создан',
+            'Ошибка при создании пользователя "' + form.name + '"'
+          )
+        : putData(
+            `/api/users/${user._id}`,
+            form,
+            afterConfirm,
+            'Пользователь "' + form.name + '" изменен',
+            'Ошибка при редактировании пользователя "' + form.name + '"'
+          )
     } else {
       setErrors({ errs })
     }
@@ -93,7 +107,11 @@ export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
         placeholder="Выберите должность"
         items={ROLES.filter((role) => !role.hidden)}
       />
-
+      <InputMask
+        className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
+        mask="+4\9 99 999 99"
+        maskChar=" "
+      />
       {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>
         <select

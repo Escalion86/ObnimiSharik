@@ -11,6 +11,8 @@ import { postData, putData } from '@helpers/CRUD'
 
 import compareArrays from '@helpers/compareArrays'
 
+import toasts from '@helpers/toasts'
+
 import Form from './Form'
 
 const ProductForm = ({
@@ -86,15 +88,21 @@ const ProductForm = ({
 
   //   return images
   // }
-
   const sendForm = async () => {
     forNew
-      ? postData('/api/products', form, afterConfirmUpd, setMessage)
+      ? postData(
+          '/api/products',
+          form,
+          afterConfirmUpd,
+          'Товар "' + form.name + '" создан',
+          'Ошибка при создании товара "' + form.name + '"'
+        )
       : putData(
           `/api/products/${product._id}`,
           form,
           afterConfirmUpd,
-          setMessage
+          'Товар "' + form.name + '" изменен',
+          'Ошибка при редактировании товара "' + form.name + '"'
         )
   }
 

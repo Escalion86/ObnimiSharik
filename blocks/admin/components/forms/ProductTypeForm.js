@@ -42,12 +42,19 @@ const ProductTypeForm = ({
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
       forNew
-        ? postData('/api/producttypes', form, afterConfirm, setMessage)
+        ? postData(
+            '/api/producttypes',
+            form,
+            afterConfirm,
+            'Тип товара "' + form.name + '" создан',
+            'Ошибка при создании типа товара "' + form.name + '"'
+          )
         : putData(
             `/api/producttypes/${producttype._id}`,
             form,
             afterConfirm,
-            setMessage
+            'Тип товара "' + form.name + '" изменен',
+            'Ошибка при редактировании типа товара "' + form.name + '"'
           )
     } else {
       setErrors({ errs })

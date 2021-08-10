@@ -9,7 +9,12 @@ const UserModal = ({ user, onClose = () => {}, afterConfirm = () => {} }) => {
       onDelete={
         user?._id
           ? () => {
-              deleteData('/api/users/' + invitation._id)
+              deleteData(
+                '/api/users/' + user._id,
+                null,
+                'Пользователь "' + user.name + '" удален',
+                'Ошибка при удалении пользователя "' + user.name + '"'
+              )
               afterConfirm()
               onClose()
             }

@@ -13,7 +13,12 @@ const InvitationModal = ({
       onDelete={
         invitation?._id
           ? () => {
-              deleteData('/api/users/invitations/' + invitation._id)
+              deleteData(
+                '/api/users/invitations/' + invitation._id,
+                null,
+                'Приглашение для "' + invitation.email + '" удалено',
+                'Ошибка при удалении приглаения для "' + invitation.email + '"'
+              )
               afterConfirm()
               onClose()
             }

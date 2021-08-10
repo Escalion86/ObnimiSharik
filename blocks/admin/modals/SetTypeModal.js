@@ -13,7 +13,12 @@ const SetTypeModal = ({
       onDelete={
         settype?._id
           ? () => {
-              deleteData('/api/settypes/' + settype._id)
+              deleteData(
+                '/api/settypes/' + settype._id,
+                null,
+                'Тип набора "' + settype.name + '" удален',
+                'Ошибка при удалении типа набора "' + settype.name + '"'
+              )
               afterConfirm()
               onClose()
             }

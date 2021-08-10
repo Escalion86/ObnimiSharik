@@ -42,12 +42,19 @@ const SetTypeForm = ({
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
       forNew
-        ? postData('/api/settypes', form, afterConfirm, setMessage)
+        ? postData(
+            '/api/settypes',
+            form,
+            afterConfirm,
+            'Тип набора "' + form.name + '" создан',
+            'Ошибка при создании типа набора "' + form.name + '"'
+          )
         : putData(
             `/api/settypes/${settype._id}`,
             form,
             afterConfirm,
-            setMessage
+            'Тип набора "' + form.name + '" изменен',
+            'Ошибка при редактировании типа набора "' + form.name + '"'
           )
     } else {
       setErrors({ errs })

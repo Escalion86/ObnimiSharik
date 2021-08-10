@@ -15,7 +15,12 @@ const SetModal = ({
       onDelete={
         set?._id
           ? () => {
-              deleteData('/api/sets/' + set._id)
+              deleteData(
+                '/api/sets/' + set._id,
+                null,
+                'Набор "' + set.name + '" удален',
+                'Ошибка при удалении набора "' + set.name + '"'
+              )
               afterConfirm()
               onClose()
             }

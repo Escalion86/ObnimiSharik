@@ -44,12 +44,19 @@ const InvitationForm = ({
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
       forNew
-        ? postData('/api/users/invitations', form, afterConfirm, setMessage)
+        ? postData(
+            '/api/users/invitations',
+            form,
+            afterConfirm,
+            'Приглашение для "' + form.email + '" создано и отправлно',
+            'Ошибка при редактировании пришлашения для "' + form.email + '"'
+          )
         : putData(
             `/api/users/invitations/${invitation._id}`,
             form,
             afterConfirm,
-            setMessage
+            'Приглашение для "' + form.email + '" изменено',
+            'Ошибка при редактировании приглашения для "' + form.email + '"'
           )
     } else {
       setErrors({ errs })

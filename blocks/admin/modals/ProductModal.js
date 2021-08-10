@@ -15,7 +15,12 @@ const ProductModal = ({
       onDelete={
         product?._id
           ? () => {
-              deleteData('/api/products/' + product._id)
+              deleteData(
+                '/api/products/' + product._id,
+                null,
+                'Товар "' + product.name + '" удален',
+                'Ошибка при удалении товара "' + product.name + '"'
+              )
               afterConfirm()
               onClose()
             }
