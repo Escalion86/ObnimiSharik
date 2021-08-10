@@ -44,186 +44,15 @@ import {
   fetchingUsers,
 } from '@helpers/fetchers'
 
-const TitleBtn = ({ data, setModal, modal, icon = faPlus, afterConfirm }) => {
-  const Modal = modal
-  return (
-    <IconButton
-      onClick={() =>
-        setModal(() => (
-          <Modal
-            {...data}
-            onClose={() => setModal(null)}
-            afterConfirm={afterConfirm}
-          />
-        ))
-      }
-      inverse
-      icon={icon}
-    />
-  )
-}
-
-const BtnAddSet = ({ data, setModal, updateData, key }) => (
-  <TitleBtn
-    data={data}
-    setModal={setModal}
-    modal={SetModal}
-    icon={faPlus}
-    afterConfirm={() => fetchingSets(updateData)}
-    key={key}
-  />
-)
-
-const BtnAddProductType = ({ data, setModal, updateData, key }) => (
-  <TitleBtn
-    data={data}
-    setModal={setModal}
-    modal={ProductTypeModal}
-    icon={faPlus}
-    afterConfirm={() => fetchingProductTypes(updateData)}
-    key={key}
-  />
-)
-
-const BtnAddSetType = ({ data, setModal, updateData, key }) => (
-  <TitleBtn
-    data={data}
-    setModal={setModal}
-    modal={SetTypeModal}
-    icon={faPlus}
-    afterConfirm={() => fetchingSetTypes(updateData)}
-    key={key}
-  />
-)
-
-const BtnAddProduct = ({ data, setModal, updateData, key }) => (
-  <TitleBtn
-    data={data}
-    setModal={setModal}
-    modal={ProductModal}
-    icon={faPlus}
-    afterConfirm={() => fetchingProducts(updateData)}
-    key={key}
-  />
-)
-
-const BtnAddInvitation = ({ data, setModal, updateData, key }) => (
-  <TitleBtn
-    data={data}
-    setModal={setModal}
-    modal={InvitationModal}
-    icon={faPlus}
-    afterConfirm={() => fetchingInvitations(updateData)}
-    key={key}
-  />
-)
-
-const pages = [
-  {
-    id: 0,
-    group: 0,
-    name: 'Обзор',
-    header: 'Обзор',
-    pageContent: null,
-    pageButtons: [],
-    backToPageId: null,
-    accessRoles: ['admin'],
-  }, // 3
-  {
-    id: 1,
-    group: 1,
-    name: 'Товары',
-    header: 'Товары',
-    pageContent: ProductsContent,
-    pageButtons: [BtnAddProduct],
-    backToPageId: null,
-    accessRoles: ['admin', 'operator', 'aerodesigner'],
-  }, // 0
-  {
-    id: 2,
-    group: 1,
-    name: 'Типы шариков',
-    header: 'Типы шариков',
-    pageContent: ProductTypesContent,
-    pageButtons: [BtnAddProductType],
-    backToPageId: null,
-    accessRoles: ['admin'],
-  }, // 1
-  {
-    id: 3,
-    group: 1,
-    name: 'Наборы',
-    header: 'Наборы',
-    pageContent: SetsContent,
-    pageButtons: [BtnAddSet],
-    backToPageId: null,
-    accessRoles: ['admin', 'operator', 'aerodesigner'],
-  }, // 2
-  {
-    id: 4,
-    group: 1,
-    name: 'Типы наборов',
-    header: 'Типы наборов',
-    pageContent: SetTypesContent,
-    pageButtons: [BtnAddSetType],
-    backToPageId: null,
-    accessRoles: ['admin'],
-  }, // 1
-  {
-    id: 5,
-    group: null,
-    name: 'Параметры учетной записи',
-    header: 'Параметры учетной записи',
-    pageContent: null,
-    pageButtons: [],
-    backToPageId: null,
-  }, // 3
-  {
-    id: 6,
-    group: 3,
-    name: 'Сотрудники',
-    header: 'Сотрудники',
-    pageContent: UsersContent,
-    pageButtons: [],
-    backToPageId: null,
-    accessRoles: ['admin'],
-  }, // 3
-  {
-    id: 7,
-    group: 3,
-    name: 'Приглашения',
-    header: 'Приглашения',
-    pageContent: InvitationsContent,
-    pageButtons: [BtnAddInvitation],
-    backToPageId: null,
-    accessRoles: ['admin'],
-  },
-  {
-    id: 8,
-    group: 4,
-    name: 'Настройки',
-    header: 'Настройки',
-    pageContent: SettingsContent,
-    pageButtons: [],
-    backToPageId: 0,
-    accessRoles: ['admin'],
-  },
-]
-
-const pagesGroups = [
-  { id: 0, name: '' },
-  { id: 1, name: 'Продукция' },
-  { id: 2, name: 'Склад' },
-  { id: 3, name: 'Пользователи' },
-  { id: 4, name: 'Настройки' },
-]
-
 const menuCfg = (pages, pagesGroups, userRole) => {
   let result = []
   pagesGroups.forEach((group) => {
     let items = []
     pages.forEach((page) => {
-      if (page.group === group.id && page.accessRoles.includes(userRole))
+      if (
+        userRole === 'dev' ||
+        (page.group === group.id && page.accessRoles.includes(userRole))
+      )
         items.push(page)
     })
     if (items.length > 0) result.push({ name: group.name, items })
@@ -315,6 +144,147 @@ export default function Admin() {
       )),
   }
 
+  const TitleBtn = ({ onClick = null, icon = faPlus }) => {
+    if (!onClick) return null
+    return <IconButton onClick={onClick} inverse icon={icon} />
+  }
+
+  const BtnAddProduct = ({ key }) => (
+    <TitleBtn
+      onClick={() => modals.openProductModal()}
+      icon={faPlus}
+      key={key}
+    />
+  )
+
+  const BtnAddSet = ({ key }) => (
+    <TitleBtn onClick={() => modals.openSetModal()} icon={faPlus} key={key} />
+  )
+
+  const BtnAddProductType = ({ key }) => (
+    <TitleBtn
+      onClick={() => modals.openProductTypeModal()}
+      icon={faPlus}
+      key={key}
+    />
+  )
+
+  const BtnAddSetType = ({ key }) => (
+    <TitleBtn
+      onClick={() => modals.openSetTypeModal()}
+      icon={faPlus}
+      key={key}
+    />
+  )
+
+  const BtnAddInvitation = ({ key }) => (
+    <TitleBtn
+      onClick={() => modals.openInvitationModal()}
+      icon={faPlus}
+      key={key}
+    />
+  )
+
+  const pages = [
+    {
+      id: 0,
+      group: 0,
+      name: 'Обзор',
+      header: 'Обзор',
+      pageContent: null,
+      pageButtons: [BtnToast],
+      backToPageId: null,
+      accessRoles: ['admin'],
+    }, // 3
+    {
+      id: 1,
+      group: 1,
+      name: 'Товары',
+      header: 'Товары',
+      pageContent: ProductsContent,
+      pageButtons: [BtnAddProduct],
+      backToPageId: null,
+      accessRoles: ['admin', 'operator', 'aerodesigner'],
+    }, // 0
+    {
+      id: 2,
+      group: 1,
+      name: 'Типы шариков',
+      header: 'Типы шариков',
+      pageContent: ProductTypesContent,
+      pageButtons: [BtnAddProductType],
+      backToPageId: null,
+      accessRoles: ['admin'],
+    }, // 1
+    {
+      id: 3,
+      group: 1,
+      name: 'Наборы',
+      header: 'Наборы',
+      pageContent: SetsContent,
+      pageButtons: [BtnAddSet],
+      backToPageId: null,
+      accessRoles: ['admin', 'operator', 'aerodesigner'],
+    }, // 2
+    {
+      id: 4,
+      group: 1,
+      name: 'Типы наборов',
+      header: 'Типы наборов',
+      pageContent: SetTypesContent,
+      pageButtons: [BtnAddSetType],
+      backToPageId: null,
+      accessRoles: ['admin'],
+    }, // 1
+    {
+      id: 5,
+      group: null,
+      name: 'Параметры учетной записи',
+      header: 'Параметры учетной записи',
+      pageContent: null,
+      pageButtons: [],
+      backToPageId: null,
+    }, // 3
+    {
+      id: 6,
+      group: 3,
+      name: 'Сотрудники',
+      header: 'Сотрудники',
+      pageContent: UsersContent,
+      pageButtons: [],
+      backToPageId: null,
+      accessRoles: ['admin'],
+    }, // 3
+    {
+      id: 7,
+      group: 3,
+      name: 'Приглашения',
+      header: 'Приглашения',
+      pageContent: InvitationsContent,
+      pageButtons: [BtnAddInvitation],
+      backToPageId: null,
+      accessRoles: ['admin'],
+    },
+    {
+      id: 8,
+      group: 4,
+      name: 'Настройки',
+      header: 'Настройки',
+      pageContent: SettingsContent,
+      pageButtons: [],
+      backToPageId: 0,
+      accessRoles: ['admin'],
+    },
+  ]
+
+  const pagesGroups = [
+    { id: 0, name: '' },
+    { id: 1, name: 'Продукция' },
+    { id: 2, name: 'Склад' },
+    { id: 3, name: 'Пользователи' },
+    { id: 4, name: 'Настройки' },
+  ]
+
   // const router = useRouter()
   const [page, setPage] = useState(pages[0])
 
@@ -387,12 +357,7 @@ export default function Admin() {
                     buttons={
                       page.pageButtons
                         ? page.pageButtons.map((button, index) =>
-                            button({
-                              data,
-                              setModal,
-                              key: 'titleButton' + index,
-                              updateData: updateData,
-                            })
+                            button({ key: 'titleButton' + index })
                           )
                         : null
                     }
