@@ -1,5 +1,5 @@
 import React from 'react'
-import { TypeCard } from '@admincomponents/Cards'
+import { TypeCard } from '@admincomponents/cards'
 
 const SetTypesContent = ({ data, modals }) => {
   const { setTypes, sets } = data

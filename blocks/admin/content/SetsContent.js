@@ -1,5 +1,5 @@
 import React from 'react'
-import { SetCard } from '@admincomponents/Cards'
+import { SetCard } from '@admincomponents/cards'
 
 const SetsContent = ({ data, modals }) => {
   const { sets } = data

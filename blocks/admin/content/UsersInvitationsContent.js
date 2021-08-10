@@ -1,5 +1,5 @@
 import React from 'react'
-import { InvitationCard } from '@admincomponents/Cards'
+import { InvitationCard } from '@admincomponents/cards'
 import InvitationModal from '@adminblocks/modals/InvitationModal'
 import { fetchingUsersInvitations } from '@helpers/fetchers'
 

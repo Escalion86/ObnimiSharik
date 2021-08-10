@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserCard } from '@admincomponents/Cards'
+import { UserCard } from '@admincomponents/cards'
 import { fetchingUsers } from '@helpers/fetchers'
 
 const UsersContent = ({ data, modals }) => {

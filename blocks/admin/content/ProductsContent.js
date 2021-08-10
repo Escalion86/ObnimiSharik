@@ -1,5 +1,5 @@
 import React from 'react'
-import { ProductCard } from '@admincomponents/Cards'
+import { ProductCard } from '@admincomponents/cards'
 
 const ProductsContent = ({ data, modals }) => {
   const { products } = data
