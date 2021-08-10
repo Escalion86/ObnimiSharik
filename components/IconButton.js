@@ -8,7 +8,7 @@ const IconButton = ({
   animation = false,
   small = false,
   inverse = false,
-  icon = faQuestion,
+  icon = null,
 }) => (
   <button
     onClick={onClick}
@@ -23,10 +23,12 @@ const IconButton = ({
       (name === '' ? (small ? ' w-8' : ' w-10') : ' px-3')
     }
   >
-    <FontAwesomeIcon
-      className={'w-5 h-5 text-white' + (name === '' ? '' : ' mr-2')}
-      icon={icon}
-    />
+    {icon ? (
+      <FontAwesomeIcon
+        className={'w-5 h-5 text-white' + (name === '' ? '' : ' mr-2')}
+        icon={icon}
+      />
+    ) : null}
     {name}
   </button>
 )
