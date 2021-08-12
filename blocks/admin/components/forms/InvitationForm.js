@@ -77,6 +77,7 @@ const InvitationForm = ({
       buttonName={forNew ? 'Создать и отправить' : 'Применить'}
       message={message}
       errors={errors}
+      buttonDisabled={Object.keys(formValidate()).length !== 0}
     >
       <Input
         key="email"

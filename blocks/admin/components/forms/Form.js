@@ -7,13 +7,20 @@ const Form = ({
   errors = {},
   children,
   buttonName = 'Создать',
+  buttonDisabled = false,
 }) => {
   return (
     <>
       <div className="flex flex-col space-y-2">
         <div className="text-lg font-semibold text-center">{title}</div>
         {children}
-        <Button onClick={handleSubmit} name={buttonName} small inverse />
+        <Button
+          onClick={handleSubmit}
+          name={buttonName}
+          small
+          inverse
+          disabled={buttonDisabled}
+        />
       </div>
       <p>{message}</p>
       <div>

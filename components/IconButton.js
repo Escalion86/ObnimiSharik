@@ -9,6 +9,7 @@ const IconButton = ({
   small = false,
   inverse = false,
   icon = null,
+  disabled = false,
 }) => (
   <button
     onClick={onClick}
@@ -22,6 +23,7 @@ const IconButton = ({
       (className ? ' ' + className : '') +
       (name === '' ? (small ? ' w-8' : ' w-10') : ' px-3')
     }
+    disabled={disabled}
   >
     {icon ? (
       <FontAwesomeIcon

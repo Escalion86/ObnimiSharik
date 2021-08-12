@@ -79,6 +79,7 @@ export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
+      buttonDisabled={Object.keys(formValidate()).length !== 0}
     >
       <Input
         key="email"

@@ -131,6 +131,7 @@ const ProductForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
+      buttonDisabled={Object.keys(formValidate()).length !== 0}
     >
       <Input
         key="name"
