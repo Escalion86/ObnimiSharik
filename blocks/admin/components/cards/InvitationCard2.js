@@ -11,9 +11,6 @@ export const InvitationCard = ({
     case 'created':
       status = 'Создано'
       break
-    // case 'sended':
-    //   status = 'Отправлено'
-    //   break
     case 'confirmed':
       status = 'Принято'
       break
