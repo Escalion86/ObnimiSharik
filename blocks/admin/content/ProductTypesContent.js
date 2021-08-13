@@ -6,19 +6,21 @@ const ProductTypesContent = ({ data, modals }) => {
 
   return (
     <div>
-      {productTypes.map((producttype) => {
-        const count = products.filter((product) =>
-          product.typesId.includes(producttype._id)
-        ).length
-        return (
-          <TypeCard
-            key={producttype._id}
-            type={producttype}
-            count={count}
-            onClick={() => modals.openProductTypeModal(producttype)}
-          />
-        )
-      })}
+      {productTypes && productTypes.length > 0
+        ? productTypes.map((producttype) => {
+            const count = products.filter((product) =>
+              product.typesId.includes(producttype._id)
+            ).length
+            return (
+              <TypeCard
+                key={producttype._id}
+                type={producttype}
+                count={count}
+                onClick={() => modals.openProductTypeModal(producttype)}
+              />
+            )
+          })
+        : 'Типов продуктов нет'}
     </div>
   )
 }
