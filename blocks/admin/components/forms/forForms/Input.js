@@ -19,6 +19,7 @@ const Input = ({
   textarea,
   accept,
   className,
+  disabled = false,
 }) => {
   return (
     <div className={'flex flex-col' + (className ? ' ' + className : '')}>
@@ -28,8 +29,9 @@ const Input = ({
       </label>
       <InputComponent
         className={
-          'px-2 py-1 bg-gray-200 border rounded-lg ' +
-          (required && !value ? 'border-red-700' : 'border-gray-700')
+          'px-2 py-1 border rounded-lg ' +
+          (required && !value ? 'border-red-700' : 'border-gray-700') +
+          (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
         }
         type={type}
         maxLength={maxLength}
@@ -39,6 +41,7 @@ const Input = ({
         required={required}
         textarea={textarea}
         accept={accept}
+        disabled={disabled}
       />
     </div>
   )

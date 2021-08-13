@@ -10,7 +10,7 @@ import InputMask from 'react-input-mask'
 
 import Form from './Form'
 
-export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
+const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
@@ -90,6 +90,7 @@ export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
         value={form.email}
         onChange={handleChange}
         required
+        disabled
       />
       <Input
         key="name"
@@ -132,3 +133,5 @@ export const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
     </Form>
   )
 }
+
+export default UserForm

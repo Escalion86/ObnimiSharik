@@ -13,22 +13,31 @@ const UsersSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    default: '',
+    default: null,
   },
   phone: {
     type: Number,
-    default: 0,
+    default: null,
   },
   whatsapp: {
     type: Number,
-    default: 0,
+    default: null,
   },
   birthday: {
     type: Date,
+    default: null,
   },
   role: {
     type: String,
     default: 'client',
+  },
+  lastActivityAt: {
+    type: Date,
+    default: Date.now,
+  },
+  lastAutorizationAt: {
+    type: Date,
+    default: Date.now,
   },
   createdAt: {
     type: Date,

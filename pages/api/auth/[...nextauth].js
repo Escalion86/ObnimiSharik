@@ -4,6 +4,16 @@ import dbConnect from '@utils/dbConnect'
 import Users from '@models/Users'
 import Invitations from '@models/Invitations'
 
+const defaultUserProps = {
+  role: 'client',
+  birthday: null,
+  phone: null,
+  whatsapp: null,
+  updatedAt: Date.now(),
+  lastActivityAt: Date.now(),
+  lastAutorizationAt: Date.now(),
+}
+
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
@@ -26,26 +36,44 @@ export default NextAuth({
       })
       session.user.role = result[0].role
       session.user.phone = result[0].phone
+      // console.log(`result[0]`, result[0])
+      if (result) {
+        if (result[0].role === 'client') {
+          const invitation = await Invitations.find({
+            email: user.email,
+            status: 'created',
+          })
 
-      if (result && result[0].role === 'client') {
-        const invitation = await Invitations.find({
-          email: user.email,
-          status: 'created',
-        })
-
-        if (invitation && invitation.length === 1) {
+          if (invitation && invitation.length === 1) {
+            // Ели пользователь впервые зашел, но есть приглашение то создаем пустую учетку и указываем роль в приглашении
+            await Users.findOneAndUpdate(
+              { email: user.email },
+              {
+                ...defaultUserProps,
+                role: invitation[0].role,
+              }
+            )
+            await Invitations.findOneAndUpdate(
+              { email: user.email, status: 'created' },
+              { status: 'confirmed', updatedAt: Date.now() }
+            )
+            session.user.role = invitation[0].role
+          } else {
+            // Если пользователь зашел, но небыло приглаения то создаем пустую учетку с ролью client
+            await Users.findOneAndUpdate(
+              { email: user.email },
+              defaultUserProps
+            )
+          }
+          // session.user.role = 'client'
+          // session.user.phone = 0
+        } else {
+          // Если пользователь авторизован, то обновляем только время активности
           await Users.findOneAndUpdate(
             { email: user.email },
-            { role: invitation[0].role, updatedAt: Date.now() }
+            { lastActivityAt: Date.now(), lastAutorizationAt: Date.now() }
           )
-          await Invitations.findOneAndUpdate(
-            { email: user.email, status: 'created' },
-            { status: 'confirmed', updatedAt: Date.now() }
-          )
-          session.user.role = invitation[0].role
         }
-        // session.user.role = 'client'
-        // session.user.phone = 0
       }
       return Promise.resolve(session)
     },
