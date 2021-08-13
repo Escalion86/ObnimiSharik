@@ -358,6 +358,9 @@ export default function Admin() {
       </div>
     )
 
+  const haveAccess =
+    ROLES.filter((role) => role.value === session.user.role).length > 0
+
   return (
     <>
       {(!session || loading) && (
@@ -367,8 +370,7 @@ export default function Admin() {
       )}
       {session && !loading && (
         <>
-          {ROLES.filter((role) => role.value === session.user.role).length >
-            0 && (
+          {haveAccess && (
             // <>
             //   Signed in as {session.user.email} <br />
             //   Вы администратор
@@ -418,7 +420,7 @@ export default function Admin() {
               </Cabinet>
             </>
           )}
-          {session.user.role !== 'admin' && (
+          {!haveAccess && (
             <div className="flex items-center justify-center h-screen">
               <div className="flex flex-col items-center justify-center p-10 bg-gray-400 rounded-2xl w-92">
                 <div>Вы авторизировались как {session.user.email}</div>
