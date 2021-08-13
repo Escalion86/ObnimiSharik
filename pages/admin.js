@@ -370,30 +370,15 @@ export default function Admin() {
       )}
       {session && !loading && (
         <>
-          {haveAccess && (
-            // <>
-            //   Signed in as {session.user.email} <br />
-            //   Вы администратор
-            //   <br />
-            //   <Button name="Сменить учетную запись" onClick={() => signOut()} />
-            // </>
+          {haveAccess ? (
             <>
-              {/* <Modal
-                product={data.products[0]}
-                types={data.types}
-                sets={data.sets}
-                title="Создание продукта"
-              /> */}
               {modal}
               {confirmModal}
-              {/* <ProductModal types={data.types} title="Создание продукта" /> */}
               <Cabinet
                 page={page}
                 setPageId={setPageId}
-                // courses={courses}
                 menuCfg={menuCfg(pages, pagesGroups, session.user.role)}
                 user={session.user}
-                // setUser={setUserState}
                 onSignOut={signOut}
               >
                 <div className="relative flex flex-col flex-1">
@@ -419,8 +404,7 @@ export default function Admin() {
                 {/* <PageContent data={data} page={page} /> */}
               </Cabinet>
             </>
-          )}
-          {!haveAccess && (
+          ) : (
             <div className="flex items-center justify-center h-screen">
               <div className="flex flex-col items-center justify-center p-10 bg-gray-400 rounded-2xl w-92">
                 <div>Вы авторизировались как {session.user.email}</div>
@@ -434,7 +418,6 @@ export default function Admin() {
               </div>
             </div>
           )}
-          {/* <button onClick={() => signOut()}>Sign out</button> */}
         </>
       )}
     </>
