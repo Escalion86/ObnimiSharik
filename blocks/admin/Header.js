@@ -68,7 +68,7 @@ const UserMenu = ({
                             icon={faUser}
                           />
                         )}
-                        Учетная запись
+                        Параметры учетной записи
                       </a>
                     )}
                   </Menu.Item>
@@ -93,7 +93,7 @@ const UserMenu = ({
                             icon={faSignOutAlt}
                           />
                         )}
-                        Выход
+                        Сменить учетную запись
                       </a>
                     )}
                   </Menu.Item>
