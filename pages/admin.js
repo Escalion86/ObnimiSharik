@@ -22,6 +22,7 @@ import {
   InvitationsContent,
   SettingsContent,
   TestContent,
+  ProductCirculationsContent,
 } from '@adminblocks/content'
 
 import {
@@ -34,6 +35,7 @@ import {
   UserModal,
   MessageModal,
   ConfirmModal,
+  ProductCirculationModal,
 } from '@adminblocks/modals'
 
 import {
@@ -44,6 +46,7 @@ import {
   fetchingSetTypes,
   fetchingInvitations,
   fetchingUsers,
+  fetchingProductCirculations,
 } from '@helpers/fetchers'
 import { ROLES } from '@helpers/constants'
 
@@ -155,6 +158,15 @@ export default function Admin() {
           invitation={invitation}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingInvitations(updateData)}
+          confirmModal={openConfirmModal}
+        />
+      )),
+    openProductCirculationModal: (productCirculation) =>
+      setModal(() => (
+        <ProductCirculationModal
+          productCirculation={productCirculation}
+          onClose={() => setModal(null)}
+          afterConfirm={() => fetchingProductCirculations(updateData)}
           confirmModal={openConfirmModal}
         />
       )),
@@ -318,6 +330,16 @@ export default function Admin() {
       backToPageId: 0,
       accessRoles: [],
     },
+    {
+      id: 10,
+      group: 2,
+      name: 'Движение товаров',
+      header: 'Движение товаров',
+      pageContent: ProductCirculationsContent,
+      pageButtons: [],
+      backToPageId: 0,
+      accessRoles: ['admin'],
+    },
   ]
 
   const pagesGroups = [
@@ -359,6 +381,7 @@ export default function Admin() {
     )
 
   const haveAccess =
+    session?.user?.role &&
     ROLES.filter((role) => role.value === session.user.role).length > 0
 
   return (

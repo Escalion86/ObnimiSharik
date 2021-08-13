@@ -66,3 +66,12 @@ export async function fetchingUsers(updateData = () => {}) {
   console.log('Запущен fetchingUsers')
   return resp
 }
+
+export async function fetchingProductCirculations(updateData = () => {}) {
+  const resp = await fetch('/api/productcirculation')
+    .then((res) => res.json())
+    .then((json) => json.data)
+  updateData({ productCirculation: resp })
+  console.log('Запущен fetchingUsers')
+  return resp
+}

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
-const ProductCirculationSchema = new mongoose.Schema({
+const ProductCirculationsSchema = new mongoose.Schema({
   productId: {
     type: String,
     required: [true, 'Необходимо указать id продукта'],
@@ -30,5 +30,5 @@ const ProductCirculationSchema = new mongoose.Schema({
   },
 })
 
-export default mongoose.models.ProductCirculation ||
-  mongoose.model('ProductCirculation', ProductCirculationSchema)
+export default mongoose.models.ProductCirculations ||
+  mongoose.model('ProductCirculations', ProductCirculationsSchema)

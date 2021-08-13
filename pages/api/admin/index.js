@@ -5,6 +5,7 @@ import Sets from '@models/Sets'
 import SetTypes from '@models/SetTypes'
 import Invitations from '@models/Invitations'
 import Users from '@models/Users'
+import ProductCirculations from '@models/ProductCirculations'
 
 export default async function handler(req, res) {
   const { method } = req
@@ -20,6 +21,7 @@ export default async function handler(req, res) {
         const setTypes = await SetTypes.find({})
         const invitations = await Invitations.find({})
         const users = await Users.find({})
+        const productCirculations = await ProductCirculations.find({})
 
         res.status(200).json({
           success: true,
@@ -30,6 +32,7 @@ export default async function handler(req, res) {
             setTypes,
             invitations,
             users,
+            productCirculations,
           },
         })
       } catch (error) {
