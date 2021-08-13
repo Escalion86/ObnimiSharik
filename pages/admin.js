@@ -401,7 +401,6 @@ export default function Admin() {
                     />
                   </div>
                 </div>
-                {/* <PageContent data={data} page={page} /> */}
               </Cabinet>
             </>
           ) : (
