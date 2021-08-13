@@ -35,7 +35,7 @@ const UsersSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  lastAutorizationAt: {
+  lastAuthAt: {
     type: Date,
     default: Date.now,
   },
