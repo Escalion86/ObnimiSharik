@@ -39,7 +39,11 @@ const TitleBlock2 = () => (
             (только до конца июня)
           </div>
         </div>
-        <Button name="Заказать обратный звонок" className="w-full mt-3" alt />
+        <Button
+          name="Заказать обратный звонок"
+          className="w-full mt-3"
+          type="alt"
+        />
       </div>
     </Block>
     <div className="w-full mt-48 overflow-hidden">

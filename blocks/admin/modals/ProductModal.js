@@ -8,22 +8,30 @@ const ProductModal = ({
   productTypes,
   onClose = () => {},
   afterConfirm = () => {},
+  confirmModal = (title, message, func) => func(),
 }) => {
+  const onDelete = () => {
+    deleteData(
+      '/api/products/' + product._id,
+      null,
+      'Товар "' + product.name + '" удален',
+      'Ошибка при удалении товара "' + product.name + '"'
+    )
+    afterConfirm()
+    onClose()
+  }
+
   return (
     <Modal
       onClose={onClose}
       onDelete={
         product?._id
-          ? () => {
-              deleteData(
-                '/api/products/' + product._id,
-                null,
-                'Товар "' + product.name + '" удален',
-                'Ошибка при удалении товара "' + product.name + '"'
+          ? () =>
+              confirmModal(
+                'Удаление товара',
+                'Вы уверены что хотите удалить товар "' + product.name + '"?',
+                onDelete
               )
-              afterConfirm()
-              onClose()
-            }
           : null
       }
     >

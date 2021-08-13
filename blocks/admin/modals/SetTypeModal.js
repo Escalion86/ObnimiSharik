@@ -6,22 +6,32 @@ const SetTypeModal = ({
   settype,
   onClose = () => {},
   afterConfirm = () => {},
+  confirmModal = (title, message, func) => func(),
 }) => {
+  const onDelete = () => {
+    deleteData(
+      '/api/settypes/' + settype._id,
+      null,
+      'Тип набора "' + settype.name + '" удален',
+      'Ошибка при удалении типа набора "' + settype.name + '"'
+    )
+    afterConfirm()
+    onClose()
+  }
+
   return (
     <Modal
       onClose={onClose}
       onDelete={
         settype?._id
-          ? () => {
-              deleteData(
-                '/api/settypes/' + settype._id,
-                null,
-                'Тип набора "' + settype.name + '" удален',
-                'Ошибка при удалении типа набора "' + settype.name + '"'
+          ? () =>
+              confirmModal(
+                'Удаление типа набора',
+                'Вы уверены что хотите удалить тип набора "' +
+                  settype.name +
+                  '"?',
+                onDelete
               )
-              afterConfirm()
-              onClose()
-            }
           : null
       }
     >

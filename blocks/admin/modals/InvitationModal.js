@@ -6,22 +6,32 @@ const InvitationModal = ({
   invitation,
   onClose = () => {},
   afterConfirm = () => {},
+  confirmModal = (title, message, func) => func(),
 }) => {
+  const onDelete = () => {
+    deleteData(
+      '/api/users/invitations/' + invitation._id,
+      null,
+      'Приглашение для "' + invitation.email + '" удалено',
+      'Ошибка при удалении приглаения для "' + invitation.email + '"'
+    )
+    afterConfirm()
+    onClose()
+  }
+
   return (
     <Modal
       onClose={onClose}
       onDelete={
         invitation?._id
-          ? () => {
-              deleteData(
-                '/api/users/invitations/' + invitation._id,
-                null,
-                'Приглашение для "' + invitation.email + '" удалено',
-                'Ошибка при удалении приглаения для "' + invitation.email + '"'
+          ? () =>
+              confirmModal(
+                'Удаление приглашения',
+                'Вы уверены что хотите удалить приглашение для "' +
+                  invitation.email +
+                  '"?',
+                onDelete
               )
-              afterConfirm()
-              onClose()
-            }
           : null
       }
     >

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
 
-import { faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faDownload, faBug } from '@fortawesome/free-solid-svg-icons'
 
 import Button from '@components/Button'
 import IconButton from '@components/IconButton'
@@ -21,6 +21,7 @@ import {
   UsersContent,
   InvitationsContent,
   SettingsContent,
+  TestContent,
 } from '@adminblocks/content'
 
 import {
@@ -32,6 +33,7 @@ import {
   TildaImportModal,
   UserModal,
   MessageModal,
+  ConfirmModal,
 } from '@adminblocks/modals'
 
 import {
@@ -43,6 +45,7 @@ import {
   fetchingInvitations,
   fetchingUsers,
 } from '@helpers/fetchers'
+import { ROLES } from '@helpers/constants'
 
 const menuCfg = (pages, pagesGroups, userRole) => {
   let result = []
@@ -50,8 +53,8 @@ const menuCfg = (pages, pagesGroups, userRole) => {
     let items = []
     pages.forEach((page) => {
       if (
-        userRole === 'dev' ||
-        (page.group === group.id && page.accessRoles.includes(userRole))
+        page.group === group.id &&
+        (userRole === 'dev' || page.accessRoles.includes(userRole))
       )
         items.push(page)
     })
@@ -75,11 +78,22 @@ export default function Admin() {
     users: [],
     invitations: [],
   })
-  const [Modal, setModal] = useState(null)
+  const [modal, setModal] = useState(null)
+  const [confirmModal, setConfirmModal] = useState([])
 
-  // console.log(`data`, data)
   const updateData = (newData) => {
     setData({ ...data, ...newData })
+  }
+
+  const openConfirmModal = (title, message, onConfirm) => {
+    setConfirmModal(() => (
+      <ConfirmModal
+        title={title}
+        message={message}
+        onConfirm={onConfirm}
+        onClose={() => setConfirmModal(null)}
+      />
+    ))
   }
 
   const modals = {
@@ -91,6 +105,7 @@ export default function Admin() {
           products={data.products}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingSets(updateData)}
+          confirmModal={openConfirmModal}
         />
       )),
     openProductModal: (product) =>
@@ -100,6 +115,7 @@ export default function Admin() {
           productTypes={data.productTypes}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingProducts(updateData)}
+          confirmModal={openConfirmModal}
         />
       )),
     openProductTypeModal: (producttype) =>
@@ -108,6 +124,7 @@ export default function Admin() {
           producttype={producttype}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingProductTypes(updateData)}
+          confirmModal={openConfirmModal}
         />
       )),
     openSetTypeModal: (settype) =>
@@ -116,6 +133,7 @@ export default function Admin() {
           settype={settype}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingSetTypes(updateData)}
+          confirmModal={openConfirmModal}
         />
       )),
     openTildaImportModal: () =>
@@ -128,6 +146,7 @@ export default function Admin() {
           user={user}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingUsers(updateData)}
+          confirmModal={openConfirmModal}
         />
       )),
     openInvitationModal: (invitation) =>
@@ -136,12 +155,14 @@ export default function Admin() {
           invitation={invitation}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingInvitations(updateData)}
+          confirmModal={openConfirmModal}
         />
       )),
     openMessageModal: (message) =>
       setModal(() => (
         <MessageModal message={message} onClose={() => setModal(null)} />
       )),
+    openConfirmModal,
   }
 
   const TitleBtn = ({ onClick = null, icon = faPlus }) => {
@@ -181,6 +202,18 @@ export default function Admin() {
     <TitleBtn
       onClick={() => modals.openInvitationModal()}
       icon={faPlus}
+      key={key}
+    />
+  )
+
+  const BtnTest = ({ key }) => (
+    <TitleBtn
+      onClick={() =>
+        modals.openConfirmModal('Заголовок', 'Текст сообщения', () =>
+          console.log('Принято')
+        )
+      }
+      icon={faBug}
       key={key}
     />
   )
@@ -275,6 +308,16 @@ export default function Admin() {
       backToPageId: 0,
       accessRoles: ['admin'],
     },
+    {
+      id: 9,
+      group: 5,
+      name: 'Тестовая страница',
+      header: 'Тестовая страница',
+      pageContent: TestContent,
+      pageButtons: [BtnTest],
+      backToPageId: 0,
+      accessRoles: [],
+    },
   ]
 
   const pagesGroups = [
@@ -283,6 +326,7 @@ export default function Admin() {
     { id: 2, name: 'Склад' },
     { id: 3, name: 'Пользователи' },
     { id: 4, name: 'Настройки' },
+    { id: 5, name: 'Разработка' },
   ]
 
   // const router = useRouter()
@@ -323,10 +367,8 @@ export default function Admin() {
       )}
       {session && !loading && (
         <>
-          {(session.user.role === 'admin' ||
-            session.user.role === 'aerodesigner' ||
-            session.user.role === 'deliver' ||
-            session.user.role === 'operator') && (
+          {ROLES.filter((role) => role.value === session.user.role).length >
+            0 && (
             // <>
             //   Signed in as {session.user.email} <br />
             //   Вы администратор
@@ -340,7 +382,8 @@ export default function Admin() {
                 sets={data.sets}
                 title="Создание продукта"
               /> */}
-              {Modal ? Modal : null}
+              {modal}
+              {confirmModal}
               {/* <ProductModal types={data.types} title="Создание продукта" /> */}
               <Cabinet
                 page={page}

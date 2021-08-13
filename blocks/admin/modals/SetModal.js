@@ -8,22 +8,30 @@ const SetModal = ({
   products,
   onClose = () => {},
   afterConfirm = () => {},
+  confirmModal = (title, message, func) => func(),
 }) => {
+  const onDelete = () => {
+    deleteData(
+      '/api/sets/' + set._id,
+      null,
+      'Набор "' + set.name + '" удален',
+      'Ошибка при удалении набора "' + set.name + '"'
+    )
+    afterConfirm()
+    onClose()
+  }
+
   return (
     <Modal
       onClose={onClose}
       onDelete={
         set?._id
-          ? () => {
-              deleteData(
-                '/api/sets/' + set._id,
-                null,
-                'Набор "' + set.name + '" удален',
-                'Ошибка при удалении набора "' + set.name + '"'
+          ? () =>
+              confirmModal(
+                'Удаление набора',
+                'Вы уверены что хотите удалить набора "' + set.name + '"?',
+                onDelete
               )
-              afterConfirm()
-              onClose()
-            }
           : null
       }
     >

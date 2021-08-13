@@ -2,35 +2,46 @@ const Button = ({
   name = '',
   onClick,
   className = '',
-  alt = false,
+  type = 'default',
   animation = false,
   small = false,
   inverse = false,
   disabled = false,
 }) => {
   let colorBtn
-  if (alt) {
+  if (disabled) {
     if (inverse) {
-      colorBtn = disabled
-        ? 'bg-gray-400 text-white'
-        : 'bg-yellow-300 text-white'
+      colorBtn = 'bg-gray-400 text-white'
     } else {
-      colorBtn = disabled
-        ? 'text-gray-400 border-gray-400 bg-transparent '
-        : 'text-yellow-300 border-yellow-300 bg-transparent'
+      colorBtn = 'text-gray-400 border-gray-400 bg-transparent '
     }
-    colorBtn = colorBtn + ' whitespace-nowrap h-12 font-futuraDemi rounded-full'
+  } else if (type === 'alt') {
+    if (inverse) {
+      colorBtn = 'bg-yellow-300 text-white'
+    } else {
+      colorBtn = 'text-yellow-300 border-yellow-300 bg-transparent'
+    }
+  } else if (type === 'cancel') {
+    if (inverse) {
+      colorBtn = 'bg-red-700 text-white'
+    } else {
+      colorBtn = 'bg-white border-red-700 text-red-700'
+    }
   } else {
     if (inverse) {
-      colorBtn = disabled ? 'bg-gray-400 text-white' : 'bg-primary text-white'
+      colorBtn = 'bg-primary text-white'
     } else {
-      colorBtn = disabled
-        ? 'bg-white border-gray-400 text-gray-400'
-        : 'bg-white border-white text-primary'
+      colorBtn = 'bg-white border-primary text-primary'
     }
+  }
+
+  if (type === 'alt') {
+    colorBtn = colorBtn + ' whitespace-nowrap h-12 font-futuraDemi rounded-full'
+  } else {
     colorBtn =
       colorBtn + ' border whitespace-nowrap shadow font-futuraDemi rounded-2xl'
   }
+
   return (
     <button
       onClick={onClick}

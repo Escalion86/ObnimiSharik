@@ -8,19 +8,33 @@ const Form = ({
   children,
   buttonName = 'Создать',
   buttonDisabled = false,
+  cancelButton = false,
 }) => {
   return (
     <>
       <div className="flex flex-col space-y-2">
         <div className="text-lg font-semibold text-center">{title}</div>
         {children}
-        <Button
-          onClick={handleSubmit}
-          name={buttonName}
-          small
-          inverse
-          disabled={buttonDisabled}
-        />
+        <div className="flex justify-between gap-2">
+          <Button
+            onClick={handleSubmit}
+            name={buttonName}
+            small
+            inverse
+            disabled={buttonDisabled}
+            className="flex-1"
+          />
+          {cancelButton ? (
+            <Button
+              onClick={cancelButton}
+              name="Отмена"
+              small
+              inverse
+              type="cancel"
+              className="flex-1"
+            />
+          ) : null}
+        </div>
       </div>
       <p>{message}</p>
       <div>
