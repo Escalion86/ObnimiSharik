@@ -30,7 +30,7 @@ const Cabinet = ({
   }
 
   return (
-    <div className="flex h-screen max-h-screen">
+    <div className="flex h-screen max-h-screen overflow-y-hidden">
       <SidePanel
         menuCfg={menuCfg}
         menuOpen={menuOpen}
@@ -38,7 +38,10 @@ const Cabinet = ({
         activePageId={page.id}
         closeMenu={closeMenu}
       />
-      <div className="relative flex flex-col flex-1 min-w-0">
+      <div
+        className="relative grid flex-1 max-h-screen min-w-0 "
+        style={{ gridTemplateRows: '3.8rem 1fr' }}
+      >
         <Header
           user={user}
           menuOpen={menuOpen}
@@ -47,9 +50,7 @@ const Cabinet = ({
           closeMenu={closeMenu}
           onSignOut={onSignOut}
         />
-        <main className="flex flex-col flex-1 px-3 pb-3 overflow-y-scroll">
-          {children}
-        </main>
+        {children}
       </div>
       <ToastContainer />
     </div>

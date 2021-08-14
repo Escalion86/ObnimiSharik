@@ -408,7 +408,7 @@ export default function Admin() {
                 user={session.user}
                 onSignOut={signOut}
               >
-                <div className="relative flex flex-col flex-1">
+                <main className="flex flex-col flex-1 overflow-y-auto">
                   <Title
                     text={page.header}
                     buttons={
@@ -419,15 +419,19 @@ export default function Admin() {
                         : null
                     }
                   />
-                  <div className="flex-1 h-full">
-                    <PageContent
-                      data={data}
-                      setModal={setModal}
-                      updateData={updateData}
-                      modals={modals}
-                    />
+                  <div className="flex flex-col flex-1 max-h-full px-3 pb-3 overflow-y-scroll">
+                    <div className="relative flex flex-col flex-1">
+                      <div className="flex-1 h-full">
+                        <PageContent
+                          data={data}
+                          setModal={setModal}
+                          updateData={updateData}
+                          modals={modals}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </main>
               </Cabinet>
             </>
           ) : (

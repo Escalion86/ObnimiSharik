@@ -135,7 +135,7 @@ const Header = ({
   onSignOut = () => {},
 }) => {
   return (
-    <div className="sticky top-0 z-20 border-b border-primary bg-primary">
+    <div className="top-0 z-20 border-b border-primary bg-primary">
       <header className="px-6">
         <div className="flex items-center justify-between py-3 border-gray-200">
           <div className="flex items-center flex-1">
