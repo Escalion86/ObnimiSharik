@@ -1,5 +1,5 @@
 import dbConnect from '@utils/dbConnect'
-import ProductCirculation from '@models/ProductCirculation'
+import ProductCirculations from '@models/ProductCirculations'
 
 export default async function handler(req, res) {
   const {
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET' /* Get a model by its ID */:
       try {
-        const productCirculation = await ProductCirculation.findById(id)
+        const productCirculation = await ProductCirculations.findById(id)
         if (!productCirculation) {
           return res.status(400).json({ success: false })
         }
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     case 'PUT' /* Edit a model by its ID */:
       try {
         const body = { ...req.body, updatedAt: Date.now() }
-        const productCirculation = await ProductCirculation.findByIdAndUpdate(
+        const productCirculation = await ProductCirculations.findByIdAndUpdate(
           id,
           body,
           {
@@ -33,7 +33,8 @@ export default async function handler(req, res) {
             runValidators: true,
           }
         )
-        if (!product) {
+
+        if (!productCirculation) {
           return res.status(400).json({ success: false })
         }
         res.status(200).json({ success: true, data: productCirculation })
@@ -44,7 +45,7 @@ export default async function handler(req, res) {
 
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        const deletedProductCirculation = await ProductCirculation.deleteOne({
+        const deletedProductCirculation = await ProductCirculations.deleteOne({
           _id: id,
         })
         if (!deletedProductCirculation) {

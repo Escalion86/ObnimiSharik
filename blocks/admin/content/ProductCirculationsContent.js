@@ -2,7 +2,7 @@ import React from 'react'
 import { ProductCirculationCard } from '@admincomponents/cards'
 
 const ProductCirculationsContent = ({ data, modals }) => {
-  const { productCirculations } = data
+  const { productCirculations, products } = data
 
   return (
     <div>
@@ -12,6 +12,7 @@ const ProductCirculationsContent = ({ data, modals }) => {
               <ProductCirculationCard
                 key={productCirculation._id}
                 productCirculation={productCirculation}
+                products={products}
                 onClick={() =>
                   modals.openProductCirculationModal(productCirculation)
                 }

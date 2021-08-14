@@ -18,7 +18,6 @@ const ProductCirculationsSchema = new mongoose.Schema({
   },
   orderId: {
     type: String,
-    required: [true, 'Необходимо указать id корзины'],
   },
   createdAt: {
     type: Date,

@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        const productCirculations = await ProductCirculation.find(
+        const productCirculations = await ProductCirculations.find(
           {}
         ) /* find all the data in our database */
         res.status(200).json({ success: true, data: productCirculations })
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       break
     case 'POST':
       try {
-        const productCirculation = await ProductCirculation.create(
+        const productCirculation = await ProductCirculations.create(
           req.body
         ) /* create a new model in the database */
         res.status(201).json({ success: true, data: productCirculation })
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       break
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        const deletedProductCirculation = await ProductCirculation.deleteMany(
+        const deletedProductCirculation = await ProductCirculations.deleteMany(
           {}
         )
         if (!deletedProductCirculation) {

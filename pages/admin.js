@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-// import { useRouter } from 'next/router'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
 
-import { faPlus, faDownload, faBug } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faBug } from '@fortawesome/free-solid-svg-icons'
 
 import Button from '@components/Button'
 import IconButton from '@components/IconButton'
@@ -48,6 +47,7 @@ import {
   fetchingUsers,
   fetchingProductCirculations,
 } from '@helpers/fetchers'
+
 import { ROLES } from '@helpers/constants'
 
 const menuCfg = (pages, pagesGroups, userRole) => {
@@ -65,11 +65,6 @@ const menuCfg = (pages, pagesGroups, userRole) => {
   })
   return result
 }
-
-// const fetcher = (url) =>
-//   fetch(url)
-//     .then((res) => res.json())
-//     .then((json) => json.data)
 
 export default function Admin() {
   const [session, loading] = useSession()
@@ -165,6 +160,7 @@ export default function Admin() {
       setModal(() => (
         <ProductCirculationModal
           productCirculation={productCirculation}
+          products={data.products}
           onClose={() => setModal(null)}
           afterConfirm={() => fetchingProductCirculations(updateData)}
           confirmModal={openConfirmModal}
@@ -213,6 +209,14 @@ export default function Admin() {
   const BtnAddInvitation = ({ key }) => (
     <TitleBtn
       onClick={() => modals.openInvitationModal()}
+      icon={faPlus}
+      key={key}
+    />
+  )
+
+  const BtnAddProductCirculation = ({ key }) => (
+    <TitleBtn
+      onClick={() => modals.openProductCirculationModal()}
       icon={faPlus}
       key={key}
     />
@@ -336,7 +340,7 @@ export default function Admin() {
       name: 'Движение товаров',
       header: 'Движение товаров',
       pageContent: ProductCirculationsContent,
-      pageButtons: [],
+      pageButtons: [BtnAddProductCirculation],
       backToPageId: 0,
       accessRoles: ['admin'],
     },

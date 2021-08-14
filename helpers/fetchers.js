@@ -68,10 +68,10 @@ export async function fetchingUsers(updateData = () => {}) {
 }
 
 export async function fetchingProductCirculations(updateData = () => {}) {
-  const resp = await fetch('/api/productcirculation')
+  const resp = await fetch('/api/productcirculations')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ productCirculation: resp })
-  console.log('Запущен fetchingUsers')
+  updateData({ productCirculations: resp })
+  console.log('Запущен fetchingProductCirculations')
   return resp
 }

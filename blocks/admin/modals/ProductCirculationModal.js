@@ -1,19 +1,27 @@
 import { ProductCirculationForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 import { deleteData } from '@helpers/CRUD'
+import findDataWithId from '@helpers/findDataWithId'
 
 const ProductCirculationModal = ({
   productCirculation,
+  products,
   onClose = () => {},
   afterConfirm = () => {},
   confirmModal = (title, message, func) => func(),
 }) => {
+  const product = findDataWithId(products, productCirculation?.productId)
+
   const onDelete = () => {
     deleteData(
-      '/api/productcirculation/' + productCirculation._id,
+      '/api/productcirculations/' + productCirculation._id,
       null,
-      'Движние товара "' + productCirculation.name + '" удалено',
-      'Ошибка при удалении движения товара "' + productCirculation.name + '"'
+      'Движние товара (' + product.article + ') "' + product.name + '" удалено',
+      'Ошибка при удалении движения товара (' +
+        product.article +
+        ') "' +
+        product.name +
+        '"'
     )
     afterConfirm()
     onClose()
@@ -27,8 +35,10 @@ const ProductCirculationModal = ({
           ? () =>
               confirmModal(
                 'Удаление движения товара',
-                'Вы уверены что хотите удалить движение товара "' +
-                  productCirculation.name +
+                'Вы уверены что хотите удалить движение товара (' +
+                  product.article +
+                  ') "' +
+                  product.name +
                   '"?',
                 onDelete
               )
@@ -37,6 +47,7 @@ const ProductCirculationModal = ({
     >
       <ProductCirculationForm
         productCirculation={productCirculation}
+        products={products}
         afterConfirm={(data) => {
           afterConfirm(data)
           onClose()

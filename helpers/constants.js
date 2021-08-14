@@ -59,3 +59,10 @@ export const ROLES = [
   { name: 'Оператор', value: 'operator', hidden: false },
   { name: 'Разработчик', value: 'dev', hidden: true },
 ]
+
+export const DEFAULT_PRODUCT_CIRCULATION = {
+  productId: '',
+  count: 1,
+  orderId: '',
+  purchase: false,
+}
