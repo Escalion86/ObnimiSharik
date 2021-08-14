@@ -36,7 +36,7 @@ module.exports = {
         desktop: '1200px',
       },
       inset: {
-        menu: '3.70rem',
+        menu: '3.75rem',
         title: '3.80rem',
         18: '4.5rem',
         '-18': '-4.5rem',

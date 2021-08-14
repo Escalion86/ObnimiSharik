@@ -64,7 +64,7 @@ const SidePanel = ({
   return (
     <div
       className={
-        'fixed laptop:static w-64 h-screen max-h-screen left-0 top-menu laptop:top-0 z-10 transform duration-300 border-t border-primary laptop:border-t-0 bg-white' +
+        'fixed laptop:static w-64 h-screen max-h-screen left-0 top-menu laptop:top-0 z-30 transform duration-300 border-t border-primary laptop:border-t-0 bg-white' +
         (!menuOpen
           ? ' scale-x-0 -translate-x-32 w-0 laptop:w-64 laptop:transform-none'
           : '')
