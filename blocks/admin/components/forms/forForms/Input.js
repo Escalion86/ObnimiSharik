@@ -33,15 +33,34 @@ const Input = ({
           (required && !value ? 'border-red-700' : 'border-gray-700') +
           (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
         }
-        type={type}
+        type={type === 'number' ? 'text' : type}
         maxLength={maxLength}
         name={name}
-        value={value}
-        onChange={onChange}
+        value={type === 'number' ? parseInt(value) : value}
+        onChange={
+          type === 'number'
+            ? (e) => {
+                e.target.value = Number(e.target.value)
+                onChange(e)
+              }
+            : onChange
+        }
         required={required}
         textarea={textarea}
         accept={accept}
         disabled={disabled}
+        onKeyPress={
+          type === 'number'
+            ? (e) => {
+                e = e || window.event
+                var charCode =
+                  typeof e.which == 'undefined' ? e.keyCode : e.which
+                if (!(charCode >= 48 && charCode <= 57)) {
+                  e.preventDefault()
+                }
+              }
+            : null
+        }
       />
     </div>
   )
