@@ -13,7 +13,7 @@ export const ProductCirculationCard = ({
   return (
     <Card>
       <div className="flex-1 mr-24">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col flex-wrap tablet:items-center gap-x-2 tablet:flex-row">
           <div>{formatDate(productCirculation.purchasedAt)}</div>
           <div
             className="font-semibold cursor-pointer text-primary hover:text-toxic"

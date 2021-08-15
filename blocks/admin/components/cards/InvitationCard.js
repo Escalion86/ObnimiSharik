@@ -22,9 +22,9 @@ export const InvitationCard = ({
   return (
     <Card>
       <div className="flex-1">
-        <div className="flex justify-between space-x-4">
+        <div className="flex flex-col flex-wrap justify-between gap-x-4 phoneH:flex-row">
           <div
-            className="w-3/12 font-semibold cursor-pointer text-primary hover:text-toxic"
+            className="font-semibold cursor-pointer text-primary hover:text-toxic"
             onClick={() => onClick(invitation)}
           >
             {invitation.email}

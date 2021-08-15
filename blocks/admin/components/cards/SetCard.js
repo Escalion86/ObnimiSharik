@@ -30,7 +30,7 @@ export const SetCard = ({
       <img className="w-14 h-14" src="/img/no_image.png" alt="set" />
     )}
     <div className="flex-1 ml-3">
-      <div className="flex flex-col justify-between space-x-2 tablet:flex-row">
+      <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
         <div
           className="w-5/12 font-semibold cursor-pointer min-w-48 text-primary hover:text-toxic"
           onClick={() => onClick(set)}
