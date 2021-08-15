@@ -1,3 +1,5 @@
+import { Tooltip } from '@material-ui/core'
+
 const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
   if (productsIdCount[0] === undefined) productsIdCount.length = 0
   return (
@@ -11,26 +13,42 @@ const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
             )
             return (
               <div className="flex" key={'product' + productIdCount?.id}>
-                <div
-                  className="cursor-pointer text-primary hover:text-toxic"
-                  onClick={() => onClick(product)}
+                <Tooltip
+                  title={
+                    <div className="text-xs">
+                      Артикул:{' '}
+                      {product.article
+                        ? '(' + product.article + ')'
+                        : 'отсутствует'}
+                      <br />В наличии: {product.count} шт.
+                    </div>
+                  }
+                  arrow
+                  placement="top"
                 >
-                  {product.article && '(' + product.article + ') '}
-                  {product.name}
-                </div>
-                <div className="ml-1">
-                  -{' '}
-                  <span
-                    className={
-                      !product.count || product.count < productIdCount.count
-                        ? 'text-red-400'
-                        : 'text-black'
-                    }
-                  >
-                    {productIdCount.count}
-                  </span>{' '}
-                  шт
-                </div>
+                  <div className="flex">
+                    <div
+                      className="cursor-pointer text-primary hover:text-toxic"
+                      onClick={() => onClick(product)}
+                    >
+                      {/* {product.article && '(' + product.article + ') '} */}
+                      {product.name}
+                    </div>
+                    <div className="ml-1">
+                      -{' '}
+                      <span
+                        className={
+                          !product.count || product.count < productIdCount.count
+                            ? 'text-red-400'
+                            : 'text-black'
+                        }
+                      >
+                        {productIdCount.count}
+                      </span>{' '}
+                      шт
+                    </div>
+                  </div>
+                </Tooltip>
                 {index < productsIdCount.length - 1 ? (
                   <div className="mr-1">, </div>
                 ) : (
