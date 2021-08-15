@@ -8,6 +8,7 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import findDataWithId from '@helpers/findDataWithId'
+import DatePicker from './forForms/DatePicker'
 
 const ProductCirculationForm = ({
   productCirculation = DEFAULT_PRODUCT_CIRCULATION,
@@ -22,6 +23,7 @@ const ProductCirculationForm = ({
     count: productCirculation.count,
     orderId: productCirculation.orderId,
     purchase: productCirculation.purchase,
+    purchasedAt: productCirculation.purchasedAt,
   })
 
   const forNew = productCirculation._id === undefined
@@ -29,10 +31,7 @@ const ProductCirculationForm = ({
   const product = findDataWithId(products, form.productId)
 
   const handleChange = (e) => {
-    const target = e.target
-    const value = target.value
-    const name = target.name
-
+    const { value, name } = e.target
     setForm({
       ...form,
       [name]: value,
@@ -83,6 +82,8 @@ const ProductCirculationForm = ({
     let err = {}
     if (!form.productId) err.productId = 'Введите товар'
     if (!form.count) err.count = 'Введите количество'
+    if (!form.purchasedAt) err.purchasedAt = 'Введите дату закупа/продажи'
+
     // if (!form.images) err.image = 'Image URL is required'
     return err
   }
@@ -133,6 +134,15 @@ const ProductCirculationForm = ({
           { name: 'Закуп', value: false },
           { name: 'Продажа', value: true },
         ]}
+      />
+      <DatePicker
+        key="purchasedAt"
+        label="Дата закупа/продажи"
+        name="purchasedAt"
+        value={form.purchasedAt}
+        // value={productCirculation.createdAt}
+        onChange={handleChange}
+        required
       />
     </Form>
   )

@@ -19,6 +19,10 @@ const ProductCirculationsSchema = new mongoose.Schema({
   orderId: {
     type: String,
   },
+  purchasedAt: {
+    type: Date,
+    default: Date.now,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
