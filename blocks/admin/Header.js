@@ -8,6 +8,7 @@ import { Fragment } from 'react'
 // import SearchInput from '../Components/SearchInput'
 import { DEFAULT_USER } from '@helpers/constants'
 import roleRus from '@helpers/roleRus'
+import DeviceCheck from '@components/DeviceCheck'
 
 const UserMenu = ({
   user = DEFAULT_USER,
@@ -138,12 +139,15 @@ const Header = ({
     <div className="top-0 z-20 border-b border-primary bg-primary">
       <header className="px-6">
         <div className="flex items-center justify-between py-3 border-gray-200">
-          <div className="flex items-center flex-1">
+          <div className="flex items-center flex-1 gap-2">
             <Burger
               className="z-20 flex laptop:hidden"
               menuOpen={menuOpen}
               onClick={onClickBurger}
             />
+            {user.role === 'dev' && (
+              <DeviceCheck className="text-white text-bold" />
+            )}
           </div>
           <div className="flex items-center">
             <div className="ml-5 cursor-pointer">

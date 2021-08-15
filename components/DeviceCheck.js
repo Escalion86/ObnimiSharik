@@ -1,19 +1,53 @@
-function DeviceCheck() {
+function DeviceCheck({ className = null, textClassName = null }) {
   return (
-    <div className="fixed left-0 z-50 flex items-center justify-center h-24 text-sm leading-3 w-9 top-20 bg-primary rounded-r-md">
-      <div className="hidden transform rotate-90 phoneV:block phoneH:hidden">
+    <div
+      className={
+        'flex items-center justify-center ' +
+        (className
+          ? className
+          : 'fixed -left-7 z-50 h-10 text-sm leading-3 w-24 top-20 bg-primary rounded-t-md transform rotate-90')
+      }
+    >
+      <div
+        className={
+          (textClassName ? textClassName : '') +
+          ' text-center hidden phoneV:block phoneH:hidden'
+        }
+      >
         Телефон вертикаль
       </div>
-      <div className="hidden transform -rotate-90 phoneH:block tablet:hidden">
+      <div
+        className={
+          (textClassName ? textClassName : '') +
+          ' text-center hidden phoneH:block tablet:hidden'
+        }
+      >
         Телефон горизонт
       </div>
-      <div className="hidden transform -rotate-90 tablet:block laptop:hidden">
+      <div
+        className={
+          (textClassName ? textClassName : '') +
+          ' text-center hidden tablet:block laptop:hidden'
+        }
+      >
         Планшет
       </div>
-      <div className="hidden transform -rotate-90 laptop:block desktop:hidden">
+      <div
+        className={
+          (textClassName ? textClassName : '') +
+          ' text-center hidden laptop:block desktop:hidden'
+        }
+      >
         Ноутбук
       </div>
-      <div className="hidden transform -rotate-90 desktop:block">Компьютер</div>
+      <div
+        className={
+          (textClassName ? textClassName : '') +
+          ' text-center hidden desktop:block'
+        }
+      >
+        Компьютер
+      </div>
     </div>
   )
 }
