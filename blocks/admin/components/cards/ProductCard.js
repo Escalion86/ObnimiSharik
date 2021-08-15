@@ -34,19 +34,28 @@ export const ProductCard = ({
       <img className="w-14 h-14" src="/img/no_image.png" alt="product" />
     )}
     <div className="flex-1 ml-3">
-      <div className="flex justify-between space-x-2">
+      <div className="flex flex-col justify-between space-x-2 tablet:flex-row">
         <div
-          className="w-3/12 font-semibold cursor-pointer text-primary hover:text-toxic"
+          className="w-5/12 font-semibold cursor-pointer min-w-48 text-primary hover:text-toxic"
           onClick={() => onClick(product)}
         >
           {product.name}
         </div>
-        <div className="flex-1 text-sm italic">{product.description}</div>
+        <div className="flex-1 text-sm italic min-w-48">
+          {product.description}
+        </div>
       </div>
-      <TypesInCard types={product.types} onClick={onTypeClick} />
+      <div className="flex-1 text-sm">
+        Артикул: <span className="italic">{product.article}</span>
+      </div>
+      <div className="mr-12">
+        <TypesInCard types={product.types} onClick={onTypeClick} />
+      </div>
     </div>
-    <div className="w-1/12 mb-10 text-right">
-      <div className="font-bold">{product.price / 100} ₽</div>
+    <div className="w-20 mb-10 text-right min-w-min">
+      <div className="font-bold whitespace-nowrap min-w-min">
+        {product.price / 100} ₽
+      </div>
     </div>
     <div
       className={

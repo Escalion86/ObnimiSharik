@@ -59,7 +59,7 @@ module.exports = {
         // 4: '1rem',
         // 8: '2rem',
         // 12: '3rem',
-        // 16: '4rem',
+        16: '4rem',
         32: '8rem',
         36: '9rem',
         40: '10rem',

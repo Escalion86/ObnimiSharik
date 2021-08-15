@@ -30,24 +30,28 @@ export const SetCard = ({
       <img className="w-14 h-14" src="/img/no_image.png" alt="set" />
     )}
     <div className="flex-1 ml-3">
-      <div className="flex justify-between space-x-2">
+      <div className="flex flex-col justify-between space-x-2 tablet:flex-row">
         <div
-          className="w-3/12 font-semibold cursor-pointer text-primary hover:text-toxic"
+          className="w-5/12 font-semibold cursor-pointer min-w-48 text-primary hover:text-toxic"
           onClick={() => onClick(set)}
         >
           {set.name}
         </div>
-        <div className="flex-1 text-sm italic">{set.description}</div>
+        <div className="flex-1 text-sm italic min-w-48">{set.description}</div>
       </div>
       <ProductsInCard
         productsIdCount={set.productsIdCount}
         productsWithCount={productsWithCount}
         onClick={onProductClick}
       />
-      <TypesInCard types={set.types} onClick={onTypeClick} />
+      <div className="mr-12">
+        <TypesInCard types={set.types} onClick={onTypeClick} />
+      </div>
     </div>
-    <div className="w-1/12 mb-10 text-right ">
-      <div className="font-bold">{set.price / 100} ₽</div>
+    <div className="w-20 mb-10 text-right min-w-min">
+      <div className="font-bold whitespace-nowrap min-w-min">
+        {set.price / 100} ₽
+      </div>
       {/* <div className="">{products.price} ₽</div> */}
     </div>
     {set.productsIdCount.length > 0 ? (
