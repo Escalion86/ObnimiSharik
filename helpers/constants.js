@@ -65,5 +65,5 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
   count: 1,
   orderId: '',
   purchase: false,
-  purchasedAt: Date.now().toISOString(),
+  purchasedAt: new Date().toISOString(),
 }
