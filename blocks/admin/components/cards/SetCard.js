@@ -57,7 +57,7 @@ export const SetCard = ({
     {set.productsIdCount.length > 0 ? (
       <div
         className={
-          'absolute bottom-0 right-0 flex items-center justify-center w-24 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
+          'absolute bottom-0 right-0 flex items-center justify-center w-20 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
           (count > 3
             ? 'bg-green-400'
             : count > 0
@@ -73,7 +73,7 @@ export const SetCard = ({
         </span>
       </div>
     ) : (
-      <div className="absolute bottom-0 right-0 flex items-center justify-center w-24 h-10 bg-gray-200 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg">
+      <div className="absolute bottom-0 right-0 flex items-center justify-center w-20 h-10 bg-gray-200 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg">
         <span className="text-sm text-gray-600">Набор пуст</span>
       </div>
     )}

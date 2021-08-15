@@ -59,7 +59,7 @@ export const ProductCard = ({
     </div>
     <div
       className={
-        'absolute bottom-0 right-0 flex items-center justify-center w-24 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
+        'absolute bottom-0 right-0 flex items-center justify-center w-20 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
         (count > 3
           ? 'bg-green-400'
           : count > 0
