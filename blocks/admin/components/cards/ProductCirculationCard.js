@@ -1,4 +1,5 @@
 import findDataWithId from '@helpers/findDataWithId'
+import formatDate from '@helpers/formatDate'
 import Card from './Card'
 
 export const ProductCirculationCard = ({
@@ -9,11 +10,11 @@ export const ProductCirculationCard = ({
 }) => {
   const { count, purchase, productId } = productCirculation
   const product = findDataWithId(products, productId)
-
   return (
     <Card>
-      <div className="flex-1">
-        <div className="flex justify-between space-x-2">
+      <div className="flex-1 mr-24">
+        <div className="flex items-center gap-2">
+          <div>{formatDate(productCirculation.purchasedAt)}</div>
           <div
             className="font-semibold cursor-pointer text-primary hover:text-toxic"
             onClick={() => onClick(productCirculation)}
@@ -24,7 +25,7 @@ export const ProductCirculationCard = ({
       </div>
       <div
         className={
-          'absolute flex justify-center items-center right-0 w-24 h-full text-right rounded-r-lg ' +
+          'absolute flex justify-center items-center right-0 w-20 h-full text-right rounded-r-lg ' +
           (purchase ? 'bg-red-200' : 'bg-green-200')
         }
       >
