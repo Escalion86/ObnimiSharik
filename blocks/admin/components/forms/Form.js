@@ -24,7 +24,7 @@ const Form = ({
             disabled={buttonDisabled}
             className="flex-1"
           />
-          {cancelButton ? (
+          {cancelButton && (
             <Button
               onClick={cancelButton}
               name="Отмена"
@@ -33,7 +33,7 @@ const Form = ({
               type="cancel"
               className="flex-1"
             />
-          ) : null}
+          )}
         </div>
       </div>
       <p>{message}</p>

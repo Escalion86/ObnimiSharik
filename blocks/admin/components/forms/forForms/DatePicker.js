@@ -22,7 +22,7 @@ const DatePicker = ({
   <div className={'flex flex-col' + (className ? ' ' + className : '')}>
     <label htmlFor={name}>
       {label}
-      {required ? <span className="text-red-700">*</span> : null}
+      {required && <span className="text-red-700">*</span>}
     </label>
     <input
       className={

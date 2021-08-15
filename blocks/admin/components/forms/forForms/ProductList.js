@@ -74,7 +74,7 @@ const ProductList = ({
     <div className="flex flex-col">
       <label htmlFor="productIds">
         Список товаров
-        {required ? <span className="text-red-700">*</span> : null}
+        {required && <span className="text-red-700">*</span>}
       </label>
       <div
         name="productIds"
@@ -85,18 +85,17 @@ const ProductList = ({
             : 'border-gray-700')
         }
       >
-        {productsIdCount
-          ? productsIdCount.map((item, index) => (
-              <ItemRow
-                key={'ItemRow' + index}
-                onChange={onChangeItemRow}
-                selectedId={item.id}
-                count={item.count}
-                index={index}
-                products={products}
-              />
-            ))
-          : null}
+        {productsIdCount &&
+          productsIdCount.map((item, index) => (
+            <ItemRow
+              key={'ItemRow' + index}
+              onChange={onChangeItemRow}
+              selectedId={item.id}
+              count={item.count}
+              index={index}
+              products={products}
+            />
+          ))}
         <div
           onClick={AddRow}
           className="flex items-center justify-center h-6 bg-white rounded-lg cursor-pointer"

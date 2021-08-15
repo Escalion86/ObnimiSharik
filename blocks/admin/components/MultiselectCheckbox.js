@@ -23,7 +23,7 @@ const MultiselectCheckbox = ({
     <div>
       <div className="">
         {title}
-        {required ? <span className="text-red-700">*</span> : null}
+        {required && <span className="text-red-700">*</span>}
       </div>
       <div className="overflow-hidden bg-gray-200 border border-gray-700 rounded-lg max-h-40">
         <div className="px-2 py-1 overflow-y-scroll max-h-40">

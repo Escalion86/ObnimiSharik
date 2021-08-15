@@ -22,7 +22,7 @@ const InputImages = ({
   return (
     <div className="flex flex-col">
       <label>
-        Картинки{required ? <span className="text-red-700">*</span> : null}
+        Картинки{required && <span className="text-red-700">*</span>}
       </label>
       <div
         className={
@@ -55,7 +55,7 @@ const InputImages = ({
             />
           </div>
         ))}
-        {images.length < 4 ? (
+        {images.length < 4 && (
           <div
             onClick={addImageClick}
             className="flex items-center justify-center w-20 h-20 bg-white border-2 border-gray-500 cursor-pointer rounded-xl"
@@ -79,7 +79,7 @@ const InputImages = ({
               />
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   )

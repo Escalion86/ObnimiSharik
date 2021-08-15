@@ -15,7 +15,7 @@ const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
                   className="cursor-pointer text-primary hover:text-toxic"
                   onClick={() => onClick(product)}
                 >
-                  {product.article ? '(' + product.article + ') ' : null}
+                  {product.article && '(' + product.article + ') '}
                   {product.name}
                 </div>
                 <div className="ml-1">

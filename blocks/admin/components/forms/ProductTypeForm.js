@@ -22,15 +22,7 @@ const ProductTypeForm = ({
   const forNew = producttype._id === undefined
 
   const handleChange = (e) => {
-    const target = e.target
-    const value =
-      target.name === 'price'
-        ? target.value * 100
-        : target.name === 'images'
-        ? [target.value]
-        : target.value
-    const name = target.name
-
+    const { value, name } = e.target
     setForm({
       ...form,
       [name]: value,

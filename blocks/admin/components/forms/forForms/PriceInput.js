@@ -3,7 +3,7 @@ const PriceInput = ({ value, onChange, required = false, className }) => {
   return (
     <div className={'flex flex-col w-32' + (className ? ' ' + className : '')}>
       <label htmlFor="price">
-        Стоимость{required ? <span className="text-red-700">*</span> : null}
+        Стоимость{required && <span className="text-red-700">*</span>}
       </label>
       <div
         className={

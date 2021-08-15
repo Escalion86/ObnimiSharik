@@ -18,11 +18,11 @@ const ComboBox = ({
       onChange={handleChange}
       defaultValue={defaultValue}
     >
-      {placeholder ? (
+      {placeholder && (
         <option disabled value="">
           {placeholder}
         </option>
-      ) : null}
+      )}
       {items.map((item, index) => (
         <option key={'combo' + index} value={item.value}>
           {item.name}

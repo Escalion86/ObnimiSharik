@@ -10,14 +10,14 @@ const Modal = ({ children, onClose = () => {}, onDelete = null }) => (
         size="lg"
         onClick={onClose}
       />
-      {onDelete ? (
+      {onDelete && (
         <FontAwesomeIcon
           className="absolute w-10 h-10 text-red-700 duration-200 transform cursor-pointer top-1 left-4 hover:scale-110"
           icon={faTrash}
           size="1x"
           onClick={onDelete}
         />
-      ) : null}
+      )}
       {children}
     </div>
   </div>

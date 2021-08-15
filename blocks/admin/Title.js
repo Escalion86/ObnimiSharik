@@ -25,11 +25,11 @@ const Title = ({ text = '', btnOnClick = null, buttons = null }) => {
           </a>
         </div>
       )}
-      {text ? (
+      {text && (
         <h2 className="flex-1 px-2 py-2 text-2xl font-semibold leading-tight text-gray-900">
           {text}
         </h2>
-      ) : null}
+      )}
       {buttons}
     </div>
   )

@@ -25,12 +25,12 @@ const IconButton = ({
     }
     disabled={disabled}
   >
-    {icon ? (
+    {icon && (
       <FontAwesomeIcon
         className={'w-5 h-5 text-white' + (name === '' ? '' : ' mr-2')}
         icon={icon}
       />
-    ) : null}
+    )}
     {name}
   </button>
 )
