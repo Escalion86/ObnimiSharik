@@ -13,7 +13,7 @@ const TypesInCard = ({ types, onClick }) => {
               >
                 {type.name}
               </div>
-              {index < types.length - 1 ? <div className="mr-1">, </div> : ''}
+              {index < types.length - 1 && <div className="mr-1">, </div>}
             </div>
           ))}
         </div>
