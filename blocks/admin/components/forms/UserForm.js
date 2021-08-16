@@ -2,11 +2,9 @@ import { useState } from 'react'
 
 import { ROLES, DEFAULT_USER } from '@helpers/constants'
 
-import { ComboBox, Input } from './forForms'
+import { ComboBox, Input, PhoneInput } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
-
-import InputMask from 'react-input-mask'
 
 import Form from './Form'
 
@@ -103,11 +101,29 @@ const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
         items={ROLES.filter((role) => !role.hidden)}
         required
       />
-      <InputMask
-        className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
-        mask="+4\9 99 999 99"
-        maskChar=" "
-      />
+
+      <div className="flex">
+        <div className="flex-1">
+          <PhoneInput
+            key="phone"
+            label="Телефон"
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+            // required
+          />
+        </div>
+        <div className="flex-1">
+          <PhoneInput
+            key="whatsapp"
+            label="WhatsApp"
+            name="whatsapp"
+            value={form.whatsapp}
+            onChange={handleChange}
+            // required
+          />
+        </div>
+      </div>
       {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>
         <select
