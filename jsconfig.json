@@ -9,7 +9,8 @@
       "@helpers/*": ["helpers/*"],
       "@pages/*": ["pages/*"],
       "@models/*": ["models/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@server/*": ["server/*"]
     }
   }
 }
