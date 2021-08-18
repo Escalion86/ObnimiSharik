@@ -33,7 +33,7 @@ export const UserCard = ({ user, onClick = () => {}, onDelete = null }) => {
         <FontAwesomeIcon
           className="ml-4 cursor-pointer text-primary hover:text-toxic"
           icon={faWhatsapp}
-          onClick={() => window.open('https://wa.me/+' + user.phone)}
+          onClick={() => window.open('https://wa.me/' + user.phone)}
         />
       )}
     </Card>
