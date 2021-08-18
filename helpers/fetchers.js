@@ -50,7 +50,7 @@ export async function fetchingSetTypes(updateData = () => {}) {
 }
 
 export async function fetchingInvitations(updateData = () => {}) {
-  const resp = await fetch('/api/users/invitations')
+  const resp = await fetch('/api/invitations')
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ invitations: resp })

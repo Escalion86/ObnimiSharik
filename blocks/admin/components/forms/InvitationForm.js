@@ -45,14 +45,14 @@ const InvitationForm = ({
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
-            '/api/users/invitations',
+            '/api/invitations',
             form,
             afterConfirm,
             'Приглашение для "' + form.email + '" создано и отправлно',
             'Ошибка при редактировании пришлашения для "' + form.email + '"'
           )
         : putData(
-            `/api/users/invitations/${invitation._id}`,
+            `/api/invitations/${invitation._id}`,
             form,
             afterConfirm,
             'Приглашение для "' + form.email + '" изменено',
