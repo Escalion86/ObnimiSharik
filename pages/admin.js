@@ -259,8 +259,8 @@ export default function Admin() {
     {
       id: 2,
       group: 1,
-      name: 'Типы шариков',
-      header: 'Типы шариков',
+      name: 'Типы товаров',
+      header: 'Типы товаров',
       pageContent: ProductTypesContent,
       pageButtons: [BtnAddProductType],
       backToPageId: null,
