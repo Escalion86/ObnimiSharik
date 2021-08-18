@@ -49,7 +49,7 @@ const InvitationForm = ({
             form,
             afterConfirm,
             'Приглашение для "' + form.email + '" создано и отправлно',
-            'Ошибка при редактировании пришлашения для "' + form.email + '"'
+            'Ошибка при создании пришлашения для "' + form.email + '"'
           )
         : putData(
             `/api/invitations/${invitation._id}`,
