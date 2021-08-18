@@ -75,6 +75,7 @@ export default function Admin() {
     setTypes: [],
     users: [],
     invitations: [],
+    productCirculations: [],
   })
   const [modal, setModal] = useState(null)
   const [confirmModal, setConfirmModal] = useState([])
@@ -427,6 +428,7 @@ export default function Admin() {
                           setModal={setModal}
                           updateData={updateData}
                           modals={modals}
+                          user={session.user}
                         />
                       </div>
                     </div>
