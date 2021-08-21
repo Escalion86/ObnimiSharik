@@ -18,7 +18,7 @@ export async function fetchingProducts(updateData = () => {}) {
   const resp = await fetch('/api/products')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ products: resp })
+  updateData(resp)
   return resp
 }
 
@@ -27,7 +27,7 @@ export async function fetchingSets(updateData = () => {}) {
   const resp = await fetch('/api/sets')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ sets: resp })
+  updateData(resp)
   return resp
 }
 
@@ -36,7 +36,7 @@ export async function fetchingProductTypes(updateData = () => {}) {
   const resp = await fetch('/api/producttypes')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ productTypes: resp })
+  updateData(resp)
   return resp
 }
 
@@ -45,7 +45,7 @@ export async function fetchingSetTypes(updateData = () => {}) {
   const resp = await fetch('/api/settypes')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ setTypes: resp })
+  updateData(resp)
   return resp
 }
 
@@ -54,7 +54,7 @@ export async function fetchingInvitations(updateData = () => {}) {
   const resp = await fetch('/api/invitations')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ invitations: resp })
+  updateData(resp)
   return resp
 }
 
@@ -63,7 +63,7 @@ export async function fetchingUsers(updateData = () => {}) {
   const resp = await fetch('/api/users')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ users: resp })
+  updateData(resp)
   return resp
 }
 
@@ -72,6 +72,6 @@ export async function fetchingProductCirculations(updateData = () => {}) {
   const resp = await fetch('/api/productcirculations')
     .then((res) => res.json())
     .then((json) => json.data)
-  updateData({ productCirculations: resp })
+  updateData(resp)
   return resp
 }

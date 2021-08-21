@@ -50,7 +50,23 @@ import {
 } from '@helpers/fetchers'
 
 import { ROLES } from '@helpers/constants'
-import { setAllData } from '@state/actions'
+import {
+  setAllData,
+  setSets,
+  setProducts,
+  setSetTypes,
+  setProductTypes,
+  setUsers,
+  setInvitations,
+  setProductCirculations,
+} from '@state/actions'
+// import { setSets } from '@state/actions/setsActions'
+// import { setProducts } from '@state/actions/productsActions'
+// import { setSetTypes } from '@state/actions/setTypesActions'
+// import { setProductTypes } from '@state/actions/productTypesActions'
+// import { setUsers } from '@state/actions/usersActions'
+// import { setInvitations } from '@state/actions/invitationsActions'
+// import { setProductCirculations } from '@state/actions/productCirculationsActions'
 
 const menuCfg = (pages, pagesGroups, userRole) => {
   let result = []
@@ -70,27 +86,25 @@ const menuCfg = (pages, pagesGroups, userRole) => {
 
 export default function Admin() {
   const [session, loading] = useSession()
-  const [data, setData] = useState({
-    products: [],
-    productTypes: [],
-    sets: [],
-    setTypes: [],
-    users: [],
-    invitations: [],
-    productCirculations: [],
-  })
+  // const [data, setData] = useState({
+  //   products: [],
+  //   productTypes: [],
+  //   sets: [],
+  //   setTypes: [],
+  //   users: [],
+  //   invitations: [],
+  //   productCirculations: [],
+  // })
   const [modal, setModal] = useState(null)
   const [confirmModal, setConfirmModal] = useState([])
 
-  console.log(`session`, session)
-  console.log(`loading`, loading)
-  console.log(`data`, data)
+  const data = useSelector((state) => state)
 
   const dispatch = useDispatch()
 
-  const updateData = (newData) => {
-    setData({ ...data, ...newData })
-  }
+  // const updateData = (newData) => {
+  //   setData({ ...data, ...newData })
+  // }
 
   const openConfirmModal = (title, message, onConfirm) => {
     setConfirmModal(() => (
@@ -111,7 +125,9 @@ export default function Admin() {
           setTypes={data.setTypes}
           products={data.products}
           onClose={() => setModal(null)}
-          afterConfirm={() => fetchingSets(updateData)}
+          afterConfirm={() =>
+            fetchingSets((result) => dispatch(setSets(result)))
+          }
           confirmModal={openConfirmModal}
         />
       )),
@@ -121,7 +137,9 @@ export default function Admin() {
           product={product}
           productTypes={data.productTypes}
           onClose={() => setModal(null)}
-          afterConfirm={() => fetchingProducts(updateData)}
+          afterConfirm={() =>
+            fetchingProducts((result) => dispatch(setProducts(result)))
+          }
           confirmModal={openConfirmModal}
         />
       )),
@@ -130,7 +148,9 @@ export default function Admin() {
         <ProductTypeModal
           producttype={producttype}
           onClose={() => setModal(null)}
-          afterConfirm={() => fetchingProductTypes(updateData)}
+          afterConfirm={() =>
+            fetchingProductTypes((result) => dispatch(setProductTypes(result)))
+          }
           confirmModal={openConfirmModal}
         />
       )),
@@ -139,7 +159,9 @@ export default function Admin() {
         <SetTypeModal
           settype={settype}
           onClose={() => setModal(null)}
-          afterConfirm={() => fetchingSetTypes(updateData)}
+          afterConfirm={() =>
+            fetchingSetTypes((result) => dispatch(setSetTypes(result)))
+          }
           confirmModal={openConfirmModal}
         />
       )),
@@ -152,7 +174,9 @@ export default function Admin() {
         <UserModal
           user={user}
           onClose={() => setModal(null)}
-          afterConfirm={() => fetchingUsers(updateData)}
+          afterConfirm={() =>
+            fetchingUsers((result) => dispatch(setUsers(result)))
+          }
           confirmModal={openConfirmModal}
         />
       )),
@@ -161,7 +185,9 @@ export default function Admin() {
         <InvitationModal
           invitation={invitation}
           onClose={() => setModal(null)}
-          afterConfirm={() => fetchingInvitations(updateData)}
+          afterConfirm={() =>
+            fetchingInvitations((result) => dispatch(setInvitations(result)))
+          }
           confirmModal={openConfirmModal}
         />
       )),
@@ -171,7 +197,11 @@ export default function Admin() {
           productCirculation={productCirculation}
           products={data.products}
           onClose={() => setModal(null)}
-          afterConfirm={() => fetchingProductCirculations(updateData)}
+          afterConfirm={() =>
+            fetchingProductCirculations((result) =>
+              dispatch(setProductCirculations(result))
+            )
+          }
           confirmModal={openConfirmModal}
         />
       )),
@@ -372,22 +402,12 @@ export default function Admin() {
       signIn('google')
     } else if (!loading) {
       const fetching = async () => {
-        const result = await fetchingAll(setData)
-        // console.log(`result`, result)
-        dispatch(setAllData(result))
-        // dispatch(setProducts(result.products))
-        // dispatch(setSets(result.sets))
-        // dispatch(setProductTypes(result.productTypes))
-        // dispatch(setSetTypes(result.setTypes))
-        // dispatch(setInvitations(result.invitations))
-        // dispatch(setUsers(result.users))
+        // const result = await fetchingAll(setData)
+        await fetchingAll((result) => dispatch(setAllData(result)))
       }
       fetching()
     }
   }, [!!session, loading])
-
-  const STORE = useSelector((state) => state)
-  console.log(`STORE`, STORE)
 
   const setPageId = (id, props = {}) => {
     pages.some((page) => {
@@ -447,8 +467,8 @@ export default function Admin() {
                       <div className="flex-1 h-full">
                         <PageContent
                           data={data}
-                          setModal={setModal}
-                          updateData={updateData}
+                          // setModal={setModal}
+                          // updateData={updateData}
                           modals={modals}
                           user={session.user}
                         />
