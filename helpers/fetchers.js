@@ -1,4 +1,5 @@
 export async function fetchingAll(setState = () => {}) {
+  console.log('Запущен fetchingAll')
   const urls = ['/api/admin']
   const result = await Promise.all(
     urls.map(async (url) => {
@@ -9,69 +10,68 @@ export async function fetchingAll(setState = () => {}) {
     })
   )
   setState(result[0])
-  console.log('Запущен fetchingAll')
   return result[0]
 }
 
 export async function fetchingProducts(updateData = () => {}) {
+  console.log('Запущен fetchingProducts')
   const resp = await fetch('/api/products')
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ products: resp })
-  console.log('Запущен fetchingProducts')
   return resp
 }
 
 export async function fetchingSets(updateData = () => {}) {
+  console.log('Запущен fetchingSets')
   const resp = await fetch('/api/sets')
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ sets: resp })
-  console.log('Запущен fetchingSets')
   return resp
 }
 
 export async function fetchingProductTypes(updateData = () => {}) {
+  console.log('Запущен fetchingProductTypes')
   const resp = await fetch('/api/producttypes')
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ productTypes: resp })
-  console.log('Запущен fetchingProductTypes')
   return resp
 }
 
 export async function fetchingSetTypes(updateData = () => {}) {
+  console.log('Запущен fetchingSetTypes')
   const resp = await fetch('/api/settypes')
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ setTypes: resp })
-  console.log('Запущен fetchingSetTypes')
   return resp
 }
 
 export async function fetchingInvitations(updateData = () => {}) {
+  console.log('Запущен fetchingInvitations')
   const resp = await fetch('/api/invitations')
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ invitations: resp })
-  console.log('Запущен fetchingInvitations')
   return resp
 }
 
 export async function fetchingUsers(updateData = () => {}) {
+  console.log('Запущен fetchingUsers')
   const resp = await fetch('/api/users')
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ users: resp })
-  console.log('Запущен fetchingUsers')
   return resp
 }
 
 export async function fetchingProductCirculations(updateData = () => {}) {
+  console.log('Запущен fetchingProductCirculations')
   const resp = await fetch('/api/productcirculations')
     .then((res) => res.json())
     .then((json) => json.data)
   updateData({ productCirculations: resp })
-  console.log('Запущен fetchingProductCirculations')
   return resp
 }
