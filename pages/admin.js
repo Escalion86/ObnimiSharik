@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
 
@@ -49,6 +50,7 @@ import {
 } from '@helpers/fetchers'
 
 import { ROLES } from '@helpers/constants'
+import { setAllData } from '@state/actions'
 
 const menuCfg = (pages, pagesGroups, userRole) => {
   let result = []
@@ -79,6 +81,12 @@ export default function Admin() {
   })
   const [modal, setModal] = useState(null)
   const [confirmModal, setConfirmModal] = useState([])
+
+  console.log(`session`, session)
+  console.log(`loading`, loading)
+  console.log(`data`, data)
+
+  const dispatch = useDispatch()
 
   const updateData = (newData) => {
     setData({ ...data, ...newData })
@@ -362,10 +370,24 @@ export default function Admin() {
   useEffect(() => {
     if (!session && !loading) {
       signIn('google')
-    } else {
-      fetchingAll(setData)
+    } else if (!loading) {
+      const fetching = async () => {
+        const result = await fetchingAll(setData)
+        // console.log(`result`, result)
+        dispatch(setAllData(result))
+        // dispatch(setProducts(result.products))
+        // dispatch(setSets(result.sets))
+        // dispatch(setProductTypes(result.productTypes))
+        // dispatch(setSetTypes(result.setTypes))
+        // dispatch(setInvitations(result.invitations))
+        // dispatch(setUsers(result.users))
+      }
+      fetching()
     }
-  }, [session, loading])
+  }, [!!session, loading])
+
+  const STORE = useSelector((state) => state)
+  console.log(`STORE`, STORE)
 
   const setPageId = (id, props = {}) => {
     pages.some((page) => {

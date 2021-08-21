@@ -10,7 +10,8 @@
       "@pages/*": ["pages/*"],
       "@models/*": ["models/*"],
       "@utils/*": ["utils/*"],
-      "@server/*": ["server/*"]
+      "@server/*": ["server/*"],
+      "@state/*": ["state/*"]
     }
   }
 }

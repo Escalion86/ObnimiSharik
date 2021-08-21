@@ -3,6 +3,39 @@ import '../styles/fonts/FuturaPT.css'
 import '../styles/global.css'
 import Head from 'next/head'
 
+import { createStore, applyMiddleware, compose } from 'redux'
+import { batchedSubscribe } from 'redux-batched-subscribe'
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
+
+import allReducers from 'state/reducers'
+
+const composeEnhancers =
+  (typeof window !== 'undefined' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose
+
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk)
+  // window &&
+  //   window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  //   window.__REDUX_DEVTOOLS_EXTENSION__()
+  // batchedSubscribe((notify) => {
+  //   notify()
+  // })
+)
+
+const store = createStore(
+  allReducers,
+  enhancer /* preloadedState, */
+  // applyMiddleware(thunk),
+  // typeof window !== 'undefined' &&
+  //   window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  //   window.__REDUX_DEVTOOLS_EXTENSION__()
+  // ,
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
@@ -20,7 +53,9 @@ function MyApp({ Component, pageProps }) {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </Head>
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     </>
   )
 }
