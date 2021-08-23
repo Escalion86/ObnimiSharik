@@ -59,18 +59,27 @@ const SetForm = ({
   const handleSubmit = (e) => {
     e.preventDefault()
     const errs = formValidate()
+    // Убираем невыбранные товары и с количеством 0
+    const productsIdCount = form.productsIdCount.filter(
+      (productIdCount) =>
+        productIdCount.id &&
+        productIdCount.id !== '0' &&
+        productIdCount.count > 0
+    )
+    const fixedForm = { ...form, productsIdCount }
+
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
             '/api/sets',
-            form,
+            fixedForm,
             afterConfirmUpd,
             'Набор "' + form.name + '" создан',
             'Ошибка при создании набора "' + form.name + '"'
           )
         : putData(
             `/api/sets/${set._id}`,
-            form,
+            fixedForm,
             afterConfirmUpd,
             'Набор "' + form.name + '" изменен',
             'Ошибка при редактировании набора "' + form.name + '"'
