@@ -11,16 +11,18 @@ const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
             const product = productsWithCount.find(
               (product) => productIdCount.id === product._id
             )
+            if (!product) return null
             return (
               <div className="flex" key={'product' + productIdCount?.id}>
                 <Tooltip
                   title={
                     <div className="text-xs">
                       Артикул:{' '}
-                      {product.article
+                      {product?.article
                         ? '(' + product.article + ')'
                         : 'отсутствует'}
-                      <br />В наличии: {product.count} шт.
+                      <br />В наличии: {product?.count ? product.count : '0'}{' '}
+                      шт.
                     </div>
                   }
                   arrow
@@ -28,17 +30,24 @@ const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
                 >
                   <div className="flex">
                     <div
-                      className="cursor-pointer text-primary hover:text-toxic"
+                      className={
+                        'cursor-pointer hover:text-toxic ' +
+                        (!product?.count ||
+                        product?.count < productIdCount.count
+                          ? 'text-red-400'
+                          : 'text-primary')
+                      }
                       onClick={() => onClick(product)}
                     >
                       {/* {product.article && '(' + product.article + ') '} */}
-                      {product.name}
+                      {product?.name}
                     </div>
                     <div className="ml-1">
                       -{' '}
                       <span
                         className={
-                          !product.count || product.count < productIdCount.count
+                          !product?.count ||
+                          product?.count < productIdCount.count
                             ? 'text-red-400'
                             : 'text-black'
                         }
