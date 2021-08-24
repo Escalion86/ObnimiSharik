@@ -8,7 +8,7 @@ const ProductCirculationModal = ({
   products,
   onClose = () => {},
   afterConfirm = () => {},
-  confirmModal = (title, message, func) => func(),
+  confirmModal = (title, message, func) => {},
 }) => {
   const product = findDataWithId(products, productCirculation?.productId)
 

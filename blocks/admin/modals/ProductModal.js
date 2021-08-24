@@ -8,7 +8,7 @@ const ProductModal = ({
   productTypes,
   onClose = () => {},
   afterConfirm = () => {},
-  confirmModal = (title, message, func) => func(),
+  confirmModal = (title, message, func) => {},
 }) => {
   const onDelete = () => {
     deleteData(
