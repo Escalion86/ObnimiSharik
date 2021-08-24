@@ -2,14 +2,15 @@ import { ProductCirculationForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 import { deleteData } from '@helpers/CRUD'
 import findDataWithId from '@helpers/findDataWithId'
+import { useSelector } from 'react-redux'
 
 const ProductCirculationModal = ({
   productCirculation,
-  products,
   onClose = () => {},
   afterConfirm = () => {},
   confirmModal = (title, message, func) => {},
 }) => {
+  const { products } = useSelector((state) => state)
   const product = findDataWithId(products, productCirculation?.productId)
 
   const onDelete = () => {

@@ -141,8 +141,6 @@ export default function Admin() {
         addModal(({ onClose }) => (
           <SetModal
             set={set}
-            setTypes={data.setTypes}
-            products={data.products}
             onClose={onClose}
             afterConfirm={() =>
               fetchingSets((result) => dispatch(setSets(result)))
@@ -168,7 +166,6 @@ export default function Admin() {
         addModal(({ onClose }) => (
           <ProductModal
             product={product}
-            productTypes={data.productTypes}
             onClose={onClose}
             afterConfirm={() =>
               fetchingProducts((result) => dispatch(setProducts(result)))
@@ -298,7 +295,6 @@ export default function Admin() {
         addModal(({ onClose }) => (
           <ProductCirculationModal
             productCirculation={productCirculation}
-            products={data.products}
             onClose={onClose}
             afterConfirm={() =>
               fetchingProductCirculations((result) =>

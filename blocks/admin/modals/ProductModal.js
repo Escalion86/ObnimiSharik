@@ -1,15 +1,15 @@
 import { ProductForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 import { deleteData } from '@helpers/CRUD'
+import { useSelector } from 'react-redux'
 
 const ProductModal = ({
   product,
-  products,
-  productTypes,
   onClose = () => {},
   afterConfirm = () => {},
   confirmModal = (title, message, func) => {},
 }) => {
+  const { products, productTypes } = useSelector((state) => state)
   const onDelete = () => {
     deleteData(
       '/api/products/' + product._id,

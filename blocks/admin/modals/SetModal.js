@@ -1,15 +1,15 @@
 import { SetForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 import { deleteData } from '@helpers/CRUD'
+import { useSelector } from 'react-redux'
 
 const SetModal = ({
   set,
-  setTypes,
-  products,
   onClose = () => {},
   afterConfirm = () => {},
   confirmModal = (title, message, func) => {},
 }) => {
+  const { products, setTypes } = useSelector((state) => state)
   const onDelete = () => {
     deleteData(
       '/api/sets/' + set._id,
