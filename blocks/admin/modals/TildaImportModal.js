@@ -50,7 +50,11 @@ const Input = ({
   </div>
 )
 
-const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
+const TildaImportModal = ({
+  onClose = () => {},
+  afterConfirm = () => {},
+  confirmModal = (title, message, func) => {},
+}) => {
   const toastId = useRef(null)
 
   function changeHandler(evt, onClose, afterConfirm) {
