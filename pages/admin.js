@@ -235,18 +235,16 @@ export default function Admin() {
     // )),
     openTildaImportModal: () =>
       dispatch(
-        addModal(
-          setModal(({ onClose }) => (
-            <TildaImportModal {...data} onClose={onClose} />
-          ))
-        )
+        addModal(({ onClose }) => (
+          <TildaImportModal {...data} onClose={onClose} />
+        ))
       ),
     // setModal(() => (
     //   <TildaImportModal {...data} onClose={() => setModal(null)} />
     // )),
     openUserModal: (user) =>
       dispatch(
-        addModal(({ key }) => (
+        addModal(({ onClose }) => (
           <UserModal
             user={user}
             onClose={onClose}
