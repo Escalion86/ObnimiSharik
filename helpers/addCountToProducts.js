@@ -1,12 +1,20 @@
 import formProductCountObj from './formProductCountObj'
 
-const addCountToProducts = (products, productCirculations) => {
-  const countProductCirculations = formProductCountObj(productCirculations)
+const addCountToProducts = (
+  products,
+  productCirculations,
+  formated = false
+) => {
+  const countProductCirculations = formated
+    ? productCirculations
+    : formProductCountObj(productCirculations)
 
   return products.map((product) => {
     return {
       ...product,
-      count: countProductCirculations[product._id],
+      count: countProductCirculations[product._id]
+        ? countProductCirculations[product._id]
+        : 0,
     }
   })
 }
