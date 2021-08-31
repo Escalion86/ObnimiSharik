@@ -6,15 +6,10 @@ export const TypeCard = ({
   onClick = () => {},
   onDelete = null,
 }) => (
-  <Card>
+  <Card onClick={() => onClick(type)}>
     <div className="flex-1">
       <div className="flex justify-between gap-x-2">
-        <div
-          className="font-semibold cursor-pointer text-primary hover:text-toxic"
-          onClick={() => onClick(type)}
-        >
-          {type.name}
-        </div>
+        <div className="font-semibold">{type.name}</div>
         {/* <div className="flex-1 italic">{type.description}</div> */}
       </div>
     </div>

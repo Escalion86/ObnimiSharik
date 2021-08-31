@@ -20,15 +20,10 @@ export const InvitationCard = ({
   }
 
   return (
-    <Card>
+    <Card onClick={() => onClick(invitation)}>
       <div className="flex-1">
         <div className="flex flex-col flex-wrap justify-between gap-x-4 phoneH:flex-row">
-          <div
-            className="font-semibold cursor-pointer text-primary hover:text-toxic"
-            onClick={() => onClick(invitation)}
-          >
-            {invitation.email}
-          </div>
+          <div className="font-semibold">{invitation.email}</div>
           <div className="flex-1 italic">{roleRus(invitation.role)}</div>
         </div>
       </div>

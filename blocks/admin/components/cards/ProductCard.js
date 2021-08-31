@@ -4,12 +4,12 @@ import Card from './Card'
 
 export const ProductCard = ({
   product,
-  count = 0,
+  // count = 0,
   onClick = () => {},
   onTypeClick = () => {},
   onDelete = null,
 }) => (
-  <Card>
+  <Card onClick={() => onClick(product)}>
     {/* <img
       className="w-14 h-14"
       src={product.images[0]}
@@ -22,7 +22,7 @@ export const ProductCard = ({
         image={{
           src: product.images[0],
           alt: 'product',
-          className: 'w-14 h-14',
+          className: 'w-16 h-16',
           // style: { width: '50em' }
         }}
         zoomImage={{
@@ -35,12 +35,7 @@ export const ProductCard = ({
     )}
     <div className="flex-1 ml-3">
       <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
-        <div
-          className="w-5/12 font-semibold cursor-pointer min-w-48 text-primary hover:text-toxic"
-          onClick={() => onClick(product)}
-        >
-          {product.name}
-        </div>
+        <div className="w-5/12 font-semibold min-w-48">{product.name}</div>
         <div className="flex-1 text-sm italic min-w-48">
           {product.description}
         </div>
@@ -60,17 +55,17 @@ export const ProductCard = ({
     <div
       className={
         'absolute bottom-0 right-0 flex items-center justify-center w-20 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
-        (count > 3
+        (product.count > 3
           ? 'bg-green-400'
-          : count > 0
+          : product.count > 0
           ? 'bg-green-200'
-          : count < 0
+          : product.count < 0
           ? 'bg-red-400'
           : 'bg-red-200')
       }
     >
       <span>
-        <span>{count}</span>
+        <span>{product.count ? product.count : 0}</span>
         <span className="text-sm"> шт.</span>
       </span>
     </div>

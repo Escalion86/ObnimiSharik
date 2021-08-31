@@ -82,12 +82,13 @@ module.exports = {
         'zoom-in': 'zoom-in',
       },
       boxShadow: {
-        light: '0 5px 10px 0 rgba(0, 0, 0, 0.20)',
-        medium: '0 4px 12px 0 rgba(0, 0, 0, 0.30)',
-        large: '0 3px 15px 0 rgba(0, 0, 0, 0.40)',
+        light: '1px 5px 4px 0 rgba(0, 0, 0, 0.20)',
+        medium: '1px 4px 5px 0 rgba(0, 0, 0, 0.30)',
+        large: '1px 3px 6px 0 rgba(0, 0, 0, 0.40)',
         // sm: '0 3px 15px 0 rgba(0, 0, 0, 0.10)',
         active:
-          '0 1px 3px 1px rgba(76, 29, 149, 0.4), 0 1px 2px 1px rgba(76, 29, 149, 0.3)',
+          '0 1px 3px 1px rgba(38, 163, 212, 0.5), 0 1px 2px 1px rgba(38, 163, 212, 0.3)',
+        'medium-active': '0 1px 4px 5px rgba(38, 163, 212, 0.5)',
       },
       spacing: {
         90: '22.5rem',

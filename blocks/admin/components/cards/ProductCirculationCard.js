@@ -1,25 +1,24 @@
 import findDataWithId from '@helpers/findDataWithId'
 import formatDate from '@helpers/formatDate'
+import { useSelector } from 'react-redux'
 import Card from './Card'
 
 export const ProductCirculationCard = ({
   productCirculation,
-  products,
   onClick = () => {},
   onDelete = null,
 }) => {
   const { count, purchase, productId } = productCirculation
+  const { products } = useSelector((state) => state)
   const product = findDataWithId(products, productId)
+  // if (!product) return <Card>?</Card>
   return (
-    <Card>
+    <Card onClick={() => onClick(productCirculation)}>
       <div className="flex-1 mr-24">
         <div className="flex flex-col flex-wrap tablet:items-center gap-x-2 tablet:flex-row">
           <div>{formatDate(productCirculation.purchasedAt)}</div>
-          <div
-            className="font-semibold cursor-pointer text-primary hover:text-toxic"
-            onClick={() => onClick(productCirculation)}
-          >
-            {product.name}
+          <div className="font-semibold">
+            {product ? product.name : '? [товар не найден в базе]'}
           </div>
         </div>
       </div>

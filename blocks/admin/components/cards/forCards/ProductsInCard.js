@@ -1,14 +1,84 @@
 import { Tooltip } from '@material-ui/core'
+import { useSelector } from 'react-redux'
 
-const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
-  if (productsIdCount[0] === undefined) productsIdCount.length = 0
+const ProductsInCard = ({ productsIdCount = {}, onClick = null }) => {
+  const { products } = useSelector((state) => state)
+
+  const productItems = []
+  // let i = 0
+  for (const [id, count] of Object.entries(productsIdCount)) {
+    productItems.push(({ index }) => {
+      const product = products.find((product) => id === product._id)
+      if (!product) return null
+
+      return (
+        <div className="flex" key={'product' + id}>
+          <Tooltip
+            title={
+              <div className="text-xs">
+                {product?.name}
+                <br />
+                Артикул:{' '}
+                {product?.article ? '(' + product.article + ')' : 'отсутствует'}
+                <br />В наличии: {product?.count ? product.count : '0'} шт.
+              </div>
+            }
+            arrow
+            placement="top"
+          >
+            <div className="flex">
+              <div
+                className={
+                  onClick
+                    ? 'cursor-pointer hover:text-toxic ' +
+                      (!product?.count || product?.count < count
+                        ? 'text-red-400'
+                        : 'text-primary')
+                    : ''
+                }
+                onClick={onClick ? () => onClick(product) : null}
+              >
+                {/* {product.article && '(' + product.article + ') '} */}
+                {product?.name}
+              </div>
+              <div className="ml-1">
+                {'- '}
+                <span
+                  className={
+                    !product?.count || product?.count < count
+                      ? 'text-red-400'
+                      : 'text-black'
+                  }
+                >
+                  {count}
+                </span>{' '}
+                шт
+              </div>
+            </div>
+          </Tooltip>
+          {/* {index < productsIdCount.length - 1 ? (
+            <div className="mr-1">, </div>
+          ) : (
+            ''
+          )} */}
+        </div>
+      )
+    })
+    // i++
+  }
+
   return (
     <div className="flex mt-1 space-x-2 text-sm">
       <div className="min-w-max">Товары в наборе:</div>
-      {productsIdCount.length > 0 ? (
+      {productItems.length > 0 ? (
         <div className="flex flex-wrap gap-x-2">
+          {productItems.map((Item, index) => (
+            <Item key={'ItemRow' + index} index={index} />
+          ))}
+          {/* 
+
           {productsIdCount.map((productIdCount, index) => {
-            const product = productsWithCount.find(
+            const product = products.find(
               (product) => productIdCount.id === product._id
             )
             if (!product) return null
@@ -17,6 +87,8 @@ const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
                 <Tooltip
                   title={
                     <div className="text-xs">
+                      {product?.name}
+                      <br />
                       Артикул:{' '}
                       {product?.article
                         ? '(' + product.article + ')'
@@ -31,19 +103,20 @@ const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
                   <div className="flex">
                     <div
                       className={
-                        'cursor-pointer hover:text-toxic ' +
-                        (!product?.count ||
-                        product?.count < productIdCount.count
-                          ? 'text-red-400'
-                          : 'text-primary')
+                        onClick
+                          ? 'cursor-pointer hover:text-toxic ' +
+                            (!product?.count ||
+                            product?.count < productIdCount.count
+                              ? 'text-red-400'
+                              : 'text-primary')
+                          : ''
                       }
-                      onClick={() => onClick(product)}
+                      onClick={onClick ? () => onClick(product) : null}
                     >
-                      {/* {product.article && '(' + product.article + ') '} */}
                       {product?.name}
                     </div>
                     <div className="ml-1">
-                      -{' '}
+                      {'- '}
                       <span
                         className={
                           !product?.count ||
@@ -66,6 +139,9 @@ const ProductsInCard = ({ productsIdCount, productsWithCount, onClick }) => {
               </div>
             )
           })}
+
+
+           */}
         </div>
       ) : (
         <div>отсутствуют</div>
