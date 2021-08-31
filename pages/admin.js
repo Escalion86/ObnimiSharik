@@ -92,25 +92,10 @@ const menuCfg = (pages, pagesGroups, userRole) => {
 
 export default function Admin() {
   const [session, loading] = useSession()
-  // const [data, setData] = useState({
-  //   products: [],
-  //   productTypes: [],
-  //   sets: [],
-  //   setTypes: [],
-  //   users: [],
-  //   invitations: [],
-  //   productCirculations: [],
-  // })
-  const [modal, setModal] = useState(null)
-  const [confirmModal, setConfirmModal] = useState([])
 
   const data = useSelector((state) => state)
 
   const dispatch = useDispatch()
-
-  // const updateData = (newData) => {
-  //   setData({ ...data, ...newData })
-  // }
 
   const openConfirmModal = (title, message, onConfirm) => {
     dispatch(
@@ -123,14 +108,6 @@ export default function Admin() {
         />
       ))
     )
-    // setConfirmModal(() => (
-    //   <ConfirmModal
-    //     title={title}
-    //     message={message}
-    //     onConfirm={onConfirm}
-    //     onClose={() => setConfirmModal(null)}
-    //   />
-    // ))
   }
 
   const closeModal = () => dispatch(removeModal())
@@ -149,18 +126,6 @@ export default function Admin() {
           />
         ))
       ),
-    // setModal(() => (
-    //   <SetModal
-    //     set={set}
-    //     setTypes={data.setTypes}
-    //     products={data.products}
-    //     onClose={() => setModal(null)}
-    //     afterConfirm={() =>
-    //       fetchingSets((result) => dispatch(setSets(result)))
-    //     }
-    //     confirmModal={openConfirmModal}
-    //   />
-    // )),
     openProductModal: (product) =>
       dispatch(
         addModal(({ onClose }) => (
@@ -168,23 +133,18 @@ export default function Admin() {
             product={product}
             onClose={onClose}
             afterConfirm={() =>
-              fetchingProducts((result) => dispatch(setProducts(result)))
+              fetchingProducts((result) =>
+                dispatch(
+                  setProducts(
+                    addCountToProducts(result, data.productCirculations)
+                  )
+                )
+              )
             }
             confirmModal={openConfirmModal}
           />
         ))
       ),
-    // setModal(() => (
-    //   <ProductModal
-    //     product={product}
-    //     productTypes={data.productTypes}
-    //     onClose={() => setModal(null)}
-    //     afterConfirm={() =>
-    //       fetchingProducts((result) => dispatch(setProducts(result)))
-    //     }
-    //     confirmModal={openConfirmModal}
-    //   />
-    // )),
     openProductTypeModal: (producttype) =>
       dispatch(
         addModal(({ onClose }) => (
@@ -200,16 +160,6 @@ export default function Admin() {
           />
         ))
       ),
-    // setModal(() => (
-    //   <ProductTypeModal
-    //     producttype={producttype}
-    //     onClose={() => setModal(null)}
-    //     afterConfirm={() =>
-    //       fetchingProductTypes((result) => dispatch(setProductTypes(result)))
-    //     }
-    //     confirmModal={openConfirmModal}
-    //   />
-    // )),
     openSetTypeModal: (settype) =>
       dispatch(
         addModal(({ onClose }) => (
@@ -223,25 +173,20 @@ export default function Admin() {
           />
         ))
       ),
-    // setModal(() => (
-    //   <SetTypeModal
-    //     settype={settype}
-    //     onClose={() => setModal(null)}
-    //     afterConfirm={() =>
-    //       fetchingSetTypes((result) => dispatch(setSetTypes(result)))
-    //     }
-    //     confirmModal={openConfirmModal}
-    //   />
-    // )),
     openTildaImportModal: () =>
       dispatch(
         addModal(({ onClose }) => (
-          <TildaImportModal {...data} onClose={onClose} />
+          <TildaImportModal
+            {...data}
+            onClose={onClose}
+            afterConfirm={() =>
+              fetchingAll((result) => {
+                dispatch(setAllData(result))
+              })
+            }
+          />
         ))
       ),
-    // setModal(() => (
-    //   <TildaImportModal {...data} onClose={() => setModal(null)} />
-    // )),
     openUserModal: (user) =>
       dispatch(
         addModal(({ onClose }) => (
@@ -255,16 +200,6 @@ export default function Admin() {
           />
         ))
       ),
-    // setModal(() => (
-    //   <UserModal
-    //     user={user}
-    //     onClose={() => setModal(null)}
-    //     afterConfirm={() =>
-    //       fetchingUsers((result) => dispatch(setUsers(result)))
-    //     }
-    //     confirmModal={openConfirmModal}
-    //   />
-    // )),
     openInvitationModal: (invitation) =>
       dispatch(
         addModal(({ onClose }) => (
@@ -278,16 +213,6 @@ export default function Admin() {
           />
         ))
       ),
-    // setModal(() => (
-    //   <InvitationModal
-    //     invitation={invitation}
-    //     onClose={() => setModal(null)}
-    //     afterConfirm={() =>
-    //       fetchingInvitations((result) => dispatch(setInvitations(result)))
-    //     }
-    //     confirmModal={openConfirmModal}
-    //   />
-    // )),
     openProductCirculationModal: (productCirculation) =>
       dispatch(
         addModal(({ onClose }) => (
@@ -296,35 +221,19 @@ export default function Admin() {
             onClose={onClose}
             afterConfirm={() =>
               fetchingProductCirculations((result) =>
-                dispatch(setProductCirculations(result))
+                dispatch(setProductCirculations(result, true))
               )
             }
             confirmModal={openConfirmModal}
           />
         ))
       ),
-    // setModal(() => (
-    //   <ProductCirculationModal
-    //     productCirculation={productCirculation}
-    //     products={data.products}
-    //     onClose={() => setModal(null)}
-    //     afterConfirm={() =>
-    //       fetchingProductCirculations((result) =>
-    //         dispatch(setProductCirculations(result))
-    //       )
-    //     }
-    //     confirmModal={openConfirmModal}
-    //   />
-    // )),
     openMessageModal: (message) =>
       dispatch(
         addModal(({ onClose }) => (
           <MessageModal message={message} onClose={onClose} />
         ))
       ),
-    // setModal(() => (
-    //   <MessageModal message={message} onClose={() => setModal(null)} />
-    // )),
     openConfirmModal,
     closeModal,
   }
@@ -520,7 +429,10 @@ export default function Admin() {
     } else if (!loading) {
       const fetching = async () => {
         // const result = await fetchingAll(setData)
-        await fetchingAll((result) => dispatch(setAllData(result)))
+        await fetchingAll((result) => {
+          dispatch(setAllData(result))
+        })
+
         // await dispatch(setModalsFunctions(result))
       }
       fetching()
@@ -548,7 +460,7 @@ export default function Admin() {
   const haveAccess =
     session?.user?.role &&
     ROLES.filter((role) => role.value === session.user.role).length > 0
-  console.log(`data.modals`, data.modals)
+
   return (
     <>
       {(!session || loading) && (
@@ -560,8 +472,8 @@ export default function Admin() {
         <>
           {haveAccess ? (
             <>
-              {modal}
-              {confirmModal}
+              {/* {modal} */}
+              {/* {confirmModal} */}
               {/* {data.modals.map((Modal, index) => (
                 <Modal key={'modal' + index} />
               ))} */}
@@ -597,7 +509,7 @@ export default function Admin() {
                     <div className="relative flex flex-col flex-1">
                       <div className="flex-1 h-full">
                         <PageContent
-                          data={data}
+                          // data={data}
                           // setModal={setModal}
                           // updateData={updateData}
                           modals={modals}
