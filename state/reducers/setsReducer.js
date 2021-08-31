@@ -1,15 +1,13 @@
-import { SET_SETS } from 'state/constants'
+import addCountToSets from '@helpers/addCountToSets'
+import { SET_SETS, ADD_COUNT_TO_SETS } from 'state/constants'
 
 const setsReducer = (state = [], action) => {
   switch (action.type) {
-    // case ADD_PRODUCT:
-    //   return (state = { ...state, logged_in: true })
-    // case 'EDIT_PRODUCT':
-    //   return (state = { ...state, logged_in: false })
-    // case 'DELETE_PRODUCT':
-    //   return (state = { ...state, logged_in: false })
+    case ADD_COUNT_TO_SETS:
+      return addCountToSets(state)
     case SET_SETS:
-      return action.sets
+      if (action.addCount) return addCountToSets(action.sets)
+      else return action.sets
     default:
       return state
   }
