@@ -1,8 +1,9 @@
 import React from 'react'
 import { TypeCard } from '@admincomponents/cards'
+import { useSelector } from 'react-redux'
 
-const SetTypesContent = ({ data, modals }) => {
-  const { setTypes, sets } = data
+const SetTypesContent = ({ modals }) => {
+  const { setTypes, sets } = useSelector((state) => state)
 
   if (!(setTypes && setTypes.length > 0)) return <>'Типов наборов нет'</>
 

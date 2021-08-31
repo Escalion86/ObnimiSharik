@@ -1,8 +1,9 @@
 import React from 'react'
 import { UserCard } from '@admincomponents/cards'
+import { useSelector } from 'react-redux'
 
-const UsersContent = ({ data, modals, user }) => {
-  const { users } = data
+const UsersContent = ({ modals, user }) => {
+  const { users } = useSelector((state) => state)
   let showedUsers = []
   if (users)
     if (user.role !== 'dev')

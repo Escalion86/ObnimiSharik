@@ -1,8 +1,9 @@
 import React from 'react'
 import { InvitationCard } from '@admincomponents/cards'
+import { useSelector } from 'react-redux'
 
-const InvitationsContent = ({ data, modals }) => {
-  const { invitations } = data
+const InvitationsContent = ({ modals }) => {
+  const { invitations } = useSelector((state) => state)
 
   return (
     <div>

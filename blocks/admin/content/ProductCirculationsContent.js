@@ -1,8 +1,9 @@
 import React from 'react'
 import { ProductCirculationCard } from '@admincomponents/cards'
+import { useSelector } from 'react-redux'
 
-const ProductCirculationsContent = ({ data, modals }) => {
-  const { productCirculations, products } = data
+const ProductCirculationsContent = ({ modals }) => {
+  const { productCirculations } = useSelector((state) => state)
 
   if (!(productCirculations && productCirculations.length > 0))
     return <>'Товарооборота нет'</>
@@ -14,7 +15,6 @@ const ProductCirculationsContent = ({ data, modals }) => {
           <ProductCirculationCard
             key={productCirculation._id}
             productCirculation={productCirculation}
-            products={products}
             onClick={() =>
               modals.openProductCirculationModal(productCirculation)
             }

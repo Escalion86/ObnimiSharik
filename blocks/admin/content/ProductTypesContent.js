@@ -1,8 +1,9 @@
 import React from 'react'
 import { TypeCard } from '@admincomponents/cards'
+import { useSelector } from 'react-redux'
 
-const ProductTypesContent = ({ data, modals }) => {
-  const { productTypes, products } = data
+const ProductTypesContent = ({ modals }) => {
+  const { productTypes, products } = useSelector((state) => state)
 
   if (!(productTypes && productTypes.length > 0))
     return <>'Типов продуктов нет'</>
