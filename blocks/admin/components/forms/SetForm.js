@@ -60,12 +60,16 @@ const SetForm = ({
     e.preventDefault()
     const errs = formValidate()
     // Убираем невыбранные товары и с количеством 0
-    const productsIdCount = form.productsIdCount.filter(
-      (productIdCount) =>
-        productIdCount.id &&
-        productIdCount.id !== '0' &&
-        productIdCount.count > 0
-    )
+    const productsIdCount = {}
+    for (const [id, count] of Object.entries(form.productsIdCount)) {
+      if (id !== '?' && count > 0) productsIdCount[id] = count
+    }
+    // form.productsIdCount.filter(
+    //   (productIdCount) =>
+    //     productIdCount.id &&
+    //     productIdCount.id !== '0' &&
+    //     productIdCount.count > 0
+    // )
     const fixedForm = { ...form, productsIdCount }
 
     if (Object.keys(errs).length === 0) {

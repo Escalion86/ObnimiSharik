@@ -5,9 +5,9 @@ const СomboList = ({ onChange, selectedId, products }) => (
   <select
     className="w-full px-2 py-1 text-sm bg-gray-200 rounded-l-lg"
     onChange={onChange}
-    defaultValue={selectedId ? selectedId : '0'}
+    defaultValue={selectedId ? selectedId : '?'}
   >
-    <option disabled className="text-sm" value="0">
+    <option disabled className="text-sm" value="?">
       Выберите товар
     </option>
     {products.map((product, index) => (
@@ -25,9 +25,9 @@ const СomboList = ({ onChange, selectedId, products }) => (
 
 const ItemRow = ({ onChange, selectedId, count = 1, index, products }) => {
   const onChangeCount = (e) =>
-    onChange({ id: selectedId, count: Number(e.target.value), index })
-  const onChangeItem = (e) =>
-    onChange({ id: e.target.value, count: count, index })
+    onChange(selectedId, Number(e.target.value), index)
+  const onChangeItem = (e) => onChange(e.target.value, count, index)
+
   return (
     <div className="flex border-b border-gray-700">
       <СomboList
@@ -53,22 +53,49 @@ const ItemRow = ({ onChange, selectedId, count = 1, index, products }) => {
 }
 
 const ProductList = ({
-  productsIdCount = [],
-  products,
-  onChange,
-  required,
+  productsIdCount = {},
+  products = {},
+  onChange = () => {},
+  required = false,
 }) => {
-  const onChangeItemRow = (e) => {
-    const newProductsIdCount = productsIdCount.map((item, index) => {
-      if (index === e.index) return { id: e.id, count: e.count }
-      return item
-    })
-    onChange(newProductsIdCount)
+  const onChangeItemRow = (id, count, index) => {
+    const tempProductsIdCount = {}
+    let i = 0
+    for (const [id_old, count_old] of Object.entries(productsIdCount)) {
+      if (i === index) tempProductsIdCount[id] = count
+      else tempProductsIdCount[id_old] = count_old
+      i++
+    }
+    onChange(tempProductsIdCount)
+    // const newProductsIdCount = productsIdCount.map((item, index) => {
+    //   if (index === e.index) return { id: e.id, count: e.count }
+    //   return item
+    // })
+    // onChange(newProductsIdCount)
   }
 
   const AddRow = () => {
-    onChange([...productsIdCount, { id: '0', count: 1 }])
+    onChange(Object.assign(productsIdCount, { ['?']: 1 }))
   }
+
+  // const itemRows = () => {
+  const itemRows = []
+  // let i = 0
+  for (const [id, count] of Object.entries(productsIdCount)) {
+    itemRows.push(({ index }) => (
+      <ItemRow
+        onChange={onChangeItemRow}
+        selectedId={id}
+        count={count}
+        index={index}
+        products={products}
+      />
+    ))
+    // i++
+  }
+  // }
+
+  const addButtonIsActive = !('?' in productsIdCount)
 
   return (
     <div className="flex flex-col">
@@ -79,13 +106,13 @@ const ProductList = ({
       <div
         name="productIds"
         className={
-          'flex flex-col bg-gray-200 border rounded-lg ' +
+          'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg ' +
           (required && !productsIdCount?.length
             ? 'border-red-700'
             : 'border-gray-700')
         }
       >
-        {productsIdCount &&
+        {/* {productsIdCount &&
           productsIdCount.map((item, index) => (
             <ItemRow
               key={'ItemRow' + index}
@@ -95,14 +122,26 @@ const ProductList = ({
               index={index}
               products={products}
             />
-          ))}
+          ))} */}
+
+        {itemRows.map((Item, index) => (
+          <Item key={'ItemRow' + index} index={index} />
+        ))}
         <div
-          onClick={AddRow}
-          className="flex items-center justify-center h-6 bg-white rounded-lg cursor-pointer"
+          onClick={addButtonIsActive ? AddRow : null}
+          className={
+            'flex items-center justify-center h-6 bg-white rounded-lg' +
+            (addButtonIsActive ? ' cursor-pointer' : '')
+          }
         >
-          <div className="flex items-center justify-center flex-1 transparent hover:scale-150">
+          <div
+            className={
+              'flex items-center justify-center flex-1 transparent' +
+              (addButtonIsActive ? ' hover:scale-150' : '')
+            }
+          >
             <FontAwesomeIcon
-              className="text-gray-700"
+              className={addButtonIsActive ? 'text-gray-700' : 'text-gray-400'}
               icon={faPlus}
               size="1x"
             />

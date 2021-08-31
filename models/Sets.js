@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+const productsIdCountSchema = new mongoose.Schema({})
+
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const SetsSchema = new mongoose.Schema({
   article: {
@@ -29,8 +31,9 @@ const SetsSchema = new mongoose.Schema({
     default: [],
   },
   productsIdCount: {
-    type: Array,
-    default: [],
+    type: Map,
+    of: Number,
+    default: {},
   },
   typesId: {
     type: Array,
