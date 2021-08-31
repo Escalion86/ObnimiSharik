@@ -1,13 +1,25 @@
+// import { useSelector } from 'react-redux'
 import formProductCountObj from './formProductCountObj'
 
 const addCountToProducts = (
   products,
-  productCirculations,
+  productCirculations = null,
   formated = false
 ) => {
-  const countProductCirculations = formated
-    ? productCirculations
-    : formProductCountObj(productCirculations)
+  // const state = useSelector((state) => state)
+  if (!products) return
+  // products = useSelector((state) => state.products)
+
+  let countProductCirculations
+  if (!productCirculations)
+    // countProductCirculations = formProductCountObjuseSelector(
+    //   (state) => state.productCirculations
+    // )
+    return products
+  else
+    countProductCirculations = formated
+      ? productCirculations
+      : formProductCountObj(productCirculations)
 
   return products.map((product) => {
     return {
