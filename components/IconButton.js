@@ -8,7 +8,7 @@ const IconButton = ({
   animation = false,
   small = false,
   inverse = false,
-  icon = null,
+  icon = faQuestion,
   disabled = false,
 }) => (
   <button
