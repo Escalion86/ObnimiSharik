@@ -103,11 +103,11 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openSetTypeModal: (settype, edit) =>
+    openSetTypeModal: (setType, edit) =>
       dispatch(
         addModal((modalId) => (
           <SetTypeModal
-            settype={settype}
+            setType={setType}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={() =>
               fetchingSetTypes((result) => dispatch(setSetTypes(result)))

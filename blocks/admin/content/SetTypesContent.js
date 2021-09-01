@@ -9,18 +9,18 @@ const SetTypesContent = ({ modals }) => {
 
   return (
     <div>
-      {setTypes.map((settype) => {
+      {setTypes.map((setType) => {
         const count = sets.filter((set) =>
-          set.typesId.includes(settype._id)
+          set.typesId.includes(setType._id)
         ).length
         return (
           <TypeCard
-            key={settype._id}
-            type={settype}
+            key={setType._id}
+            type={setType}
             count={count}
-            onClick={() => modals.openSetTypeModal(settype)}
-            onEdit={() => modals.openSetTypeModal(settype, true)}
-            onDelete={() => modals.openDeleteSetType(settype)}
+            onClick={() => modals.openSetTypeModal(setType)}
+            onEdit={() => modals.openSetTypeModal(setType, true)}
+            onDelete={() => modals.openDeleteSetType(setType)}
           />
         )
       })}
