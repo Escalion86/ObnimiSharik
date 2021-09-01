@@ -19,6 +19,8 @@ const SetTypesContent = ({ modals }) => {
             type={settype}
             count={count}
             onClick={() => modals.openSetTypeModal(settype)}
+            onEdit={() => modals.openSetTypeModal(settype, true)}
+            onDelete={() => modals.openDeleteSetType(settype)}
           />
         )
       })}

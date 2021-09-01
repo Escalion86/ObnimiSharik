@@ -10,16 +10,18 @@ const ProductTypesContent = ({ modals }) => {
 
   return (
     <div>
-      {productTypes.map((producttype) => {
+      {productTypes.map((productType) => {
         const count = products.filter((product) =>
-          product.typesId.includes(producttype._id)
+          product.typesId.includes(productType._id)
         ).length
         return (
           <TypeCard
-            key={producttype._id}
-            type={producttype}
+            key={productType._id}
+            type={productType}
             count={count}
-            onClick={() => modals.openProductTypeModal(producttype)}
+            onClick={() => modals.openProductTypeModal(productType)}
+            onEdit={() => modals.openProductTypeModal(productType, true)}
+            onDelete={() => modals.openDeleteProductType(productType)}
           />
         )
       })}

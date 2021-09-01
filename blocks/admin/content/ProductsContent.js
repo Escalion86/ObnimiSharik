@@ -2,6 +2,8 @@ import React from 'react'
 import { ProductCard } from '@admincomponents/cards'
 import formProductCountObj from '@helpers/formProductCountObj'
 import { useSelector } from 'react-redux'
+import { deleteData } from '@helpers/CRUD'
+import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 
 const ProductsContent = ({ modals }) => {
   const { products, productTypes } = useSelector((state) => state)
@@ -24,6 +26,14 @@ const ProductsContent = ({ modals }) => {
             product={{ ...product, types }}
             // count={countProductCirculations[product._id]}
             onClick={() => modals.openProductModal(product)}
+            onEdit={() => modals.openProductModal(product, true)}
+            onBuying={() =>
+              modals.openProductCirculationModal({
+                ...DEFAULT_PRODUCT_CIRCULATION,
+                productId: product._id,
+              })
+            }
+            onDelete={() => modals.openDeleteProduct(product)}
             onTypeClick={(producttype) =>
               modals.openProductTypeModal(producttype)
             }

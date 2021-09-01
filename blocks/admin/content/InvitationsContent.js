@@ -17,6 +17,8 @@ const InvitationsContent = ({ modals }) => {
                 key={invitation._id}
                 invitation={invitation}
                 onClick={() => modals.openInvitationModal(invitation)}
+                onEdit={() => modals.openInvitationModal(invitation, true)}
+                onDelete={() => modals.openDeleteInvitation(invitation)}
               />
             )
           })

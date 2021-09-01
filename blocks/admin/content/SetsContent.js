@@ -53,6 +53,8 @@ const SetsContent = ({ modals }) => {
             // productsWithCount={productsWithCount}
             // count={countSet ? countSet : 0}
             onClick={() => modals.openSetModal(set)}
+            onEdit={() => modals.openSetModal(set, true)}
+            onDelete={() => modals.openDeleteSet(set)}
             onTypeClick={(settype) => modals.openSetTypeModal(settype)}
             onProductClick={(product) => modals.openProductModal(product)}
           />
