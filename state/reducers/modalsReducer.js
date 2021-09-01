@@ -13,7 +13,8 @@ const modalsReducer = (state = {}, action) => {
       return tempState
     case ADD_MODAL:
       // state[uuid()] = action.modal
-      return { ...state, [uuid()]: action.modal }
+      const modalId = uuid()
+      return { ...state, [modalId]: () => action.modal(modalId) }
     default:
       return state
   }
