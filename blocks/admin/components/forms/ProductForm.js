@@ -11,14 +11,11 @@ import { postData, putData } from '@helpers/CRUD'
 
 import compareArrays from '@helpers/compareArrays'
 
-import toasts from '@helpers/toasts'
-
 import Form from './Form'
+import { useSelector } from 'react-redux'
 
 const ProductForm = ({
   product = DEFAULT_PRODUCT,
-  products = [],
-  productTypes = [],
   afterConfirm = () => {},
 }) => {
   const [errors, setErrors] = useState({})
@@ -33,6 +30,8 @@ const ProductForm = ({
     typesId: product.typesId,
     archive: product.archive,
   })
+
+  const { productTypes } = useSelector((state) => state)
 
   const afterConfirmUpd = (data) => {
     deleteImages(compareArrays(product.images, form.images).removed)
