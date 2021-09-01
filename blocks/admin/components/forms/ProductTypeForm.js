@@ -9,17 +9,17 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 
 const ProductTypeForm = ({
-  producttype = DEFAULT_PRODUCT_TYPE,
+  productType = DEFAULT_PRODUCT_TYPE,
   afterConfirm = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
   const [form, setForm] = useState({
-    name: producttype.name,
+    name: productType.name,
   })
 
-  const forNew = producttype._id === undefined
+  const forNew = productType._id === undefined
 
   const handleChange = (e) => {
     const { value, name } = e.target
@@ -42,7 +42,7 @@ const ProductTypeForm = ({
             'Ошибка при создании типа товара "' + form.name + '"'
           )
         : putData(
-            `/api/producttypes/${producttype._id}`,
+            `/api/producttypes/${productType._id}`,
             form,
             afterConfirm,
             'Тип товара "' + form.name + '" изменен',
