@@ -1,42 +1,16 @@
 import { ProductTypeForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
-import { deleteData } from '@helpers/CRUD'
 
 const ProductTypeModal = ({
-  producttype,
+  productType,
   onClose = () => {},
   afterConfirm = () => {},
-  confirmModal = (title, message, func) => {},
+  onDelete = null,
 }) => {
-  const onDelete = () => {
-    deleteData(
-      '/api/producttypes/' + producttype._id,
-      null,
-      'Тип товара "' + producttype.name + '" удален',
-      'Ошибка при удалении типа товара "' + producttype.name + '"'
-    )
-    afterConfirm()
-    onClose()
-  }
-
   return (
-    <Modal
-      onClose={onClose}
-      onDelete={
-        producttype?._id
-          ? () =>
-              confirmModal(
-                'Удаление типа товара',
-                'Вы уверены что хотите удалить тип товара "' +
-                  producttype.name +
-                  '"?',
-                onDelete
-              )
-          : null
-      }
-    >
+    <Modal onClose={onClose} onDelete={onDelete}>
       <ProductTypeForm
-        producttype={producttype}
+        productType={productType}
         afterConfirm={(data) => {
           afterConfirm(data)
           onClose()

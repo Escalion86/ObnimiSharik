@@ -50,11 +50,7 @@ const Input = ({
   </div>
 )
 
-const TildaImportModal = ({
-  onClose = () => {},
-  afterConfirm = () => {},
-  confirmModal = (title, message, func) => {},
-}) => {
+const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
   const toastId = useRef(null)
 
   function changeHandler(evt, onClose, afterConfirm) {
@@ -170,7 +166,6 @@ const TildaImportModal = ({
     }
 
     fileReader.onerror = function (progressEvent) {
-      console.log('onerror!')
       console.log('Has Error!')
     }
 

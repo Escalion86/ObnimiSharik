@@ -66,6 +66,7 @@ import {
   removeAllModals,
   removeModal,
 } from '@state/actions/modalsActions'
+import modalsFunctions from '@adminblocks/modals/modalsFunctions'
 // import { setSets } from '@state/actions/setsActions'
 // import { setProducts } from '@state/actions/productsActions'
 // import { setSetTypes } from '@state/actions/setTypesActions'
@@ -97,146 +98,7 @@ export default function Admin() {
 
   const dispatch = useDispatch()
 
-  const openConfirmModal = (title, message, onConfirm) => {
-    dispatch(
-      addModal(() => (
-        <ConfirmModal
-          title={title}
-          message={message}
-          onConfirm={onConfirm}
-          onClose={() => dispatch(removeModal())}
-        />
-      ))
-    )
-  }
-
-  const closeModal = () => dispatch(removeModal())
-
-  const modals = {
-    openSetModal: (set) =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <SetModal
-            set={set}
-            onClose={onClose}
-            afterConfirm={() =>
-              fetchingSets((result) => dispatch(setSets(result)))
-            }
-            confirmModal={openConfirmModal}
-          />
-        ))
-      ),
-    openProductModal: (product) =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <ProductModal
-            product={product}
-            onClose={onClose}
-            afterConfirm={() =>
-              fetchingProducts((result) =>
-                dispatch(
-                  setProducts(
-                    addCountToProducts(result, data.productCirculations)
-                  )
-                )
-              )
-            }
-            confirmModal={openConfirmModal}
-          />
-        ))
-      ),
-    openProductTypeModal: (producttype) =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <ProductTypeModal
-            producttype={producttype}
-            onClose={onClose}
-            afterConfirm={() =>
-              fetchingProductTypes((result) =>
-                dispatch(setProductTypes(result))
-              )
-            }
-            confirmModal={openConfirmModal}
-          />
-        ))
-      ),
-    openSetTypeModal: (settype) =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <SetTypeModal
-            settype={settype}
-            onClose={onClose}
-            afterConfirm={() =>
-              fetchingSetTypes((result) => dispatch(setSetTypes(result)))
-            }
-            confirmModal={openConfirmModal}
-          />
-        ))
-      ),
-    openTildaImportModal: () =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <TildaImportModal
-            {...data}
-            onClose={onClose}
-            afterConfirm={() =>
-              fetchingAll((result) => {
-                dispatch(setAllData(result))
-              })
-            }
-          />
-        ))
-      ),
-    openUserModal: (user) =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <UserModal
-            user={user}
-            onClose={onClose}
-            afterConfirm={() =>
-              fetchingUsers((result) => dispatch(setUsers(result)))
-            }
-            confirmModal={openConfirmModal}
-          />
-        ))
-      ),
-    openInvitationModal: (invitation) =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <InvitationModal
-            invitation={invitation}
-            onClose={onClose}
-            afterConfirm={() =>
-              fetchingInvitations((result) => dispatch(setInvitations(result)))
-            }
-            confirmModal={openConfirmModal}
-          />
-        ))
-      ),
-    openProductCirculationModal: (productCirculation) =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <ProductCirculationModal
-            productCirculation={productCirculation}
-            onClose={onClose}
-            afterConfirm={() =>
-              fetchingProductCirculations((result) =>
-                dispatch(setProductCirculations(result, true))
-              )
-            }
-            confirmModal={openConfirmModal}
-          />
-        ))
-      ),
-    openMessageModal: (message) =>
-      dispatch(
-        addModal(({ onClose }) => (
-          <MessageModal message={message} onClose={onClose} />
-        ))
-      ),
-    openConfirmModal,
-    closeModal,
-  }
+  const modals = modalsFunctions(dispatch, data)
 
   const TitleBtn = ({ onClick = null, icon = faPlus }) => {
     if (!onClick) return null
