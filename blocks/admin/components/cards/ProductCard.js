@@ -1,6 +1,12 @@
 import TypesInCard from './forCards/TypesInCard'
 import ImageZoom from 'react-medium-image-zoom'
 import Card from './Card'
+import {
+  faPencilAlt,
+  faTrash,
+  faShoppingCart,
+} from '@fortawesome/free-solid-svg-icons'
+import CardButton from '@components/CardButton'
 
 export const ProductCard = ({
   product,
@@ -8,6 +14,8 @@ export const ProductCard = ({
   onClick = () => {},
   onTypeClick = () => {},
   onDelete = null,
+  onEdit = null,
+  onBuying = null,
 }) => (
   <Card onClick={() => onClick(product)}>
     {/* <img
@@ -47,14 +55,49 @@ export const ProductCard = ({
         <TypesInCard types={product.types} onClick={onTypeClick} />
       </div>
     </div>
-    <div className="w-20 mb-10 text-right min-w-min">
+    <div className="absolute top-0 right-0 flex items-center justify-end h-8 overflow-hidden border-b border-l border-gray-200 rounded-tr-lg rounded-bl-lg">
+      {onBuying && (
+        <CardButton
+          onClick={(event) => {
+            event.stopPropagation()
+            onBuying()
+          }}
+          className="bg-yellow-400"
+          inverse
+          icon={faShoppingCart}
+        />
+      )}
+      {onEdit && (
+        <CardButton
+          onClick={(event) => {
+            event.stopPropagation()
+            onEdit()
+          }}
+          className="bg-primary"
+          inverse
+          icon={faPencilAlt}
+        />
+      )}
+      {onDelete && (
+        <CardButton
+          onClick={(event) => {
+            event.stopPropagation()
+            onDelete()
+          }}
+          className="bg-red-400"
+          inverse
+          icon={faTrash}
+        />
+      )}
+    </div>
+    <div className="w-24 my-10 text-right min-w-min">
       <div className="font-bold whitespace-nowrap min-w-min">
         {product.price / 100} ₽
       </div>
     </div>
     <div
       className={
-        'absolute bottom-0 right-0 flex items-center justify-center w-20 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
+        'absolute bottom-0 right-0 flex items-center justify-center w-20 h-8 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg ' +
         (product.count > 3
           ? 'bg-green-400'
           : product.count > 0
