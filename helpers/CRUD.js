@@ -34,6 +34,7 @@ export const putData = async (
     if (toastOnSuccess) toasts.success(toastOnSuccess)
   } catch (error) {
     console.log('Failed to update (PUT) on ' + url)
+    console.log('error: ' + error)
     if (toastOnError) toasts.error(toastOnError)
   }
 }
@@ -67,6 +68,7 @@ export const postData = async (
     if (toastOnSuccess) toasts.success(toastOnSuccess)
   } catch (error) {
     console.log('Failed to add (POST) on ' + url)
+    console.log('error: ' + error)
     if (toastOnError) toasts.error(toastOnError)
   }
 }
@@ -97,6 +99,7 @@ export const deleteData = async (
     if (toastOnSuccess) toasts.success(toastOnSuccess)
   } catch (error) {
     console.log('Failed to delete on ' + url)
+    console.log('error: ' + error)
     if (toastOnError) toasts.error(toastOnError)
   }
 }
