@@ -7,6 +7,7 @@ import { ComboBox, Input } from './forForms'
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
+import compareObjects from '@helpers/compareObjects'
 
 const InvitationForm = ({
   invitation = DEFAULT_INVITATION,
