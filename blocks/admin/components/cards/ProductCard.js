@@ -26,18 +26,20 @@ export const ProductCard = ({
       height={56}
     /> */}
     {product.images[0] ? (
-      <ImageZoom
-        image={{
-          src: product.images[0],
-          alt: 'product',
-          className: 'w-16 h-16',
-          // style: { width: '50em' }
-        }}
-        zoomImage={{
-          src: product.images[0],
-          alt: 'product',
-        }}
-      />
+      <div onClick={(event) => event.stopPropagation()}>
+        <ImageZoom
+          image={{
+            src: product.images[0],
+            alt: 'product',
+            className: 'w-16 h-16',
+            // style: { width: '50em' }
+          }}
+          zoomImage={{
+            src: product.images[0],
+            alt: 'product',
+          }}
+        />
+      </div>
     ) : (
       <img className="w-14 h-14" src="/img/no_image.png" alt="product" />
     )}

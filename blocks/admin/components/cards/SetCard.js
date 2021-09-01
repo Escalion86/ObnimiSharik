@@ -21,18 +21,20 @@ export const SetCard = ({
 }) => (
   <Card onClick={() => onClick(set)}>
     {set.images[0] ? (
-      <ImageZoom
-        image={{
-          src: set.images[0],
-          alt: 'set',
-          className: 'w-16 h-16',
-          // style: { width: '50em' }
-        }}
-        zoomImage={{
-          src: set.images[0],
-          alt: 'set',
-        }}
-      />
+      <div onClick={(event) => event.stopPropagation()}>
+        <ImageZoom
+          image={{
+            src: set.images[0],
+            alt: 'set',
+            className: 'w-16 h-16',
+            // style: { width: '50em' }
+          }}
+          zoomImage={{
+            src: set.images[0],
+            alt: 'set',
+          }}
+        />
+      </div>
     ) : (
       <img className="w-14 h-14" src="/img/no_image.png" alt="set" />
     )}
