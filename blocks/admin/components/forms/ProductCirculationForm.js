@@ -10,6 +10,7 @@ import Form from './Form'
 import findDataWithId from '@helpers/findDataWithId'
 import DatePicker from './forForms/DatePicker'
 import { useSelector } from 'react-redux'
+import compareObjects from '@helpers/compareObjects'
 
 const ProductCirculationForm = ({
   productCirculation = DEFAULT_PRODUCT_CIRCULATION,
