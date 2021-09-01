@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TestContent = ({ data, modals }) => {
+const TestContent = ({ user, modals }) => {
   return <div></div>
 }
 
