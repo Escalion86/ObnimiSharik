@@ -6,9 +6,12 @@ const ComboBox = ({
   placeholder,
   items,
   required = false,
+  inLine = false,
 }) => (
-  <div className="flex flex-col">
-    <label htmlFor={name}>{title}</label>
+  <div className={'flex ' + (inLine ? 'flex-row items-center ' : 'flex-col ')}>
+    <label className="w-24" htmlFor={name}>
+      {title}
+    </label>
     <select
       name={name}
       className={
