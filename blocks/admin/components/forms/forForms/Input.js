@@ -20,16 +20,23 @@ const Input = ({
   accept,
   className,
   disabled = false,
+  inLine = false,
 }) => {
   return (
-    <div className={'flex flex-col' + (className ? ' ' + className : '')}>
-      <label htmlFor={name}>
+    <div
+      className={
+        'flex ' +
+        (inLine ? 'flex-row items-center ' : 'flex-col ') +
+        (className ? ' ' + className : '')
+      }
+    >
+      <label className="w-24" htmlFor={name}>
         {label}
         {required && <span className="text-red-700">*</span>}
       </label>
       <InputComponent
         className={
-          'px-2 py-1 border rounded-lg ' +
+          'flex-1 px-2 py-1 border rounded-lg ' +
           (required && !value ? 'border-red-700' : 'border-gray-700') +
           (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
         }
