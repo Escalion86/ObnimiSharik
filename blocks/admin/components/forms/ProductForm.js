@@ -13,6 +13,7 @@ import compareArrays from '@helpers/compareArrays'
 
 import Form from './Form'
 import { useSelector } from 'react-redux'
+import compareObjects from '@helpers/compareObjects'
 
 const ProductForm = ({
   product = DEFAULT_PRODUCT,
@@ -122,6 +123,7 @@ const ProductForm = ({
     // if (!form.images) err.image = 'Image URL is required'
     return err
   }
+  console.log(`form`, form)
 
   return (
     <Form
@@ -130,7 +132,10 @@ const ProductForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={Object.keys(formValidate()).length !== 0}
+      buttonDisabled={
+        Object.keys(formValidate()).length !== 0 ||
+        compareObjects(form, product)
+      }
     >
       <Input
         key="name"

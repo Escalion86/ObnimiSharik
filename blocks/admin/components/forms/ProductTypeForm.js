@@ -7,6 +7,7 @@ import { Input } from './forForms'
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
+import compareObjects from '@helpers/compareObjects'
 
 const ProductTypeForm = ({
   productType = DEFAULT_PRODUCT_TYPE,
@@ -66,7 +67,10 @@ const ProductTypeForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={Object.keys(formValidate()).length !== 0}
+      buttonDisabled={
+        Object.keys(formValidate()).length !== 0 ||
+        compareObjects(form, productType)
+      }
     >
       <Input
         key="name"

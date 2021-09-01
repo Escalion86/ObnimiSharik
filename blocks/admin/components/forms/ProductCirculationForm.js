@@ -9,10 +9,10 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import findDataWithId from '@helpers/findDataWithId'
 import DatePicker from './forForms/DatePicker'
+import { useSelector } from 'react-redux'
 
 const ProductCirculationForm = ({
   productCirculation = DEFAULT_PRODUCT_CIRCULATION,
-  products = [],
   afterConfirm = () => {},
 }) => {
   const [errors, setErrors] = useState({})
@@ -27,6 +27,8 @@ const ProductCirculationForm = ({
   })
 
   const forNew = productCirculation._id === undefined
+
+  const { products } = useSelector((state) => state)
 
   const product = findDataWithId(products, form.productId)
 
@@ -97,7 +99,10 @@ const ProductCirculationForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={Object.keys(formValidate()).length !== 0}
+      buttonDisabled={
+        Object.keys(formValidate()).length !== 0 ||
+        compareObjects(form, productCirculation)
+      }
     >
       <ComboBox
         name="productId"

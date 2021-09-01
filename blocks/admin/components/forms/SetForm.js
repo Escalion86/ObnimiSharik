@@ -12,13 +12,10 @@ import { postData, putData } from '@helpers/CRUD'
 import compareArrays from '@helpers/compareArrays'
 
 import Form from './Form'
+import compareObjects from '@helpers/compareObjects'
+import { useSelector } from 'react-redux'
 
-const SetForm = ({
-  set = DEFAULT_SET,
-  products = [],
-  setTypes = [],
-  afterConfirm = () => {},
-}) => {
+const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
@@ -32,6 +29,8 @@ const SetForm = ({
     productsIdCount: set.productsIdCount,
     archive: set.archive,
   })
+
+  const { products, setTypes } = useSelector((state) => state)
 
   const afterConfirmUpd = (data) => {
     deleteImages(compareArrays(set.images, form.images).removed)
@@ -108,7 +107,9 @@ const SetForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={Object.keys(formValidate()).length !== 0}
+      buttonDisabled={
+        Object.keys(formValidate()).length !== 0 || compareObjects(form, set)
+      }
     >
       <Input
         key="name"

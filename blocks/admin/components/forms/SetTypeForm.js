@@ -7,19 +7,20 @@ import { Input } from './forForms'
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
+import compareObjects from '@helpers/compareObjects'
 
 const SetTypeForm = ({
-  settype = DEFAULT_SET_TYPE,
+  setType = DEFAULT_SET_TYPE,
   afterConfirm = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
   const [form, setForm] = useState({
-    name: settype.name,
+    name: setType.name,
   })
 
-  const forNew = settype._id === undefined
+  const forNew = setType._id === undefined
 
   const handleChange = (e) => {
     const { value, name } = e.target
@@ -35,14 +36,14 @@ const SetTypeForm = ({
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
-            '/api/settypes',
+            '/api/setTypes',
             form,
             afterConfirm,
             'Тип набора "' + form.name + '" создан',
             'Ошибка при создании типа набора "' + form.name + '"'
           )
         : putData(
-            `/api/settypes/${settype._id}`,
+            `/api/setTypes/${setType._id}`,
             form,
             afterConfirm,
             'Тип набора "' + form.name + '" изменен',
@@ -66,7 +67,10 @@ const SetTypeForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={Object.keys(formValidate()).length !== 0}
+      buttonDisabled={
+        Object.keys(formValidate()).length !== 0 ||
+        compareObjects(form, setType)
+      }
     >
       <Input
         key="name"

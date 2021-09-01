@@ -11,8 +11,6 @@ const SetModal = ({
     <Modal onClose={onClose} onDelete={onDelete}>
       <SetForm
         set={set}
-        setTypes={setTypes}
-        products={products}
         afterConfirm={(data) => {
           afterConfirm(data)
           onClose()

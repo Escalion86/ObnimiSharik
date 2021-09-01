@@ -7,6 +7,7 @@ import { ComboBox, Input, PhoneInput } from './forForms'
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
+import compareObjects from '@helpers/compareObjects'
 
 const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
   const [errors, setErrors] = useState({})
@@ -69,7 +70,9 @@ const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={Object.keys(formValidate()).length !== 0}
+      buttonDisabled={
+        Object.keys(formValidate()).length !== 0 || compareObjects(form, user)
+      }
     >
       <Input
         key="email"

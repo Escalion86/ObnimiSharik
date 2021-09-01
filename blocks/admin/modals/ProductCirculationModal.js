@@ -11,7 +11,6 @@ const ProductCirculationModal = ({
     <Modal onClose={onClose} onDelete={onDelete}>
       <ProductCirculationForm
         productCirculation={productCirculation}
-        products={products}
         afterConfirm={(data) => {
           afterConfirm(data)
           onClose()
