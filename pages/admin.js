@@ -23,6 +23,7 @@ import {
   SettingsContent,
   TestContent,
   ProductCirculationsContent,
+  UserContent,
 } from '@adminblocks/content'
 
 import {
@@ -217,7 +218,7 @@ export default function Admin() {
       group: null,
       name: 'Параметры учетной записи',
       header: 'Параметры учетной записи',
-      pageContent: null,
+      pageContent: UserContent,
       pageButtons: [],
       backToPageId: null,
     }, // 3
