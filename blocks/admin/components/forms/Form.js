@@ -2,7 +2,7 @@ import Button from '@components/Button'
 
 const Form = ({
   handleSubmit = () => {},
-  title = '',
+  title = null,
   message = '',
   errors = {},
   children,
@@ -12,17 +12,19 @@ const Form = ({
 }) => {
   return (
     <>
-      <div className="flex flex-col space-y-2">
-        <div className="text-lg font-semibold text-center">{title}</div>
+      <div className="flex flex-col gap-y-2">
+        {title && (
+          <div className="text-lg font-semibold text-center">{title}</div>
+        )}
         {children}
-        <div className="flex justify-between gap-2">
+        <div className="flex justify-center gap-2">
           <Button
             onClick={handleSubmit}
             name={buttonName}
             small
             inverse
             disabled={buttonDisabled}
-            className="flex-1"
+            className="flex-1 max-w-md"
           />
           {cancelButton && (
             <Button
@@ -31,7 +33,7 @@ const Form = ({
               small
               inverse
               type="cancel"
-              className="flex-1"
+              className="flex-1 max-w-md"
             />
           )}
         </div>
