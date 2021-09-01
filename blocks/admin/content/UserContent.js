@@ -13,8 +13,9 @@ const UserContent = ({ user, modals }) => {
       <UserContentForm
         user={user}
         afterConfirm={(data) => {
-          afterConfirm(data)
-          onClose()
+          // afterConfirm(data)
+          console.log(`data`, data)
+          // onClose()
         }}
       />
       {/* <IconButton
