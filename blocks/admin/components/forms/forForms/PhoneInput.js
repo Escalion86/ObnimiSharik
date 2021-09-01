@@ -8,10 +8,17 @@ const PhoneInput = ({
   required = false,
   className,
   disabled,
+  inLine = false,
 }) => {
   return (
-    <div className={'flex flex-col w-32' + (className ? ' ' + className : '')}>
-      <label htmlFor={name}>
+    <div
+      className={
+        'flex w-32' +
+        (inLine ? 'flex-row items-center ' : 'flex-col ') +
+        (className ? ' ' + className : '')
+      }
+    >
+      <label className="w-24" htmlFor={name}>
         {label}
         {required && <span className="text-red-700">*</span>}
       </label>
@@ -33,7 +40,7 @@ const PhoneInput = ({
             target: {
               ...e.target,
               name: e.target.name,
-              value: e.target.value.replace(/[^0-9]/g, ''),
+              value: Number(e.target.value.replace(/[^0-9]/g, '')),
             },
           })
         }
