@@ -11,7 +11,7 @@ const CardButton = ({
   <button
     onClick={onClick}
     className={
-      'h-8 w-8 whitespace-nowrap shadow font-futuraDemi flex items-center justify-center hover:bg-toxic' +
+      'h-full w-8 whitespace-nowrap shadow font-futuraDemi flex items-center justify-center hover:bg-toxic' +
       (className ? ' ' + className : '')
     }
     disabled={disabled}

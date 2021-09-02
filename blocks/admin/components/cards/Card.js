@@ -1,9 +1,11 @@
-const Card = ({ onClick = null, children }) => (
+const Card = ({ className, inLine = false, onClick = null, children }) => (
   <div
     onClick={onClick}
     className={
-      'relative flex border border-gray-200 items-center p-2 mx-1 my-2 bg-white rounded-lg shadow-medium hover:shadow-medium-active' +
-      (onClick ? ' cursor-pointer' : '')
+      'relative items-center flex border border-gray-200 mx-1 my-2 bg-white rounded-lg shadow-medium hover:shadow-medium-active' +
+      (onClick ? ' cursor-pointer' : '') +
+      (className ? ' ' + className : '') +
+      (inLine ? ' h-10' : '')
     }
   >
     {children}

@@ -2,12 +2,14 @@ import TypesInCard from './forCards/TypesInCard'
 import ImageZoom from 'react-medium-image-zoom'
 import ProductsInCard from './forCards/ProductsInCard'
 import Card from './Card'
-import CardButton from '@components/CardButton'
+import CardButton from '@admincomponents/cards/forCards/CardButton'
 import {
   faPencilAlt,
   faShoppingCart,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
+import CardButtons from './forCards/CardButtons'
+import CardContainer from './CardContainer'
 
 export const SetCard = ({
   set,
@@ -20,62 +22,43 @@ export const SetCard = ({
   onEdit = null,
 }) => (
   <Card onClick={() => onClick(set)}>
-    {set.images[0] ? (
-      <div onClick={(event) => event.stopPropagation()}>
-        <ImageZoom
-          image={{
-            src: set.images[0],
-            alt: 'set',
-            className: 'w-16 h-16',
-            // style: { width: '50em' }
-          }}
-          zoomImage={{
-            src: set.images[0],
-            alt: 'set',
-          }}
-        />
-      </div>
-    ) : (
-      <img className="w-14 h-14" src="/img/no_image.png" alt="set" />
-    )}
-    <div className="flex-1 ml-3">
-      <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
-        <div className="w-5/12 font-semibold min-w-48 ">{set.name}</div>
-        <div className="flex-1 text-sm italic min-w-48">{set.description}</div>
-      </div>
-      <ProductsInCard
-        productsIdCount={set.productsIdCount}
-        // productsWithCount={productsWithCount}
-        onClick={onProductClick}
-      />
-      <div className="mr-12">
-        <TypesInCard types={set.types} onClick={onTypeClick} />
-      </div>
-    </div>
-    <div className="absolute top-0 right-0 flex items-center justify-end h-8 overflow-hidden border-b border-l border-gray-200 rounded-tr-lg rounded-bl-lg">
-      {onEdit && (
-        <CardButton
-          onClick={(event) => {
-            event.stopPropagation()
-            onEdit()
-          }}
-          className="bg-primary"
-          inverse
-          icon={faPencilAlt}
-        />
+    <CardContainer>
+      {set.images[0] ? (
+        <div onClick={(event) => event.stopPropagation()}>
+          <ImageZoom
+            image={{
+              src: set.images[0],
+              alt: 'set',
+              className: 'w-16 h-16',
+              // style: { width: '50em' }
+            }}
+            zoomImage={{
+              src: set.images[0],
+              alt: 'set',
+            }}
+          />
+        </div>
+      ) : (
+        <img className="w-14 h-14" src="/img/no_image.png" alt="set" />
       )}
-      {onDelete && (
-        <CardButton
-          onClick={(event) => {
-            event.stopPropagation()
-            onDelete()
-          }}
-          className="bg-red-400"
-          inverse
-          icon={faTrash}
+      <div className="flex-1 ml-3">
+        <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
+          <div className="w-5/12 font-semibold min-w-48 ">{set.name}</div>
+          <div className="flex-1 text-sm italic min-w-48">
+            {set.description}
+          </div>
+        </div>
+        <ProductsInCard
+          productsIdCount={set.productsIdCount}
+          // productsWithCount={productsWithCount}
+          onClick={onProductClick}
         />
-      )}
-    </div>
+        <div className="mr-12">
+          <TypesInCard types={set.types} onClick={onTypeClick} />
+        </div>
+      </div>
+    </CardContainer>
+    <CardButtons topRight onEdit={onEdit} onDelete={onDelete} />
     <div className="w-24 my-10 text-right min-w-min">
       <div className="font-bold whitespace-nowrap min-w-min">
         {set.price / 100} ₽
