@@ -13,7 +13,7 @@ const PhoneInput = ({
   return (
     <div
       className={
-        'flex w-32' +
+        'flex' +
         (inLine ? ' flex-row items-center' : ' flex-col') +
         (className ? ' ' + className : '')
       }
