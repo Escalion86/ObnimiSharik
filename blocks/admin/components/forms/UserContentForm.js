@@ -103,30 +103,24 @@ const UserContentForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
         inLine
       /> */}
 
-      <div className="flex flex-wrap gap-2 ">
-        <div className="flex-1">
-          <PhoneInput
-            key="phone"
-            label="Телефон"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            // required
-            inLine
-          />
-        </div>
-        <div className="flex-1">
-          <PhoneInput
-            key="whatsapp"
-            label="WhatsApp"
-            name="whatsapp"
-            value={form.whatsapp}
-            onChange={handleChange}
-            // required
-            inLine
-          />
-        </div>
-      </div>
+      <PhoneInput
+        key="phone"
+        label="Телефон"
+        name="phone"
+        value={form.phone}
+        onChange={handleChange}
+        // required
+        inLine
+      />
+      <PhoneInput
+        key="whatsapp"
+        label="WhatsApp"
+        name="whatsapp"
+        value={form.whatsapp}
+        onChange={handleChange}
+        // required
+        inLine
+      />
       {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>
         <select
