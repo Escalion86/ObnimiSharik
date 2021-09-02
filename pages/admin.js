@@ -369,16 +369,14 @@ export default function Admin() {
                     }
                   />
                   <div className="flex flex-col flex-1 max-h-full px-3 pb-3 overflow-y-scroll">
-                    <div className="relative flex flex-col flex-1">
-                      <div className="flex-1 h-full">
-                        <PageContent
-                          // data={data}
-                          // setModal={setModal}
-                          // updateData={updateData}
-                          modals={modals}
-                          user={session.user}
-                        />
-                      </div>
+                    <div className="relative flex flex-col flex-1 h-full">
+                      <PageContent
+                        // data={data}
+                        // setModal={setModal}
+                        // updateData={updateData}
+                        modals={modals}
+                        user={session.user}
+                      />
                     </div>
                   </div>
                 </main>
