@@ -1,6 +1,7 @@
 import React from 'react'
 import { TypeCard } from '@admincomponents/cards'
 import { useSelector } from 'react-redux'
+import { DEFAULT_SET } from '@helpers/constants'
 
 const SetTypesContent = ({ modals }) => {
   const { setTypes, sets } = useSelector((state) => state)
@@ -19,6 +20,12 @@ const SetTypesContent = ({ modals }) => {
             type={setType}
             count={count}
             onClick={() => modals.openSetTypeModal(setType)}
+            onAdd={() =>
+              modals.openSetModal({
+                ...DEFAULT_SET,
+                typesId: [setType._id],
+              })
+            }
             onEdit={() => modals.openSetTypeModal(setType, true)}
             onDelete={() => modals.openDeleteSetType(setType)}
           />

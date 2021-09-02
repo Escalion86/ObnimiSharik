@@ -1,6 +1,7 @@
 import React from 'react'
 import { TypeCard } from '@admincomponents/cards'
 import { useSelector } from 'react-redux'
+import { DEFAULT_PRODUCT } from '@helpers/constants'
 
 const ProductTypesContent = ({ modals }) => {
   const { productTypes, products } = useSelector((state) => state)
@@ -20,6 +21,12 @@ const ProductTypesContent = ({ modals }) => {
             type={productType}
             count={count}
             onClick={() => modals.openProductTypeModal(productType)}
+            onAdd={() =>
+              modals.openProductModal({
+                ...DEFAULT_PRODUCT,
+                typesId: [productType._id],
+              })
+            }
             onEdit={() => modals.openProductTypeModal(productType, true)}
             onDelete={() => modals.openDeleteProductType(productType)}
           />
