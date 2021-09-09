@@ -7,7 +7,7 @@ import setTypesReducer from './setTypesReducer'
 import invitationsReducer from './invitationsReducer'
 import productCirculationsReducer from './productCirculationsReducer'
 import modalsReducer from './modalsReducer'
-// import modalReducer from './modalReducer'
+import filterReducer from './filterReducer'
 
 const allReducers = combineReducers({
   products: productsReducer,
@@ -18,7 +18,7 @@ const allReducers = combineReducers({
   users: usersReducer,
   productCirculations: productCirculationsReducer,
   modals: modalsReducer,
-  // modal: modalReducer,
+  filter: filterReducer,
 })
 
 export default allReducers
