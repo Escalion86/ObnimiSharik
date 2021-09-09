@@ -30,7 +30,6 @@ const Filter = ({
   const purchaseFilterExists =
     data.filter[filterName].purchase !== undefined &&
     filter.purchase !== undefined
-  console.log(` filter.purchase`, filter.purchase)
 
   let maxPrice = 0
   let minPrice = 0
@@ -153,12 +152,18 @@ const Filter = ({
               checked: filter.purchase[1],
             },
           ]}
-          onChange={(types) =>
-            setFilter({
-              ...filter,
-              purchase: types.map((item) => item.checked),
-            })
-          }
+          onChange={(types) => {
+            if (!types[0].checked && !types[1].checked) {
+              setFilter({
+                ...filter,
+                purchase: [!filter.purchase[0], !filter.purchase[1]],
+              })
+            } else
+              setFilter({
+                ...filter,
+                purchase: types.map((item) => item.checked),
+              })
+          }}
           getAll
           noScroll
         />
