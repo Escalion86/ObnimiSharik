@@ -13,7 +13,7 @@ const ComboBox = ({
     <div
       className={'flex ' + (inLine ? 'flex-row items-center ' : 'flex-col ')}
     >
-      <label className="w-24" htmlFor={name}>
+      <label className={inLine ? 'w-24' : ''} htmlFor={name}>
         {title}
       </label>
       <select

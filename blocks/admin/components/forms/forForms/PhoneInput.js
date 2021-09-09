@@ -18,7 +18,7 @@ const PhoneInput = ({
         (className ? ' ' + className : '')
       }
     >
-      <label className="w-24" htmlFor={name}>
+      <label className={inLine ? 'w-24' : ''} htmlFor={name}>
         {label}
         {required && <span className="text-red-700">*</span>}
       </label>
