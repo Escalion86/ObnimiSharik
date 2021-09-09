@@ -52,6 +52,10 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
+        <link
+          href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css"
+          rel="stylesheet"
+        />
       </Head>
       <Provider store={store}>
         <Component {...pageProps} />
