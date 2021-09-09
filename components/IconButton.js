@@ -10,14 +10,16 @@ const IconButton = ({
   inverse = false,
   icon = faQuestion,
   disabled = false,
+  active = false,
 }) => (
   <button
     onClick={onClick}
     className={
       (small ? 'text-base h-8' : 'text-lg h-10') +
       (inverse
-        ? ' bg-primary text-white'
-        : ' bg-white border-white text-primary') +
+        ? ' text-white ' + (active ? ' bg-yellow-400' : 'bg-primary')
+        : ' bg-white border-white ' +
+          (active ? ' text-yellow-400' : 'text-primary')) +
       ' border whitespace-nowrap shadow font-futuraDemi rounded-xl flex items-center justify-center hover:bg-toxic' +
       (animation ? ' animate-pulse-light' : '') +
       (className ? ' ' + className : '') +
