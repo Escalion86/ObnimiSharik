@@ -8,7 +8,7 @@ const SetTypeModal = ({
   onDelete = null,
 }) => {
   return (
-    <Modal onClose={onClose} onDelete={onDelete}>
+    <Modal onClose={onClose} onDelete={setType?._id && onDelete}>
       <SetTypeForm
         setType={setType}
         afterConfirm={(data) => {

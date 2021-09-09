@@ -8,7 +8,7 @@ const UserModal = ({
   onDelete,
 }) => {
   return (
-    <Modal onClose={onClose} onDelete={onDelete}>
+    <Modal onClose={onClose} onDelete={user?._id && onDelete}>
       <UserForm
         user={user}
         afterConfirm={(data) => {

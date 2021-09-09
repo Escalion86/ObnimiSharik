@@ -8,7 +8,7 @@ const ProductTypeModal = ({
   onDelete = null,
 }) => {
   return (
-    <Modal onClose={onClose} onDelete={onDelete}>
+    <Modal onClose={onClose} onDelete={productType?._id && onDelete}>
       <ProductTypeForm
         productType={productType}
         afterConfirm={(data) => {

@@ -8,7 +8,7 @@ const ProductCirculationModal = ({
   onDelete = null,
 }) => {
   return (
-    <Modal onClose={onClose} onDelete={onDelete}>
+    <Modal onClose={onClose} onDelete={productCirculation?._id && onDelete}>
       <ProductCirculationForm
         productCirculation={productCirculation}
         afterConfirm={(data) => {

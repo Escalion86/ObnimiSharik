@@ -10,7 +10,7 @@ const ProductModal = ({
   return (
     <Modal
       onClose={onClose}
-      onDelete={onDelete}
+      onDelete={product?._id && onDelete}
       //   product?._id
       //     ? () =>
       //         confirmModal(
