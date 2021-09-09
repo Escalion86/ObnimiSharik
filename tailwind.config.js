@@ -1,13 +1,22 @@
 module.exports = {
+  important: true,
   mode: 'jit',
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './blocks/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
+  i18n: {
+    locales: ['en-US'],
+    defaultLocale: 'en-US',
+  },
   theme: {
     extend: {
+      backgroundImage: (theme) => ({
+        check: "url('/icons/check.svg')",
+        landscape: "url('/images/landscape/2.jpg')",
+      }),
       colors: {
         header: '#4D9DC4',
         primary: '#26A3D4',
@@ -111,9 +120,18 @@ module.exports = {
     },
   },
   variants: {
-    extend: { overflow: ['hover', 'focus'] },
+    extend: {
+      overflow: ['hover', 'focus'],
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+      inset: ['checked'],
+      zIndex: ['hover', 'active'],
+    },
     // boxShadow: ['responsive', 'hover', 'focus'],
     // transform: ['hover', 'responsive'],
   },
   plugins: [],
+  future: {
+    purgeLayersByDefault: true,
+  },
 }
