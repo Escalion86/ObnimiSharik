@@ -6,7 +6,15 @@ import {
   SET_SETS_FILTER,
   SET_SET_TYPES_FILTER,
   SET_USERS_FILTER,
+  SET_FILTER,
 } from 'state/constants'
+
+export const setFilter = (data) => {
+  return {
+    type: SET_FILTER,
+    data,
+  }
+}
 
 export const setProductsFilter = (data) => {
   return {

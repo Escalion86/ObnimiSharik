@@ -3,10 +3,10 @@ import { SetCard } from '@admincomponents/cards'
 // import formProductCountObj from '@helpers/formProductCountObj'
 import { useSelector } from 'react-redux'
 
-const SetsContent = ({ modals }) => {
-  const { sets, setTypes } = useSelector((state) => state)
+const SetsContent = ({ data, modals }) => {
+  const { setTypes } = useSelector((state) => state)
 
-  if (!(sets && sets.length > 0)) return <>'Наборов нет'</>
+  if (!(data && data.length > 0)) return <>'Наборов нет'</>
 
   // const countProductCirculations = formProductCountObj(productCirculations)
 
@@ -19,7 +19,7 @@ const SetsContent = ({ modals }) => {
 
   return (
     <>
-      {sets.map((set) => {
+      {data.map((set) => {
         const types = set.typesId.map((type_id) =>
           setTypes.find((typeCheck) => typeCheck._id === type_id)
         )

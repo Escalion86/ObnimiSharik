@@ -3,14 +3,14 @@ import { TypeCard } from '@admincomponents/cards'
 import { useSelector } from 'react-redux'
 import { DEFAULT_SET } from '@helpers/constants'
 
-const SetTypesContent = ({ modals }) => {
+const SetTypesContent = ({ data, modals }) => {
   const { setTypes, sets } = useSelector((state) => state)
 
-  if (!(setTypes && setTypes.length > 0)) return <>'Типов наборов нет'</>
+  if (!(data && data.length > 0)) return <>'Типов наборов нет'</>
 
   return (
-    <div>
-      {setTypes.map((setType) => {
+    <>
+      {data.map((setType) => {
         const count = sets.filter((set) =>
           set.typesId.includes(setType._id)
         ).length
@@ -31,7 +31,7 @@ const SetTypesContent = ({ modals }) => {
           />
         )
       })}
-    </div>
+    </>
   )
 }
 

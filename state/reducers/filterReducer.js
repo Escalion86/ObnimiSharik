@@ -6,20 +6,23 @@ import {
   SET_SETS_FILTER,
   SET_SET_TYPES_FILTER,
   SET_USERS_FILTER,
+  SET_FILTER,
 } from 'state/constants'
 
 export const initialState = {
   products: {
-    types: null,
+    productTypes: null,
     price: [null, null],
+    count: [null, null],
   },
   sets: {
-    types: null,
+    setTypes: null,
     price: [null, null],
+    count: [null, null],
   },
   productCirculations: {
     purchase: [true, true],
-    price: [null, null],
+    count: [null, null],
   },
   productTypes: {},
   setTypes: {},
@@ -29,6 +32,8 @@ export const initialState = {
 
 const filterReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_FILTER:
+      return { ...state, ...action.data }
     case SET_PRODUCTS_FILTER:
       return { ...state, products: action.data }
     case SET_SETS_FILTER:

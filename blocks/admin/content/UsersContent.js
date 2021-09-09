@@ -2,7 +2,7 @@ import React from 'react'
 import { UserCard } from '@admincomponents/cards'
 import { useSelector } from 'react-redux'
 
-const UsersContent = ({ modals, user }) => {
+const UsersContent = ({ data, modals, user }) => {
   const { users } = useSelector((state) => state)
   let showedUsers = []
   if (users)
@@ -13,7 +13,7 @@ const UsersContent = ({ modals, user }) => {
   if (!(showedUsers && showedUsers.length > 0)) return <>'Пользователей нет'</>
 
   return (
-    <div>
+    <>
       {showedUsers.map((showedUser) => {
         // const count = sets.filter((set) =>
         //   set.typesId.includes(settype._id)
@@ -28,7 +28,7 @@ const UsersContent = ({ modals, user }) => {
           />
         )
       })}
-    </div>
+    </>
   )
 }
 

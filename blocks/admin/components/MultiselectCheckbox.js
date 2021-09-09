@@ -7,6 +7,9 @@ const MultiselectCheckbox = ({
   onChange = () => {},
   required = false,
   checkAllBtn = false,
+  className = null,
+  getAll = false,
+  noScroll = false,
 }) => {
   const [data, setData] = useState(options)
 
@@ -18,7 +21,7 @@ const MultiselectCheckbox = ({
       checked: !data[index].checked,
     })
     setData(newData)
-    onChange(newData.filter((x) => x.checked))
+    onChange(getAll ? newData : newData.filter((x) => x.checked))
   }
 
   useEffect(() => setData(options), [options])
@@ -30,13 +33,15 @@ const MultiselectCheckbox = ({
       return { ...item, checked: !checkedAll }
     })
     setData(newData)
-    onChange(newData.filter((x) => x.checked))
+    onChange(getAll ? newData : newData.filter((x) => x.checked))
   }
 
   return (
-    <div className="max-w-xl">
-      <div className="flex">
-        <div className="flex-1">
+    <div
+      className={'flex flex-col max-w-xl' + (className ? +' ' + className : '')}
+    >
+      <div className="flex justify-between">
+        <div>
           {title}
           {required && <span className="text-red-700">*</span>}
         </div>
@@ -72,8 +77,13 @@ const MultiselectCheckbox = ({
           />
         )}
       </div>
-      <div className="overflow-hidden bg-gray-200 border border-gray-700 rounded-lg max-h-40">
-        <div className="px-2 py-1 overflow-y-scroll max-h-40">
+      <div className="flex-1 overflow-hidden bg-gray-200 border border-gray-700 rounded-lg">
+        <div
+          className={
+            'px-2 py-1 rounded-lg max-h-60' +
+            (!noScroll && ' overflow-y-scroll')
+          }
+        >
           {data.map((item, index) => (
             <div key={item.label} className="flex items-center">
               <CheckBox

@@ -6,9 +6,7 @@ import { signIn, signOut, useSession } from 'next-auth/client'
 import { faPlus, faBug } from '@fortawesome/free-solid-svg-icons'
 
 import Button from '@components/Button'
-import IconButton from '@components/IconButton'
 
-import Title from '@adminblocks/Title'
 import Cabinet from '@adminblocks/Cabinet'
 
 import Spinner from '@admincomponents/Spinner'
@@ -68,6 +66,7 @@ import {
   removeModal,
 } from '@state/actions/modalsActions'
 import modalsFunctions from '@adminblocks/modals/modalsFunctions'
+import TitleButton from '@admincomponents/TitleButton'
 // import { setSets } from '@state/actions/setsActions'
 // import { setProducts } from '@state/actions/productsActions'
 // import { setSetTypes } from '@state/actions/setTypesActions'
@@ -101,13 +100,8 @@ export default function Admin() {
 
   const modals = modalsFunctions(dispatch, data)
 
-  const TitleBtn = ({ onClick = null, icon = faPlus }) => {
-    if (!onClick) return null
-    return <IconButton onClick={onClick} inverse icon={icon} />
-  }
-
   const BtnAddProduct = ({ key }) => (
-    <TitleBtn
+    <TitleButton
       onClick={() => modals.openProductModal()}
       icon={faPlus}
       key={key}
@@ -115,11 +109,15 @@ export default function Admin() {
   )
 
   const BtnAddSet = ({ key }) => (
-    <TitleBtn onClick={() => modals.openSetModal()} icon={faPlus} key={key} />
+    <TitleButton
+      onClick={() => modals.openSetModal()}
+      icon={faPlus}
+      key={key}
+    />
   )
 
   const BtnAddProductType = ({ key }) => (
-    <TitleBtn
+    <TitleButton
       onClick={() => modals.openProductTypeModal()}
       icon={faPlus}
       key={key}
@@ -127,7 +125,7 @@ export default function Admin() {
   )
 
   const BtnAddSetType = ({ key }) => (
-    <TitleBtn
+    <TitleButton
       onClick={() => modals.openSetTypeModal()}
       icon={faPlus}
       key={key}
@@ -135,7 +133,7 @@ export default function Admin() {
   )
 
   const BtnAddInvitation = ({ key }) => (
-    <TitleBtn
+    <TitleButton
       onClick={() => modals.openInvitationModal()}
       icon={faPlus}
       key={key}
@@ -143,7 +141,7 @@ export default function Admin() {
   )
 
   const BtnAddProductCirculation = ({ key }) => (
-    <TitleBtn
+    <TitleButton
       onClick={() => modals.openProductCirculationModal()}
       icon={faPlus}
       key={key}
@@ -151,7 +149,7 @@ export default function Admin() {
   )
 
   const BtnTest = ({ key }) => (
-    <TitleBtn
+    <TitleButton
       onClick={() =>
         modals.openConfirmModal('Заголовок', 'Текст сообщения', () =>
           console.log('Принято')
@@ -172,6 +170,7 @@ export default function Admin() {
       pageButtons: [],
       backToPageId: null,
       accessRoles: ['admin'],
+      filterName: null,
     }, // 3
     {
       id: 1,
@@ -182,6 +181,7 @@ export default function Admin() {
       pageButtons: [BtnAddProduct],
       backToPageId: null,
       accessRoles: ['admin', 'operator', 'aerodesigner'],
+      filterName: 'products',
     }, // 0
     {
       id: 2,
@@ -192,6 +192,7 @@ export default function Admin() {
       pageButtons: [BtnAddProductType],
       backToPageId: null,
       accessRoles: ['admin'],
+      filterName: 'productTypes',
     }, // 1
     {
       id: 3,
@@ -202,6 +203,7 @@ export default function Admin() {
       pageButtons: [BtnAddSet],
       backToPageId: null,
       accessRoles: ['admin', 'operator', 'aerodesigner'],
+      filterName: 'sets',
     }, // 2
     {
       id: 4,
@@ -212,6 +214,7 @@ export default function Admin() {
       pageButtons: [BtnAddSetType],
       backToPageId: null,
       accessRoles: ['admin'],
+      filterName: 'setTypes',
     }, // 1
     {
       id: 5,
@@ -221,6 +224,7 @@ export default function Admin() {
       pageContent: UserContent,
       pageButtons: [],
       backToPageId: null,
+      filterName: null,
     }, // 3
     {
       id: 6,
@@ -231,6 +235,7 @@ export default function Admin() {
       pageButtons: [],
       backToPageId: null,
       accessRoles: ['admin'],
+      filterName: 'users',
     }, // 3
     {
       id: 7,
@@ -241,6 +246,7 @@ export default function Admin() {
       pageButtons: [BtnAddInvitation],
       backToPageId: null,
       accessRoles: ['admin'],
+      filterName: 'invitations',
     },
     {
       id: 8,
@@ -251,6 +257,7 @@ export default function Admin() {
       pageButtons: [],
       backToPageId: 0,
       accessRoles: ['admin'],
+      filterName: null,
     },
     {
       id: 9,
@@ -261,6 +268,7 @@ export default function Admin() {
       pageButtons: [BtnTest],
       backToPageId: 0,
       accessRoles: [],
+      filterName: null,
     },
     {
       id: 10,
@@ -271,6 +279,7 @@ export default function Admin() {
       pageButtons: [BtnAddProductCirculation],
       backToPageId: 0,
       accessRoles: ['admin'],
+      filterName: 'productCirculations',
     },
   ]
 
@@ -356,31 +365,9 @@ export default function Admin() {
                 menuCfg={menuCfg(pages, pagesGroups, session.user.role)}
                 user={session.user}
                 onSignOut={signOut}
-              >
-                <main className="flex flex-col flex-1 overflow-y-auto">
-                  <Title
-                    text={page.header}
-                    buttons={
-                      page.pageButtons
-                        ? page.pageButtons.map((button, index) =>
-                            button({ key: 'titleButton' + index })
-                          )
-                        : null
-                    }
-                  />
-                  <div className="flex flex-col flex-1 max-h-full px-3 pb-3 overflow-y-scroll">
-                    <div className="relative flex flex-col flex-1 h-full">
-                      <PageContent
-                        // data={data}
-                        // setModal={setModal}
-                        // updateData={updateData}
-                        modals={modals}
-                        user={session.user}
-                      />
-                    </div>
-                  </div>
-                </main>
-              </Cabinet>
+                modals={modals}
+                data={data}
+              />
             </>
           ) : (
             <div className="flex items-center justify-center h-screen">

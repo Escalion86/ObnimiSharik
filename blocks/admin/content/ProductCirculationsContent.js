@@ -1,17 +1,13 @@
 import React from 'react'
 import { ProductCirculationCard } from '@admincomponents/cards'
-import { useSelector } from 'react-redux'
 import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 
-const ProductCirculationsContent = ({ modals }) => {
-  const { productCirculations } = useSelector((state) => state)
-
-  if (!(productCirculations && productCirculations.length > 0))
-    return <>'Товарооборота нет'</>
+const ProductCirculationsContent = ({ data, modals }) => {
+  if (!(data && data.length > 0)) return <>'Товарооборота нет'</>
 
   return (
     <div>
-      {productCirculations.map((productCirculation) => {
+      {data.map((productCirculation) => {
         return (
           <ProductCirculationCard
             key={productCirculation._id}

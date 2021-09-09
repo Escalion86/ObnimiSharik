@@ -3,15 +3,14 @@ import { TypeCard } from '@admincomponents/cards'
 import { useSelector } from 'react-redux'
 import { DEFAULT_PRODUCT } from '@helpers/constants'
 
-const ProductTypesContent = ({ modals }) => {
-  const { productTypes, products } = useSelector((state) => state)
+const ProductTypesContent = ({ data, modals }) => {
+  const { products } = useSelector((state) => state)
 
-  if (!(productTypes && productTypes.length > 0))
-    return <>'Типов продуктов нет'</>
+  if (!(data && data.length > 0)) return <>'Типов продуктов нет'</>
 
   return (
-    <div>
-      {productTypes.map((productType) => {
+    <>
+      {data.map((productType) => {
         const count = products.filter((product) =>
           product.typesId.includes(productType._id)
         ).length
@@ -32,7 +31,7 @@ const ProductTypesContent = ({ modals }) => {
           />
         )
       })}
-    </div>
+    </>
   )
 }
 

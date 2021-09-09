@@ -6,9 +6,9 @@ import { UserContentForm } from '@admincomponents/forms'
 
 // const
 
-const UserContent = ({ user, modals }) => {
+const UserContent = ({ data, user, modals }) => {
   return (
-    <div>
+    <>
       {/* <SubTitle title="Экспорт/Импорт" /> */}
       <UserContentForm
         user={user}
@@ -24,7 +24,7 @@ const UserContent = ({ user, modals }) => {
         inverse
         icon={faDownload}
       /> */}
-    </div>
+    </>
   )
 }
 
