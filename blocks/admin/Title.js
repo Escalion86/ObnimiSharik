@@ -2,7 +2,7 @@ import React from 'react'
 
 const Title = ({ title = '', btnOnClick = null, buttons = null }) => {
   return (
-    <div className="flex items-center justify-center bg-white border-b border-gray-200">
+    <div className="flex items-center justify-center gap-1 bg-white border-b border-gray-200">
       {btnOnClick !== null && btnOnClick !== undefined && (
         <div>
           <a
