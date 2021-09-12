@@ -108,7 +108,8 @@ module.exports = {
         88: '22rem',
         100: '25rem',
       },
-      wight: {
+      width: {
+        26: '6.65rem',
         34: '8.25rem',
         84: '21rem',
         88: '22rem',
@@ -127,10 +128,18 @@ module.exports = {
       inset: ['checked'],
       zIndex: ['hover', 'active'],
     },
+    backgroundColor: [
+      'responsive',
+      'hover',
+      'focus',
+      'group-hover',
+      'group-focus',
+    ],
+    textColor: ['responsive', 'hover', 'focus', 'group-hover', 'group-focus'],
     // boxShadow: ['responsive', 'hover', 'focus'],
     // transform: ['hover', 'responsive'],
   },
-  plugins: [],
+  plugins: [require('tailwindcss-nested-groups')],
   future: {
     purgeLayersByDefault: true,
   },
