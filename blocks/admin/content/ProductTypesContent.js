@@ -10,27 +10,21 @@ const ProductTypesContent = ({ data, modals }) => {
 
   return (
     <>
-      {data.map((productType) => {
-        const count = products.filter((product) =>
-          product.typesId.includes(productType._id)
-        ).length
-        return (
-          <TypeCard
-            key={productType._id}
-            type={productType}
-            count={count}
-            onClick={() => modals.openProductTypeModal(productType)}
-            onAdd={() =>
-              modals.openProductModal({
-                ...DEFAULT_PRODUCT,
-                typesId: [productType._id],
-              })
-            }
-            onEdit={() => modals.openProductTypeModal(productType, true)}
-            onDelete={() => modals.openDeleteProductType(productType)}
-          />
-        )
-      })}
+      {data.map((productType) => (
+        <TypeCard
+          key={productType._id}
+          type={productType}
+          onClick={() => modals.openProductTypeModal(productType)}
+          onAdd={() =>
+            modals.openProductModal({
+              ...DEFAULT_PRODUCT,
+              typesId: [productType._id],
+            })
+          }
+          onEdit={() => modals.openProductTypeModal(productType, true)}
+          onDelete={() => modals.openDeleteProductType(productType)}
+        />
+      ))}
     </>
   )
 }

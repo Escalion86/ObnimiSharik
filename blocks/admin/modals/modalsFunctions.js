@@ -38,6 +38,8 @@ import {
   ConfirmModal,
   ProductCirculationModal,
 } from '@adminblocks/modals'
+import addCountToProductTypes from '@helpers/addCountToProductTypes'
+import addCountToSetTypes from '@helpers/addCountToSetTypes'
 
 const modals = (dispatch, data) => {
   const modals = {
@@ -93,7 +95,9 @@ const modals = (dispatch, data) => {
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={() =>
               fetchingProductTypes((result) =>
-                dispatch(setProductTypes(result))
+                dispatch(
+                  setProductTypes(addCountToProductTypes(result, data.products))
+                )
               )
             }
             edit={edit}
@@ -110,7 +114,9 @@ const modals = (dispatch, data) => {
             setType={setType}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={() =>
-              fetchingSetTypes((result) => dispatch(setSetTypes(result)))
+              fetchingSetTypes((result) =>
+                dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
+              )
             }
             edit={edit}
             onDelete={() => {
@@ -243,7 +249,9 @@ const modals = (dispatch, data) => {
             '/api/producttypes/' + productType._id,
             () =>
               fetchingProductTypes((result) =>
-                dispatch(setProductTypes(result))
+                dispatch(
+                  setProductTypes(addCountToProductTypes(result, data.products))
+                )
               ),
             'Тип товара "' + productType.name + '" удален',
             'Ошибка при удалении типа товара "' + productType.name + '"'
@@ -258,7 +266,10 @@ const modals = (dispatch, data) => {
         () => {
           deleteData(
             '/api/settypes/' + setType._id,
-            () => fetchingSetTypes((result) => dispatch(setSetTypes(result))),
+            () =>
+              fetchingSetTypes((result) =>
+                dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
+              ),
             'Тип набора "' + setType.name + '" удален',
             'Ошибка при удалении типа набора "' + setType.name + '"'
           )

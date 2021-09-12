@@ -10,7 +10,7 @@ import CardButtons from './forCards/CardButtons'
 
 export const TypeCard = ({
   type,
-  count = null,
+  // count = null,
   onClick = () => {},
   onAdd = null,
   onDelete = null,
@@ -26,7 +26,7 @@ export const TypeCard = ({
       </div>
       <div className="w-20 text-right">
         <span>
-          <span>{count}</span>
+          <span>{type.count}</span>
           <span className="text-sm"> шт.</span>
         </span>
         {/* <div className="font-bold">{count !== null ? count : '0'} шт.</div> */}
