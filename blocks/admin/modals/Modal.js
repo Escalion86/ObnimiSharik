@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const Modal = ({ children, onClose = () => {}, onDelete = null }) => (
-  <div className="absolute top-0 left-0 z-40 flex items-center justify-center w-screen h-screen p-5 bg-gray-800 bg-opacity-80">
+  <div className="absolute top-0 left-0 z-50 flex items-center justify-center w-screen h-screen p-5 bg-gray-800 bg-opacity-80">
     <div className="relative px-5 py-4 my-auto bg-white border-l rounded-xl border-primary w-100">
       <FontAwesomeIcon
         className="absolute w-6 h-6 text-black duration-200 transform cursor-pointer right-4 top-4 hover:scale-110"
