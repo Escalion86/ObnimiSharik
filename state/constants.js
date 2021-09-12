@@ -22,3 +22,6 @@ export const SET_SET_TYPES_FILTER = 'SET_SET_TYPES_FILTER'
 export const SET_USERS_FILTER = 'SET_USERS_FILTER'
 export const SET_INVITATIONS_FILTER = 'SET_USERS_FILTER'
 export const SET_FILTER = 'SET_FILTER'
+
+// Sorting
+export const SET_SORTING = 'SET_SORTING'

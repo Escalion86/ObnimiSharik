@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, useRef } from 'react'
 // import axios from 'axios'
 // import logo from './logo.svg'
 
@@ -12,11 +12,12 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import TitleButton from '@admincomponents/TitleButton'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
-import { useDispatch } from 'react-redux'
 import { toggleProductsFilterShow } from '@state/actions/filterActions'
 import compareObjects from '@helpers/compareObjects'
 import { initialState as filterInitialState } from '@state/reducers/filterReducer'
 import Filter from '@admincomponents/filter/Filter'
+
+import SortTitleButtonMenu from '@admincomponents/SortTitleButtonMenu'
 // import ContentContainer from './content/ContentContainer'
 
 const Cabinet = ({
@@ -56,12 +57,18 @@ const Cabinet = ({
   let pageButtons = page.pageButtons ? page.pageButtons : []
 
   const filterExists =
-    page.filterName && Object.keys(data.filter[page.filterName]).length > 0
+    page.variable &&
+    data.filter[page.variable] &&
+    Object.keys(data.filter[page.variable]).length > 0
+  const sortingExists =
+    page.variable &&
+    data.sorting[page.variable] &&
+    Object.keys(data.sorting[page.variable]).length > 0
 
   // // // const pageButtons = []
   // let Filter
   // // let onClickBtnFilter = () => {}
-  // switch (page.filterName) {
+  // switch (page.variable) {
   //   case 'products':
   //     Filter = ProductsFilter
   //   // onClickBtnFilter = () => dispatch(toggleProductsFilterShow())
@@ -70,10 +77,10 @@ const Cabinet = ({
   const btnFilterActive = useMemo(
     () =>
       !compareObjects(
-        data.filter[page.filterName],
-        filterInitialState[page.filterName]
+        data.filter[page.variable],
+        filterInitialState[page.variable]
       ),
-    [page.filterName, JSON.stringify(data.filter[page.filterName])]
+    [page.variable, JSON.stringify(data.filter[page.variable])]
   )
 
   const BtnFilter = ({ key }) => (
@@ -86,7 +93,12 @@ const Cabinet = ({
     />
   )
 
-  if (filterExists) pageButtons = [...pageButtons, BtnFilter]
+  const BtnSort = ({ key }) => (
+    <SortTitleButtonMenu data={data} key={key} variable={page.variable} />
+  )
+
+  if (filterExists) pageButtons = [BtnFilter, ...pageButtons]
+  if (sortingExists) pageButtons = [BtnSort, ...pageButtons]
   // // if (page.pageButtons) pageButtons = [...pageButtons, ...buttons]
   // // pageButtons = page.pageButtons ? page.pageButtons : []
 
@@ -95,37 +107,49 @@ const Cabinet = ({
   )
 
   let filteredData = null
-  if (page.filterName) {
-    if (!filterExists) filteredData = data[page.filterName]
+  if (page.variable) {
+    if (!filterExists) filteredData = data[page.variable]
     else
-      filteredData = data[page.filterName].filter(
+      filteredData = data[page.variable].filter(
         (item) =>
-          (data.filter[page.filterName].price === undefined ||
-            ((data.filter[page.filterName].price[0] === null ||
-              item.price >= data.filter[page.filterName].price[0] * 100) &&
-              (data.filter[page.filterName].price[1] === null ||
-                item.price <= data.filter[page.filterName].price[1] * 100))) &&
-          (data.filter[page.filterName].count === undefined ||
-            ((data.filter[page.filterName].count[0] === null ||
-              item.count >= data.filter[page.filterName].count[0]) &&
-              (data.filter[page.filterName].count[1] === null ||
-                item.count <= data.filter[page.filterName].count[1]))) &&
-          (data.filter[page.filterName].productTypes === undefined ||
-            data.filter[page.filterName].productTypes === null ||
+          (data.filter[page.variable].price === undefined ||
+            ((data.filter[page.variable].price[0] === null ||
+              item.price >= data.filter[page.variable].price[0] * 100) &&
+              (data.filter[page.variable].price[1] === null ||
+                item.price <= data.filter[page.variable].price[1] * 100))) &&
+          (data.filter[page.variable].count === undefined ||
+            ((data.filter[page.variable].count[0] === null ||
+              item.count >= data.filter[page.variable].count[0]) &&
+              (data.filter[page.variable].count[1] === null ||
+                item.count <= data.filter[page.variable].count[1]))) &&
+          (data.filter[page.variable].productTypes === undefined ||
+            data.filter[page.variable].productTypes === null ||
             item.typesId.some((type) =>
-              data.filter[page.filterName].productTypes.includes(type)
+              data.filter[page.variable].productTypes.includes(type)
             )) &&
-          (data.filter[page.filterName].setTypes === undefined ||
-            data.filter[page.filterName].setTypes === null ||
+          (data.filter[page.variable].setTypes === undefined ||
+            data.filter[page.variable].setTypes === null ||
             item.typesId.some((type) =>
-              data.filter[page.filterName].setTypes.includes(type)
+              data.filter[page.variable].setTypes.includes(type)
             )) &&
-          (data.filter[page.filterName].purchase === undefined ||
+          (data.filter[page.variable].purchase === undefined ||
             (item.purchase === true &&
-              data.filter[page.filterName].purchase[1]) ||
-            (item.purchase === false &&
-              data.filter[page.filterName].purchase[0]))
+              data.filter[page.variable].purchase[1]) ||
+            (item.purchase === false && data.filter[page.variable].purchase[0]))
       )
+  }
+  if (data.sorting[page.variable]) {
+    const sortKey = data.sorting[page.variable][0]
+    const sortValue = data.sorting[page.variable][1]
+    filteredData = filteredData.sort((a, b) => {
+      if (a[sortKey] < b[sortKey]) {
+        return sortValue === 'DESC' ? 1 : -1
+      }
+      if (a[sortKey] > b[sortKey]) {
+        return sortValue === 'DESC' ? -1 : 1
+      }
+      return 0
+    })
   }
 
   return (
@@ -163,10 +187,7 @@ const Cabinet = ({
             title={
               page.header +
               (filterExists
-                ? ' ' +
-                  filteredData.length +
-                  ' / ' +
-                  data[page.filterName].length
+                ? ' ' + filteredData.length + ' / ' + data[page.variable].length
                 : '')
             }
             buttons={buttons}
@@ -175,7 +196,7 @@ const Cabinet = ({
             {filterExists && (
               <Filter
                 data={data}
-                filterName={page.filterName}
+                variable={page.variable}
                 show={filterShow}
                 setHideFilter={() => setFilterShow(false)}
               />

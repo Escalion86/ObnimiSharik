@@ -4,44 +4,39 @@ import Slider from '@admincomponents/Slider'
 import FilterButtons from './forFilter/FilterButtons'
 import compareObjects from '@helpers/compareObjects'
 
-const Filter = ({
-  data,
-  filterName,
-  show = false,
-  setHideFilter = () => {},
-}) => {
-  const [filter, setFilter] = useState(data.filter[filterName])
+const Filter = ({ data, variable, show = false, setHideFilter = () => {} }) => {
+  const [filter, setFilter] = useState(data.filter[variable])
 
   useEffect(() => {
-    if (!compareObjects(data.filter[filterName], filter))
-      setFilter(data.filter[filterName])
-  }, [filterName])
+    if (!compareObjects(data.filter[variable], filter))
+      setFilter(data.filter[variable])
+  }, [variable])
 
   const priceFilterExists =
-    data.filter[filterName].price !== undefined && filter.price !== undefined
+    data.filter[variable].price !== undefined && filter.price !== undefined
   const countFilterExists =
-    data.filter[filterName].count !== undefined && filter.count !== undefined
+    data.filter[variable].count !== undefined && filter.count !== undefined
   const productTypesFilterExists =
-    data.filter[filterName].productTypes !== undefined &&
+    data.filter[variable].productTypes !== undefined &&
     filter.productTypes !== undefined
   const setTypesFilterExists =
-    data.filter[filterName].setTypes !== undefined &&
+    data.filter[variable].setTypes !== undefined &&
     filter.setTypes !== undefined
   const purchaseFilterExists =
-    data.filter[filterName].purchase !== undefined &&
+    data.filter[variable].purchase !== undefined &&
     filter.purchase !== undefined
 
   let maxPrice = 0
   let minPrice = 0
   let sliderPriceValue = [0, 0]
 
-  if (priceFilterExists) {
+  if (data[variable] && data[variable].length > 0 && priceFilterExists) {
     maxPrice =
-      data[filterName].reduce(function (prev, current) {
+      data[variable].reduce(function (prev, current) {
         return prev.price > current.price ? prev : current
       }).price / 100
     minPrice =
-      data[filterName].reduce(function (prev, current) {
+      data[variable].reduce(function (prev, current) {
         return prev.price < current.price ? prev : current
       }).price / 100
     sliderPriceValue = [
@@ -54,11 +49,11 @@ const Filter = ({
   let minCount = 0
   let sliderCountValue = [0, 0]
 
-  if (countFilterExists) {
-    maxCount = data[filterName].reduce(function (prev, current) {
+  if (data[variable] && data[variable].length > 0 && countFilterExists) {
+    maxCount = data[variable].reduce(function (prev, current) {
       return prev.count > current.count ? prev : current
     }).count
-    minCount = data[filterName].reduce(function (prev, current) {
+    minCount = data[variable].reduce(function (prev, current) {
       return prev.count < current.count ? prev : current
     }).count
     sliderCountValue = [
@@ -203,7 +198,7 @@ const Filter = ({
         )}
         <FilterButtons
           data={data}
-          filterName={filterName}
+          variable={variable}
           filter={filter}
           setFilter={setFilter}
           setHideFilter={setHideFilter}

@@ -6,7 +6,7 @@ import { setFilter as actionSetFilter } from '@state/actions/filterActions'
 
 const FilterButtons = ({
   data,
-  filterName,
+  variable,
   filter,
   setFilter,
   setHideFilter,
@@ -15,16 +15,13 @@ const FilterButtons = ({
 
   return (
     <div className="flex justify-end gap-2">
-      {!compareObjects(
-        data.filter[filterName],
-        filterInitialState[filterName]
-      ) && (
+      {!compareObjects(data.filter[variable], filterInitialState[variable]) && (
         <Button
           onClick={() => {
-            setFilter(filterInitialState[filterName])
+            setFilter(filterInitialState[variable])
             setHideFilter()
             dispatch(
-              actionSetFilter({ [filterName]: filterInitialState[filterName] })
+              actionSetFilter({ [variable]: filterInitialState[variable] })
             )
           }}
           name="Сбросить фильтр"
@@ -37,7 +34,7 @@ const FilterButtons = ({
       <Button
         onClick={() => {
           setHideFilter()
-          dispatch(actionSetFilter({ [filterName]: filter }))
+          dispatch(actionSetFilter({ [variable]: filter }))
         }}
         name="Применить фильтр"
         small
@@ -47,7 +44,7 @@ const FilterButtons = ({
         disabled={
           filter.productTypes?.length === 0 ||
           filter.setTypes?.length === 0 ||
-          compareObjects(data.filter[filterName], filter)
+          compareObjects(data.filter[variable], filter)
         }
       />
     </div>

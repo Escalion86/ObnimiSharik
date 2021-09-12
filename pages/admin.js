@@ -170,7 +170,7 @@ export default function Admin() {
       pageButtons: [],
       backToPageId: null,
       accessRoles: ['admin'],
-      filterName: null,
+      variable: null,
     }, // 3
     {
       id: 1,
@@ -181,7 +181,7 @@ export default function Admin() {
       pageButtons: [BtnAddProduct],
       backToPageId: null,
       accessRoles: ['admin', 'operator', 'aerodesigner'],
-      filterName: 'products',
+      variable: 'products',
     }, // 0
     {
       id: 2,
@@ -192,7 +192,7 @@ export default function Admin() {
       pageButtons: [BtnAddProductType],
       backToPageId: null,
       accessRoles: ['admin'],
-      filterName: 'productTypes',
+      variable: 'productTypes',
     }, // 1
     {
       id: 3,
@@ -203,7 +203,7 @@ export default function Admin() {
       pageButtons: [BtnAddSet],
       backToPageId: null,
       accessRoles: ['admin', 'operator', 'aerodesigner'],
-      filterName: 'sets',
+      variable: 'sets',
     }, // 2
     {
       id: 4,
@@ -214,7 +214,7 @@ export default function Admin() {
       pageButtons: [BtnAddSetType],
       backToPageId: null,
       accessRoles: ['admin'],
-      filterName: 'setTypes',
+      variable: 'setTypes',
     }, // 1
     {
       id: 5,
@@ -224,7 +224,7 @@ export default function Admin() {
       pageContent: UserContent,
       pageButtons: [],
       backToPageId: null,
-      filterName: null,
+      variable: null,
     }, // 3
     {
       id: 6,
@@ -235,7 +235,7 @@ export default function Admin() {
       pageButtons: [],
       backToPageId: null,
       accessRoles: ['admin'],
-      filterName: 'users',
+      variable: 'users',
     }, // 3
     {
       id: 7,
@@ -246,7 +246,7 @@ export default function Admin() {
       pageButtons: [BtnAddInvitation],
       backToPageId: null,
       accessRoles: ['admin'],
-      filterName: 'invitations',
+      variable: 'invitations',
     },
     {
       id: 8,
@@ -257,7 +257,7 @@ export default function Admin() {
       pageButtons: [],
       backToPageId: 0,
       accessRoles: ['admin'],
-      filterName: null,
+      variable: null,
     },
     {
       id: 9,
@@ -268,7 +268,7 @@ export default function Admin() {
       pageButtons: [BtnTest],
       backToPageId: 0,
       accessRoles: [],
-      filterName: null,
+      variable: null,
     },
     {
       id: 10,
@@ -279,7 +279,7 @@ export default function Admin() {
       pageButtons: [BtnAddProductCirculation],
       backToPageId: 0,
       accessRoles: ['admin'],
-      filterName: 'productCirculations',
+      variable: 'productCirculations',
     },
   ]
 

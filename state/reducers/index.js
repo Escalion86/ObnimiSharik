@@ -8,6 +8,7 @@ import invitationsReducer from './invitationsReducer'
 import productCirculationsReducer from './productCirculationsReducer'
 import modalsReducer from './modalsReducer'
 import filterReducer from './filterReducer'
+import sortingReducer from './sortingReducer'
 
 const allReducers = combineReducers({
   products: productsReducer,
@@ -19,6 +20,7 @@ const allReducers = combineReducers({
   productCirculations: productCirculationsReducer,
   modals: modalsReducer,
   filter: filterReducer,
+  sorting: sortingReducer,
 })
 
 export default allReducers
