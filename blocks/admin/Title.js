@@ -2,7 +2,7 @@ import React from 'react'
 
 const Title = ({ title = '', btnOnClick = null, buttons = null }) => {
   return (
-    <div className="flex items-center justify-center gap-1 bg-white border-b border-gray-200">
+    <div className="flex items-center justify-center gap-1 px-1 bg-white border-b border-gray-200">
       {btnOnClick !== null && btnOnClick !== undefined && (
         <div>
           <a
@@ -25,7 +25,7 @@ const Title = ({ title = '', btnOnClick = null, buttons = null }) => {
           </a>
         </div>
       )}
-      <h2 className="flex-1 px-2 py-2 text-2xl font-semibold leading-tight text-gray-900">
+      <h2 className="flex-1 px-1 py-2 text-2xl font-semibold leading-tight text-gray-900">
         {title}
       </h2>
       {buttons}
