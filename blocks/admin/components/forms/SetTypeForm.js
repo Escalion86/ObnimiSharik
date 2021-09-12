@@ -36,14 +36,14 @@ const SetTypeForm = ({
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
-            '/api/setTypes',
+            '/api/settypes',
             form,
             afterConfirm,
             'Тип набора "' + form.name + '" создан',
             'Ошибка при создании типа набора "' + form.name + '"'
           )
         : putData(
-            `/api/setTypes/${setType._id}`,
+            `/api/settypes/${setType._id}`,
             form,
             afterConfirm,
             'Тип набора "' + form.name + '" изменен',
