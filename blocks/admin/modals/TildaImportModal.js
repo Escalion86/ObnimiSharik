@@ -1,13 +1,15 @@
 import { useState, useRef } from 'react'
 import Modal from '@adminblocks/modals/Modal'
-import Button from '@components/Button'
-const csv = require('csvtojson')
 import Papa from 'papaparse'
-import { DEFAULT_PRODUCT } from '@helpers/constants'
-import { fetchingProductTypes, fetchingSetTypes } from '@helpers/fetchers'
+import { DEFAULT_PRODUCT, DEFAULT_SET } from '@helpers/constants'
+import {
+  fetchingProductTypes,
+  fetchingSetTypes,
+  fetchingProducts,
+} from '@helpers/fetchers'
 
 import { toast } from 'react-toastify'
-import toasts from '@helpers/toasts'
+import replaceSpecialSymbols from '@helpers/replaceSpecialSymbols'
 
 const concatArrays = (setArray, addArray) => {
   addArray.forEach((arr) => {
@@ -102,11 +104,12 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
       const mapProduct = (product) => {
         return {
           ...DEFAULT_PRODUCT,
-          name: product['Title'],
-          description: product['Description']
-            .replace(/<br\s*[\/]?>/gi, `\n`)
-            .replace(/(<([^>]+)>)/gi, ``)
-            .replace(/&nbsp;/gi, ` `),
+          name: replaceSpecialSymbols(product['Title']),
+          description: replaceSpecialSymbols(
+            product['Description']
+              .replace(/<br\s*[\/]?>/gi, `\n`)
+              .replace(/(<([^>]+)>)/gi, ``)
+          ),
           price: product['Price'] * 100,
           images: product['Photo'].split(' '),
           typesId: product['Category'].split(';'),
@@ -114,22 +117,44 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
         }
       }
 
+      const mapSet = (set) => {
+        return {
+          ...DEFAULT_SET,
+          name: replaceSpecialSymbols(set['Title']),
+          description: replaceSpecialSymbols(
+            set['Description']
+              .replace(/<br\s*[\/]?>/gi, `\n`)
+              .replace(/(<([^>]+)>)/gi, ``)
+          ),
+          price: set['Price'] * 100,
+          images: set['Photo'].split(' '),
+          typesId: set['Category'].split(';'),
+          article: set['SKU'],
+          productCountArticles: set['Text'].replace(/\s/g, '').split('<br/>'),
+        }
+      }
+
       const parsedProducts = parseResult['data']
         .filter(
           (product) =>
             product &&
+            // !product['Text'] &&
             product['Category'] &&
-            !product['Category'].includes('Набор')
+            !product['Text']
+          // !product['Category'].includes('Набор')
         )
         .map(mapProduct)
       const parsedSets = parseResult['data']
         .filter(
           (product) =>
             product &&
+            // product['Text']
             product['Category'] &&
-            product['Category'].includes('Набор')
+            product['Text']
+          // product['Category'].includes('Набор')
         )
-        .map(mapProduct)
+        .map(mapSet)
+
       console.log(`parsedProducts`, parsedProducts)
       console.log(`parsedSets`, parsedSets)
       const productTypes = []
@@ -236,9 +261,7 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
 
       const newSetTypes = await fetchingSetTypes()
 
-      // console.log('newSetTypes: ', newSetTypes)
-
-      const newProducts = products.map((product) => {
+      let newProducts = products.map((product) => {
         return {
           ...product,
           typesId: product.typesId.map(
@@ -248,19 +271,6 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
           ),
         }
       })
-
-      // console.log('newProducts: ', newProducts)
-
-      const newSets = sets.map((set) => {
-        return {
-          ...set,
-          typesId: set.typesId.map(
-            (type) => newSetTypes.find((setType) => setType.name === type)._id
-          ),
-        }
-      })
-
-      // console.log('newSets: ', newSets)
 
       res = await fetch('/api/products', {
         method: 'DELETE',
@@ -285,6 +295,38 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
       if (!res.ok) {
         throw new Error(res.status)
       }
+
+      newProducts = await fetchingProducts()
+      // console.log(`sets`, sets)
+      const newSets = sets.map((set) => {
+        const productsIdCount = {}
+        set.productCountArticles.map((countArticle) => {
+          const article = countArticle
+            .substring(countArticle.indexOf('-') + 1)
+            .replace('/([^()]*)/g', '')
+          const product = newProducts.find(
+            (product) => product.article === article
+          )
+          const count = Number(
+            countArticle
+              .substring(0, countArticle.indexOf('-'))
+              .replace(/[^+\d]/g, '')
+          )
+          if (product) productsIdCount[product._id] = count
+        })
+
+        const newSet = {
+          ...set,
+          typesId: set.typesId.map(
+            (type) => newSetTypes.find((setType) => setType.name === type)._id
+          ),
+          productsIdCount,
+        }
+        delete newSet.productCountArticles
+        return newSet
+      })
+
+      console.log(`newSets`, newSets)
 
       res = await fetch('/api/sets', {
         method: 'DELETE',
