@@ -26,27 +26,37 @@ const ProductsInCard = ({ productsIdCount = {}, onClick = null }) => {
             arrow
             placement="top"
           >
-            <div className="flex">
+            <div
+              className="flex cursor-pointer group"
+              onClick={
+                onClick
+                  ? (event) => {
+                      event.stopPropagation()
+                      onClick(product)
+                    }
+                  : null
+              }
+            >
               <div
                 className={
-                  onClick
-                    ? 'cursor-pointer hover:text-toxic ' +
-                      (!product?.count || product?.count < count
-                        ? 'text-red-400'
-                        : 'text-primary')
-                    : ''
+                  'group-hover:text-toxic ' +
+                  // (onClick
+                  //   ? !product?.count || product?.count < count
+                  //     ? 'text-red-400'
+                  //     : 'text-primary'
+                  //   : '')
+                  (onClick ? 'text-primary' : '')
                 }
-                onClick={onClick ? () => onClick(product) : null}
               >
                 {/* {product.article && '(' + product.article + ') '} */}
                 {product?.name}
               </div>
-              <div className="ml-1">
+              <div className="ml-1 group-hover:text-toxic">
                 {'- '}
                 <span
                   className={
                     !product?.count || product?.count < count
-                      ? 'text-red-400'
+                      ? 'text-red-400 font-bold'
                       : 'text-black'
                   }
                 >
