@@ -1,19 +1,12 @@
 import TypesInCard from './forCards/TypesInCard'
 import ImageZoom from 'react-medium-image-zoom'
 import Card from './Card'
-import {
-  faPencilAlt,
-  faTrash,
-  faShoppingCart,
-} from '@fortawesome/free-solid-svg-icons'
-import CardButton from '@admincomponents/cards/forCards/CardButton'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import { useSelector } from 'react-redux'
 
 export const ProductCard = ({
   product,
-  // count = 0,
   onClick = () => {},
   onTypeClick = () => {},
   onDelete = null,
@@ -26,6 +19,8 @@ export const ProductCard = ({
   )
 
   if (types[0] === undefined) types.length === []
+
+  const imageClassName = 'w-20 h-20'
 
   return (
     <Card onClick={() => onClick(product)}>
@@ -43,7 +38,7 @@ export const ProductCard = ({
               image={{
                 src: product.images[0],
                 alt: 'product',
-                className: 'w-16 h-16',
+                className: imageClassName,
                 // style: { width: '50em' }
               }}
               zoomImage={{
@@ -53,7 +48,11 @@ export const ProductCard = ({
             />
           </div>
         ) : (
-          <img className="w-14 h-14" src="/img/no_image.png" alt="product" />
+          <img
+            className={imageClassName}
+            src="/img/no_image.png"
+            alt="product"
+          />
         )}
         <div className="flex-1 ml-3">
           <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">

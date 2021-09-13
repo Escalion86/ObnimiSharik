@@ -29,6 +29,8 @@ export const SetCard = ({
   )
 
   if (types[0] === undefined) types.length === []
+
+  const imageClassName = 'w-20 h-20'
   return (
     <Card onClick={() => onClick(set)}>
       <CardContainer>
@@ -38,7 +40,7 @@ export const SetCard = ({
               image={{
                 src: set.images[0],
                 alt: 'set',
-                className: 'w-16 h-16',
+                className: imageClassName,
                 // style: { width: '50em' }
               }}
               zoomImage={{
@@ -48,7 +50,7 @@ export const SetCard = ({
             />
           </div>
         ) : (
-          <img className="w-14 h-14" src="/img/no_image.png" alt="set" />
+          <img className={imageClassName} src="/img/no_image.png" alt="set" />
         )}
         <div className="flex-1 ml-3">
           <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
