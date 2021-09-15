@@ -67,6 +67,7 @@ import {
 } from '@state/actions/modalsActions'
 import modalsFunctions from '@adminblocks/modals/modalsFunctions'
 import TitleButton from '@admincomponents/TitleButton'
+import OverviewContent from '@adminblocks/content/OverviewContent'
 // import { setSets } from '@state/actions/setsActions'
 // import { setProducts } from '@state/actions/productsActions'
 // import { setSetTypes } from '@state/actions/setTypesActions'
@@ -166,7 +167,7 @@ export default function Admin() {
       group: 0,
       name: 'Обзор',
       header: 'Обзор',
-      pageContent: null,
+      pageContent: OverviewContent,
       pageButtons: [],
       backToPageId: null,
       accessRoles: ['admin'],
