@@ -4,39 +4,44 @@ import Slider from '@admincomponents/Slider'
 import FilterButtons from './forFilter/FilterButtons'
 import compareObjects from '@helpers/compareObjects'
 
-const Filter = ({ data, variable, show = false, setHideFilter = () => {} }) => {
-  const [filter, setFilter] = useState(data.filter[variable])
+const Filter = ({
+  state,
+  variable,
+  show = false,
+  setHideFilter = () => {},
+}) => {
+  const [filter, setFilter] = useState(state.filter[variable])
 
   useEffect(() => {
-    if (!compareObjects(data.filter[variable], filter))
-      setFilter(data.filter[variable])
+    if (!compareObjects(state.filter[variable], filter))
+      setFilter(state.filter[variable])
   }, [variable])
 
   const priceFilterExists =
-    data.filter[variable].price !== undefined && filter.price !== undefined
+    state.filter[variable].price !== undefined && filter.price !== undefined
   const countFilterExists =
-    data.filter[variable].count !== undefined && filter.count !== undefined
+    state.filter[variable].count !== undefined && filter.count !== undefined
   const productTypesFilterExists =
-    data.filter[variable].productTypes !== undefined &&
+    state.filter[variable].productTypes !== undefined &&
     filter.productTypes !== undefined
   const setTypesFilterExists =
-    data.filter[variable].setTypes !== undefined &&
+    state.filter[variable].setTypes !== undefined &&
     filter.setTypes !== undefined
   const purchaseFilterExists =
-    data.filter[variable].purchase !== undefined &&
+    state.filter[variable].purchase !== undefined &&
     filter.purchase !== undefined
 
   let maxPrice = 0
   let minPrice = 0
   let sliderPriceValue = [0, 0]
 
-  if (data[variable] && data[variable].length > 0 && priceFilterExists) {
+  if (state[variable] && state[variable].length > 0 && priceFilterExists) {
     maxPrice =
-      data[variable].reduce(function (prev, current) {
+      state[variable].reduce(function (prev, current) {
         return prev.price > current.price ? prev : current
       }).price / 100
     minPrice =
-      data[variable].reduce(function (prev, current) {
+      state[variable].reduce(function (prev, current) {
         return prev.price < current.price ? prev : current
       }).price / 100
     sliderPriceValue = [
@@ -49,11 +54,11 @@ const Filter = ({ data, variable, show = false, setHideFilter = () => {} }) => {
   let minCount = 0
   let sliderCountValue = [0, 0]
 
-  if (data[variable] && data[variable].length > 0 && countFilterExists) {
-    maxCount = data[variable].reduce(function (prev, current) {
+  if (state[variable] && state[variable].length > 0 && countFilterExists) {
+    maxCount = state[variable].reduce(function (prev, current) {
       return prev.count > current.count ? prev : current
     }).count
-    minCount = data[variable].reduce(function (prev, current) {
+    minCount = state[variable].reduce(function (prev, current) {
       return prev.count < current.count ? prev : current
     }).count
     sliderCountValue = [
@@ -83,7 +88,7 @@ const Filter = ({ data, variable, show = false, setHideFilter = () => {} }) => {
         <MultiselectCheckbox
           className="h-full"
           title="Типы"
-          options={data.productTypes.map((type) => {
+          options={state.productTypes.map((type) => {
             return {
               label: type.name,
               id: type._id,
@@ -98,7 +103,7 @@ const Filter = ({ data, variable, show = false, setHideFilter = () => {} }) => {
             setFilter({
               ...filter,
               productTypes:
-                types.length === data.productTypes.length
+                types.length === state.productTypes.length
                   ? null
                   : types.map((item) => item.id),
             })
@@ -109,7 +114,7 @@ const Filter = ({ data, variable, show = false, setHideFilter = () => {} }) => {
         <MultiselectCheckbox
           className="h-full"
           title="Типы"
-          options={data.setTypes.map((type) => {
+          options={state.setTypes.map((type) => {
             return {
               label: type.name,
               id: type._id,
@@ -124,7 +129,7 @@ const Filter = ({ data, variable, show = false, setHideFilter = () => {} }) => {
             setFilter({
               ...filter,
               setTypes:
-                types.length === data.setTypes.length
+                types.length === state.setTypes.length
                   ? null
                   : types.map((item) => item.id),
             })
@@ -197,7 +202,7 @@ const Filter = ({ data, variable, show = false, setHideFilter = () => {} }) => {
           </div>
         )}
         <FilterButtons
-          data={data}
+          state={state}
           variable={variable}
           filter={filter}
           setFilter={setFilter}

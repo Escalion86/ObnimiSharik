@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { setFilter as actionSetFilter } from '@state/actions/filterActions'
 
 const FilterButtons = ({
-  data,
+  state,
   variable,
   filter,
   setFilter,
@@ -15,7 +15,10 @@ const FilterButtons = ({
 
   return (
     <div className="flex justify-end gap-2">
-      {!compareObjects(data.filter[variable], filterInitialState[variable]) && (
+      {!compareObjects(
+        state.filter[variable],
+        filterInitialState[variable]
+      ) && (
         <Button
           onClick={() => {
             setFilter(filterInitialState[variable])
@@ -44,7 +47,7 @@ const FilterButtons = ({
         disabled={
           filter.productTypes?.length === 0 ||
           filter.setTypes?.length === 0 ||
-          compareObjects(data.filter[variable], filter)
+          compareObjects(state.filter[variable], filter)
         }
       />
     </div>

@@ -9,6 +9,7 @@ import productCirculationsReducer from './productCirculationsReducer'
 import modalsReducer from './modalsReducer'
 import filterReducer from './filterReducer'
 import sortingReducer from './sortingReducer'
+import pageReducer from './pageReducer'
 
 const allReducers = combineReducers({
   products: productsReducer,
@@ -21,6 +22,7 @@ const allReducers = combineReducers({
   modals: modalsReducer,
   filter: filterReducer,
   sorting: sortingReducer,
+  page: pageReducer,
 })
 
 export default allReducers

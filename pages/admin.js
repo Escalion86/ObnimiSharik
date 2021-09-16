@@ -68,6 +68,16 @@ import {
 import modalsFunctions from '@adminblocks/modals/modalsFunctions'
 import TitleButton from '@admincomponents/TitleButton'
 import OverviewContent from '@adminblocks/content/OverviewContent'
+import {
+  BtnAddInvitation,
+  BtnAddProduct,
+  BtnAddProductCirculation,
+  BtnAddProductType,
+  BtnAddSet,
+  BtnAddSetType,
+  BtnTest,
+} from '@components/TitleButtons'
+import { setPage } from '@state/actions/pageActions'
 // import { setSets } from '@state/actions/setsActions'
 // import { setProducts } from '@state/actions/productsActions'
 // import { setSetTypes } from '@state/actions/setTypesActions'
@@ -75,6 +85,7 @@ import OverviewContent from '@adminblocks/content/OverviewContent'
 // import { setUsers } from '@state/actions/usersActions'
 // import { setInvitations } from '@state/actions/invitationsActions'
 // import { setProductCirculations } from '@state/actions/productCirculationsActions'
+import { pages, pagesGroups } from '@adminblocks/pages'
 
 const menuCfg = (pages, pagesGroups, userRole) => {
   let result = []
@@ -95,206 +106,15 @@ const menuCfg = (pages, pagesGroups, userRole) => {
 export default function Admin() {
   const [session, loading] = useSession()
 
-  const data = useSelector((state) => state)
+  const state = useSelector((state) => state)
 
   const dispatch = useDispatch()
 
-  const modals = modalsFunctions(dispatch, data)
-
-  const BtnAddProduct = ({ key }) => (
-    <TitleButton
-      onClick={() => modals.openProductModal()}
-      icon={faPlus}
-      key={key}
-    />
-  )
-
-  const BtnAddSet = ({ key }) => (
-    <TitleButton
-      onClick={() => modals.openSetModal()}
-      icon={faPlus}
-      key={key}
-    />
-  )
-
-  const BtnAddProductType = ({ key }) => (
-    <TitleButton
-      onClick={() => modals.openProductTypeModal()}
-      icon={faPlus}
-      key={key}
-    />
-  )
-
-  const BtnAddSetType = ({ key }) => (
-    <TitleButton
-      onClick={() => modals.openSetTypeModal()}
-      icon={faPlus}
-      key={key}
-    />
-  )
-
-  const BtnAddInvitation = ({ key }) => (
-    <TitleButton
-      onClick={() => modals.openInvitationModal()}
-      icon={faPlus}
-      key={key}
-    />
-  )
-
-  const BtnAddProductCirculation = ({ key }) => (
-    <TitleButton
-      onClick={() => modals.openProductCirculationModal()}
-      icon={faPlus}
-      key={key}
-    />
-  )
-
-  const BtnTest = ({ key }) => (
-    <TitleButton
-      onClick={() =>
-        modals.openConfirmModal('Заголовок', 'Текст сообщения', () =>
-          console.log('Принято')
-        )
-      }
-      icon={faBug}
-      key={key}
-    />
-  )
-
-  const pages = [
-    {
-      id: 0,
-      group: 0,
-      name: 'Обзор',
-      header: 'Обзор',
-      pageContent: OverviewContent,
-      pageButtons: [],
-      backToPageId: null,
-      accessRoles: ['admin'],
-      variable: null,
-    }, // 3
-    {
-      id: 1,
-      group: 1,
-      name: 'Товары',
-      header: 'Товары',
-      pageContent: ProductsContent,
-      pageButtons: [BtnAddProduct],
-      backToPageId: null,
-      accessRoles: ['admin', 'operator', 'aerodesigner'],
-      variable: 'products',
-    }, // 0
-    {
-      id: 2,
-      group: 1,
-      name: 'Типы товаров',
-      header: 'Типы товаров',
-      pageContent: ProductTypesContent,
-      pageButtons: [BtnAddProductType],
-      backToPageId: null,
-      accessRoles: ['admin'],
-      variable: 'productTypes',
-    }, // 1
-    {
-      id: 3,
-      group: 1,
-      name: 'Наборы',
-      header: 'Наборы',
-      pageContent: SetsContent,
-      pageButtons: [BtnAddSet],
-      backToPageId: null,
-      accessRoles: ['admin', 'operator', 'aerodesigner'],
-      variable: 'sets',
-    }, // 2
-    {
-      id: 4,
-      group: 1,
-      name: 'Типы наборов',
-      header: 'Типы наборов',
-      pageContent: SetTypesContent,
-      pageButtons: [BtnAddSetType],
-      backToPageId: null,
-      accessRoles: ['admin'],
-      variable: 'setTypes',
-    }, // 1
-    {
-      id: 5,
-      group: null,
-      name: 'Параметры учетной записи',
-      header: 'Параметры учетной записи',
-      pageContent: UserContent,
-      pageButtons: [],
-      backToPageId: null,
-      variable: null,
-    }, // 3
-    {
-      id: 6,
-      group: 3,
-      name: 'Сотрудники',
-      header: 'Сотрудники',
-      pageContent: UsersContent,
-      pageButtons: [],
-      backToPageId: null,
-      accessRoles: ['admin'],
-      variable: 'users',
-    }, // 3
-    {
-      id: 7,
-      group: 3,
-      name: 'Приглашения',
-      header: 'Приглашения',
-      pageContent: InvitationsContent,
-      pageButtons: [BtnAddInvitation],
-      backToPageId: null,
-      accessRoles: ['admin'],
-      variable: 'invitations',
-    },
-    {
-      id: 8,
-      group: 4,
-      name: 'Настройки',
-      header: 'Настройки',
-      pageContent: SettingsContent,
-      pageButtons: [],
-      backToPageId: 0,
-      accessRoles: ['admin'],
-      variable: null,
-    },
-    {
-      id: 9,
-      group: 5,
-      name: 'Тестовая страница',
-      header: 'Тестовая страница',
-      pageContent: TestContent,
-      pageButtons: [BtnTest],
-      backToPageId: 0,
-      accessRoles: [],
-      variable: null,
-    },
-    {
-      id: 10,
-      group: 2,
-      name: 'Движение товаров',
-      header: 'Движение товаров',
-      pageContent: ProductCirculationsContent,
-      pageButtons: [BtnAddProductCirculation],
-      backToPageId: 0,
-      accessRoles: ['admin'],
-      variable: 'productCirculations',
-    },
-  ]
-
-  const pagesGroups = [
-    { id: 0, name: '' },
-    { id: 1, name: 'Продукция' },
-    { id: 2, name: 'Склад' },
-    { id: 3, name: 'Пользователи' },
-    { id: 4, name: 'Настройки' },
-    { id: 5, name: 'Разработка' },
-  ]
+  const modals = modalsFunctions(dispatch, state)
 
   // const router = useRouter()
-  const [page, setPage] = useState(pages[0])
+  // const [page, setPage] = useState(pages[0])
+  const { page } = state
 
   useEffect(() => {
     if (!session && !loading) {
@@ -315,20 +135,12 @@ export default function Admin() {
   const setPageId = (id, props = {}) => {
     pages.some((page) => {
       if (page.id === id) {
-        setPage({ ...page, ...props })
+        dispatch(setPage(page))
+        // setPage({ ...page, ...props })
         return true
       }
     })
   }
-
-  const PageContent = (data) =>
-    page?.pageContent ? (
-      page.pageContent(data)
-    ) : (
-      <div className="flex items-center justify-center h-full text-xl">
-        Страница в разработке
-      </div>
-    )
 
   const haveAccess =
     session?.user?.role &&
@@ -347,19 +159,19 @@ export default function Admin() {
             <>
               {/* {modal} */}
               {/* {confirmModal} */}
-              {/* {data.modals.map((Modal, index) => (
+              {/* {state.modals.map((Modal, index) => (
                 <Modal key={'modal' + index} />
               ))} */}
-              {Object.keys(data.modals).map((key) => {
-                const Modal = data.modals[key]
+              {Object.keys(state.modals).map((key) => {
+                const Modal = state.modals[key]
                 return (
                   <Modal
                     key={'modal' + key}
-                    onClose={() => dispatch(removeAllModals(key))}
+                    onClose={() => dispatch(removeModal(key))}
                   />
                 )
               })}
-              {/* {data.modal} */}
+              {/* {state.modal} */}
               <Cabinet
                 page={page}
                 setPageId={setPageId}
@@ -367,7 +179,7 @@ export default function Admin() {
                 user={session.user}
                 onSignOut={signOut}
                 modals={modals}
-                data={data}
+                state={state}
               />
             </>
           ) : (

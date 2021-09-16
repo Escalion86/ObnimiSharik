@@ -67,7 +67,7 @@ const SortItem = ({
   )
 }
 
-const SortTitleButtonMenu = ({ data, variable }) => {
+const SortTitleButtonMenu = ({ state, variable }) => {
   const buttonRef = useRef()
   const dispatch = useDispatch()
 
@@ -99,15 +99,15 @@ const SortTitleButtonMenu = ({ data, variable }) => {
           onClickDown(key)
         }}
         active={
-          data.sorting[variable][0] === key ? data.sorting[variable][1] : null
+          state.sorting[variable][0] === key ? state.sorting[variable][1] : null
         }
         iconUp={numericValue ? faSortNumericDownAlt : faSortAlphaDownAlt}
         iconDown={numericValue ? faSortNumericDown : faSortAlphaDown}
       />
     )
   }
-  const key = data.sorting[variable][0]
-  const value = data.sorting[variable][1]
+  const key = state.sorting[variable][0]
+  const value = state.sorting[variable][1]
   const numericValue =
     key === 'price' ||
     key === 'count' ||
@@ -143,7 +143,7 @@ const SortTitleButtonMenu = ({ data, variable }) => {
                 <IconButton
                   inverse
                   icon={activeIcon}
-                  name={sortingVariables[variable][data.sorting[variable][0]]}
+                  name={sortingVariables[variable][state.sorting[variable][0]]}
                   textPos="left"
                 />
               </Menu.Button>

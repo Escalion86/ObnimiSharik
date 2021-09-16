@@ -29,7 +29,7 @@ const Cabinet = ({
   // setUser,
   onSignOut,
   modals,
-  data,
+  state,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [filterShow, setFilterShow] = useState(false)
@@ -51,19 +51,19 @@ const Cabinet = ({
           Страница в разработке
         </div>
       ),
-    [JSON.stringify(data), page.pageContent]
+    [JSON.stringify(state), page.pageContent]
   )
 
   let pageButtons = page.pageButtons ? page.pageButtons : []
 
   const filterExists =
     page.variable &&
-    data.filter[page.variable] &&
-    Object.keys(data.filter[page.variable]).length > 0
+    state.filter[page.variable] &&
+    Object.keys(state.filter[page.variable]).length > 0
   const sortingExists =
     page.variable &&
-    data.sorting[page.variable] &&
-    Object.keys(data.sorting[page.variable]).length > 0
+    state.sorting[page.variable] &&
+    Object.keys(state.sorting[page.variable]).length > 0
 
   // // // const pageButtons = []
   // let Filter
@@ -77,10 +77,10 @@ const Cabinet = ({
   const btnFilterActive = useMemo(
     () =>
       !compareObjects(
-        data.filter[page.variable],
+        state.filter[page.variable],
         filterInitialState[page.variable]
       ),
-    [page.variable, JSON.stringify(data.filter[page.variable])]
+    [page.variable, JSON.stringify(state.filter[page.variable])]
   )
 
   const BtnFilter = ({ key }) => (
@@ -94,7 +94,7 @@ const Cabinet = ({
   )
 
   const BtnSort = ({ key }) => (
-    <SortTitleButtonMenu data={data} key={key} variable={page.variable} />
+    <SortTitleButtonMenu state={state} key={key} variable={page.variable} />
   )
 
   if (filterExists) pageButtons = [BtnFilter, ...pageButtons]
@@ -103,44 +103,45 @@ const Cabinet = ({
   // // pageButtons = page.pageButtons ? page.pageButtons : []
 
   const buttons = pageButtons.map((button, index) =>
-    button({ key: 'titleButton' + index })
+    button({ key: 'titleButton' + index, modals })
   )
 
   let filteredData = null
   if (page.variable) {
-    if (!filterExists) filteredData = data[page.variable]
+    if (!filterExists) filteredData = state[page.variable]
     else
-      filteredData = data[page.variable].filter(
+      filteredData = state[page.variable].filter(
         (item) =>
-          (data.filter[page.variable].price === undefined ||
-            ((data.filter[page.variable].price[0] === null ||
-              item.price >= data.filter[page.variable].price[0] * 100) &&
-              (data.filter[page.variable].price[1] === null ||
-                item.price <= data.filter[page.variable].price[1] * 100))) &&
-          (data.filter[page.variable].count === undefined ||
-            ((data.filter[page.variable].count[0] === null ||
-              item.count >= data.filter[page.variable].count[0]) &&
-              (data.filter[page.variable].count[1] === null ||
-                item.count <= data.filter[page.variable].count[1]))) &&
-          (data.filter[page.variable].productTypes === undefined ||
-            data.filter[page.variable].productTypes === null ||
+          (state.filter[page.variable].price === undefined ||
+            ((state.filter[page.variable].price[0] === null ||
+              item.price >= state.filter[page.variable].price[0] * 100) &&
+              (state.filter[page.variable].price[1] === null ||
+                item.price <= state.filter[page.variable].price[1] * 100))) &&
+          (state.filter[page.variable].count === undefined ||
+            ((state.filter[page.variable].count[0] === null ||
+              item.count >= state.filter[page.variable].count[0]) &&
+              (state.filter[page.variable].count[1] === null ||
+                item.count <= state.filter[page.variable].count[1]))) &&
+          (state.filter[page.variable].productTypes === undefined ||
+            state.filter[page.variable].productTypes === null ||
             item.typesId.some((type) =>
-              data.filter[page.variable].productTypes.includes(type)
+              state.filter[page.variable].productTypes.includes(type)
             )) &&
-          (data.filter[page.variable].setTypes === undefined ||
-            data.filter[page.variable].setTypes === null ||
+          (state.filter[page.variable].setTypes === undefined ||
+            state.filter[page.variable].setTypes === null ||
             item.typesId.some((type) =>
-              data.filter[page.variable].setTypes.includes(type)
+              state.filter[page.variable].setTypes.includes(type)
             )) &&
-          (data.filter[page.variable].purchase === undefined ||
+          (state.filter[page.variable].purchase === undefined ||
             (item.purchase === true &&
-              data.filter[page.variable].purchase[1]) ||
-            (item.purchase === false && data.filter[page.variable].purchase[0]))
+              state.filter[page.variable].purchase[1]) ||
+            (item.purchase === false &&
+              state.filter[page.variable].purchase[0]))
       )
   }
-  if (data.sorting[page.variable]) {
-    const sortKey = data.sorting[page.variable][0]
-    const sortValue = data.sorting[page.variable][1]
+  if (state.sorting[page.variable]) {
+    const sortKey = state.sorting[page.variable][0]
+    const sortValue = state.sorting[page.variable][1]
     filteredData = filteredData.sort((a, b) => {
       if (a[sortKey] < b[sortKey]) {
         return sortValue === 'DESC' ? 1 : -1
@@ -187,7 +188,10 @@ const Cabinet = ({
             title={
               page.header +
               (filterExists
-                ? ' ' + filteredData.length + ' / ' + data[page.variable].length
+                ? ' ' +
+                  filteredData.length +
+                  ' / ' +
+                  state[page.variable].length
                 : '')
             }
             buttons={buttons}
@@ -195,7 +199,7 @@ const Cabinet = ({
           <div className="relative">
             {filterExists && (
               <Filter
-                data={data}
+                state={state}
                 variable={page.variable}
                 show={filterShow}
                 setHideFilter={() => setFilterShow(false)}
