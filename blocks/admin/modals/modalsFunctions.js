@@ -60,7 +60,9 @@ const modals = (dispatch, data) => {
             }
             edit={edit}
             onDelete={() => {
-              modals.openDeleteProduct(product)
+              modals.openDeleteProduct(product, () =>
+                modals.closeModal(modalId)
+              )
             }}
           />
         ))
@@ -82,7 +84,7 @@ const modals = (dispatch, data) => {
             }
             edit={edit}
             onDelete={() => {
-              modals.openDeleteSet(set)
+              modals.openDeleteSet(set, () => modals.closeModal(modalId))
             }}
           />
         ))
@@ -102,7 +104,9 @@ const modals = (dispatch, data) => {
             }
             edit={edit}
             onDelete={() => {
-              modals.openDeleteProductType(productType)
+              modals.openDeleteProductType(productType, () =>
+                modals.closeModal(modalId)
+              )
             }}
           />
         ))
@@ -120,7 +124,9 @@ const modals = (dispatch, data) => {
             }
             edit={edit}
             onDelete={() => {
-              modals.openDeleteSetType(setType)
+              modals.openDeleteSetType(setType, () =>
+                modals.closeModal(modalId)
+              )
             }}
           />
         ))
@@ -150,7 +156,7 @@ const modals = (dispatch, data) => {
             }
             edit={edit}
             onDelete={() => {
-              modals.openDeleteUser(user)
+              modals.openDeleteUser(user, () => modals.closeModal(modalId))
             }}
           />
         ))
@@ -166,7 +172,9 @@ const modals = (dispatch, data) => {
             }
             edit={edit}
             onDelete={() => {
-              modals.openDeleteInvitation(invitation)
+              modals.openDeleteInvitation(invitation, () =>
+                modals.closeModal(modalId)
+              )
             }}
           />
         ))
@@ -184,7 +192,9 @@ const modals = (dispatch, data) => {
             }
             edit={edit}
             onDelete={() => {
-              modals.openDeleteProductCirculation(productCirculation)
+              modals.openDeleteProductCirculation(productCirculation, () =>
+                modals.closeModal(modalId)
+              )
             }}
           />
         ))

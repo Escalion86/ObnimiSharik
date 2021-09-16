@@ -15,10 +15,7 @@ const Modal = ({ children, onClose = () => {}, onDelete = null }) => (
           className="absolute w-5 h-5 text-red-700 duration-200 transform cursor-pointer top-4 left-4 hover:scale-110"
           icon={faTrash}
           size="1x"
-          onClick={() => {
-            onDelete()
-            onClose()
-          }}
+          onClick={onDelete}
         />
       )}
       {children}
