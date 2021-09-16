@@ -207,17 +207,19 @@ const Cabinet = ({
             )}
           </div>
 
-          <div className="relative flex flex-col flex-1 max-h-full px-3 pb-3 overflow-y-scroll">
-            <div className="relative flex flex-col flex-1 h-full">
-              <PageContent
-                data={filteredData}
-                // setModal={setModal}
-                // updateData={updateData}
-                modals={modals}
-                user={user}
-              />
-            </div>
+          {/* <div className="relative flex flex-col flex-1 max-h-full px-3 pb-3 overflow-y-scroll">
+            <div className="relative flex flex-col flex-1 h-full"> */}
+          <div className="h-full overflow-y-auto">
+            <PageContent
+              data={filteredData}
+              // setModal={setModal}
+              // updateData={updateData}
+              modals={modals}
+              user={user}
+            />
           </div>
+          {/* </div>
+          </div> */}
         </main>
       </div>
       <ToastContainer />
