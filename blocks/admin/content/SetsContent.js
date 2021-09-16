@@ -1,23 +1,14 @@
 import React from 'react'
 import { SetCard } from '@admincomponents/cards'
-// import formProductCountObj from '@helpers/formProductCountObj'
-import { useSelector } from 'react-redux'
+import { Virtuoso } from 'react-virtuoso'
 
 const SetsContent = ({ data, modals }) => {
   if (!(data && data.length > 0)) return <>'Наборов нет'</>
 
-  // const countProductCirculations = formProductCountObj(productCirculations)
-
-  // const productsWithCount = products.map((product) => {
-  //   return {
-  //     ...product,
-  //     count: countProductCirculations[product._id],
-  //   }
-  // })
-
   return (
-    <>
-      {data.map((set) => (
+    <Virtuoso
+      data={data}
+      itemContent={(index, set) => (
         <SetCard
           key={set._id}
           set={set}
@@ -29,8 +20,8 @@ const SetsContent = ({ data, modals }) => {
           onTypeClick={(settype) => modals.openSetTypeModal(settype)}
           onProductClick={(product) => modals.openProductModal(product)}
         />
-      ))}
-    </>
+      )}
+    />
   )
 }
 

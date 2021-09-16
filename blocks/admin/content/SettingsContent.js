@@ -5,7 +5,7 @@ import SubTitle from '@admincomponents/SubTitle'
 
 const SettingsContent = ({ user, modals }) => {
   return (
-    <>
+    <div className="px-3">
       <SubTitle title="Экспорт/Импорт" />
       <IconButton
         name="Импорт CSV из Tilda"
@@ -13,7 +13,7 @@ const SettingsContent = ({ user, modals }) => {
         inverse
         icon={faDownload}
       />
-    </>
+    </div>
   )
 }
 

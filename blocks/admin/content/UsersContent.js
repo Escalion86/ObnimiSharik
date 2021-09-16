@@ -1,9 +1,9 @@
 import React from 'react'
 import { UserCard } from '@admincomponents/cards'
-import { useSelector } from 'react-redux'
+import { Virtuoso } from 'react-virtuoso'
 
 const UsersContent = ({ data, modals, user }) => {
-  const { users } = useSelector((state) => state)
+  const users = data
   let showedUsers = []
   if (users)
     if (user.role !== 'dev')
@@ -13,22 +13,18 @@ const UsersContent = ({ data, modals, user }) => {
   if (!(showedUsers && showedUsers.length > 0)) return <>'Пользователей нет'</>
 
   return (
-    <>
-      {showedUsers.map((showedUser) => {
-        // const count = sets.filter((set) =>
-        //   set.typesId.includes(settype._id)
-        // ).length
-        return (
-          <UserCard
-            key={showedUser._id}
-            user={showedUser}
-            onClick={() => modals.openUserModal(showedUser)}
-            onEdit={() => modals.openUserModal(showedUser, true)}
-            onDelete={() => modals.openDeleteUser(showedUser)}
-          />
-        )
-      })}
-    </>
+    <Virtuoso
+      data={showedUsers}
+      itemContent={(index, showedUser) => (
+        <UserCard
+          key={showedUser._id}
+          user={showedUser}
+          onClick={() => modals.openUserModal(showedUser)}
+          onEdit={() => modals.openUserModal(showedUser, true)}
+          onDelete={() => modals.openDeleteUser(showedUser)}
+        />
+      )}
+    />
   )
 }
 

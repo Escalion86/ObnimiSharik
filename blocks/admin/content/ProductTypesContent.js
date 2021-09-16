@@ -2,15 +2,15 @@ import React from 'react'
 import { TypeCard } from '@admincomponents/cards'
 import { useSelector } from 'react-redux'
 import { DEFAULT_PRODUCT } from '@helpers/constants'
+import { Virtuoso } from 'react-virtuoso'
 
 const ProductTypesContent = ({ data, modals }) => {
-  const { products } = useSelector((state) => state)
-
   if (!(data && data.length > 0)) return <>'Типов продуктов нет'</>
 
   return (
-    <>
-      {data.map((productType) => (
+    <Virtuoso
+      data={data}
+      itemContent={(index, productType) => (
         <TypeCard
           key={productType._id}
           type={productType}
@@ -24,8 +24,8 @@ const ProductTypesContent = ({ data, modals }) => {
           onEdit={() => modals.openProductTypeModal(productType, true)}
           onDelete={() => modals.openDeleteProductType(productType)}
         />
-      ))}
-    </>
+      )}
+    />
   )
 }
 

@@ -2,15 +2,15 @@ import React from 'react'
 import { TypeCard } from '@admincomponents/cards'
 import { useSelector } from 'react-redux'
 import { DEFAULT_SET } from '@helpers/constants'
+import { Virtuoso } from 'react-virtuoso'
 
 const SetTypesContent = ({ data, modals }) => {
-  const { setTypes, sets } = useSelector((state) => state)
-
   if (!(data && data.length > 0)) return <>'Типов наборов нет'</>
 
   return (
-    <>
-      {data.map((setType) => (
+    <Virtuoso
+      data={data}
+      itemContent={(index, setType) => (
         <TypeCard
           key={setType._id}
           type={setType}
@@ -24,8 +24,8 @@ const SetTypesContent = ({ data, modals }) => {
           onEdit={() => modals.openSetTypeModal(setType, true)}
           onDelete={() => modals.openDeleteSetType(setType)}
         />
-      ))}
-    </>
+      )}
+    />
   )
 }
 
