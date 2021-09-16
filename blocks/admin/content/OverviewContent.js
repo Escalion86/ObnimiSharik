@@ -2,47 +2,109 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { Doughnut } from 'react-chartjs-2'
+import SubTitle from '@admincomponents/SubTitle'
 
-const OverviewContent = ({ data, modals, user }) => {
-  const { products, sets } = useSelector((state) => state)
-  const productsTotal = products.length
-  const productsInStock = products.filter((product) => product.count > 0).length
-  const productsOutOfStock = productsTotal - productsInStock
-  const productsChartData = {
-    labels: ['В наличии', 'Отсутствуют'],
+const DougnutContent = ({ title, data }) => {
+  const dataTotal = data.length
+  const dataInStock = data.filter((item) => item.count > 0).length
+  const dataOutOfStock = dataTotal - dataInStock
+  const dataPercentOutOfStock = Math.floor((dataOutOfStock / dataTotal) * 100)
+  const dataPercentInStock = 100 - dataPercentOutOfStock
+  const dataChartData = {
+    labels: [
+      'В наличии (' + dataPercentInStock + '%)',
+      'Отсутствуют (' + dataPercentOutOfStock + '%)',
+    ],
     datasets: [
       {
         label: 'Ghbdtn',
-        data: [productsInStock, productsOutOfStock],
+        data: [dataInStock, dataOutOfStock],
         backgroundColor: [
-          'rgba(75, 255, 100, 0.5)',
+          'rgba(75, 215, 120, 0.5)',
           'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, 159, 64, 0.5)',
+          // 'rgba(54, 162, 235, 0.5)',
+          // 'rgba(255, 206, 86, 0.5)',
+          // 'rgba(153, 102, 255, 0.5)',
+          // 'rgba(255, 159, 64, 0.5)',
         ],
         borderColor: [
-          'rgba(75, 255, 100, 1)',
+          'rgba(75, 215, 120, 1)',
           'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
+          // 'rgba(54, 162, 235, 1)',
+          // 'rgba(255, 206, 86, 1)',
+          // 'rgba(153, 102, 255, 1)',
+          // 'rgba(255, 159, 64, 1)',
         ],
         // hoverBackgroundColor: 'rgba(54, 162, 235, 1)',
         // hoverBorderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 0,
-        hoverOffset: 4,
+        borderWidth: 1,
+        hoverOffset: 10,
       },
     ],
   }
+
+  // const image = new Image()
+  // image.src = '/img/balloon.webp'
+
+  const plugin = {
+    id: 'custom_canvas_background_image',
+    beforeDraw: (chart) => {
+      // if (image.complete) {
+      const ctx = chart.ctx
+      // const { top, left, width, height } = chart.chartArea
+      // const x = left + width / 2 - image.width / 2
+      // const y = top + height / 2 - image.height / 2
+      // ctx.drawImage(image, x, y)
+      ctx.font = '24px Arial'
+      ctx.fillStyle = 'black'
+      ctx.textAlign = 'center'
+      ctx.fillText(dataTotal, 143, 194)
+      // } else {
+      //   image.onload = () => chart.draw()
+      // }
+    },
+  }
+
   return (
-    <div className="w-60 h-60">
+    // <div>
+    <div className="w-72 h-72">
       <Doughnut
-        // className="w-100 h-100"
-        data={productsChartData}
+        // className="p-10 overflow-visible"
+        data={dataChartData}
+        plugins={[plugin]}
         options={{
+          plugins: {
+            title: {
+              display: true,
+              text: title,
+              font: {
+                size: 18,
+              },
+              color: 'black',
+            },
+            legend: {
+              onClick: null,
+              // title: { color: '#116699' },
+            },
+            beforeDraw: (chart) => {
+              if (image.complete) {
+                const ctx = chart.ctx
+                const { top, left, width, height } = chart.chartArea
+                const x = left + width / 2 - image.width / 2
+                const y = top + height / 2 - image.height / 2
+                ctx.drawImage(image, x, y)
+              } else {
+                image.onload = () => chart.draw()
+              }
+            },
+            // subtitle: {
+            //   display: true,
+            //   text: 'Custom Chart Subtitle',
+            // },
+          },
+          layout: {
+            padding: 8,
+          },
           maintainAspectRatio: false,
           // interaction: {
           //   mode: 'dataset',
@@ -57,9 +119,22 @@ const OverviewContent = ({ data, modals, user }) => {
         }}
         // getDatasetAtEvent={(e) => console.log('getDatasetAtEvent', e)}
         getElementAtEvent={(e) =>
-          console.log('getElementAtEvent', productsChartData.labels[e[0].index])
+          e[0] &&
+          console.log('getElementAtEvent', dataChartData.labels[e[0].index])
         }
       />
+    </div>
+    // </div>
+  )
+}
+
+const OverviewContent = ({ data, modals, user }) => {
+  const { products, sets } = useSelector((state) => state)
+
+  return (
+    <div className="flex flex-wrap justify-around px-3">
+      <DougnutContent title="Товары" data={products} />
+      <DougnutContent title="Наборы" data={sets} />
     </div>
   )
 }
