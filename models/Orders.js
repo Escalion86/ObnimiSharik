@@ -24,6 +24,10 @@ const OrdersSchema = new mongoose.Schema({
     required: [true, 'Пожалуйста укажите стоимость за штуку'],
     maxlength: [8, 'Стоимость не может превышать 999999,99 руб'],
   },
+  status: {
+    type: String,
+    default: 'created',
+  },
   deliveryAddress: [DeliveryAddressesSchema],
   deliveryDateFrom: {
     type: Date,
