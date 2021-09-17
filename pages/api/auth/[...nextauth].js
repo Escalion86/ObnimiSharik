@@ -37,6 +37,7 @@ export default NextAuth({
       session.user.role = result[0].role
       session.user.phone = result[0].phone
       session.user.whatsapp = result[0].whatsapp
+      session.user.birthday = result[0].birthday
       session.user._id = result[0]._id
       // console.log(`result[0]`, result[0])
       if (result) {

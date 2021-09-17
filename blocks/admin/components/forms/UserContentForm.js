@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { ROLES, DEFAULT_USER } from '@helpers/constants'
+import { DEFAULT_USER } from '@helpers/constants'
 
-import { ComboBox, Input, PhoneInput } from './forForms'
+import { DatePicker, Input, PhoneInput } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -19,7 +19,7 @@ const UserContentForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
     name: user.name,
     phone: user.phone,
     whatsapp: user.whatsapp,
-    // role: user.role,
+    birthday: user.birthday,
   })
 
   const handleChange = (e) => {
@@ -119,6 +119,15 @@ const UserContentForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
         value={form.whatsapp}
         onChange={handleChange}
         // required
+        inLine
+      />
+      <DatePicker
+        key="birthday"
+        label="День рождения"
+        name="birthday"
+        value={form.birthday}
+        // value={productCirculation.createdAt}
+        onChange={handleChange}
         inLine
       />
       {/* <div className="flex flex-col">
