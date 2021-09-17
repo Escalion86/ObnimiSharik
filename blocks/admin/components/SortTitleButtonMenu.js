@@ -124,7 +124,7 @@ const SortTitleButtonMenu = ({ state, variable }) => {
 
   return (
     // <div className="z-20 ml-5 -mt-1 -mb-1 h-11 w-11">
-    <Menu as="div" className="relative z-40 inline-block h-10 text-left">
+    <Menu as="div" className="relative z-10 inline-block h-10 text-left">
       {({ open }) => {
         return (
           <>

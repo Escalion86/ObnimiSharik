@@ -17,7 +17,7 @@ const UserMenu = ({
   closeMenu = () => {},
 }) => {
   return (
-    <div className="z-20 ml-5 -mt-1 -mb-1 h-11 w-11">
+    <div className="z-50 ml-5 -mt-1 -mb-1 h-11 w-11">
       <Menu as="div" className="relative inline-block text-left h-11 w-11">
         {({ open }) => {
           return (
@@ -46,11 +46,13 @@ const UserMenu = ({
                   static
                   className="absolute z-0 w-56 py-1 mt-2 origin-top-right bg-white border divide-y divide-gray-100 rounded-md shadow-lg border-primary -top-2 right-5 ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
-                  <div className="flex items-center pt-1 pl-3 pr-6 text-sm italic font-semibold text-gray-900 min-h-11">
-                    {user.name}
-                  </div>
-                  <div className="flex items-center pb-1 pl-3 pr-6 text-xs italic font-semibold text-gray-900 min-h-11">
-                    {roleRus(user.role)}
+                  <div>
+                    <div className="flex items-center pt-1 pl-3 pr-6 text-sm italic font-semibold text-gray-900 min-h-11">
+                      {user.name}
+                    </div>
+                    <div className="flex items-center pb-1 pl-3 pr-6 text-xs italic font-semibold text-gray-900 min-h-11">
+                      {roleRus(user.role)}
+                    </div>
                   </div>
                   <div className="px-1">
                     <Menu.Item>
