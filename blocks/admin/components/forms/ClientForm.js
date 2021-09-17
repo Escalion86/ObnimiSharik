@@ -68,6 +68,7 @@ const ClientForm = ({ client = DEFAULT_CLIENT, afterConfirm = () => {} }) => {
     let err = {}
     if (!form.name) err.name = 'Name is required'
     if (!form.phone) err.phone = 'Phone is required'
+    else if (form.phone.length <= 11) err.phone = 'Wrong phone'
     // if (!form.email) err.email = 'Email is required'
     // if (!form.role) err.role = 'Role is required'
     return err
