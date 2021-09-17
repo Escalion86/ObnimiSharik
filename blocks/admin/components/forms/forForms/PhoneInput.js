@@ -18,7 +18,7 @@ const PhoneInput = ({
         (className ? ' ' + className : '')
       }
     >
-      <label className={inLine ? 'w-24' : ''} htmlFor={name}>
+      <label className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''} htmlFor={name}>
         {label}
         {required && <span className="text-red-700">*</span>}
       </label>
@@ -33,7 +33,7 @@ const PhoneInput = ({
         mask="+7 999-999-9999"
         maskChar="_"
         alwaysShowMask
-        value={value}
+        value={value || ''}
         onChange={(e) =>
           onChange({
             ...e,

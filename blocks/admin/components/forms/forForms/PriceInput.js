@@ -1,8 +1,23 @@
-const PriceInput = ({ value, onChange, required = false, className }) => {
+const PriceInput = ({
+  value,
+  onChange,
+  required = false,
+  className,
+  inLine,
+}) => {
   if (!parseInt(value)) value = 0
   return (
-    <div className={'flex flex-col w-32' + (className ? ' ' + className : '')}>
-      <label htmlFor="price">
+    <div
+      className={
+        'flex' +
+        (inLine ? ' flex-row items-center' : ' flex-col') +
+        (className ? ' ' + className : '')
+      }
+    >
+      <label
+        className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''}
+        htmlFor="price"
+      >
         Стоимость{required && <span className="text-red-700">*</span>}
       </label>
       <div

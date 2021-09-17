@@ -30,7 +30,7 @@ const Input = ({
         (className ? ' ' + className : '')
       }
     >
-      <label className="w-24" htmlFor={name}>
+      <label className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''} htmlFor={name}>
         {label}
         {required && <span className="text-red-700">*</span>}
       </label>

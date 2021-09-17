@@ -1,4 +1,5 @@
 function formatDate(date) {
+  if (!date) return undefined
   var d = new Date(date),
     month = '' + (d.getMonth() + 1),
     day = '' + d.getDate(),
@@ -18,9 +19,16 @@ const DatePicker = ({
   required = false,
   className,
   disabled = false,
+  inLine = false,
 }) => (
-  <div className={'flex flex-col' + (className ? ' ' + className : '')}>
-    <label htmlFor={name}>
+  <div
+    className={
+      'flex' +
+      (inLine ? ' flex-row items-center' : ' flex-col') +
+      (className ? ' ' + className : '')
+    }
+  >
+    <label className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''} htmlFor={name}>
       {label}
       {required && <span className="text-red-700">*</span>}
     </label>
