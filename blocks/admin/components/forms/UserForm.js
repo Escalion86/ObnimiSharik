@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { ROLES, DEFAULT_USER } from '@helpers/constants'
 
-import { ComboBox, Input, PhoneInput } from './forForms'
+import { ComboBox, DatePicker, Input, PhoneInput } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -19,6 +19,7 @@ const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
     phone: user.phone,
     whatsapp: user.whatsapp,
     role: user.role,
+    birthday: user.birthday,
   })
 
   const forNew = user._id === undefined
@@ -66,7 +67,7 @@ const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние пользователя' : 'Редактирование пользователя'}
+      title={forNew ? 'Создние сотрудника' : 'Редактирование сотрудника'}
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
@@ -127,6 +128,14 @@ const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
           />
         </div>
       </div>
+      <DatePicker
+        key="birthday"
+        label="День рождения"
+        name="birthday"
+        value={form.birthday}
+        // value={productCirculation.createdAt}
+        onChange={handleChange}
+      />
       {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>
         <select
