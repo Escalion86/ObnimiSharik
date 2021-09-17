@@ -12,12 +12,14 @@ const DougnutContent = ({ title, data }) => {
   const dataPercentInStock = 100 - dataPercentOutOfStock
   const dataChartData = {
     labels: [
-      'В наличии (' + dataPercentInStock + '%)',
-      'Отсутствуют (' + dataPercentOutOfStock + '%)',
+      'В наличии' +
+        (dataPercentInStock ? ' (' + dataPercentInStock + '%)' : ''),
+      'Отсутствуют' +
+        (dataPercentOutOfStock ? ' (' + dataPercentOutOfStock + '%)' : ''),
     ],
     datasets: [
       {
-        label: 'Ghbdtn',
+        // label: 'Ghbdtn',
         data: [dataInStock, dataOutOfStock],
         backgroundColor: [
           'rgba(75, 215, 120, 0.5)',
@@ -50,15 +52,15 @@ const DougnutContent = ({ title, data }) => {
     id: 'custom_canvas_background_image',
     beforeDraw: (chart) => {
       // if (image.complete) {
-      const ctx = chart.ctx
-      // const { top, left, width, height } = chart.chartArea
+      const { ctx, chartArea } = chart
+      const { top, left, width, height } = chartArea
       // const x = left + width / 2 - image.width / 2
       // const y = top + height / 2 - image.height / 2
       // ctx.drawImage(image, x, y)
       ctx.font = '24px Arial'
       ctx.fillStyle = 'black'
       ctx.textAlign = 'center'
-      ctx.fillText(dataTotal, 143, 194)
+      ctx.fillText(dataTotal, left + width / 2, top + height / 2 + 3)
       // } else {
       //   image.onload = () => chart.draw()
       // }
@@ -67,63 +69,62 @@ const DougnutContent = ({ title, data }) => {
 
   return (
     // <div>
-    <div className="w-72 h-72">
-      <Doughnut
-        // className="p-10 overflow-visible"
-        data={dataChartData}
-        plugins={[plugin]}
-        options={{
-          plugins: {
-            title: {
-              display: true,
-              text: title,
-              font: {
-                size: 18,
-              },
-              color: 'black',
+
+    <Doughnut
+      // className="p-10 overflow-visible"
+      data={dataChartData}
+      plugins={[plugin]}
+      options={{
+        plugins: {
+          title: {
+            display: true,
+            text: title,
+            font: {
+              size: 18,
             },
-            legend: {
-              onClick: null,
-              // title: { color: '#116699' },
-            },
-            beforeDraw: (chart) => {
-              if (image.complete) {
-                const ctx = chart.ctx
-                const { top, left, width, height } = chart.chartArea
-                const x = left + width / 2 - image.width / 2
-                const y = top + height / 2 - image.height / 2
-                ctx.drawImage(image, x, y)
-              } else {
-                image.onload = () => chart.draw()
-              }
-            },
-            // subtitle: {
-            //   display: true,
-            //   text: 'Custom Chart Subtitle',
-            // },
+            color: 'black',
           },
-          layout: {
-            padding: 8,
+          legend: {
+            onClick: null,
+            // title: { color: '#116699' },
           },
-          maintainAspectRatio: false,
-          // interaction: {
-          //   mode: 'dataset',
+          // beforeDraw: (chart) => {
+          //   if (image.complete) {
+          //     const ctx = chart.ctx
+          //     const { top, left, width, height } = chart.chartArea
+          //     const x = left + width / 2 - image.width / 2
+          //     const y = top + height / 2 - image.height / 2
+          //     ctx.drawImage(image, x, y)
+          //   } else {
+          //     image.onload = () => chart.draw()
+          //   }
           // },
-          onClick: (e) => {
-            // console.log(`e`, e)
-            // const canvasPosition = Chart.helpers.getRelativePosition(e, chart);
-            // // Substitute the appropriate scale IDs
-            // const dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
-            // const dataY = chart.scales.y.getValueForPixel(canvasPosition.y);
-          },
-        }}
-        // getDatasetAtEvent={(e) => console.log('getDatasetAtEvent', e)}
-        getElementAtEvent={(e) =>
-          e[0] &&
-          console.log('getElementAtEvent', dataChartData.labels[e[0].index])
-        }
-      />
-    </div>
+          // subtitle: {
+          //   display: true,
+          //   text: 'Custom Chart Subtitle',
+          // },
+        },
+        layout: {
+          padding: 8,
+        },
+        maintainAspectRatio: true,
+        // interaction: {
+        //   mode: 'dataset',
+        // },
+        onClick: (e) => {
+          // console.log(`e`, e)
+          // const canvasPosition = Chart.helpers.getRelativePosition(e, chart);
+          // // Substitute the appropriate scale IDs
+          // const dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
+          // const dataY = chart.scales.y.getValueForPixel(canvasPosition.y);
+        },
+      }}
+      // getDatasetAtEvent={(e) => console.log('getDatasetAtEvent', e)}
+      getElementAtEvent={(e) =>
+        e[0] &&
+        console.log('getElementAtEvent', dataChartData.labels[e[0].index])
+      }
+    />
     // </div>
   )
 }
@@ -133,8 +134,12 @@ const OverviewContent = ({ data, modals, user }) => {
 
   return (
     <div className="flex flex-wrap justify-around px-3">
-      <DougnutContent title="Товары" data={products} />
-      <DougnutContent title="Наборы" data={sets} />
+      <div className="flex-1 min-w-72 max-w-100">
+        <DougnutContent title="Товары" data={products} />
+      </div>
+      <div className="flex-1 min-w-72 max-w-100">
+        <DougnutContent title="Наборы" data={sets} />
+      </div>
     </div>
   )
 }
