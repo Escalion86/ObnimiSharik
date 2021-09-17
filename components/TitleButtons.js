@@ -56,3 +56,11 @@ export const BtnTest = ({ key, modals }) => (
     key={key}
   />
 )
+
+export const BtnAddClient = ({ key, modals }) => (
+  <TitleButton
+    onClick={() => modals.openClientModal()}
+    icon={faPlus}
+    key={key}
+  />
+)

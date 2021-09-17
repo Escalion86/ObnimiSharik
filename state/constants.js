@@ -7,6 +7,7 @@ export const SET_SET_TYPES = 'SET_SET_TYPES'
 export const SET_INVITATIONS = 'SET_INVITATIONS'
 export const SET_USERS = 'SET_USERS'
 export const SET_PRODUCT_CIRCULATIONS = 'SET_PRODUCT_CIRCULATIONS'
+export const SET_CLIENTS = 'SET_CLIENTS'
 
 export const SET_MODAL = 'SET_MODAL'
 export const ADD_MODAL = 'ADD_MODAL'

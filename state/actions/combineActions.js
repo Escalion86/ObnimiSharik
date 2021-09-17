@@ -4,6 +4,7 @@ import addCountToSets from '@helpers/addCountToSets'
 import addCountToSetTypes from '@helpers/addCountToSetTypes'
 import formProductCountObj from '@helpers/formProductCountObj'
 import { batch } from 'react-redux'
+import { setClients } from './clientsActions'
 import { setInvitations } from './invitationsActions'
 import { setProductCirculations } from './productCirculationsActions'
 import { setProducts } from './productsActions'
@@ -41,6 +42,7 @@ export const setAllData = (data) => {
       dispatch(setInvitations(data.invitations))
       dispatch(setUsers(data.users))
       dispatch(setProductCirculations(data.productCirculations))
+      dispatch(setClients(data.clients))
     })
   }
 }

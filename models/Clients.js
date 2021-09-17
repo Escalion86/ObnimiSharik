@@ -9,7 +9,6 @@ const ClientsSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'Введите EMail'],
   },
   image: {
     type: String,
@@ -17,7 +16,7 @@ const ClientsSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    default: 0,
+    required: [true, 'Введите номер телефона'],
   },
   whatsapp: {
     type: Number,

@@ -2,6 +2,7 @@ import addCountToProducts from '@helpers/addCountToProducts'
 import addCountToSets from '@helpers/addCountToSets'
 import {
   fetchingAll,
+  fetchingClients,
   fetchingInvitations,
   fetchingProductCirculations,
   fetchingProducts,
@@ -37,9 +38,11 @@ import {
   MessageModal,
   ConfirmModal,
   ProductCirculationModal,
+  ClientModal,
 } from '@adminblocks/modals'
 import addCountToProductTypes from '@helpers/addCountToProductTypes'
 import addCountToSetTypes from '@helpers/addCountToSetTypes'
+import { setClients } from '@state/actions/clientsActions'
 
 const modals = (dispatch, data) => {
   const modals = {
@@ -199,6 +202,22 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
+    openClientModal: (client, edit) =>
+      dispatch(
+        addModal((modalId) => (
+          <ClientModal
+            client={client}
+            onClose={() => modals.closeModal(modalId)}
+            afterConfirm={() =>
+              fetchingClients((result) => dispatch(setClients(result)))
+            }
+            edit={edit}
+            onDelete={() => {
+              modals.openDeleteClient(client, () => modals.closeModal(modalId))
+            }}
+          />
+        ))
+      ),
     openMessageModal: (message) =>
       dispatch(
         addModal((modalId) => (
@@ -351,6 +370,20 @@ const modals = (dispatch, data) => {
         }
       )
     },
+    openDeleteClient: (client, onConfirm = null) =>
+      modals.openConfirmModal(
+        'Удаление клиента',
+        'Вы уверены что хотите удалить клиента "' + client.name + '"?',
+        () => {
+          deleteData(
+            '/api/clients/' + client._id,
+            () => fetchingClients((result) => dispatch(setClients(result))),
+            'Клиент "' + client.name + '" удален',
+            'Ошибка при удалении клиента "' + client.name + '"'
+          )
+          if (onConfirm) onConfirm()
+        }
+      ),
     openConfirmModal: (title, message, onConfirm) =>
       dispatch(
         addModal((modalId) => (

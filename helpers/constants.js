@@ -8,11 +8,11 @@ export const DEFAULT_USER = {
   role: 'client',
 }
 
-export const CLIENT = {
-  name: 'Гость',
+export const DEFAULT_CLIENT = {
+  name: '',
   email: '',
-  phone: 0,
-  whatsapp: 0,
+  phone: null,
+  whatsapp: null,
   birthday: null,
   image: null,
 }

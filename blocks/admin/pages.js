@@ -1,4 +1,5 @@
 import {
+  BtnAddClient,
   BtnAddInvitation,
   BtnAddProduct,
   BtnAddProductCirculation,
@@ -19,6 +20,7 @@ import {
   UserContent,
   UsersContent,
 } from './content'
+import ClientsContent from './content/ClientsContent'
 import OverviewContent from './content/OverviewContent'
 
 export const pages = [
@@ -111,7 +113,7 @@ export const pages = [
   },
   {
     id: 8,
-    group: 4,
+    group: 5,
     name: 'Настройки',
     header: 'Настройки',
     pageContent: SettingsContent,
@@ -122,7 +124,7 @@ export const pages = [
   },
   {
     id: 9,
-    group: 5,
+    group: 6,
     name: 'Тестовая страница',
     header: 'Тестовая страница',
     pageContent: TestContent,
@@ -142,6 +144,17 @@ export const pages = [
     accessRoles: ['admin'],
     variable: 'productCirculations',
   },
+  {
+    id: 11,
+    group: 4,
+    name: 'Клиенты',
+    header: 'Клиенты',
+    pageContent: ClientsContent,
+    pageButtons: [BtnAddClient],
+    backToPageId: 0,
+    accessRoles: ['admin'],
+    variable: 'clients',
+  },
 ]
 
 export const pagesGroups = [
@@ -149,6 +162,7 @@ export const pagesGroups = [
   { id: 1, name: 'Продукция' },
   { id: 2, name: 'Склад' },
   { id: 3, name: 'Пользователи' },
-  { id: 4, name: 'Настройки' },
-  { id: 5, name: 'Разработка' },
+  { id: 4, name: 'Клиенты' },
+  { id: 5, name: 'Настройки' },
+  { id: 6, name: 'Разработка' },
 ]

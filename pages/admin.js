@@ -123,7 +123,7 @@ export default function Admin() {
       const fetching = async () => {
         // const result = await fetchingAll(setData)
         await fetchingAll((result) => {
-          dispatch(setAllData(result))
+          if (result) dispatch(setAllData(result))
         })
 
         // await dispatch(setModalsFunctions(result))
