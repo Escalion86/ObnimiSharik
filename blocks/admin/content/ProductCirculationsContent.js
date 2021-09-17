@@ -4,7 +4,8 @@ import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 import { Virtuoso } from 'react-virtuoso'
 
 const ProductCirculationsContent = ({ data, modals }) => {
-  if (!(data && data.length > 0)) return <>'Товарооборота нет'</>
+  if (!(data && data.length > 0))
+    return <div className="px-3">'Товарооборота нет'</div>
 
   return (
     <Virtuoso

@@ -10,7 +10,8 @@ const UsersContent = ({ data, modals, user }) => {
       showedUsers = users.filter((showedUser) => showedUser.role !== 'dev')
     else showedUsers = users
 
-  if (!(showedUsers && showedUsers.length > 0)) return <>'Пользователей нет'</>
+  if (!(showedUsers && showedUsers.length > 0))
+    return <div className="px-3">'Пользователей нет'</div>
 
   return (
     <Virtuoso

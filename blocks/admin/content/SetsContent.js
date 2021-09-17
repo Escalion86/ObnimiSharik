@@ -3,7 +3,8 @@ import { SetCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
 const SetsContent = ({ data, modals }) => {
-  if (!(data && data.length > 0)) return <>'Наборов нет'</>
+  if (!(data && data.length > 0))
+    return <div className="px-3">'Наборов нет'</div>
 
   return (
     <Virtuoso

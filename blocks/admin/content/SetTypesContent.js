@@ -5,7 +5,8 @@ import { DEFAULT_SET } from '@helpers/constants'
 import { Virtuoso } from 'react-virtuoso'
 
 const SetTypesContent = ({ data, modals }) => {
-  if (!(data && data.length > 0)) return <>'Типов наборов нет'</>
+  if (!(data && data.length > 0))
+    return <div className="px-3">'Типов наборов нет'</div>
 
   return (
     <Virtuoso
