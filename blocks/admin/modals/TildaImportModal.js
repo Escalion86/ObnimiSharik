@@ -352,6 +352,17 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
         throw new Error(res.status)
       }
 
+      res = await fetch('/api/productcirculations', {
+        method: 'DELETE',
+        headers: {
+          Accept: contentType,
+          'Content-Type': contentType,
+        },
+      })
+      if (!res.ok) {
+        throw new Error(res.status)
+      }
+
       toast.update(toastId.current, {
         type: toast.TYPE.SUCCESS,
         render: 'Импорт завершен успешно',
