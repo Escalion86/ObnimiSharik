@@ -58,10 +58,14 @@ const Cabinet = ({
 
   const filterExists =
     page.variable &&
+    state[page.variable] &&
+    state[page.variable].length > 0 &&
     state.filter[page.variable] &&
     Object.keys(state.filter[page.variable]).length > 0
   const sortingExists =
     page.variable &&
+    state[page.variable] &&
+    state[page.variable].length > 0 &&
     state.sorting[page.variable] &&
     Object.keys(state.sorting[page.variable]).length > 0
 
