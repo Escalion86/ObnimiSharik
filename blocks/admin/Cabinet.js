@@ -186,7 +186,7 @@ const Cabinet = ({
         <main className="flex flex-col flex-1 overflow-y-auto">
           <Title
             title={
-              page.header +
+              page.name +
               (filterExists
                 ? ' ' +
                   filteredData.length +
