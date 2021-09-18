@@ -1,6 +1,8 @@
 import {
   BtnAddClient,
   BtnAddInvitation,
+  BtnAddOrder,
+  BtnAddPayment,
   BtnAddProduct,
   BtnAddProductCirculation,
   BtnAddProductType,
@@ -19,9 +21,11 @@ import {
   TestContent,
   UserContent,
   UsersContent,
+  OverviewContent,
+  ClientsContent,
+  OrdersContent,
+  PaymentsContent,
 } from './content'
-import ClientsContent from './content/ClientsContent'
-import OverviewContent from './content/OverviewContent'
 
 export const pages = [
   {
@@ -137,8 +141,8 @@ export const pages = [
     id: 11,
     group: 3,
     name: 'Заказы',
-    pageContent: null,
-    pageButtons: [],
+    pageContent: OrdersContent,
+    pageButtons: [BtnAddOrder],
     backToPageId: 0,
     accessRoles: ['admin'],
     variable: 'orders',
@@ -147,8 +151,8 @@ export const pages = [
     id: 12,
     group: 3,
     name: 'Транзакции',
-    pageContent: null,
-    pageButtons: [],
+    pageContent: PaymentsContent,
+    pageButtons: [BtnAddPayment],
     backToPageId: 0,
     accessRoles: ['admin'],
     variable: 'payments',

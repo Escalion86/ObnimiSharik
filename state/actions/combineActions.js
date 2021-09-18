@@ -6,6 +6,8 @@ import formProductCountObj from '@helpers/formProductCountObj'
 import { batch } from 'react-redux'
 import { setClients } from './clientsActions'
 import { setInvitations } from './invitationsActions'
+import { setOrders } from './ordersActions'
+import { setPayments } from './paymentsActions'
 import { setProductCirculations } from './productCirculationsActions'
 import { setProducts } from './productsActions'
 import { setProductTypes } from './productTypesActions'
@@ -43,6 +45,8 @@ export const setAllData = (data) => {
       dispatch(setUsers(data.users))
       dispatch(setProductCirculations(data.productCirculations))
       dispatch(setClients(data.clients))
+      dispatch(setOrders(data.orders))
+      dispatch(setPayments(data.payments))
     })
   }
 }

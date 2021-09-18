@@ -75,6 +75,7 @@ const DougnutContent = ({ title, data }) => {
       data={dataChartData}
       plugins={[plugin]}
       options={{
+        animation: false,
         plugins: {
           title: {
             display: true,

@@ -7,6 +7,8 @@ import Invitations from '@models/Invitations'
 import Users from '@models/Users'
 import ProductCirculations from '@models/ProductCirculations'
 import Clients from '@models/Clients'
+import Payments from '@models/Payments'
+import Orders from '@models/Orders'
 
 export default async function handler(req, res) {
   const { method } = req
@@ -24,6 +26,8 @@ export default async function handler(req, res) {
         const users = await Users.find({})
         const productCirculations = await ProductCirculations.find({})
         const clients = await Clients.find({})
+        const orders = await Orders.find({})
+        const payments = await Payments.find({})
 
         res.status(200).json({
           success: true,
@@ -36,6 +40,8 @@ export default async function handler(req, res) {
             users,
             productCirculations,
             clients,
+            orders,
+            payments,
           },
         })
       } catch (error) {

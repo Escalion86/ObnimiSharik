@@ -14,6 +14,10 @@ const OrdersSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  number: {
+    type: Number,
+    default: 0,
+  },
   discount: {
     type: Number,
     default: 0,

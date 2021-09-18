@@ -84,3 +84,21 @@ export async function fetchingClients(updateData = () => {}) {
   updateData(resp)
   return resp
 }
+
+export async function fetchingOrders(updateData = () => {}) {
+  console.log('Запущен fetchingOrders')
+  const resp = await fetch('/api/orders')
+    .then((res) => res.json())
+    .then((json) => json.data)
+  updateData(resp)
+  return resp
+}
+
+export async function fetchingPayments(updateData = () => {}) {
+  console.log('Запущен fetchingPayments')
+  const resp = await fetch('/api/payments')
+    .then((res) => res.json())
+    .then((json) => json.data)
+  updateData(resp)
+  return resp
+}

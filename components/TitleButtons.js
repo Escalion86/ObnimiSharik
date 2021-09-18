@@ -64,3 +64,19 @@ export const BtnAddClient = ({ key, modals }) => (
     key={key}
   />
 )
+
+export const BtnAddOrder = ({ key, modals }) => (
+  <TitleButton
+    onClick={() => modals.openOrderModal()}
+    icon={faPlus}
+    key={key}
+  />
+)
+
+export const BtnAddPayment = ({ key, modals }) => (
+  <TitleButton
+    onClick={() => modals.openPaymentModal()}
+    icon={faPlus}
+    key={key}
+  />
+)

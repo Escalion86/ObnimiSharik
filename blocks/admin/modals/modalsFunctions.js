@@ -4,6 +4,8 @@ import {
   fetchingAll,
   fetchingClients,
   fetchingInvitations,
+  fetchingOrders,
+  fetchingPayments,
   fetchingProductCirculations,
   fetchingProducts,
   fetchingProductTypes,
@@ -20,6 +22,9 @@ import {
   setSets,
   setSetTypes,
   setUsers,
+  setClients,
+  setOrders,
+  setPayments,
 } from '@state/actions'
 import {
   addModal,
@@ -39,10 +44,11 @@ import {
   ConfirmModal,
   ProductCirculationModal,
   ClientModal,
+  OrderModal,
+  PaymentModal,
 } from '@adminblocks/modals'
 import addCountToProductTypes from '@helpers/addCountToProductTypes'
 import addCountToSetTypes from '@helpers/addCountToSetTypes'
-import { setClients } from '@state/actions/clientsActions'
 
 const modals = (dispatch, data) => {
   const modals = {
@@ -218,6 +224,40 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
+    openOrderModal: (order, edit) =>
+      dispatch(
+        addModal((modalId) => (
+          <OrderModal
+            order={order}
+            onClose={() => modals.closeModal(modalId)}
+            afterConfirm={() =>
+              fetchingOrders((result) => dispatch(setOrders(result)))
+            }
+            edit={edit}
+            onDelete={() => {
+              modals.openDeleteOrder(order, () => modals.closeModal(modalId))
+            }}
+          />
+        ))
+      ),
+    openPaymentModal: (payment, edit) =>
+      dispatch(
+        addModal((modalId) => (
+          <PaymentModal
+            payment={payment}
+            onClose={() => modals.closeModal(modalId)}
+            afterConfirm={() =>
+              fetchingPayments((result) => dispatch(setPayments(result)))
+            }
+            edit={edit}
+            onDelete={() => {
+              modals.openDeletePayment(payment, () =>
+                modals.closeModal(modalId)
+              )
+            }}
+          />
+        ))
+      ),
     openMessageModal: (message) =>
       dispatch(
         addModal((modalId) => (
@@ -380,6 +420,34 @@ const modals = (dispatch, data) => {
             () => fetchingClients((result) => dispatch(setClients(result))),
             'Клиент "' + client.name + '" удален',
             'Ошибка при удалении клиента "' + client.name + '"'
+          )
+          if (onConfirm) onConfirm()
+        }
+      ),
+    openDeleteOrder: (order, onConfirm = null) =>
+      modals.openConfirmModal(
+        'Удаление заказа',
+        'Вы уверены что хотите удалить заказ №' + order.number + '?',
+        () => {
+          deleteData(
+            '/api/orders/' + order._id,
+            () => fetchingOrders((result) => dispatch(setOrders(result))),
+            'Заказ №' + order.number + '" удален',
+            'Ошибка при удалении заказа №' + order.number
+          )
+          if (onConfirm) onConfirm()
+        }
+      ),
+    openDeletePayment: (payment, onConfirm = null) =>
+      modals.openConfirmModal(
+        'Удаление транзакции',
+        'Вы уверены что хотите удалить транзакцию №' + payment.number + '?',
+        () => {
+          deleteData(
+            '/api/payments/' + payment._id,
+            () => fetchingPayments((result) => dispatch(setPayments(result))),
+            'Транзакция №' + payment.number + '" удалена',
+            'Ошибка при удалении транзакции №' + payment.number
           )
           if (onConfirm) onConfirm()
         }

@@ -67,3 +67,34 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
   purchase: false,
   purchasedAt: new Date().toISOString(),
 }
+
+export const DEFAULT_DELIVERY_ADDRESS = {
+  town: '',
+  street: '',
+  flat: '',
+  comment: '',
+}
+
+export const DEFAULT_ORDER = {
+  number: 0,
+  clientId: '',
+  products: [],
+  sets: [],
+  discount: 0,
+  fullPrice: 0,
+  status: 'created',
+  deliveryAddress: DEFAULT_DELIVERY_ADDRESS,
+  deliveryDateFrom: new Date().toISOString(),
+  deliveryDateTo: new Date().toISOString(),
+  deliverId: '',
+}
+
+export const DEFAULT_PAYMENT = {
+  number: 0,
+  clientId: '',
+  orderId: '',
+  way: 'card',
+  sum: 0,
+  status: 'created',
+  payAt: new Date().toISOString(),
+}
