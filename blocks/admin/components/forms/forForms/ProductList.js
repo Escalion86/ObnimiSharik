@@ -1,53 +1,71 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { SelectProduct } from './SelectItem'
 
-const СomboList = ({ onChange, selectedId, products }) => (
-  <select
-    className="w-full px-2 py-1 text-sm bg-gray-200 cursor-pointer"
-    onChange={onChange}
-    defaultValue={selectedId ? selectedId : '?'}
-  >
-    <option disabled className="text-sm" value="?">
-      Выберите товар
-    </option>
-    {products.map((product, index) => (
-      <option
-        key={'combo' + product._id}
-        className="text-sm"
-        value={product._id}
-      >
-        {product.article ? '(' + product.article + ')' : '(без артикула)'}{' '}
-        {product.name}
-      </option>
-    ))}
-  </select>
-)
+// const СomboList = ({ onChange, selectedId, products }) => (
+//   <select
+//     className="w-full px-2 py-1 text-sm bg-gray-200 cursor-pointer"
+//     onChange={onChange}
+//     defaultValue={selectedId ? selectedId : '?'}
+//   >
+//     <option disabled className="text-sm" value="?">
+//       Выберите товар
+//     </option>
+//     {products.map((product, index) => (
+//       <option
+//         key={'combo' + product._id}
+//         className="text-sm"
+//         value={product._id}
+//       >
+//         {product.article ? '(' + product.article + ')' : '(без артикула)'}{' '}
+//         {product.name}
+//       </option>
+//     ))}
+//   </select>
+// )
 
-const ItemRow = ({ onChange, selectedId, count = 1, index, products }) => {
+const ItemRow = ({
+  onChange,
+  selectedId,
+  count = 1,
+  index,
+  selectedProductsIds,
+}) => {
   const onChangeCount = (e) =>
     onChange(selectedId, Number(e.target.value), index)
-  const onChangeItem = (e) => onChange(e.target.value, count, index)
+  // const onChangeItem = (e) => onChange(e.target.value, count, index)
+  const onChangeItem = (value) => onChange(value, count, index)
   const incCount = () => onChange(selectedId, count + 1, index)
 
   const decCount = () => onChange(selectedId, count - 1, index)
 
   return (
     <div className="flex border-b border-gray-700">
-      <СomboList
+      {/* <СomboList
         onChange={onChangeItem}
         selectedId={selectedId}
         products={products}
+      /> */}
+      <SelectProduct
+        className={'flex-1' + (index === 0 ? ' rounded-tl-lg' : '')}
+        onChange={(product) => onChangeItem(product._id)}
+        selectedId={selectedId}
+        exceptedIds={selectedProductsIds}
       />
       <div className="flex items-center justify-between border-l border-gray-700">
         <div
           className={
-            'flex items-center justify-center h-full px-1 ' +
+            'flex items-center justify-center h-full px-1 group ' +
             (count > 0 ? 'cursor-pointer' : 'cursor-not-allowed')
           }
           onClick={count > 0 ? decCount : null}
         >
           <FontAwesomeIcon
-            className={count > 0 ? 'text-gray-700' : 'text-gray-400'}
+            className={
+              count > 0
+                ? 'text-gray-700 transform group-hover:hover:scale-125 duration-200 '
+                : 'text-gray-400'
+            }
             icon={faMinus}
             size="sm"
           />
@@ -66,10 +84,14 @@ const ItemRow = ({ onChange, selectedId, count = 1, index, products }) => {
           }}
         />
         <div
-          className="flex items-center justify-center h-full px-1 cursor-pointer"
+          className="flex items-center justify-center h-full px-1 cursor-pointer group"
           onClick={incCount}
         >
-          <FontAwesomeIcon className="text-gray-700" icon={faPlus} size="sm" />
+          <FontAwesomeIcon
+            className="text-gray-700 duration-200 transform group-hover:hover:scale-125"
+            icon={faPlus}
+            size="sm"
+          />
         </div>
       </div>
     </div>
@@ -78,7 +100,7 @@ const ItemRow = ({ onChange, selectedId, count = 1, index, products }) => {
 
 const ProductList = ({
   productsIdCount = {},
-  products = {},
+  // products = {},
   onChange = () => {},
   required = false,
 }) => {
@@ -105,6 +127,7 @@ const ProductList = ({
   // const itemRows = () => {
   const itemRows = []
   // let i = 0
+  const selectedProductsIds = Object.keys(productsIdCount)
   for (const [id, count] of Object.entries(productsIdCount)) {
     itemRows.push(({ index }) => (
       <ItemRow
@@ -112,7 +135,8 @@ const ProductList = ({
         selectedId={id}
         count={count}
         index={index}
-        products={products}
+        selectedProductsIds={selectedProductsIds}
+        // products={products}
       />
     ))
     // i++
@@ -130,7 +154,7 @@ const ProductList = ({
       <div
         name="productIds"
         className={
-          'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg overflow-hidden ' +
+          'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg ' +
           (required && !productsIdCount?.length
             ? 'border-red-700'
             : 'border-gray-700')
@@ -154,14 +178,14 @@ const ProductList = ({
         <div
           onClick={addButtonIsActive ? AddRow : null}
           className={
-            'flex items-center justify-center h-6 bg-white rounded-lg' +
+            'group flex items-center justify-center h-6 bg-white rounded-lg' +
             (addButtonIsActive ? ' cursor-pointer' : '')
           }
         >
           <div
             className={
               'flex items-center justify-center flex-1 transparent' +
-              (addButtonIsActive ? ' hover:scale-150' : '')
+              (addButtonIsActive ? ' duration-200 group-hover:scale-150' : '')
             }
           >
             <FontAwesomeIcon
