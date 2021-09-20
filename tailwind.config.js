@@ -67,7 +67,7 @@ module.exports = {
       minWidth: {
         // 4: '1rem',
         // 8: '2rem',
-        // 12: '3rem',
+        12: '3rem',
         16: '4rem',
         24: '6rem',
         32: '8rem',
@@ -75,6 +75,8 @@ module.exports = {
         40: '10rem',
         48: '12rem',
         72: '18rem',
+        76: '19rem',
+        100: '25rem',
       },
       maxWidth: {
         // 4: '1rem',
@@ -87,6 +89,7 @@ module.exports = {
         100: '25rem',
       },
       minHeight: {
+        20: '5rem',
         72: '18rem',
         100: '25rem',
         192: '46rem',
