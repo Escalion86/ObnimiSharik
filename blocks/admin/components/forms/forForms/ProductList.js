@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
 const СomboList = ({ onChange, selectedId, products }) => (
   <select
-    className="w-full px-2 py-1 text-sm bg-gray-200 rounded-l-lg"
+    className="w-full px-2 py-1 text-sm bg-gray-200 cursor-pointer"
     onChange={onChange}
     defaultValue={selectedId ? selectedId : '?'}
   >
@@ -27,6 +27,9 @@ const ItemRow = ({ onChange, selectedId, count = 1, index, products }) => {
   const onChangeCount = (e) =>
     onChange(selectedId, Number(e.target.value), index)
   const onChangeItem = (e) => onChange(e.target.value, count, index)
+  const incCount = () => onChange(selectedId, count + 1, index)
+
+  const decCount = () => onChange(selectedId, count - 1, index)
 
   return (
     <div className="flex border-b border-gray-700">
@@ -35,19 +38,40 @@ const ItemRow = ({ onChange, selectedId, count = 1, index, products }) => {
         selectedId={selectedId}
         products={products}
       />
-      <input
-        className="w-12 text-sm text-center bg-gray-200 border-l border-gray-700 rounded-r-lg"
-        type="text"
-        value={parseInt(count)}
-        onChange={onChangeCount}
-        onKeyPress={(e) => {
-          e = e || window.event
-          var charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
-          if (!(charCode >= 48 && charCode <= 57)) {
-            e.preventDefault()
+      <div className="flex items-center justify-between border-l border-gray-700">
+        <div
+          className={
+            'flex items-center justify-center h-full px-1 ' +
+            (count > 0 ? 'cursor-pointer' : 'cursor-not-allowed')
           }
-        }}
-      />
+          onClick={count > 0 ? decCount : null}
+        >
+          <FontAwesomeIcon
+            className={count > 0 ? 'text-gray-700' : 'text-gray-400'}
+            icon={faMinus}
+            size="sm"
+          />
+        </div>
+        <input
+          className="w-10 text-sm text-center bg-gray-200 border-l border-r border-gray-700 outline-none"
+          type="text"
+          value={parseInt(count)}
+          onChange={onChangeCount}
+          onKeyPress={(e) => {
+            e = e || window.event
+            var charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
+            if (!(charCode >= 48 && charCode <= 57)) {
+              e.preventDefault()
+            }
+          }}
+        />
+        <div
+          className="flex items-center justify-center h-full px-1 cursor-pointer"
+          onClick={incCount}
+        >
+          <FontAwesomeIcon className="text-gray-700" icon={faPlus} size="sm" />
+        </div>
+      </div>
     </div>
   )
 }
@@ -106,7 +130,7 @@ const ProductList = ({
       <div
         name="productIds"
         className={
-          'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg ' +
+          'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg overflow-hidden ' +
           (required && !productsIdCount?.length
             ? 'border-red-700'
             : 'border-gray-700')
