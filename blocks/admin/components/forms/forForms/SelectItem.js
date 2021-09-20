@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
+import lineShortening from '@helpers/lineShortening'
 
 const Item = ({ item, onClick = null, active = false }) => (
   // <Tooltip
@@ -21,7 +22,7 @@ const Item = ({ item, onClick = null, active = false }) => (
   // >
   <div
     className={
-      'flex items-center justify-between flex-1 p-1 border-b border-gray-700 cursor-pointer h-14 min-w-76 last:border-0' +
+      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer h-10 last:border-0' +
       (onClick ? ' hover:bg-blue-200' : '') +
       (active ? ' bg-green-200' : '')
     }
@@ -34,15 +35,17 @@ const Item = ({ item, onClick = null, active = false }) => (
         : null
     }
   >
-    <div className="flex-1 overflow-hidden">
-      <div className="text-gray-800 whitespace-nowrap">{item.name}</div>
-      <div className="text-sm text-gray-600">
+    <div className="h-5 text-sm text-gray-800 truncate">{item.name}</div>
+    <div className="flex items-center text-xs text-gray-600 gap-x-2">
+      <div className="flex-2 whitespace-nowrap">
         Артикул: {item.article || '[нет]'}
       </div>
-    </div>
-    <div className="flex flex-col items-end min-w-12">
-      <div className="text-gray-800">{item.price / 100} ₽</div>
-      <div className="text-sm text-gray-600">{item.count} шт</div>
+      <div className="flex-1 text-center whitespace-nowrap">
+        {item.count} шт
+      </div>
+      <div className="flex-1 text-right whitespace-nowrap">
+        {item.price / 100} ₽
+      </div>
     </div>
   </div>
   // </Tooltip>
@@ -51,7 +54,8 @@ const Item = ({ item, onClick = null, active = false }) => (
 const SelectItem = ({
   items,
   onChange,
-  selectedItem = null,
+  selectedId = null,
+  exceptedIds = [],
   className = '',
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -60,13 +64,30 @@ const SelectItem = ({
   const ref = useRef()
   const inputRef = useRef()
 
-  const filteredItems = items.filter((item) => {
-    const searchTextLowerCase = searchText.toLowerCase()
-    const itemNameLowerCase = item.name.toLowerCase()
-    return (
-      itemNameLowerCase.includes(searchTextLowerCase) ||
-      item.article.includes(searchTextLowerCase)
-    )
+  const selectedItem = selectedId
+    ? items.find((item) => item._id === selectedId)
+    : null
+
+  const filteredItems = (
+    searchText || exceptedIds.length > 0
+      ? items.filter((item) => {
+          const searchTextLowerCase = searchText.toLowerCase()
+          const itemNameLowerCase = item.name.toLowerCase()
+          return (
+            !exceptedIds.includes(item._id) &&
+            (itemNameLowerCase.includes(searchTextLowerCase) ||
+              item.article.includes(searchTextLowerCase))
+          )
+        })
+      : items
+  ).sort((a, b) => {
+    if (a.name < b.name) {
+      return -1
+    }
+    if (a.name > b.name) {
+      return 1
+    }
+    return 0
   })
 
   const toggleIsMenuOpen = () => setIsMenuOpen((state) => !state)
@@ -90,7 +111,7 @@ const SelectItem = ({
   return (
     <div
       className={
-        'relative flex items-center justify-end p-1 bg-gray-200 border border-gray-700 cursor-pointer h-14' +
+        'relative bg-gray-200 cursor-pointer h-10 w-0 flex justify-center items-center' +
         (className ? ' ' + className : '')
       }
       onClick={() => {
@@ -100,7 +121,7 @@ const SelectItem = ({
     >
       <div
         className={
-          'absolute overflow-hidden max-h-80 transform duration-300 flex flex-col top-full left-0 right-0 bg-white shadow-sm border border-gray-700 ' +
+          'absolute overflow-hidden max-h-64 transform duration-300 ease-out flex flex-col top-full left-0 right-0 bg-white shadow-sm border border-gray-700 z-50 ' +
           (isMenuOpen ? 'scale-100' : 'scale-y-0 -translate-y-1/2 opacity-0')
         }
         onClick={(e) => e.stopPropagation()}
@@ -137,19 +158,26 @@ const SelectItem = ({
                 setIsMenuOpen(false)
                 onChange(item)
               }}
-              active={item._id === selectedItem?._id}
+              active={item._id === selectedId}
             />
           ))}
         </div>
       </div>
-      {selectedItem && <Item item={selectedItem} />}
+      {selectedItem ? (
+        // <div className="w-full max-w-full">
+        <Item item={selectedItem} />
+      ) : (
+        // </div>
+        <div className="text-sm text-gray-800">Не выбрано</div>
+      )}
     </div>
   )
 }
 
 export const SelectProduct = ({
   onChange,
-  selectedProduct = null,
+  selectedId = null,
+  exceptedIds = [],
   className = '',
 }) => {
   const { products } = useSelector((state) => state)
@@ -157,20 +185,27 @@ export const SelectProduct = ({
     <SelectItem
       items={products}
       onChange={onChange}
-      selectedItem={selectedProduct}
+      selectedId={selectedId}
       className={className}
+      exceptedIds={exceptedIds}
     />
   )
 }
 
-export const SelectSet = ({ onChange, selectedSet = null, className = '' }) => {
+export const SelectSet = ({
+  onChange,
+  selectedId = null,
+  exceptedIds = [],
+  className = '',
+}) => {
   const { sets } = useSelector((state) => state)
   return (
     <SelectItem
       items={sets}
       onChange={onChange}
-      selectedItem={selectedSet}
+      selectedId={selectedId}
       className={className}
+      exceptedIds={exceptedIds}
     />
   )
 }
