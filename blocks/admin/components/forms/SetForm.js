@@ -112,7 +112,7 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
       }
       twoCols={true}
     >
-      <div className="flex-1 min-w-76">
+      <div className="flex flex-col flex-1 min-w-76 gap-y-1">
         <Input
           key="name"
           label="Название"
@@ -172,7 +172,7 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
           }}
         />
       </div>
-      <div className="flex-1 min-w-76">
+      <div className="flex flex-col flex-1 min-w-76 gap-y-1">
         <ProductList
           products={products}
           // productsIdCount={[
