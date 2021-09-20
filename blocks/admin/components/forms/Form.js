@@ -9,6 +9,7 @@ const Form = ({
   buttonName = 'Создать',
   buttonDisabled = false,
   cancelButton = false,
+  twoCols = false,
 }) => {
   return (
     <>
@@ -16,7 +17,14 @@ const Form = ({
         {title && (
           <div className="text-lg font-semibold text-center">{title}</div>
         )}
-        {children}
+        <div
+          className={
+            'flex gap-x-5 gap-y-1 ' +
+            (twoCols ? 'flex-row flex-wrap' : 'flex-col')
+          }
+        >
+          {children}
+        </div>
         <div className="flex justify-center gap-2">
           <Button
             onClick={handleSubmit}

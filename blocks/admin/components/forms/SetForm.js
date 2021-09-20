@@ -110,82 +110,86 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
       buttonDisabled={
         Object.keys(formValidate()).length !== 0 || compareObjects(form, set)
       }
+      twoCols={true}
     >
-      <Input
-        key="name"
-        label="Название"
-        type="text"
-        maxLength="80"
-        name="name"
-        value={form.name}
-        onChange={handleChange}
-        required
-      />
-      <Input
-        key="description"
-        label="Описание"
-        type="text"
-        maxLength="600"
-        name="description"
-        value={form.description}
-        onChange={handleChange}
-        textarea
-      />
-      <div className="flex">
-        <div className="flex-1">
-          <Input
-            key="article"
-            label="Артикул"
-            type="text"
-            maxLength="100"
-            name="article"
-            value={form.article}
-            onChange={handleChange}
-            className="w-40"
-          />
+      <div className="flex-1 min-w-76">
+        <Input
+          key="name"
+          label="Название"
+          type="text"
+          maxLength="80"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+        <Input
+          key="description"
+          label="Описание"
+          type="text"
+          maxLength="600"
+          name="description"
+          value={form.description}
+          onChange={handleChange}
+          textarea
+        />
+        <div className="flex">
+          <div className="flex-1">
+            <Input
+              key="article"
+              label="Артикул"
+              type="text"
+              maxLength="100"
+              name="article"
+              value={form.article}
+              onChange={handleChange}
+              className="w-40"
+            />
+          </div>
+          <div className="flex-1">
+            <PriceInput
+              value={form.price / 100}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
-        <div className="flex-1">
-          <PriceInput
-            value={form.price / 100}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <MultiselectCheckbox
+          title="Типы"
+          options={setTypes.map((type) => {
+            return {
+              label: type.name,
+              id: type._id,
+              checked: form.typesId.includes(type._id),
+            }
+          })}
+          onChange={(data) => {
+            setForm({
+              ...form,
+              typesId: data.map((type) => type.id),
+            })
+            // console.log('checked', data)
+          }}
+        />
       </div>
-      <MultiselectCheckbox
-        title="Типы"
-        options={setTypes.map((type) => {
-          return {
-            label: type.name,
-            id: type._id,
-            checked: form.typesId.includes(type._id),
+      <div className="flex-1 min-w-76">
+        <ProductList
+          products={products}
+          // productsIdCount={[
+          //   { id: '610bc814cab8460eb0ffc858', count: 1 },
+          //   { id: '610bc814cab8460eb0ffc85c', count: 2 },
+          //   { id: '610bc814cab8460eb0ffc857', count: 3 },
+          // ]}
+          productsIdCount={form.productsIdCount}
+          onChange={(newProductsIdCount) =>
+            setForm({
+              ...form,
+              productsIdCount: newProductsIdCount,
+            })
           }
-        })}
-        onChange={(data) => {
-          setForm({
-            ...form,
-            typesId: data.map((type) => type.id),
-          })
-          // console.log('checked', data)
-        }}
-      />
-      <ProductList
-        products={products}
-        // productsIdCount={[
-        //   { id: '610bc814cab8460eb0ffc858', count: 1 },
-        //   { id: '610bc814cab8460eb0ffc85c', count: 2 },
-        //   { id: '610bc814cab8460eb0ffc857', count: 3 },
-        // ]}
-        productsIdCount={form.productsIdCount}
-        onChange={(newProductsIdCount) =>
-          setForm({
-            ...form,
-            productsIdCount: newProductsIdCount,
-          })
-        }
-      />
-      {/* <SelectProductModal products={products} /> */}
-      {/* <MultiselectCheckbox
+        />
+        {/* <SelectProductModal products={products} /> */}
+        {/* <MultiselectCheckbox
         title="Товары в наборе"
         options={products.map((product) => {
           return {
@@ -202,23 +206,24 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
           // console.log('checked', data)
         }}
       /> */}
-      <InputImages
-        images={form.images}
-        onChange={(images) =>
-          setForm({
-            ...form,
-            images,
-          })
-        }
-        onAddImage={(image) =>
-          sendImage(image, (imageUrl) =>
+        <InputImages
+          images={form.images}
+          onChange={(images) =>
             setForm({
               ...form,
-              images: [...form.images, imageUrl],
+              images,
             })
-          )
-        }
-      />
+          }
+          onAddImage={(image) =>
+            sendImage(image, (imageUrl) =>
+              setForm({
+                ...form,
+                images: [...form.images, imageUrl],
+              })
+            )
+          }
+        />
+      </div>
     </Form>
   )
 }
