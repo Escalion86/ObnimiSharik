@@ -80,7 +80,7 @@ const MultiselectCheckbox = ({
       <div className="flex-1 overflow-hidden bg-gray-200 border border-gray-700 rounded-lg">
         <div
           className={
-            'px-2 py-1 rounded-lg max-h-60' +
+            'px-2 py-1 rounded-lg max-h-48' +
             (!noScroll && ' overflow-y-scroll')
           }
         >
