@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import DeliveryAddressesSchema from './DeliveryAddresses'
+// import DeliveryAddressesSchema from './DeliveryAddresses'
 
 const OrdersSchema = new mongoose.Schema({
   clientId: {
@@ -32,7 +32,23 @@ const OrdersSchema = new mongoose.Schema({
     type: String,
     default: 'created',
   },
-  deliveryAddress: [DeliveryAddressesSchema],
+  deliveryAddress: {
+    type: Map,
+    of: new mongoose.Schema({
+      town: String,
+      street: String,
+      flat: String,
+      comment: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+      updatedAt: {
+        type: Date,
+        default: Date.now,
+      },
+    }),
+  },
   deliveryDateFrom: {
     type: Date,
     default: Date.now,
