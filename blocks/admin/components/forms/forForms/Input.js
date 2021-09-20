@@ -36,8 +36,8 @@ const Input = ({
       </label>
       <InputComponent
         className={
-          'flex-1 px-2 py-1 border rounded-lg ' +
-          (required && !value ? 'border-red-700' : 'border-gray-700') +
+          'flex-1 px-2 py-1 border rounded-lg outline-none' +
+          (required && !value ? ' border-red-700' : ' border-gray-700') +
           (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
         }
         type={type === 'number' ? 'text' : type}

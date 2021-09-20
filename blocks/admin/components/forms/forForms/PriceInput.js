@@ -27,7 +27,7 @@ const PriceInput = ({
         }
       >
         <input
-          className="flex-1 w-24 px-2 py-1 bg-gray-200 rounded-l-lg"
+          className="flex-1 w-24 px-2 py-1 bg-gray-200 rounded-l-lg outline-none"
           type="text"
           name="price"
           value={parseInt(value)}
