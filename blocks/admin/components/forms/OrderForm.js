@@ -1,23 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { DEFAULT_ORDER, ROLES } from '@helpers/constants'
 
-import { ComboBox, Input } from './forForms'
+import { ComboBox, Input, ProductsList, SetsList } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
+import { useSelector } from 'react-redux'
+{
+  /* <FontAwesomeIcon
+        className={
+          'w-6 h-6 text-gray-700 hover:scale-110 transform duration-200'
+        }
+        onClick={(e) => {
+          e.stopPropagation()
+          toggleSearchMode()
+        }}
+        icon={isSearchMode ? faTimes : faSearch}
+      /> */
+}
+
 const OrderForm = ({ order = DEFAULT_ORDER, afterConfirm = () => {} }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
+  const [selectedProduct, setSelectedProduct] = useState(null)
 
   const [form, setForm] = useState({
     number: order.number,
     clientId: order.clientId,
-    products: order.products,
-    sets: order.sets,
+    productsCount: order.productsCount,
+    setsCount: order.setsCount,
     discount: order.discount,
     fullPrice: order.fullPrice,
     status: order.status,
@@ -26,6 +41,20 @@ const OrderForm = ({ order = DEFAULT_ORDER, afterConfirm = () => {} }) => {
     deliveryDateTo: order.deliveryDateTo,
     deliverId: order.deliverId,
   })
+
+  const { products, sets } = useSelector((state) => state)
+
+  const productsIdCount = {}
+  form.productsCount.forEach((productCount) => {
+    productsIdCount[productCount.product ? productCount.product._id : '?'] =
+      productCount.count
+  })
+  const setsIdCount = {}
+  form.setsCount.forEach((setCount) => {
+    setsIdCount[setCount.set ? setCount.set._id : '?'] = setCount.count
+  })
+
+  console.log(`form`, form)
 
   const forNew = order._id === undefined
 
@@ -87,6 +116,41 @@ const OrderForm = ({ order = DEFAULT_ORDER, afterConfirm = () => {} }) => {
         Object.keys(formValidate()).length !== 0 || compareObjects(form, order)
       }
     >
+      <ProductsList
+        productsIdCount={productsIdCount}
+        onChange={(newProductsIdCount) => {
+          const tempProductsCount = []
+          for (const [id, count] of Object.entries(newProductsIdCount)) {
+            tempProductsCount.push({
+              product:
+                id === '?'
+                  ? null
+                  : products.find((product) => product._id === id),
+              count,
+            })
+          }
+          setForm({
+            ...form,
+            productsCount: tempProductsCount,
+          })
+        }}
+      />
+      <SetsList
+        setsIdCount={setsIdCount}
+        onChange={(newSetsIdCount) => {
+          const tempSetsCount = []
+          for (const [id, count] of Object.entries(newSetsIdCount)) {
+            tempSetsCount.push({
+              set: id === '?' ? null : sets.find((set) => set._id === id),
+              count,
+            })
+          }
+          setForm({
+            ...form,
+            setsCount: tempSetsCount,
+          })
+        }}
+      />
       {/* <Input
         key="email"
         label="EMail сотрудника"

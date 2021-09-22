@@ -26,8 +26,8 @@ export default async function handler(req, res) {
         const users = await Users.find({})
         const productCirculations = await ProductCirculations.find({})
         const clients = await Clients.find({})
-        const orders = await Orders.find({})
         const payments = await Payments.find({})
+        const orders = await Orders.find({})
 
         res.status(200).json({
           success: true,
