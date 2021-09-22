@@ -26,6 +26,7 @@ import { SelectProduct } from './SelectItem'
 
 const ItemRow = ({
   onChange,
+  onDelete,
   selectedId,
   count = 1,
   index,
@@ -55,18 +56,19 @@ const ItemRow = ({
       <div className="flex items-center justify-between border-l border-gray-700">
         <div
           className={
-            'flex items-center justify-center h-full px-1 group ' +
-            (count > 0 ? 'cursor-pointer' : 'cursor-not-allowed')
+            'flex items-center justify-center h-full px-1 group cursor-pointer'
+            // (count > 0 ? 'cursor-pointer' : 'cursor-not-allowed')
           }
-          onClick={count > 0 ? decCount : null}
+          onClick={count > 1 ? decCount : () => onDelete(index)}
         >
           <FontAwesomeIcon
             className={
-              count > 0
+              count > 1
                 ? 'text-gray-700 transform group-hover:hover:scale-125 duration-200 '
-                : 'text-gray-400'
+                : // : 'text-gray-400'
+                  'text-red-700'
             }
-            icon={faMinus}
+            icon={count > 1 ? faMinus : faTrash}
             size="sm"
           />
         </div>
@@ -120,8 +122,18 @@ const ProductList = ({
     // onChange(newProductsIdCount)
   }
 
-  const AddRow = () => {
+  const addRow = () => {
     onChange(Object.assign(productsIdCount, { ['?']: 1 }))
+  }
+
+  const deleteRow = (index) => {
+    const tempProductsIdCount = {}
+    let i = 0
+    for (const [id, count] of Object.entries(productsIdCount)) {
+      if (i !== index) tempProductsIdCount[id] = count
+      i++
+    }
+    onChange(tempProductsIdCount)
   }
 
   // const itemRows = () => {
@@ -132,6 +144,7 @@ const ProductList = ({
     itemRows.push(({ index }) => (
       <ItemRow
         onChange={onChangeItemRow}
+        onDelete={deleteRow}
         selectedId={id}
         count={count}
         index={index}
@@ -176,7 +189,7 @@ const ProductList = ({
           <Item key={'ItemRow' + index} index={index} />
         ))}
         <div
-          onClick={addButtonIsActive ? AddRow : null}
+          onClick={addButtonIsActive ? addRow : null}
           className={
             'group flex items-center justify-center h-6 bg-white rounded-lg' +
             (addButtonIsActive ? ' cursor-pointer' : '')
