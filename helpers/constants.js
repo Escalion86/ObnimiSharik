@@ -62,6 +62,7 @@ export const ROLES = [
 
 export const DEFAULT_PRODUCT_CIRCULATION = {
   productId: '',
+  price: 0,
   count: 1,
   orderId: '',
   purchase: false,
@@ -78,8 +79,8 @@ export const DEFAULT_DELIVERY_ADDRESS = {
 export const DEFAULT_ORDER = {
   number: 0,
   clientId: '',
-  products: [],
-  sets: [],
+  productsCount: [],
+  setsCount: [],
   discount: 0,
   fullPrice: 0,
   status: 'created',
