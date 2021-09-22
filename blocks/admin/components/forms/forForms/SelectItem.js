@@ -51,7 +51,7 @@ const Item = ({ item, onClick = null, active = false }) => (
   // </Tooltip>
 )
 
-const SelectItem = ({
+export const SelectItem = ({
   items,
   onChange,
   selectedId = null,
