@@ -1,5 +1,6 @@
 const PriceInput = ({
   value,
+  title = 'Стоимость',
   onChange,
   required = false,
   className,
@@ -18,7 +19,8 @@ const PriceInput = ({
         className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''}
         htmlFor="price"
       >
-        Стоимость{required && <span className="text-red-700">*</span>}
+        {title}
+        {required && <span className="text-red-700">*</span>}
       </label>
       <div
         className={
