@@ -6,11 +6,11 @@ const OrdersSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Необходимо указать id клиента'],
   },
-  products: {
+  productsCount: {
     type: Array,
     default: [],
   },
-  sets: {
+  setsCount: {
     type: Array,
     default: [],
   },
