@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 
-import { ComboBox, Input } from './forForms'
+import { ComboBox, Input, PriceInput } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -11,6 +11,8 @@ import findDataWithId from '@helpers/findDataWithId'
 import DatePicker from './forForms/DatePicker'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes, faEquals } from '@fortawesome/free-solid-svg-icons'
 
 const ProductCirculationForm = ({
   productCirculation = DEFAULT_PRODUCT_CIRCULATION,
@@ -22,6 +24,7 @@ const ProductCirculationForm = ({
   const [form, setForm] = useState({
     productId: productCirculation.productId,
     count: productCirculation.count,
+    price: productCirculation.price,
     orderId: productCirculation.orderId,
     purchase: productCirculation.purchase,
     purchasedAt: productCirculation.purchasedAt,
@@ -34,7 +37,9 @@ const ProductCirculationForm = ({
   const product = findDataWithId(products, form.productId)
 
   const handleChange = (e) => {
-    const { value, name } = e.target
+    const target = e.target
+    const value = target.name === 'price' ? target.value * 100 : target.value
+    const name = target.name
     setForm({
       ...form,
       [name]: value,
@@ -81,10 +86,13 @@ const ProductCirculationForm = ({
     }
   }
 
+  console.log(`form.price`, form.price)
+
   const formValidate = () => {
     let err = {}
     if (!form.productId) err.productId = 'Введите товар'
     if (!form.count) err.count = 'Введите количество'
+    if (!form.price) err.count = 'Введите стоимость'
     if (!form.purchasedAt) err.purchasedAt = 'Введите дату закупа/продажи'
 
     // if (!form.images) err.image = 'Image URL is required'
@@ -122,15 +130,44 @@ const ProductCirculationForm = ({
         })}
         required
       />
-      <Input
-        key="count"
-        label="Количество"
-        type="number"
-        name="count"
-        value={form.count}
-        onChange={handleChange}
-        required
-      />
+      <div className="flex justify-between gap-x-1">
+        <PriceInput
+          title="Стоимость за шт"
+          value={form.price / 100}
+          onChange={handleChange}
+          required
+          className="w-32"
+        />
+        <div className="flex flex-col justify-end mb-2">
+          <FontAwesomeIcon
+            className="w-4 h-4 text-black"
+            icon={faTimes}
+            size="lg"
+          />
+        </div>
+        <Input
+          key="count"
+          label="Количество"
+          type="number"
+          name="count"
+          value={form.count}
+          onChange={handleChange}
+          required
+          className="w-24"
+        />
+        <div className="flex flex-col justify-end w-4 mb-2">
+          <FontAwesomeIcon
+            className="w-4 h-4 text-black"
+            icon={faEquals}
+            size="lg"
+          />
+        </div>
+        <div className="flex flex-col justify-end flex-1 mb-1">
+          {(form.count ? form.count : 0) * (form.price ? form.price / 100 : 0)}{' '}
+          ₽
+        </div>
+      </div>
+
       <ComboBox
         name="purchase"
         title="Закуп/Продажа"
