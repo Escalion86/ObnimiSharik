@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-import { SelectProduct } from './SelectItem'
+import { SelectItem, SelectProduct } from './SelectItem'
+import { useSelector } from 'react-redux'
 
 // const СomboList = ({ onChange, selectedId, products }) => (
 //   <select
@@ -25,12 +26,13 @@ import { SelectProduct } from './SelectItem'
 // )
 
 const ItemRow = ({
+  items,
   onChange,
   onDelete,
   selectedId,
   count = 1,
   index,
-  selectedProductsIds,
+  selectedItemsIds,
 }) => {
   const onChangeCount = (e) =>
     onChange(selectedId, Number(e.target.value), index)
@@ -47,11 +49,12 @@ const ItemRow = ({
         selectedId={selectedId}
         products={products}
       /> */}
-      <SelectProduct
+      <SelectItem
+        items={items}
         className={'flex-1' + (index === 0 ? ' rounded-tl-lg' : '')}
-        onChange={(product) => onChangeItem(product._id)}
+        onChange={(item) => onChangeItem(item._id)}
         selectedId={selectedId}
-        exceptedIds={selectedProductsIds}
+        exceptedIds={selectedItemsIds}
       />
       <div className="flex items-center justify-between border-l border-gray-700">
         <div
@@ -100,21 +103,23 @@ const ItemRow = ({
   )
 }
 
-const ProductList = ({
-  productsIdCount = {},
+export const ItemsList = ({
+  items = [],
+  itemsIdCount = null,
+  title = '',
   // products = {},
   onChange = () => {},
   required = false,
 }) => {
   const onChangeItemRow = (id, count, index) => {
-    const tempProductsIdCount = {}
+    const tempItemsIdCount = {}
     let i = 0
-    for (const [id_old, count_old] of Object.entries(productsIdCount)) {
-      if (i === index) tempProductsIdCount[id] = count
-      else tempProductsIdCount[id_old] = count_old
+    for (const [id_old, count_old] of Object.entries(itemsIdCount)) {
+      if (i === index) tempItemsIdCount[id] = count
+      else tempItemsIdCount[id_old] = count_old
       i++
     }
-    onChange(tempProductsIdCount)
+    onChange(tempItemsIdCount)
     // const newProductsIdCount = productsIdCount.map((item, index) => {
     //   if (index === e.index) return { id: e.id, count: e.count }
     //   return item
@@ -123,68 +128,56 @@ const ProductList = ({
   }
 
   const addRow = () => {
-    onChange(Object.assign(productsIdCount, { ['?']: 1 }))
+    onChange(Object.assign(itemsIdCount, { ['?']: 1 }))
   }
 
   const deleteRow = (index) => {
-    const tempProductsIdCount = {}
+    const tempItemsIdCount = {}
     let i = 0
-    for (const [id, count] of Object.entries(productsIdCount)) {
-      if (i !== index) tempProductsIdCount[id] = count
+    for (const [id, count] of Object.entries(itemsIdCount)) {
+      if (i !== index) tempItemsIdCount[id] = count
       i++
     }
-    onChange(tempProductsIdCount)
+    onChange(tempItemsIdCount)
   }
 
   // const itemRows = () => {
   const itemRows = []
   // let i = 0
-  const selectedProductsIds = Object.keys(productsIdCount)
-  for (const [id, count] of Object.entries(productsIdCount)) {
+  const selectedItemsIds = Object.keys(itemsIdCount)
+  for (const [id, count] of Object.entries(itemsIdCount)) {
     itemRows.push(({ index }) => (
       <ItemRow
+        items={items}
         onChange={onChangeItemRow}
         onDelete={deleteRow}
         selectedId={id}
         count={count}
         index={index}
-        selectedProductsIds={selectedProductsIds}
-        // products={products}
+        selectedItemsIds={selectedItemsIds}
       />
     ))
     // i++
   }
   // }
 
-  const addButtonIsActive = !('?' in productsIdCount)
+  const addButtonIsActive = !('?' in itemsIdCount)
 
   return (
     <div className="flex flex-col">
-      <label htmlFor="productIds">
-        Список товаров
+      <label htmlFor="itemsIds">
+        {title}
         {required && <span className="text-red-700">*</span>}
       </label>
       <div
-        name="productIds"
+        name="itemsIds"
         className={
           'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg ' +
-          (required && !productsIdCount?.length
+          (required && !itemsIdCount?.length
             ? 'border-red-700'
             : 'border-gray-700')
         }
       >
-        {/* {productsIdCount &&
-          productsIdCount.map((item, index) => (
-            <ItemRow
-              key={'ItemRow' + index}
-              onChange={onChangeItemRow}
-              selectedId={item.id}
-              count={item.count}
-              index={index}
-              products={products}
-            />
-          ))} */}
-
         {itemRows.map((Item, index) => (
           <Item key={'ItemRow' + index} index={index} />
         ))}
@@ -213,4 +206,36 @@ const ProductList = ({
   )
 }
 
-export default ProductList
+export const ProductsList = ({
+  productsIdCount = null,
+  onChange = () => {},
+  required = false,
+}) => {
+  const { products } = useSelector((state) => state)
+  return (
+    <ItemsList
+      items={products}
+      itemsIdCount={productsIdCount}
+      title="Список товаров"
+      onChange={onChange}
+      required={required}
+    />
+  )
+}
+
+export const SetsList = ({
+  setsIdCount = null,
+  onChange = () => {},
+  required = false,
+}) => {
+  const { sets } = useSelector((state) => state)
+  return (
+    <ItemsList
+      items={sets}
+      itemsIdCount={setsIdCount}
+      title="Список наборов"
+      onChange={onChange}
+      required={required}
+    />
+  )
+}
