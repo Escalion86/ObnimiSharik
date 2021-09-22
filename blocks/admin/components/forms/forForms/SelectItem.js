@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
-import lineShortening from '@helpers/lineShortening'
 
 const Item = ({ item, onClick = null, active = false }) => (
   // <Tooltip
