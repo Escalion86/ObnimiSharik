@@ -16,6 +16,11 @@ const ProductCirculationsSchema = new mongoose.Schema({
     maxlength: [6, 'Количество не может превышать 999999 шт'],
     default: 1,
   },
+  price: {
+    type: Number,
+    required: [true, 'Пожалуйста укажите стоимость'],
+    default: 0,
+  },
   orderId: {
     type: String,
   },
