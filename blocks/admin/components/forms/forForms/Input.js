@@ -25,8 +25,8 @@ const Input = ({
   return (
     <div
       className={
-        'flex ' +
-        (inLine ? 'flex-row items-center ' : 'flex-col ') +
+        'flex' +
+        (inLine ? ' flex-row items-center' : ' flex-col') +
         (className ? ' ' + className : '')
       }
     >
