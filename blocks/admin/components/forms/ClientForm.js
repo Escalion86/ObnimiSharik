@@ -104,21 +104,28 @@ const ClientForm = ({ client = DEFAULT_CLIENT, afterConfirm = () => {} }) => {
         value={form.email}
         onChange={handleChange}
       />
-      <PhoneInput
-        key="phone"
-        label="Телефон"
-        name="phone"
-        value={form.phone}
-        onChange={handleChange}
-        required
-      />
-      <PhoneInput
-        key="whatsapp"
-        label="WhatsApp"
-        name="whatsapp"
-        value={form.whatsapp}
-        onChange={handleChange}
-      />
+      <div className="flex">
+        <div className="flex-1">
+          <PhoneInput
+            key="phone"
+            label="Телефон"
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="flex-1">
+          <PhoneInput
+            key="whatsapp"
+            label="WhatsApp"
+            name="whatsapp"
+            value={form.whatsapp}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+
       <DatePicker
         key="birthday"
         label="День рождения"
