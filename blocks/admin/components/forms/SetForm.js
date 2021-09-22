@@ -4,7 +4,7 @@ import { DEFAULT_SET } from '@helpers/constants'
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 
-import { ProductList, Input, PriceInput, InputImages } from './forForms'
+import { Input, PriceInput, InputImages, ProductsList } from './forForms'
 
 import { sendImage, deleteImages } from '@helpers/cloudinary'
 import { postData, putData } from '@helpers/CRUD'
@@ -30,7 +30,7 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
     archive: set.archive,
   })
 
-  const { products, setTypes } = useSelector((state) => state)
+  const { setTypes } = useSelector((state) => state)
 
   const afterConfirmUpd = (data) => {
     deleteImages(compareArrays(set.images, form.images).removed)
@@ -112,7 +112,7 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
       }
       twoCols={true}
     >
-      <div className="flex flex-col flex-1 min-w-76 gap-y-1">
+      <div className="flex-1 min-w-76 gap-y-1">
         <Input
           key="name"
           label="Название"
@@ -173,13 +173,7 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
         />
       </div>
       <div className="flex flex-col flex-1 min-w-76 gap-y-1">
-        <ProductList
-          products={products}
-          // productsIdCount={[
-          //   { id: '610bc814cab8460eb0ffc858', count: 1 },
-          //   { id: '610bc814cab8460eb0ffc85c', count: 2 },
-          //   { id: '610bc814cab8460eb0ffc857', count: 3 },
-          // ]}
+        <ProductsList
           productsIdCount={form.productsIdCount}
           onChange={(newProductsIdCount) =>
             setForm({
@@ -188,24 +182,6 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
             })
           }
         />
-        {/* <SelectProductModal products={products} /> */}
-        {/* <MultiselectCheckbox
-        title="Товары в наборе"
-        options={products.map((product) => {
-          return {
-            label: product.name,
-            id: product._id,
-            checked: form.productsId.includes(product._id),
-          }
-        })}
-        onChange={(data) => {
-          setForm({
-            ...form,
-            productsId: data.map((product) => product.id),
-          })
-          // console.log('checked', data)
-        }}
-      /> */}
         <InputImages
           images={form.images}
           onChange={(images) =>
