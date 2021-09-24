@@ -1,13 +1,7 @@
 import TypesInCard from './forCards/TypesInCard'
-import ImageZoom from 'react-medium-image-zoom'
+import Zoom from 'react-medium-image-zoom'
 import ProductsInCard from './forCards/ProductsInCard'
 import Card from './Card'
-import CardButton from '@admincomponents/cards/forCards/CardButton'
-import {
-  faPencilAlt,
-  faShoppingCart,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import { useSelector } from 'react-redux'
@@ -19,6 +13,7 @@ export const SetCard = ({
   onClick = () => {},
   onTypeClick = () => {},
   onProductClick = () => {},
+  onClone = null,
   onDelete = null,
   onEdit = null,
 }) => {
@@ -36,7 +31,7 @@ export const SetCard = ({
       <CardContainer>
         {set.images[0] ? (
           <div onClick={(event) => event.stopPropagation()}>
-            <ImageZoom
+            {/* <ImageZoom
               image={{
                 src: set.images[0],
                 alt: 'set',
@@ -48,14 +43,18 @@ export const SetCard = ({
                 alt: 'set',
               }}
             />
+            <ImageZoom> */}
+            <Zoom zoomMargin={20}>
+              <img className="w-24" src={set.images[0]} alt="set" />
+            </Zoom>
           </div>
         ) : (
           <img className={imageClassName} src="/img/no_image.png" alt="set" />
         )}
         <div className="flex-1 ml-3">
           <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
-            <div className="w-5/12 font-semibold min-w-48 ">{set.name}</div>
-            <div className="flex-1 text-sm italic min-w-48">
+            <div className="w-5/12 font-semibold min-w-40 ">{set.name}</div>
+            <div className="flex-1 text-sm italic min-w-40">
               {set.description}
             </div>
           </div>
@@ -69,36 +68,40 @@ export const SetCard = ({
           </div>
         </div>
       </CardContainer>
-      <CardButtons topRight onEdit={onEdit} onDelete={onDelete} />
-      <div className="w-24 my-10 text-right min-w-min">
-        <div className="font-bold whitespace-nowrap min-w-min">
+      <div className="flex flex-col items-end justify-between">
+        <CardButtons
+          topRight
+          onEdit={onEdit}
+          onClone={onClone}
+          onDelete={onDelete}
+        />
+        <div className="px-1 font-bold text-right whitespace-nowrap min-w-min">
           {set.price / 100} ₽
         </div>
-        {/* <div className="">{products.price} ₽</div> */}
+        {Object.keys(set.productsIdCount).length > 0 ? (
+          <div
+            className={
+              'flex items-center justify-center w-20 h-8 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg ' +
+              (set.count > 3
+                ? 'bg-green-400'
+                : set.count > 0
+                ? 'bg-green-200'
+                : set.count < 0
+                ? 'bg-red-400'
+                : 'bg-red-200')
+            }
+          >
+            <span>
+              <span>{set.count ? set.count : 0}</span>
+              <span className="text-sm"> шт.</span>
+            </span>
+          </div>
+        ) : (
+          <div className="absolute bottom-0 right-0 flex items-center justify-center w-20 h-10 bg-gray-200 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg">
+            <span className="text-sm text-gray-600">Набор пуст</span>
+          </div>
+        )}
       </div>
-      {Object.keys(set.productsIdCount).length > 0 ? (
-        <div
-          className={
-            'absolute bottom-0 right-0 flex items-center justify-center w-20 h-8 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg ' +
-            (set.count > 3
-              ? 'bg-green-400'
-              : set.count > 0
-              ? 'bg-green-200'
-              : set.count < 0
-              ? 'bg-red-400'
-              : 'bg-red-200')
-          }
-        >
-          <span>
-            <span>{set.count ? set.count : 0}</span>
-            <span className="text-sm"> шт.</span>
-          </span>
-        </div>
-      ) : (
-        <div className="absolute bottom-0 right-0 flex items-center justify-center w-20 h-10 bg-gray-200 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg">
-          <span className="text-sm text-gray-600">Набор пуст</span>
-        </div>
-      )}
     </Card>
   )
 }

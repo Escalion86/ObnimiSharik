@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+  faClone,
   faPencilAlt,
   faPlus,
   faQuestion,
@@ -13,15 +14,14 @@ const CardButtons = ({
   onBuying = null,
   onAdd = null,
   onEdit = null,
+  onClone = null,
   onDelete = null,
   topRight = false,
 }) => (
   <div
     className={
       'flex items-center justify-end overflow-hidden border-l border-gray-200' +
-      (topRight
-        ? ' absolute top-0 right-0 h-8 rounded-tr-lg rounded-bl-lg'
-        : ' h-full rounded-r-lg') +
+      (topRight ? ' h-8 rounded-tr-lg rounded-bl-lg' : ' h-full rounded-r-lg') +
       (className ? ' ' + className : '')
     }
   >
@@ -42,7 +42,7 @@ const CardButtons = ({
           event.stopPropagation()
           onAdd()
         }}
-        className="bg-yellow-400"
+        className="bg-green-400"
         inverse
         icon={faPlus}
       />
@@ -56,6 +56,17 @@ const CardButtons = ({
         className="bg-primary"
         inverse
         icon={faPencilAlt}
+      />
+    )}
+    {onClone && (
+      <CardButton
+        onClick={(event) => {
+          event.stopPropagation()
+          onClone()
+        }}
+        className="bg-purple-400"
+        inverse
+        icon={faClone}
       />
     )}
     {onDelete && (
