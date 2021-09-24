@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import ImageZoom from 'react-medium-image-zoom'
+import Zoom from 'react-medium-image-zoom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -32,18 +32,9 @@ const InputImages = ({
       >
         {images.map((image, index) => (
           <div key={index} className="relative">
-            <ImageZoom
-              image={{
-                src: image,
-                alt: 'special',
-                className: 'w-20 h-20',
-                // style: { width: '50em' }
-              }}
-              zoomImage={{
-                src: image,
-                alt: 'product_image',
-              }}
-            />
+            <Zoom zoomMargin={20}>
+              <img className="w-20" src={image} alt="item_image" />
+            </Zoom>
             <FontAwesomeIcon
               className="absolute top-0 right-0 text-red-700 duration-200 transform cursor-pointer hover:scale-125"
               icon={faTrash}
