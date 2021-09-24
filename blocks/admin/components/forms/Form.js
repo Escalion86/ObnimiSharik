@@ -10,6 +10,7 @@ const Form = ({
   buttonDisabled = false,
   cancelButton = false,
   twoCols = false,
+  onClose = () => {},
 }) => {
   return (
     <>
@@ -27,7 +28,10 @@ const Form = ({
         </div>
         <div className="flex justify-center gap-2">
           <Button
-            onClick={handleSubmit}
+            onClick={() => {
+              handleSubmit()
+              onClose()
+            }}
             name={buttonName}
             small
             inverse
@@ -36,7 +40,7 @@ const Form = ({
           />
           {cancelButton && (
             <Button
-              onClick={cancelButton}
+              onClick={onClose}
               name="Отмена"
               small
               inverse

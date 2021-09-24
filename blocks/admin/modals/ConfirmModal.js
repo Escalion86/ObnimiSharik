@@ -9,15 +9,7 @@ const ConfirmModal = ({
 }) => {
   return (
     <Modal onClose={onClose}>
-      <Form
-        handleSubmit={() => {
-          onConfirm()
-          onClose()
-        }}
-        title={title}
-        buttonName="ОК"
-        cancelButton={onClose}
-      >
+      <Form handleSubmit={onConfirm} title={title} buttonName="ОК" cancelButton>
         {message}
       </Form>
     </Modal>

@@ -68,10 +68,8 @@ const modals = (dispatch, data) => {
               )
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteProduct(product, () =>
-                modals.closeModal(modalId)
-              )
+            onDelete={(onConfirm) => {
+              modals.openDeleteProduct(product, onConfirm)
             }}
           />
         ))
@@ -92,8 +90,8 @@ const modals = (dispatch, data) => {
               )
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteSet(set, () => modals.closeModal(modalId))
+            onDelete={(onConfirm) => {
+              modals.openDeleteSet(set, onConfirm)
             }}
           />
         ))
@@ -112,10 +110,8 @@ const modals = (dispatch, data) => {
               )
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteProductType(productType, () =>
-                modals.closeModal(modalId)
-              )
+            onDelete={(onConfirm) => {
+              modals.openDeleteProductType(productType, onConfirm)
             }}
           />
         ))
@@ -132,10 +128,8 @@ const modals = (dispatch, data) => {
               )
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteSetType(setType, () =>
-                modals.closeModal(modalId)
-              )
+            onDelete={(onConfirm) => {
+              modals.openDeleteSetType(setType, onConfirm)
             }}
           />
         ))
@@ -164,8 +158,8 @@ const modals = (dispatch, data) => {
               fetchingUsers((result) => dispatch(setUsers(result)))
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteUser(user, () => modals.closeModal(modalId))
+            onDelete={(onConfirm) => {
+              modals.openDeleteUser(user, onConfirm)
             }}
           />
         ))
@@ -180,10 +174,8 @@ const modals = (dispatch, data) => {
               fetchingInvitations((result) => dispatch(setInvitations(result)))
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteInvitation(invitation, () =>
-                modals.closeModal(modalId)
-              )
+            onDelete={(onConfirm) => {
+              modals.openDeleteInvitation(invitation, onConfirm)
             }}
           />
         ))
@@ -200,10 +192,8 @@ const modals = (dispatch, data) => {
               )
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteProductCirculation(productCirculation, () =>
-                modals.closeModal(modalId)
-              )
+            onDelete={(onConfirm) => {
+              modals.openDeleteProductCirculation(productCirculation, onConfirm)
             }}
           />
         ))
@@ -218,8 +208,8 @@ const modals = (dispatch, data) => {
               fetchingClients((result) => dispatch(setClients(result)))
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteClient(client, () => modals.closeModal(modalId))
+            onDelete={(onConfirm) => {
+              modals.openDeleteClient(client, onConfirm)
             }}
           />
         ))
@@ -234,8 +224,8 @@ const modals = (dispatch, data) => {
               fetchingOrders((result) => dispatch(setOrders(result)))
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeleteOrder(order, () => modals.closeModal(modalId))
+            onDelete={(onConfirm) => {
+              modals.openDeleteOrder(order, onConfirm)
             }}
           />
         ))
@@ -250,10 +240,8 @@ const modals = (dispatch, data) => {
               fetchingPayments((result) => dispatch(setPayments(result)))
             }
             edit={edit}
-            onDelete={() => {
-              modals.openDeletePayment(payment, () =>
-                modals.closeModal(modalId)
-              )
+            onDelete={(onConfirm) => {
+              modals.openDeletePayment(payment, onConfirm)
             }}
           />
         ))
@@ -459,7 +447,7 @@ const modals = (dispatch, data) => {
             title={title}
             message={message}
             onConfirm={onConfirm}
-            onClose={() => dispatch(removeModal(modalId))}
+            onClose={() => modals.closeModal(modalId)}
           />
         ))
       ),
