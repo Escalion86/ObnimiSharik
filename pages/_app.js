@@ -1,6 +1,7 @@
 import 'tailwindcss/tailwind.css'
 import '../styles/fonts/FuturaPT.css'
 import '../styles/global.css'
+import 'react-medium-image-zoom/dist/styles.css'
 import Head from 'next/head'
 
 import { createStore, applyMiddleware, compose } from 'redux'
