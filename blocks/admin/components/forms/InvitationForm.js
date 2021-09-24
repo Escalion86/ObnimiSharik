@@ -12,6 +12,7 @@ import compareObjects from '@helpers/compareObjects'
 const InvitationForm = ({
   invitation = DEFAULT_INVITATION,
   afterConfirm = () => {},
+  onClose = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -48,14 +49,20 @@ const InvitationForm = ({
         ? postData(
             '/api/invitations',
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Приглашение для "' + form.email + '" создано и отправлно',
             'Ошибка при создании пришлашения для "' + form.email + '"'
           )
         : putData(
             `/api/invitations/${invitation._id}`,
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Приглашение для "' + form.email + '" изменено',
             'Ошибка при редактировании приглашения для "' + form.email + '"'
           )

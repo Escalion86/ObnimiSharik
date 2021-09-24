@@ -17,6 +17,7 @@ import { faTimes, faEquals } from '@fortawesome/free-solid-svg-icons'
 const ProductCirculationForm = ({
   productCirculation = DEFAULT_PRODUCT_CIRCULATION,
   afterConfirm = () => {},
+  onClose = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -54,7 +55,10 @@ const ProductCirculationForm = ({
         ? postData(
             '/api/productcirculations',
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Движение товара (' +
               product.article +
               ') "' +
@@ -69,7 +73,10 @@ const ProductCirculationForm = ({
         : putData(
             `/api/productcirculations/${productCirculation._id}`,
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Движение товара ("' +
               product.article +
               ') "' +

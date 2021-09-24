@@ -9,13 +9,7 @@ const PaymentModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={payment?._id && onDelete}>
-      <PaymentForm
-        payment={payment}
-        afterConfirm={(data) => {
-          afterConfirm(data)
-          onClose()
-        }}
-      />
+      <PaymentForm payment={payment} afterConfirm={afterConfirm} />
     </Modal>
   )
 }

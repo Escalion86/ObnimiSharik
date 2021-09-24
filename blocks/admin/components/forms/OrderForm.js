@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 
 import { DEFAULT_ORDER, ROLES } from '@helpers/constants'
 
-import { ComboBox, Input, ProductsList, SetsList } from './forForms'
+import {
+  ComboBox,
+  Input,
+  ProductsList,
+  SelectClient,
+  SetsList,
+} from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -10,6 +16,7 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
 import { useSelector } from 'react-redux'
+
 {
   /* <FontAwesomeIcon
         className={
@@ -23,7 +30,11 @@ import { useSelector } from 'react-redux'
       /> */
 }
 
-const OrderForm = ({ order = DEFAULT_ORDER, afterConfirm = () => {} }) => {
+const OrderForm = ({
+  order = DEFAULT_ORDER,
+  afterConfirm = () => {},
+  onClose = () => {},
+}) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -82,14 +93,20 @@ const OrderForm = ({ order = DEFAULT_ORDER, afterConfirm = () => {} }) => {
         ? postData(
             '/api/orders',
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Новый Ззаказ создан',
             'Ошибка при создании заказа для'
           )
         : putData(
             `/api/orders/${order._id}`,
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Заказ №' + form.number + ' изменен',
             'Ошибка при редактировании заказа №' + form.number
           )
@@ -105,6 +122,19 @@ const OrderForm = ({ order = DEFAULT_ORDER, afterConfirm = () => {} }) => {
     return err
   }
 
+  let totalPrice = 0
+  form.productsCount.forEach((productCount) => {
+    if (productCount.product)
+      totalPrice += products.find(
+        (product) => product._id === productCount.product._id
+      ).price
+  })
+  form.setsCount.forEach((setCount) => {
+    if (setCount.set)
+      totalPrice += sets.find((set) => set._id === setCount.set._id).price
+  })
+  totalPrice = totalPrice / 100
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -116,6 +146,24 @@ const OrderForm = ({ order = DEFAULT_ORDER, afterConfirm = () => {} }) => {
         Object.keys(formValidate()).length !== 0 || compareObjects(form, order)
       }
     >
+      <div className="flex flex-col">
+        <label htmlFor="itemsIds">
+          Клиент<span className="text-red-700">*</span>
+        </label>
+        <div className="flex border border-gray-700 rounded-lg">
+          <SelectClient
+            className={'flex-1 rounded-lg'}
+            onChange={(item) =>
+              setForm({
+                ...form,
+                clientId: item._id,
+              })
+            }
+            selectedId={form.clientId}
+            // exceptedIds={selectedItemsIds}
+          />
+        </div>
+      </div>
       <ProductsList
         productsIdCount={productsIdCount}
         onChange={(newProductsIdCount) => {
@@ -151,6 +199,7 @@ const OrderForm = ({ order = DEFAULT_ORDER, afterConfirm = () => {} }) => {
           })
         }}
       />
+      <div>Итоговая сумма: {totalPrice} ₽</div>
       {/* <Input
         key="email"
         label="EMail сотрудника"

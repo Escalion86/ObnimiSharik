@@ -18,6 +18,7 @@ import compareObjects from '@helpers/compareObjects'
 const ProductForm = ({
   product = DEFAULT_PRODUCT,
   afterConfirm = () => {},
+  onClose = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -37,6 +38,7 @@ const ProductForm = ({
   const afterConfirmUpd = (data) => {
     deleteImages(compareArrays(product.images, form.images).removed)
     afterConfirm(data)
+    onClose()
   }
 
   const forNew = product._id === undefined

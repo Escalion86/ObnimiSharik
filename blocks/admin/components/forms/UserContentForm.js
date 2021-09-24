@@ -10,7 +10,11 @@ import Form from './Form'
 import roleRus from '@helpers/roleRus'
 import compareObjects from '@helpers/compareObjects'
 
-const UserContentForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
+const UserContentForm = ({
+  user = DEFAULT_USER,
+  afterConfirm = () => {},
+  onClose = () => {},
+}) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
@@ -37,7 +41,10 @@ const UserContentForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
       putData(
         `/api/users/${user._id}`,
         form,
-        afterConfirm,
+        () => {
+          afterConfirm()
+          onClose()
+        },
         'Данные учетной записи обновлены',
         'Ошибка при обновлении данных учетной записи'
       )

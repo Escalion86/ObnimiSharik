@@ -9,13 +9,7 @@ const OrderModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={order?._id && onDelete}>
-      <OrderForm
-        order={order}
-        afterConfirm={(data) => {
-          afterConfirm(data)
-          onClose()
-        }}
-      />
+      <OrderForm order={order} afterConfirm={afterConfirm} />
     </Modal>
   )
 }

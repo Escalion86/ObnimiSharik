@@ -12,6 +12,7 @@ import compareObjects from '@helpers/compareObjects'
 const ProductTypeForm = ({
   productType = DEFAULT_PRODUCT_TYPE,
   afterConfirm = () => {},
+  onClose = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -38,14 +39,20 @@ const ProductTypeForm = ({
         ? postData(
             '/api/producttypes',
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Тип товара "' + form.name + '" создан',
             'Ошибка при создании типа товара "' + form.name + '"'
           )
         : putData(
             `/api/producttypes/${productType._id}`,
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Тип товара "' + form.name + '" изменен',
             'Ошибка при редактировании типа товара "' + form.name + '"'
           )

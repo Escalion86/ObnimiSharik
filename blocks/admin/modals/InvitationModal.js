@@ -9,13 +9,7 @@ const InvitationModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={invitation?._id && onDelete}>
-      <InvitationForm
-        invitation={invitation}
-        afterConfirm={(data) => {
-          afterConfirm(data)
-          onClose()
-        }}
-      />
+      <InvitationForm invitation={invitation} afterConfirm={afterConfirm} />
     </Modal>
   )
 }

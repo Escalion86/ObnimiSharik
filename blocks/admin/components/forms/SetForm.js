@@ -15,7 +15,11 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import { useSelector } from 'react-redux'
 
-const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
+const SetForm = ({
+  set = DEFAULT_SET,
+  afterConfirm = () => {},
+  onClose = () => {},
+}) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
@@ -35,6 +39,7 @@ const SetForm = ({ set = DEFAULT_SET, afterConfirm = () => {} }) => {
   const afterConfirmUpd = (data) => {
     deleteImages(compareArrays(set.images, form.images).removed)
     afterConfirm(data)
+    onClose()
   }
 
   const forNew = set._id === undefined

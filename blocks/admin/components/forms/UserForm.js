@@ -9,7 +9,11 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
-const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
+const UserForm = ({
+  user = DEFAULT_USER,
+  afterConfirm = () => {},
+  onClose = () => {},
+}) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
@@ -40,14 +44,20 @@ const UserForm = ({ user = DEFAULT_USER, afterConfirm = () => {} }) => {
         ? postData(
             '/api/users',
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Пользователь "' + form.name + '" создан',
             'Ошибка при создании пользователя "' + form.name + '"'
           )
         : putData(
             `/api/users/${user._id}`,
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Пользователь "' + form.name + '" изменен',
             'Ошибка при редактировании пользователя "' + form.name + '"'
           )

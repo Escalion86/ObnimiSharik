@@ -9,13 +9,7 @@ const ClientModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={client?._id && onDelete}>
-      <ClientForm
-        client={client}
-        afterConfirm={(data) => {
-          afterConfirm(data)
-          onClose()
-        }}
-      />
+      <ClientForm client={client} afterConfirm={afterConfirm} />
     </Modal>
   )
 }

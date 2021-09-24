@@ -8,26 +8,8 @@ const ProductModal = ({
   onDelete = null,
 }) => {
   return (
-    <Modal
-      onClose={onClose}
-      onDelete={product?._id && onDelete}
-      //   product?._id
-      //     ? () =>
-      //         confirmModal(
-      //           'Удаление товара',
-      //           'Вы уверены что хотите удалить товар "' + product.name + '"?',
-      //           onDelete
-      //         )
-      //     : null
-      // }
-    >
-      <ProductForm
-        product={product}
-        afterConfirm={() => {
-          afterConfirm()
-          onClose()
-        }}
-      />
+    <Modal onClose={onClose} onDelete={product?._id && onDelete}>
+      <ProductForm product={product} afterConfirm={afterConfirm} />
     </Modal>
   )
 }

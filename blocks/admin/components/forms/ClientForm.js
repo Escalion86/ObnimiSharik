@@ -9,7 +9,11 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
-const ClientForm = ({ client = DEFAULT_CLIENT, afterConfirm = () => {} }) => {
+const ClientForm = ({
+  client = DEFAULT_CLIENT,
+  afterConfirm = () => {},
+  onClose = () => {},
+}) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
@@ -48,14 +52,21 @@ const ClientForm = ({ client = DEFAULT_CLIENT, afterConfirm = () => {} }) => {
         ? postData(
             '/api/clients',
             form,
-            afterConfirm,
+
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Клиент "' + form.name + '" создан',
             'Ошибка при создании клиента "' + form.name + '"'
           )
         : putData(
             `/api/clients/${client._id}`,
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Клиент "' + form.name + '" изменен',
             'Ошибка при редактировании клиента "' + form.name + '"'
           )

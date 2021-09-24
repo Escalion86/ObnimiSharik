@@ -12,6 +12,7 @@ import compareObjects from '@helpers/compareObjects'
 const SetTypeForm = ({
   setType = DEFAULT_SET_TYPE,
   afterConfirm = () => {},
+  onClose = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -38,14 +39,20 @@ const SetTypeForm = ({
         ? postData(
             '/api/settypes',
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Тип набора "' + form.name + '" создан',
             'Ошибка при создании типа набора "' + form.name + '"'
           )
         : putData(
             `/api/settypes/${setType._id}`,
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Тип набора "' + form.name + '" изменен',
             'Ошибка при редактировании типа набора "' + form.name + '"'
           )

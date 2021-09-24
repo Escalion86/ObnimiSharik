@@ -12,6 +12,7 @@ import compareObjects from '@helpers/compareObjects'
 const PaymentForm = ({
   payment = DEFAULT_PAYMENT,
   afterConfirm = () => {},
+  onClose = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -52,14 +53,20 @@ const PaymentForm = ({
         ? postData(
             '/api/payments',
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Новая транзакция создана',
             'Ошибка при создании транзакции'
           )
         : putData(
             `/api/payments/${payment._id}`,
             form,
-            afterConfirm,
+            () => {
+              afterConfirm()
+              onClose()
+            },
             'Транзакция №' + form.number + ' изменена',
             'Ошибка при редактировании транзакции №' + form.number
           )

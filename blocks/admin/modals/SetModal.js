@@ -9,13 +9,7 @@ const SetModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={set?._id && onDelete} twoCols>
-      <SetForm
-        set={set}
-        afterConfirm={(data) => {
-          afterConfirm(data)
-          onClose()
-        }}
-      />
+      <SetForm set={set} afterConfirm={afterConfirm} />
     </Modal>
   )
 }
