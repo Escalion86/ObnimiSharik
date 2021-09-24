@@ -50,8 +50,45 @@ const Item = ({ item, onClick = null, active = false }) => (
   // </Tooltip>
 )
 
+const ClientItem = ({ item, onClick = null, active = false }) => (
+  <div
+    className={
+      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer h-10 last:border-0' +
+      (onClick ? ' hover:bg-blue-200' : '') +
+      (active ? ' bg-green-200' : '')
+    }
+    onClick={
+      onClick
+        ? (e) => {
+            e.stopPropagation()
+            onClick()
+          }
+        : null
+    }
+  >
+    <div className="h-5 text-sm text-gray-800 truncate">{item.name}</div>
+    <div className="flex items-center text-xs text-gray-600 gap-x-2">
+      <div className="flex-1 whitespace-nowrap">
+        Телефон: +{item.phone || '[нет]'}
+      </div>
+      {item.whatsapp && (
+        <div className="flex-1 text-center whitespace-nowrap">
+          WhatsApp: +{item.whatsapp}
+        </div>
+      )}
+      {item.email && (
+        <div className="flex-1 text-right whitespace-nowrap">
+          Email: {item.email || '[нет]'}
+        </div>
+      )}
+    </div>
+  </div>
+  // </Tooltip>
+)
+
 export const SelectItem = ({
   items,
+  itemComponent = Item,
   onChange,
   selectedId = null,
   exceptedIds = [],
@@ -75,7 +112,9 @@ export const SelectItem = ({
           return (
             !exceptedIds.includes(item._id) &&
             (itemNameLowerCase.includes(searchTextLowerCase) ||
-              item.article.includes(searchTextLowerCase))
+              item.article?.includes(searchTextLowerCase) ||
+              item.phone?.toString().includes(searchTextLowerCase) ||
+              item.whatsapp?.toString().includes(searchTextLowerCase))
           )
         })
       : items
@@ -106,6 +145,8 @@ export const SelectItem = ({
       document.removeEventListener('mousedown', checkIfClickedOutside)
     }
   }, [isMenuOpen])
+
+  const Item = itemComponent
 
   return (
     <div
@@ -201,6 +242,25 @@ export const SelectSet = ({
   return (
     <SelectItem
       items={sets}
+      onChange={onChange}
+      selectedId={selectedId}
+      className={className}
+      exceptedIds={exceptedIds}
+    />
+  )
+}
+
+export const SelectClient = ({
+  onChange,
+  selectedId = null,
+  exceptedIds = [],
+  className = '',
+}) => {
+  const { clients } = useSelector((state) => state)
+  return (
+    <SelectItem
+      items={clients}
+      itemComponent={ClientItem}
       onChange={onChange}
       selectedId={selectedId}
       className={className}

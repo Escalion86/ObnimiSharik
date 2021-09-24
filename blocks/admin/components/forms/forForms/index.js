@@ -5,5 +5,10 @@ export { default as PriceInput } from './PriceInput'
 export { default as InputImages } from './InputImages'
 export { default as DatePicker } from './DatePicker'
 export { default as PhoneInput } from './PhoneInput'
-export { SelectItem, SelectProduct, SelectSet } from './SelectItem'
+export {
+  SelectItem,
+  SelectProduct,
+  SelectSet,
+  SelectClient,
+} from './SelectItem'
 export { ItemsList, ProductsList, SetsList } from './ItemsList'
