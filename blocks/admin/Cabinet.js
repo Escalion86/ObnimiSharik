@@ -1,24 +1,18 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react'
-// import axios from 'axios'
-// import logo from './logo.svg'
 
 import SidePanel from '@adminblocks/SidePanel'
 import Header from '@adminblocks/Header'
 import { DEFAULT_USER } from '@helpers/constants'
-// import Account from './PageContent/Account'
-// import Title from './Components/Title'
 import Title from '@adminblocks/Title'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import TitleButton from '@admincomponents/TitleButton'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
-import { toggleProductsFilterShow } from '@state/actions/filterActions'
 import compareObjects from '@helpers/compareObjects'
 import { initialState as filterInitialState } from '@state/reducers/filterReducer'
 import Filter from '@admincomponents/filter/Filter'
 
 import SortTitleButtonMenu from '@admincomponents/SortTitleButtonMenu'
-// import ContentContainer from './content/ContentContainer'
 
 const Cabinet = ({
   page,
