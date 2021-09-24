@@ -1,8 +1,14 @@
 import React from 'react'
 import { SetCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFilter } from '@state/actions'
 
 const SetsContent = ({ data, modals }) => {
+  const { filter } = useSelector((state) => state)
+
+  const dispatch = useDispatch()
+
   if (!(data && data.length > 0))
     return <div className="px-3">'Наборов нет'</div>
 
@@ -17,8 +23,25 @@ const SetsContent = ({ data, modals }) => {
           // count={countSet ? countSet : 0}
           onClick={() => modals.openSetModal(set)}
           onEdit={() => modals.openSetModal(set, true)}
+          onClone={() => {
+            const setClone = { ...set }
+            delete setClone._id
+            modals.openSetModal(setClone)
+          }}
           onDelete={() => modals.openDeleteSet(set)}
-          onTypeClick={(settype) => modals.openSetTypeModal(settype)}
+          onTypeClick={
+            (setType) => {
+              dispatch(
+                setFilter({
+                  sets: {
+                    ...filter.sets,
+                    setTypes: [setType._id],
+                  },
+                })
+              )
+            }
+            // (settype) => modals.openSetTypeModal(settype)
+          }
           onProductClick={(product) => modals.openProductModal(product)}
         />
       )}

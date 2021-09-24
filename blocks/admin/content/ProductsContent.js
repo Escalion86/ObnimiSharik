@@ -2,8 +2,14 @@ import React from 'react'
 import { ProductCard } from '@admincomponents/cards'
 import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 import { Virtuoso } from 'react-virtuoso'
+import { setFilter } from '@state/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ProductsContent = ({ data, modals }) => {
+  const { filter } = useSelector((state) => state)
+
+  const dispatch = useDispatch()
+
   if (!(data && data.length > 0))
     return <div className="px-3">'Товаров нет'</div>
 
@@ -23,9 +29,24 @@ const ProductsContent = ({ data, modals }) => {
               productId: product._id,
             })
           }
+          onClone={() => {
+            const productClone = { ...product }
+            delete productClone._id
+            modals.openProductModal(productClone)
+          }}
           onDelete={() => modals.openDeleteProduct(product)}
-          onTypeClick={(producttype) =>
-            modals.openProductTypeModal(producttype)
+          onTypeClick={
+            (productType) => {
+              dispatch(
+                setFilter({
+                  products: {
+                    ...filter.products,
+                    productTypes: [productType._id],
+                  },
+                })
+              )
+            }
+            // modals.openProductTypeModal(producttype)
           }
         />
       )}
