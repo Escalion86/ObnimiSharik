@@ -15,7 +15,7 @@ const Filter = ({
   useEffect(() => {
     if (!compareObjects(state.filter[variable], filter))
       setFilter(state.filter[variable])
-  }, [variable])
+  }, [variable, state.filter[variable]])
 
   const priceFilterExists =
     state.filter[variable].price !== undefined && filter.price !== undefined
