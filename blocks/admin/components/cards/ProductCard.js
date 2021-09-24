@@ -22,7 +22,7 @@ export const ProductCard = ({
 
   if (types[0] === undefined) types.length === []
 
-  const imageClassName = 'w-20 h-20'
+  const imageClassName = 'w-24'
 
   return (
     <Card onClick={() => onClick(product)}>
@@ -33,7 +33,7 @@ export const ProductCard = ({
       width={56}
       height={56}
     /> */}
-      <CardContainer>
+      <CardContainer className="flex-col phoneH:flex-row">
         {product.images[0] ? (
           <div onClick={(event) => event.stopPropagation()}>
             {/* <ImageZoom
@@ -49,7 +49,11 @@ export const ProductCard = ({
               }}
             /> */}
             <Zoom zoomMargin={20}>
-              <img className="w-24" src={product.images[0]} alt="product" />
+              <img
+                className={imageClassName}
+                src={product.images[0]}
+                alt="product"
+              />
               {/* <div className="border border-gray-700">Привет</div> */}
             </Zoom>
           </div>

@@ -25,10 +25,10 @@ export const SetCard = ({
 
   if (types[0] === undefined) types.length === []
 
-  const imageClassName = 'w-20 h-20'
+  const imageClassName = 'w-24'
   return (
     <Card onClick={() => onClick(set)}>
-      <CardContainer>
+      <CardContainer className="flex-col phoneH:flex-row">
         {set.images[0] ? (
           <div onClick={(event) => event.stopPropagation()}>
             {/* <ImageZoom
@@ -45,7 +45,7 @@ export const SetCard = ({
             />
             <ImageZoom> */}
             <Zoom zoomMargin={20}>
-              <img className="w-24" src={set.images[0]} alt="set" />
+              <img className={imageClassName} src={set.images[0]} alt="set" />
             </Zoom>
           </div>
         ) : (

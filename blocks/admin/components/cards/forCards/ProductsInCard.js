@@ -39,7 +39,7 @@ const ProductsInCard = ({ productsIdCount = {}, onClick = null }) => {
             >
               <div
                 className={
-                  'group-hover:text-toxic ' +
+                  'group-hover:text-toxic flex-1 ' +
                   // (onClick
                   //   ? !product?.count || product?.count < count
                   //     ? 'text-red-400'
@@ -51,8 +51,8 @@ const ProductsInCard = ({ productsIdCount = {}, onClick = null }) => {
                 {/* {product.article && '(' + product.article + ') '} */}
                 {product?.name}
               </div>
-              <div className="ml-1 group-hover:text-toxic">
-                {'- '}
+              <div className="ml-1 flex flex-nowrap gap-x-0.5 group-hover:text-toxic">
+                <span>-</span>
                 <span
                   className={
                     !product?.count || product?.count < count
@@ -61,8 +61,8 @@ const ProductsInCard = ({ productsIdCount = {}, onClick = null }) => {
                   }
                 >
                   {count}
-                </span>{' '}
-                шт
+                </span>
+                <span>шт</span>
               </div>
             </div>
           </Tooltip>
@@ -79,7 +79,7 @@ const ProductsInCard = ({ productsIdCount = {}, onClick = null }) => {
 
   return (
     <div className="flex mt-1 space-x-2 text-sm">
-      <div className="min-w-max">Товары в наборе:</div>
+      <div className="tablet:whitespace-nowrap">Товары в наборе:</div>
       {productItems.length > 0 ? (
         <div className="flex flex-wrap gap-x-2">
           {productItems.map((Item, index) => (
