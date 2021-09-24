@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 
-import { ComboBox, Input, PriceInput } from './forForms'
+import { ComboBox, Input, PriceInput, SelectProduct } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -86,8 +86,6 @@ const ProductCirculationForm = ({
     }
   }
 
-  console.log(`form.price`, form.price)
-
   const formValidate = () => {
     let err = {}
     if (!form.productId) err.productId = 'Введите товар'
@@ -113,7 +111,7 @@ const ProductCirculationForm = ({
         compareObjects(form, productCirculation)
       }
     >
-      <ComboBox
+      {/* <ComboBox
         name="productId"
         title="Товар"
         handleChange={handleChange}
@@ -129,7 +127,20 @@ const ProductCirculationForm = ({
           }
         })}
         required
-      />
+      /> */}
+      <div className="flex border border-gray-700 rounded-lg">
+        <SelectProduct
+          className={'flex-1 rounded-lg'}
+          onChange={(item) =>
+            setForm({
+              ...form,
+              productId: item._id,
+            })
+          }
+          selectedId={form.productId}
+          // exceptedIds={selectedItemsIds}
+        />
+      </div>
       <div className="flex justify-between gap-x-1">
         <PriceInput
           title="Стоимость за шт"

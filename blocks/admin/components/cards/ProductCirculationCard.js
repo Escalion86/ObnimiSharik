@@ -21,12 +21,13 @@ export const ProductCirculationCard = ({
   return (
     <Card inLine onClick={() => onClick(productCirculation)}>
       <CardContainer>
-        <div className="flex-1 mr-24">
-          <div className="flex flex-col flex-wrap tablet:items-center gap-x-2 tablet:flex-row">
-            <div>{formatDate(productCirculation.purchasedAt)}</div>
-            <div className="font-semibold">
-              {product ? product.name : '? [товар не найден в базе]'}
-            </div>
+        <div className="flex flex-col flex-wrap flex-1 tablet:items-center gap-x-2 tablet:flex-row">
+          <div>{formatDate(productCirculation.purchasedAt)}</div>
+          <div className="flex-1 font-semibold">
+            {product ? product.name : '? [товар не найден в базе]'}
+          </div>
+          <div className="font-bold whitespace-nowrap">
+            {(productCirculation.price * productCirculation.count) / 100} ₽
           </div>
         </div>
       </CardContainer>
