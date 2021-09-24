@@ -52,7 +52,7 @@ import prepareFetchProps from '@helpers/prepareFetchProps'
 //   // console.log(`json`, js`on)
 // }
 
-export default function Home({ products, sets, types }) {
+export default function Home({ products, sets, productTypes, setTypes }) {
   const { height, width } = useWindowDimensions()
   const [session, loading] = useSession()
 
