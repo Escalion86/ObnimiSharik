@@ -19,7 +19,7 @@ const toastContainer = (message, buttons) => (
 )
 
 const toastCfg = {
-  autoClose: 6000,
+  autoClose: 5000,
   // closeOnClick: true,
   pauseOnHover: true,
   // onOpen: () => console.log('Called when I open'),
