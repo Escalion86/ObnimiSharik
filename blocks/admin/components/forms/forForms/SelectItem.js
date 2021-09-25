@@ -218,17 +218,19 @@ export const SelectProduct = ({
   onChange,
   selectedId = null,
   exceptedIds = [],
-  className = '',
+  required = false,
 }) => {
   const { products } = useSelector((state) => state)
   return (
-    <SelectItem
-      items={products}
-      onChange={onChange}
-      selectedId={selectedId}
-      className={className}
-      exceptedIds={exceptedIds}
-    />
+    <SelectItemContainer required={required} label="Товар">
+      <SelectItem
+        items={products}
+        onChange={onChange}
+        selectedId={selectedId}
+        className={'flex-1 rounded-lg'}
+        exceptedIds={exceptedIds}
+      />
+    </SelectItemContainer>
   )
 }
 
@@ -236,17 +238,20 @@ export const SelectSet = ({
   onChange,
   selectedId = null,
   exceptedIds = [],
-  className = '',
+  required = false,
 }) => {
   const { sets } = useSelector((state) => state)
   return (
-    <SelectItem
-      items={sets}
-      onChange={onChange}
-      selectedId={selectedId}
-      className={className}
-      exceptedIds={exceptedIds}
-    />
+    <SelectItemContainer required={required} label="Набор">
+      <SelectItem
+        items={sets}
+        onChange={onChange}
+        selectedId={selectedId}
+        className={className}
+        className={'flex-1 rounded-lg'}
+        exceptedIds={exceptedIds}
+      />
+    </SelectItemContainer>
   )
 }
 
@@ -254,17 +259,29 @@ export const SelectClient = ({
   onChange,
   selectedId = null,
   exceptedIds = [],
-  className = '',
+  required = false,
 }) => {
   const { clients } = useSelector((state) => state)
   return (
-    <SelectItem
-      items={clients}
-      itemComponent={ClientItem}
-      onChange={onChange}
-      selectedId={selectedId}
-      className={className}
-      exceptedIds={exceptedIds}
-    />
+    <SelectItemContainer required={required} label="Клиент">
+      <SelectItem
+        items={clients}
+        itemComponent={ClientItem}
+        onChange={onChange}
+        selectedId={selectedId}
+        className={'flex-1 rounded-lg'}
+        exceptedIds={exceptedIds}
+      />
+    </SelectItemContainer>
   )
 }
+
+const SelectItemContainer = ({ required, label, children }) => (
+  <div className="flex flex-col">
+    <label htmlFor="client">
+      {label}
+      {required && <span className="text-red-700">*</span>}
+    </label>
+    <div className="flex border border-gray-700 rounded-lg">{children}</div>
+  </div>
+)

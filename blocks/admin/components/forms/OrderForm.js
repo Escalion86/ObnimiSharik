@@ -146,24 +146,16 @@ const OrderForm = ({
         Object.keys(formValidate()).length !== 0 || compareObjects(form, order)
       }
     >
-      <div className="flex flex-col">
-        <label htmlFor="itemsIds">
-          Клиент<span className="text-red-700">*</span>
-        </label>
-        <div className="flex border border-gray-700 rounded-lg">
-          <SelectClient
-            className={'flex-1 rounded-lg'}
-            onChange={(item) =>
-              setForm({
-                ...form,
-                clientId: item._id,
-              })
-            }
-            selectedId={form.clientId}
-            // exceptedIds={selectedItemsIds}
-          />
-        </div>
-      </div>
+      <SelectClient
+        onChange={(item) =>
+          setForm({
+            ...form,
+            clientId: item._id,
+          })
+        }
+        selectedId={form.clientId}
+        // exceptedIds={selectedItemsIds}
+      />
       <ProductsList
         productsIdCount={productsIdCount}
         onChange={(newProductsIdCount) => {

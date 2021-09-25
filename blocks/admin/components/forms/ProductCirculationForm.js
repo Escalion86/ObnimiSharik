@@ -135,19 +135,18 @@ const ProductCirculationForm = ({
         })}
         required
       /> */}
-      <div className="flex border border-gray-700 rounded-lg">
-        <SelectProduct
-          className={'flex-1 rounded-lg'}
-          onChange={(item) =>
-            setForm({
-              ...form,
-              productId: item._id,
-            })
-          }
-          selectedId={form.productId}
-          // exceptedIds={selectedItemsIds}
-        />
-      </div>
+
+      <SelectProduct
+        onChange={(item) =>
+          setForm({
+            ...form,
+            productId: item._id,
+          })
+        }
+        selectedId={form.productId}
+        required
+        // exceptedIds={selectedItemsIds}
+      />
       <div className="flex justify-between gap-x-1">
         <PriceInput
           title="Стоимость за шт"
