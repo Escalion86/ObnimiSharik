@@ -4,6 +4,7 @@ import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 import { Virtuoso } from 'react-virtuoso'
 import { setFilter } from '@state/actions'
 import { useDispatch, useSelector } from 'react-redux'
+import toasts from '@helpers/toasts'
 
 const ProductsContent = ({ data, modals }) => {
   const { filter } = useSelector((state) => state)
@@ -44,6 +45,12 @@ const ProductsContent = ({ data, modals }) => {
                     productTypes: [productType._id],
                   },
                 })
+              )
+              toasts.info(
+                <div>
+                  <div>Применен фильтр</div>
+                  <div className="italic">"{productType.name}"</div>
+                </div>
               )
             }
             // modals.openProductTypeModal(producttype)

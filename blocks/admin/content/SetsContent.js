@@ -3,6 +3,7 @@ import { SetCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilter } from '@state/actions'
+import toasts from '@helpers/toasts'
 
 const SetsContent = ({ data, modals }) => {
   const { filter } = useSelector((state) => state)
@@ -38,6 +39,12 @@ const SetsContent = ({ data, modals }) => {
                     setTypes: [setType._id],
                   },
                 })
+              )
+              toasts.info(
+                <div>
+                  <div>Применен фильтр</div>
+                  <div className="italic">"{productType.name}"</div>
+                </div>
               )
             }
             // (settype) => modals.openSetTypeModal(settype)
