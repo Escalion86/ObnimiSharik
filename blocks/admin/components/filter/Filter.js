@@ -80,7 +80,7 @@ const Filter = ({
   return (
     <div
       className={
-        'absolute z-30 w-full duration-500 top-0 flex items-start gap-4 p-2 transform bg-white border-b border-gray-200' +
+        'absolute z-20 w-full duration-500 top-0 flex items-start gap-4 p-2 transform bg-white border-b border-gray-200' +
         (show ? '' : ' scale-y-0 -translate-y-1/2')
       }
     >
