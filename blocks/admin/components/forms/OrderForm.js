@@ -174,6 +174,12 @@ const OrderForm = ({
             productsCount: tempProductsCount,
           })
         }}
+        required={
+          (!setsIdCount['?'] && Object.keys(setsIdCount).length > 0) ||
+          (setsIdCount['?'] && Object.keys(setsIdCount).length > 1)
+            ? 'star'
+            : true
+        }
       />
       <SetsList
         setsIdCount={setsIdCount}
@@ -190,6 +196,12 @@ const OrderForm = ({
             setsCount: tempSetsCount,
           })
         }}
+        required={
+          (!productsIdCount['?'] && Object.keys(productsIdCount).length > 0) ||
+          (productsIdCount['?'] && Object.keys(productsIdCount).length > 1)
+            ? 'star'
+            : true
+        }
       />
       <div>Итоговая сумма: {totalPrice} ₽</div>
       {/* <Input

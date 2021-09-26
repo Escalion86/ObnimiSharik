@@ -173,7 +173,9 @@ export const ItemsList = ({
         name="itemsIds"
         className={
           'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg ' +
-          (required && !itemsIdCount?.length
+          (required &&
+          required !== 'star' &&
+          (selectedItemsIds.length === 0 || selectedItemsIds[0] === '?')
             ? 'border-red-700'
             : 'border-gray-700')
         }
