@@ -8,7 +8,7 @@ const OrderModal = ({
   onDelete = null,
 }) => {
   return (
-    <Modal onClose={onClose} onDelete={order?._id && onDelete}>
+    <Modal onClose={onClose} onDelete={order?._id && onDelete} twoCols>
       <OrderForm order={order} afterConfirm={afterConfirm} />
     </Modal>
   )
