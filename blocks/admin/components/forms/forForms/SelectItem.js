@@ -50,7 +50,7 @@ const Item = ({ item, onClick = null, active = false }) => (
   // </Tooltip>
 )
 
-const ClientItem = ({ item, onClick = null, active = false }) => (
+const PersonaItem = ({ item, onClick = null, active = false }) => (
   <div
     className={
       'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer h-10 last:border-0' +
@@ -67,7 +67,7 @@ const ClientItem = ({ item, onClick = null, active = false }) => (
     }
   >
     <div className="h-5 text-sm text-gray-800 truncate">{item.name}</div>
-    <div className="flex items-center text-xs text-gray-600 gap-x-2">
+    <div className="flex items-center overflow-x-hidden text-xs text-gray-600 gap-x-2">
       <div className="flex-1 whitespace-nowrap">
         Телефон: +{item.phone || '[нет]'}
       </div>
@@ -266,7 +266,7 @@ export const SelectClient = ({
     <SelectItemContainer required={required} label="Клиент">
       <SelectItem
         items={clients}
-        itemComponent={ClientItem}
+        itemComponent={PersonaItem}
         onChange={onChange}
         selectedId={selectedId}
         className={'flex-1 rounded-lg'}
@@ -285,3 +285,25 @@ const SelectItemContainer = ({ required, label, children }) => (
     <div className="flex border border-gray-700 rounded-lg">{children}</div>
   </div>
 )
+
+export const SelectDeliver = ({
+  onChange,
+  selectedId = null,
+  exceptedIds = [],
+  required = false,
+}) => {
+  const { users } = useSelector((state) => state)
+  const delivers = users.filter((user) => user.role === 'deliver')
+  return (
+    <SelectItemContainer required={required} label="Курьер">
+      <SelectItem
+        items={delivers}
+        itemComponent={PersonaItem}
+        onChange={onChange}
+        selectedId={selectedId}
+        className={'flex-1 rounded-lg'}
+        exceptedIds={exceptedIds}
+      />
+    </SelectItemContainer>
+  )
+}
