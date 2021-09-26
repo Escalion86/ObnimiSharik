@@ -13,7 +13,8 @@ const CheckBox = ({
   return (
     <label
       className={
-        'flex items-center space-x-2' + (className ? ' ' + className : '')
+        'flex items-center cursor-pointer space-x-2' +
+        (className ? ' ' + className : '')
       }
     >
       {label && labelPos === 'left' && <Label />}
@@ -22,7 +23,7 @@ const CheckBox = ({
         checked={checked}
         type="checkbox"
         className={
-          'bg-white border border-gray-300 appearance-none form-tick bg-check checked:bg-primary checked:border-transparent focus:outline-none ' +
+          'bg-white border border-gray-300 cursor-pointer appearance-none form-tick bg-check checked:bg-primary checked:border-transparent focus:outline-none ' +
           (small ? 'w-4 h-4 rounded-sm' : 'w-5 h-5 rounded-md')
         }
         onClick={onClick}

@@ -10,10 +10,12 @@ const RadioBox = ({
   const Label = () => (
     <span className="font-normal text-gray-700 dark:text-white">{label}</span>
   )
+
   return (
     <label
       className={
-        'flex items-center space-x-2' + (className ? ' ' + className : '')
+        'flex items-center cursor-pointer space-x-2' +
+        (className ? ' ' + className : '')
       }
     >
       {label && labelPos === 'left' && <Label />}
@@ -25,8 +27,8 @@ const RadioBox = ({
           'bg-white border rounded-full border-gray-300 appearance-none form-tick bg-radio checked:bg-primary checked:border-transparent focus:outline-none ' +
           (small ? 'w-4 h-4' : 'w-5 h-5')
         }
-        onClick={onClick}
         onChange={onChange}
+        onClick={onClick}
       />
       {label && labelPos !== 'left' && <Label />}
     </label>
