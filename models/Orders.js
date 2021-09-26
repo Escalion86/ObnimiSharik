@@ -38,20 +38,23 @@ const OrdersSchema = new mongoose.Schema({
   },
   deliveryAddress: {
     type: Map,
-    of: new mongoose.Schema({
-      town: String,
-      street: String,
-      flat: String,
-      comment: String,
-      createdAt: {
-        type: Date,
-        default: Date.now,
-      },
-      updatedAt: {
-        type: Date,
-        default: Date.now,
-      },
-    }),
+    of: String,
+    // of: new mongoose.Schema({
+    //   town: String,
+    //   street: String,
+    //   floor: String,
+    //   entrance: String,
+    //   flat: String,
+    //   comment: String,
+    //   // createdAt: {
+    //   //   type: Date,
+    //   //   default: Date.now,
+    //   // },
+    //   // updatedAt: {
+    //   //   type: Date,
+    //   //   default: Date.now,
+    //   // },
+    // }),
   },
   deliveryDateFrom: {
     type: Date,
