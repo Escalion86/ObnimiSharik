@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 const DeliveryAddressesSchema = new mongoose.Schema({
   town: String,
   street: String,
+  entrance: String,
+  floor: String,
   flat: String,
   comment: String,
   createdAt: {

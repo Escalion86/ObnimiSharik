@@ -72,6 +72,8 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
 export const DEFAULT_DELIVERY_ADDRESS = {
   town: '',
   street: '',
+  entrance: '',
+  floor: '',
   flat: '',
   comment: '',
 }
@@ -84,6 +86,7 @@ export const DEFAULT_ORDER = {
   discount: 0,
   fullPrice: 0,
   status: 'created',
+  deliveryPickup: true,
   deliveryAddress: DEFAULT_DELIVERY_ADDRESS,
   deliveryDateFrom: new Date().toISOString(),
   deliveryDateTo: new Date().toISOString(),
