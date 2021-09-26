@@ -11,6 +11,8 @@ import filterReducer from './filterReducer'
 import sortingReducer from './sortingReducer'
 import pageReducer from './pageReducer'
 import clientsReducer from './clientsReducer'
+import ordersReducer from './ordersReducer'
+import paymentsReducer from './paymentsReducer'
 
 const allReducers = combineReducers({
   products: productsReducer,
@@ -25,6 +27,8 @@ const allReducers = combineReducers({
   sorting: sortingReducer,
   page: pageReducer,
   clients: clientsReducer,
+  orders: ordersReducer,
+  payments: paymentsReducer,
 })
 
 export default allReducers
