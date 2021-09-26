@@ -31,8 +31,10 @@ const Modal = ({
     >
       <div
         className={
-          'relative px-5 py-4 duration-300 my-auto bg-white border-l rounded-xl border-primary min-w-100' +
-          (twoCols ? ' w-2/3' : ' w-1/3') +
+          'relative min-w-84 max-w-132 w-9/12 tablet:min-w-116 px-4 py-4 duration-300 my-auto bg-white border-l rounded-xl border-primary ' +
+          (twoCols
+            ? ' laptop:w-9/12 laptop:min-w-228 laptop:max-w-248'
+            : ' laptop:max-w-none') +
           (rendered ? '' : ' scale-50')
         }
       >
