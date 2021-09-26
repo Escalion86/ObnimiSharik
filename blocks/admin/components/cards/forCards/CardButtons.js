@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+  faCartPlus,
   faClone,
   faPencilAlt,
   faPlus,
@@ -33,7 +34,7 @@ const CardButtons = ({
         }}
         className="bg-yellow-400"
         inverse
-        icon={faShoppingCart}
+        icon={faCartPlus}
       />
     )}
     {onAdd && (
