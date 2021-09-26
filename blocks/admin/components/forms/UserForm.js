@@ -8,6 +8,7 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
+import RowContainer from './forForms/RowContainer'
 
 const UserForm = ({
   user = DEFAULT_USER,
@@ -37,7 +38,7 @@ const UserForm = ({
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e?.preventDefault()
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
       forNew
@@ -116,28 +117,24 @@ const UserForm = ({
         required
       />
 
-      <div className="flex">
-        <div className="flex-1">
-          <PhoneInput
-            key="phone"
-            label="Телефон"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            // required
-          />
-        </div>
-        <div className="flex-1">
-          <PhoneInput
-            key="whatsapp"
-            label="WhatsApp"
-            name="whatsapp"
-            value={form.whatsapp}
-            onChange={handleChange}
-            // required
-          />
-        </div>
-      </div>
+      <RowContainer>
+        <PhoneInput
+          key="phone"
+          label="Телефон"
+          name="phone"
+          value={form.phone}
+          onChange={handleChange}
+          // required
+        />
+        <PhoneInput
+          key="whatsapp"
+          label="WhatsApp"
+          name="whatsapp"
+          value={form.whatsapp}
+          onChange={handleChange}
+          // required
+        />
+      </RowContainer>
       <DatePicker
         key="birthday"
         label="День рождения"

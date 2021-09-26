@@ -14,6 +14,7 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
+import RowContainer from './forForms/RowContainer'
 
 const ProductForm = ({
   product = DEFAULT_PRODUCT,
@@ -159,27 +160,24 @@ const ProductForm = ({
         onChange={handleChange}
         textarea
       />
-      <div className="flex">
-        <div className="flex-1">
-          <Input
-            key="article"
-            label="Артикул"
-            type="text"
-            maxLength="100"
-            name="article"
-            value={form.article}
-            onChange={handleChange}
-            className="w-40"
-          />
-        </div>
-        <div className="flex-1">
-          <PriceInput
-            value={form.price / 100}
-            onChange={handleChange}
-            required
-          />
-        </div>
-      </div>
+      <RowContainer>
+        <Input
+          key="article"
+          label="Артикул"
+          type="text"
+          maxLength="100"
+          name="article"
+          value={form.article}
+          onChange={handleChange}
+          className="flex-1"
+        />
+        <PriceInput
+          value={form.price / 100}
+          onChange={handleChange}
+          required
+          className="flex-1"
+        />
+      </RowContainer>
       {/* <Input
         key="images"
         label="Ссылка на картинку"

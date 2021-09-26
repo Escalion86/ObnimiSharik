@@ -14,6 +14,8 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import { useSelector } from 'react-redux'
+import RowContainer from './forForms/RowContainer'
+import FormColumn from './forForms/FromColumn'
 
 const SetForm = ({
   set = DEFAULT_SET,
@@ -117,7 +119,7 @@ const SetForm = ({
       }
       twoCols={true}
     >
-      <div className="flex-1 min-w-76 gap-y-1">
+      <FormColumn>
         <Input
           key="name"
           label="Название"
@@ -138,27 +140,24 @@ const SetForm = ({
           onChange={handleChange}
           textarea
         />
-        <div className="flex">
-          <div className="flex-1">
-            <Input
-              key="article"
-              label="Артикул"
-              type="text"
-              maxLength="100"
-              name="article"
-              value={form.article}
-              onChange={handleChange}
-              className="w-40"
-            />
-          </div>
-          <div className="flex-1">
-            <PriceInput
-              value={form.price / 100}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
+        <RowContainer>
+          <Input
+            key="article"
+            label="Артикул"
+            type="text"
+            maxLength="100"
+            name="article"
+            value={form.article}
+            onChange={handleChange}
+            className="flex-1"
+          />
+          <PriceInput
+            value={form.price / 100}
+            onChange={handleChange}
+            required
+            className="flex-1"
+          />
+        </RowContainer>
         <MultiselectCheckbox
           title="Типы"
           options={setTypes.map((type) => {
@@ -176,8 +175,8 @@ const SetForm = ({
             // console.log('checked', data)
           }}
         />
-      </div>
-      <div className="flex flex-col flex-1 min-w-76 gap-y-1">
+      </FormColumn>
+      <FormColumn className="flex flex-col flex-1">
         <ProductsList
           productsIdCount={form.productsIdCount}
           onChange={(newProductsIdCount) =>
@@ -204,7 +203,7 @@ const SetForm = ({
             )
           }
         />
-      </div>
+      </FormColumn>
     </Form>
   )
 }
