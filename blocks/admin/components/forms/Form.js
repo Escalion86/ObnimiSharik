@@ -20,8 +20,8 @@ const Form = ({
         )}
         <div
           className={
-            'flex gap-x-5 gap-y-1 ' +
-            (twoCols ? 'flex-row flex-wrap' : 'flex-col')
+            'flex gap-y-1 ' +
+            (twoCols ? 'flex-col laptop:flex-row' : 'flex-col')
           }
         >
           {children}
