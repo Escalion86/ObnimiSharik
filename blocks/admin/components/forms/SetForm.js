@@ -63,7 +63,7 @@ const SetForm = ({
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e?.preventDefault()
     const errs = formValidate()
     // Убираем невыбранные товары и с количеством 0
     const productsIdCount = {}

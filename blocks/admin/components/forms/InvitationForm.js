@@ -42,7 +42,7 @@ const InvitationForm = ({
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e?.preventDefault()
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
       forNew

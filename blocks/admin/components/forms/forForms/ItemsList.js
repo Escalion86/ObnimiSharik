@@ -84,7 +84,7 @@ const ItemRow = ({
             e = e || window.event
             var charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
             if (!(charCode >= 48 && charCode <= 57)) {
-              e.preventDefault()
+              e?.preventDefault()
             }
           }}
         />
