@@ -9,4 +9,4 @@ const paymentsReducer = (state = [], action) => {
   }
 }
 
-export default peymantsReducer
+export default paymentsReducer
