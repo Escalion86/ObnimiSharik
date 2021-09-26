@@ -39,7 +39,6 @@ const DatePicker = ({
         (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
       }
       type="date"
-      id="start"
       name={name}
       value={formatDate(value)}
       onChange={(e) => {
