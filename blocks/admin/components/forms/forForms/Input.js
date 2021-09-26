@@ -21,6 +21,8 @@ const Input = ({
   className,
   disabled = false,
   inLine = false,
+  labelStyle = '',
+  inputStyle = '',
 }) => {
   return (
     <div
@@ -30,7 +32,16 @@ const Input = ({
         (className ? ' ' + className : '')
       }
     >
-      <label className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''} htmlFor={name}>
+      <label
+        className={
+          labelStyle
+            ? ' ' + labelStyle
+            : inLine
+            ? 'min-w-24 max-w-40 w-1/4'
+            : ''
+        }
+        htmlFor={name}
+      >
         {label}
         {required && <span className="text-red-700">*</span>}
       </label>
@@ -38,7 +49,8 @@ const Input = ({
         className={
           'flex-1 px-2 py-1 border rounded-lg outline-none' +
           (required && !value ? ' border-red-700' : ' border-gray-700') +
-          (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
+          (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ') +
+          (inputStyle ? ' ' + inputStyle : '')
         }
         type={type === 'number' ? 'text' : type}
         maxLength={maxLength}
@@ -63,7 +75,7 @@ const Input = ({
                 var charCode =
                   typeof e.which == 'undefined' ? e.keyCode : e.which
                 if (!(charCode >= 48 && charCode <= 57)) {
-                  e.preventDefault()
+                  e?.preventDefault()
                 }
               }
             : null
