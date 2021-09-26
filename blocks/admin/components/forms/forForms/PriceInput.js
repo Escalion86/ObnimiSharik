@@ -5,6 +5,8 @@ const PriceInput = ({
   required = false,
   className,
   inLine,
+  labelStyle,
+  name = 'price',
 }) => {
   if (!parseInt(value)) value = 0
   return (
@@ -16,22 +18,28 @@ const PriceInput = ({
       }
     >
       <label
-        className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''}
-        htmlFor="price"
+        className={
+          labelStyle
+            ? ' ' + labelStyle
+            : inLine
+            ? 'min-w-24 max-w-40 w-1/4'
+            : ''
+        }
+        htmlFor={name}
       >
         {title}
         {required && <span className="text-red-700">*</span>}
       </label>
       <div
         className={
-          'flex w-full border rounded-lg flex-nowrap ' +
+          'flex w-full border rounded-lg flex-nowrap max-w-30 ' +
           (required && !value ? 'border-red-700' : 'border-gray-700')
         }
       >
         <input
           className="flex-1 w-24 px-2 py-1 bg-gray-200 rounded-l-lg outline-none"
           type="text"
-          name="price"
+          name={name}
           value={parseInt(value)}
           onChange={onChange}
           required={required}
@@ -39,7 +47,7 @@ const PriceInput = ({
             e = e || window.event
             var charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
             if (!(charCode >= 48 && charCode <= 57)) {
-              e.preventDefault()
+              e?.preventDefault()
             }
           }}
         />
