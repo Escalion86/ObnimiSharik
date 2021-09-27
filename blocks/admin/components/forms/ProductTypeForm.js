@@ -39,8 +39,8 @@ const ProductTypeForm = ({
         ? postData(
             '/api/producttypes',
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Тип товара "' + form.name + '" создан',
@@ -49,8 +49,8 @@ const ProductTypeForm = ({
         : putData(
             `/api/producttypes/${productType._id}`,
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Тип товара "' + form.name + '" изменен',

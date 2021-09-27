@@ -45,8 +45,8 @@ const UserForm = ({
         ? postData(
             '/api/users',
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Пользователь "' + form.name + '" создан',
@@ -55,8 +55,8 @@ const UserForm = ({
         : putData(
             `/api/users/${user._id}`,
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Пользователь "' + form.name + '" изменен',

@@ -52,9 +52,8 @@ const ClientForm = ({
         ? postData(
             '/api/clients',
             form,
-
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Клиент "' + form.name + '" создан',
@@ -63,8 +62,8 @@ const ClientForm = ({
         : putData(
             `/api/clients/${client._id}`,
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Клиент "' + form.name + '" изменен',

@@ -39,8 +39,8 @@ const SetTypeForm = ({
         ? postData(
             '/api/settypes',
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Тип набора "' + form.name + '" создан',
@@ -49,8 +49,8 @@ const SetTypeForm = ({
         : putData(
             `/api/settypes/${setType._id}`,
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Тип набора "' + form.name + '" изменен',

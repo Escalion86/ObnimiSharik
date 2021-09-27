@@ -49,8 +49,8 @@ const InvitationForm = ({
         ? postData(
             '/api/invitations',
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Приглашение для "' + form.email + '" создано и отправлно',
@@ -59,8 +59,8 @@ const InvitationForm = ({
         : putData(
             `/api/invitations/${invitation._id}`,
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Приглашение для "' + form.email + '" изменено',

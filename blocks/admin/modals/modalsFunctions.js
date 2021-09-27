@@ -52,13 +52,14 @@ import addCountToSetTypes from '@helpers/addCountToSetTypes'
 
 const modals = (dispatch, data) => {
   const modals = {
-    openProductModal: (product, edit) =>
+    openProductModal: (product, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <ProductModal
             product={product}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingProducts((result) =>
                 dispatch(
                   setProducts(
@@ -66,7 +67,7 @@ const modals = (dispatch, data) => {
                   )
                 )
               )
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteProduct(product, onConfirm)
@@ -74,13 +75,14 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openSetModal: (set, edit) =>
+    openSetModal: (set, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <SetModal
             set={set}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingSets((result) =>
                 dispatch(
                   setSets(
@@ -88,7 +90,7 @@ const modals = (dispatch, data) => {
                   )
                 )
               )
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteSet(set, onConfirm)
@@ -96,19 +98,20 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openProductTypeModal: (productType, edit) =>
+    openProductTypeModal: (productType, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <ProductTypeModal
             productType={productType}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingProductTypes((result) =>
                 dispatch(
                   setProductTypes(addCountToProductTypes(result, data.products))
                 )
               )
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteProductType(productType, onConfirm)
@@ -116,17 +119,18 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openSetTypeModal: (setType, edit) =>
+    openSetTypeModal: (setType, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <SetTypeModal
             setType={setType}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingSetTypes((result) =>
                 dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
               )
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteSetType(setType, onConfirm)
@@ -140,23 +144,23 @@ const modals = (dispatch, data) => {
           <TildaImportModal
             {...data}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
-              fetchingAll((result) => {
-                dispatch(setAllData(result))
-              })
-            }
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
+              fetchingAll((result) => dispatch(setAllData(result)))
+            }}
           />
         ))
       ),
-    openUserModal: (user, edit) =>
+    openUserModal: (user, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <UserModal
             user={user}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingUsers((result) => dispatch(setUsers(result)))
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteUser(user, onConfirm)
@@ -164,15 +168,16 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openInvitationModal: (invitation, edit) =>
+    openInvitationModal: (invitation, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <InvitationModal
             invitation={invitation}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingInvitations((result) => dispatch(setInvitations(result)))
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteInvitation(invitation, onConfirm)
@@ -180,17 +185,18 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openProductCirculationModal: (productCirculation, edit) =>
+    openProductCirculationModal: (productCirculation, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <ProductCirculationModal
             productCirculation={productCirculation}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingProductCirculations((result) =>
                 dispatch(setProductCirculations(result, true))
               )
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteProductCirculation(productCirculation, onConfirm)
@@ -198,15 +204,16 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openClientModal: (client, edit) =>
+    openClientModal: (client, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <ClientModal
             client={client}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingClients((result) => dispatch(setClients(result)))
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteClient(client, onConfirm)
@@ -214,15 +221,16 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openOrderModal: (order, edit) =>
+    openOrderModal: (order, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <OrderModal
             order={order}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingOrders((result) => dispatch(setOrders(result)))
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteOrder(order, onConfirm)
@@ -230,15 +238,16 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openPaymentModal: (payment, edit) =>
+    openPaymentModal: (payment, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <PaymentModal
             payment={payment}
             onClose={() => modals.closeModal(modalId)}
-            afterConfirm={() =>
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
               fetchingPayments((result) => dispatch(setPayments(result)))
-            }
+            }}
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeletePayment(payment, onConfirm)

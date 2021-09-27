@@ -53,8 +53,8 @@ const PaymentForm = ({
         ? postData(
             '/api/payments',
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Новая транзакция создана',
@@ -63,8 +63,8 @@ const PaymentForm = ({
         : putData(
             `/api/payments/${payment._id}`,
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Транзакция №' + form.number + ' изменена',

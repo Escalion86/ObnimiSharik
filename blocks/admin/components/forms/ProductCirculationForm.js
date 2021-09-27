@@ -55,8 +55,8 @@ const ProductCirculationForm = ({
         ? postData(
             '/api/productcirculations',
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Движение товара (' +
@@ -73,8 +73,8 @@ const ProductCirculationForm = ({
         : putData(
             `/api/productcirculations/${productCirculation._id}`,
             form,
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Движение товара ("' +

@@ -16,12 +16,16 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import RadioBox from './forForms/RadioBox'
 import RowContainer from './forForms/RowContainer'
 import { SelectDeliver } from './forForms/SelectItem'
 import DateTimePicker from './forForms/DateTimePicker'
 import FormColumn from './forForms/FromColumn'
+
+import { faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons'
+import CardButton from '@admincomponents/cards/forCards/CardButton'
+import modalsFunctions from '@adminblocks/modals/modalsFunctions'
 
 {
   /* <FontAwesomeIcon
@@ -45,7 +49,7 @@ const OrderForm = ({
   const [message, setMessage] = useState('')
 
   const [form, setForm] = useState({
-    number: order.number,
+    // number: order.number,
     clientId: order.clientId,
     productsCount: order.productsCount,
     setsCount: order.setsCount,
@@ -59,7 +63,24 @@ const OrderForm = ({
     deliverId: order.deliverId,
   })
 
-  const { products, sets, users } = useSelector((state) => state)
+  const state = useSelector((state) => state)
+  const { products, sets, users, orders, clients } = state
+
+  const dispatch = useDispatch()
+
+  const modals = modalsFunctions(dispatch, state)
+
+  const editClient = () =>
+    modals.openClientModal(
+      clients.find((client) => client._id === form.clientId)
+    )
+  const addClient = () =>
+    modals.openClientModal(undefined, (client) =>
+      setForm({
+        ...form,
+        clientId: client._id,
+      })
+    )
 
   const delivers = users.filter((user) => user.role === 'deliver')
 
@@ -81,8 +102,6 @@ const OrderForm = ({
   form.setsCount.forEach((setCount) => {
     setsIdCount[setCount.set ? setCount.set._id : '?'] = setCount.count
   })
-
-  console.log(`form`, form)
 
   const forNew = order._id === undefined
 
@@ -134,8 +153,8 @@ const OrderForm = ({
         ? postData(
             '/api/orders',
             { ...form, fullPrice: totalPrice * 100 },
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Новый Ззаказ создан',
@@ -144,8 +163,8 @@ const OrderForm = ({
         : putData(
             `/api/orders/${order._id}`,
             { ...form, fullPrice: totalPrice * 100 },
-            () => {
-              afterConfirm()
+            (data) => {
+              afterConfirm(data)
               onClose()
             },
             'Заказ №' + form.number + ' изменен',
@@ -176,17 +195,37 @@ const OrderForm = ({
       twoCols={true}
     >
       <FormColumn>
-        <SelectClient
-          onChange={(item) =>
-            setForm({
-              ...form,
-              clientId: item._id,
-            })
-          }
-          selectedId={form.clientId}
-          required
-          // exceptedIds={selectedItemsIds}
-        />
+        <div className="flex items-center">
+          <div className="flex items-center flex-1 h-full gap-x-1">
+            <div className="flex-1">
+              <SelectClient
+                onChange={(item) =>
+                  setForm({
+                    ...form,
+                    clientId: item._id,
+                  })
+                }
+                selectedId={form.clientId}
+                required
+                // exceptedIds={selectedItemsIds}
+              />
+            </div>
+            {form.clientId && (
+              <CardButton
+                icon={faPencilAlt}
+                className="h-10 mt-6 rounded-lg bg-primary"
+                inverse
+                onClick={editClient}
+              />
+            )}
+            <CardButton
+              icon={faPlus}
+              className="h-10 mt-6 rounded-lg bg-primary"
+              inverse
+              onClick={addClient}
+            />
+          </div>
+        </div>
         <ProductsList
           productsIdCount={productsIdCount}
           onChange={(newProductsIdCount) => {

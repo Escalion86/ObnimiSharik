@@ -41,8 +41,8 @@ const UserContentForm = ({
       putData(
         `/api/users/${user._id}`,
         form,
-        () => {
-          afterConfirm()
+        (data) => {
+          afterConfirm(data)
           onClose()
         },
         'Данные учетной записи обновлены',
