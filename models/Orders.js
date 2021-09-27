@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+const autoIncrement = require('mongoose-auto-increment')
 // import DeliveryAddressesSchema from './DeliveryAddresses'
 
 const OrdersSchema = new mongoose.Schema({
@@ -14,10 +15,10 @@ const OrdersSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  number: {
-    type: Number,
-    default: 0,
-  },
+  // number: {
+  //   type: Number,
+  //   default: 0,
+  // },
   discount: {
     type: Number,
     default: 0,
@@ -75,6 +76,15 @@ const OrdersSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+})
+
+OrdersSchema.plugin(autoIncrement.plugin, {
+  model: 'Orders',
+  field: 'number',
+  startAt: 1,
+  incrementBy: 1,
+  type: Number,
+  unique: false,
 })
 
 export default mongoose.models.Orders || mongoose.model('Orders', OrdersSchema)

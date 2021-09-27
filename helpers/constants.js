@@ -79,7 +79,7 @@ export const DEFAULT_DELIVERY_ADDRESS = {
 }
 
 export const DEFAULT_ORDER = {
-  number: 0,
+  // number: 0,
   clientId: '',
   productsCount: [],
   setsCount: [],

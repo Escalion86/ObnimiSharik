@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+const autoIncrement = require('mongoose-auto-increment')
 
 // const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.0ogkw.mongodb.net/${process.env.MONGODB_DBNAME}?retryWrites=true&w=majority`
 const MONGODB_URI = process.env.MONGODB_URI
@@ -36,6 +37,7 @@ async function dbConnect() {
     })
   }
   cached.conn = await cached.promise
+  autoIncrement.initialize(cached.conn)
   return cached.conn
 }
 
