@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faEquals } from '@fortawesome/free-solid-svg-icons'
 
 const ProductCirculationForm = ({
+  role,
   productCirculation = DEFAULT_PRODUCT_CIRCULATION,
   afterConfirm = () => {},
   onClose = () => {},

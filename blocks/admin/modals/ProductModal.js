@@ -2,6 +2,7 @@ import { ProductForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const ProductModal = ({
+  role,
   product,
   onClose = () => {},
   afterConfirm = () => {},
@@ -9,7 +10,7 @@ const ProductModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={product?._id && onDelete}>
-      <ProductForm product={product} afterConfirm={afterConfirm} />
+      <ProductForm product={product} afterConfirm={afterConfirm} role={role} />
     </Modal>
   )
 }

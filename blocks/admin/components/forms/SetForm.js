@@ -18,6 +18,7 @@ import RowContainer from './forForms/RowContainer'
 import FormColumn from './forForms/FromColumn'
 
 const SetForm = ({
+  role,
   set = DEFAULT_SET,
   afterConfirm = () => {},
   onClose = () => {},

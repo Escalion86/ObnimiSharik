@@ -11,6 +11,7 @@ import compareObjects from '@helpers/compareObjects'
 import RowContainer from './forForms/RowContainer'
 
 const UserForm = ({
+  role,
   user = DEFAULT_USER,
   afterConfirm = () => {},
   onClose = () => {},

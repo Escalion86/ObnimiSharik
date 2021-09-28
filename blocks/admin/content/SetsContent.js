@@ -20,8 +20,7 @@ const SetsContent = ({ data, modals, user }) => {
         <SetCard
           key={set._id}
           set={set}
-          // productsWithCount={productsWithCount}
-          // count={countSet ? countSet : 0}
+          role={user.role}
           onClick={() => modals.openSetModal(set)}
           onEdit={() => modals.openSetModal(set, true)}
           onClone={() => {

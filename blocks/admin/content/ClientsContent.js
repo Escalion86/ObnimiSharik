@@ -13,6 +13,7 @@ const ClientsContent = ({ data, modals, user }) => {
         <ClientCard
           key={client._id}
           client={client}
+          role={user.role}
           onClick={() => modals.openClientModal(client)}
           onEdit={() => modals.openClientModal(client, true)}
           onDelete={() => modals.openDeleteClient(client)}

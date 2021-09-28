@@ -17,6 +17,7 @@ import compareObjects from '@helpers/compareObjects'
 import RowContainer from './forForms/RowContainer'
 
 const ProductForm = ({
+  role,
   product = DEFAULT_PRODUCT,
   afterConfirm = () => {},
   onClose = () => {},

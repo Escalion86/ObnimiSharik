@@ -2,6 +2,7 @@ import { ClientForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const ClientModal = ({
+  role,
   client,
   onClose = () => {},
   afterConfirm = () => {},
@@ -9,7 +10,7 @@ const ClientModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={client?._id && onDelete}>
-      <ClientForm client={client} afterConfirm={afterConfirm} />
+      <ClientForm client={client} afterConfirm={afterConfirm} role={role} />
     </Modal>
   )
 }

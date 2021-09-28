@@ -13,6 +13,7 @@ const OrdersContent = ({ data, modals, user }) => {
         <OrderCard
           key={order._id}
           order={order}
+          role={user.role}
           onClick={() => modals.openOrderModal(order)}
           onEdit={() => modals.openOrderModal(order, true)}
           onDelete={() => modals.openDeleteOrder(order)}

@@ -14,6 +14,7 @@ const ProductCirculationsContent = ({ data, modals, user }) => {
         <ProductCirculationCard
           key={productCirculation._id}
           productCirculation={productCirculation}
+          role={user.role}
           onClick={() => modals.openProductCirculationModal(productCirculation)}
           onAdd={() =>
             modals.openProductCirculationModal({

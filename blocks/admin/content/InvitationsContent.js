@@ -13,6 +13,7 @@ const InvitationsContent = ({ data, modals, user }) => {
         <InvitationCard
           key={invitation._id}
           invitation={invitation}
+          role={user.role}
           onClick={() => modals.openInvitationModal(invitation)}
           onEdit={() => modals.openInvitationModal(invitation, true)}
           onDelete={() => modals.openDeleteInvitation(invitation)}

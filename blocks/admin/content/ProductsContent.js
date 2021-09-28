@@ -21,7 +21,7 @@ const ProductsContent = ({ data, modals, user }) => {
         <ProductCard
           key={product._id}
           product={product}
-          // count={countProductCirculations[product._id]}
+          role={user.role}
           onClick={() => modals.openProductModal(product)}
           onEdit={() => modals.openProductModal(product, true)}
           onBuying={() =>

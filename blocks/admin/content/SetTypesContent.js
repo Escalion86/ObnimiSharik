@@ -15,6 +15,7 @@ const SetTypesContent = ({ data, modals, user }) => {
         <TypeCard
           key={setType._id}
           type={setType}
+          role={user.role}
           onClick={() => modals.openSetTypeModal(setType)}
           onAdd={() =>
             modals.openSetModal({

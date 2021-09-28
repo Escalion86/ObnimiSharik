@@ -10,6 +10,7 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
 const SetTypeForm = ({
+  role,
   setType = DEFAULT_SET_TYPE,
   afterConfirm = () => {},
   onClose = () => {},

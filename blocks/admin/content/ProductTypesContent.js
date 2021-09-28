@@ -15,6 +15,7 @@ const ProductTypesContent = ({ data, modals, user }) => {
         <TypeCard
           key={productType._id}
           type={productType}
+          role={user.role}
           onClick={() => modals.openProductTypeModal(productType)}
           onAdd={() =>
             modals.openProductModal({

@@ -11,6 +11,7 @@ import roleRus from '@helpers/roleRus'
 import compareObjects from '@helpers/compareObjects'
 
 const UserContentForm = ({
+  role,
   user = DEFAULT_USER,
   afterConfirm = () => {},
   onClose = () => {},

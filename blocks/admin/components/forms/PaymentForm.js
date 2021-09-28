@@ -10,6 +10,7 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
 const PaymentForm = ({
+  role,
   payment = DEFAULT_PAYMENT,
   afterConfirm = () => {},
   onClose = () => {},

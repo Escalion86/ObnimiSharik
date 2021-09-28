@@ -10,6 +10,7 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
 const ClientForm = ({
+  role,
   client = DEFAULT_CLIENT,
   afterConfirm = () => {},
   onClose = () => {},

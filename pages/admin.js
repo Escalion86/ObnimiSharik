@@ -109,7 +109,13 @@ export default function Admin() {
 
   const dispatch = useDispatch()
 
-  const modals = modalsFunctions(dispatch, state)
+  const modals = !loading
+    ? modalsFunctions(
+        dispatch,
+        state,
+        session?.user ? session?.user?.role : 'client'
+      )
+    : null
 
   // const router = useRouter()
   // const [page, setPage] = useState(pages[0])

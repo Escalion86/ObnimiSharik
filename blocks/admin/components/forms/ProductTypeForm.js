@@ -10,6 +10,7 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
 const ProductTypeForm = ({
+  role,
   productType = DEFAULT_PRODUCT_TYPE,
   afterConfirm = () => {},
   onClose = () => {},

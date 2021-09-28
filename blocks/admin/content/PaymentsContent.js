@@ -13,6 +13,7 @@ const PaymentsContent = ({ data, modals, user }) => {
         <PaymentCard
           key={payment._id}
           order={payment}
+          role={user.role}
           onClick={() => modals.openPaymentModal(payment)}
           onEdit={() => modals.openPaymentModal(payment, true)}
           onDelete={() => modals.openDeletePayment(payment)}
