@@ -72,13 +72,9 @@ const Cabinet = ({
   //   // onClickBtnFilter = () => dispatch(toggleProductsFilterShow())
   // }
 
-  const btnFilterActive = useMemo(
-    () =>
-      !compareObjects(
-        state.filter[page.variable],
-        filterInitialState[page.variable]
-      ),
-    [page.variable, JSON.stringify(state.filter[page.variable])]
+  const btnFilterActive = !compareObjects(
+    state.filter[page.variable],
+    filterInitialState[page.variable]
   )
 
   const BtnFilter = ({ key }) => (
