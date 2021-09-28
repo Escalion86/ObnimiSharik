@@ -33,6 +33,10 @@ const OrdersSchema = new mongoose.Schema({
     type: String,
     default: 'created',
   },
+  comment: {
+    type: String,
+    default: '',
+  },
   deliveryPickup: {
     type: Boolean,
     default: true,

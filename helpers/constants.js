@@ -86,6 +86,7 @@ export const DEFAULT_ORDER = {
   discount: 0,
   fullPrice: 0,
   status: 'created',
+  comment: '',
   deliveryPickup: true,
   deliveryAddress: DEFAULT_DELIVERY_ADDRESS,
   deliveryDateFrom: new Date().toISOString(),
