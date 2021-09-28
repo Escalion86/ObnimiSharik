@@ -6,7 +6,7 @@ import { setFilter } from '@state/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import toasts from '@helpers/toasts'
 
-const ProductsContent = ({ data, modals }) => {
+const ProductsContent = ({ data, modals, user }) => {
   const { filter } = useSelector((state) => state)
 
   const dispatch = useDispatch()

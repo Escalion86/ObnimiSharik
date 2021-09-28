@@ -2,7 +2,7 @@ import React from 'react'
 import { ClientCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
-const ClientsContent = ({ data, modals }) => {
+const ClientsContent = ({ data, modals, user }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Клиентов нет'</div>
 

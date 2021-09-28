@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { DEFAULT_PRODUCT } from '@helpers/constants'
 import { Virtuoso } from 'react-virtuoso'
 
-const ProductTypesContent = ({ data, modals }) => {
+const ProductTypesContent = ({ data, modals, user }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Типов продуктов нет'</div>
 

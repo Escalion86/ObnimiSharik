@@ -2,7 +2,7 @@ import React from 'react'
 import { InvitationCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
-const InvitationsContent = ({ data, modals }) => {
+const InvitationsContent = ({ data, modals, user }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Приглашений нет'</div>
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TestContent = ({ user, modals }) => {
+const TestContent = ({ data, modals, user }) => {
   return <div className="px-3"></div>
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { OrderCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
-const OrdersContent = ({ data, modals }) => {
+const OrdersContent = ({ data, modals, user }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Заказов нет'</div>
 

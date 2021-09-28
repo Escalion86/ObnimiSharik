@@ -6,7 +6,7 @@ import { UserContentForm } from '@admincomponents/forms'
 
 // const
 
-const UserContent = ({ data, user, modals }) => {
+const UserContent = ({ data, modals, user }) => {
   return (
     <div className="px-3">
       {/* <SubTitle title="Экспорт/Импорт" /> */}

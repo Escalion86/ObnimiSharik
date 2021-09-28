@@ -2,7 +2,7 @@ import React from 'react'
 import { PaymentCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
-const PaymentsContent = ({ data, modals }) => {
+const PaymentsContent = ({ data, modals, user }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Транзакций нет'</div>
 

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { Doughnut } from 'react-chartjs-2'
 import SubTitle from '@admincomponents/SubTitle'
 
-const DougnutContent = ({ title, data }) => {
+const DougnutContent = ({ title, data, user }) => {
   const dataTotal = data.length
   const dataInStock = data.filter((item) => item.count > 0).length
   const dataOutOfStock = dataTotal - dataInStock

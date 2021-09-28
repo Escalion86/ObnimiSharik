@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setFilter } from '@state/actions'
 import toasts from '@helpers/toasts'
 
-const SetsContent = ({ data, modals }) => {
+const SetsContent = ({ data, modals, user }) => {
   const { filter } = useSelector((state) => state)
 
   const dispatch = useDispatch()
