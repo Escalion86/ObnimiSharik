@@ -219,10 +219,15 @@ export const SelectProduct = ({
   selectedId = null,
   exceptedIds = [],
   required = false,
+  className = null,
 }) => {
   const { products } = useSelector((state) => state)
   return (
-    <SelectItemContainer required={required} label="Товар">
+    <SelectItemContainer
+      required={required}
+      label="Товар"
+      className={className}
+    >
       <SelectItem
         items={products}
         onChange={onChange}
@@ -239,10 +244,15 @@ export const SelectSet = ({
   selectedId = null,
   exceptedIds = [],
   required = false,
+  className = null,
 }) => {
   const { sets } = useSelector((state) => state)
   return (
-    <SelectItemContainer required={required} label="Набор">
+    <SelectItemContainer
+      required={required}
+      label="Набор"
+      className={className}
+    >
       <SelectItem
         items={sets}
         onChange={onChange}
@@ -260,10 +270,15 @@ export const SelectClient = ({
   selectedId = null,
   exceptedIds = [],
   required = false,
+  className = null,
 }) => {
   const { clients } = useSelector((state) => state)
   return (
-    <SelectItemContainer required={required} label="Клиент">
+    <SelectItemContainer
+      required={required}
+      label="Клиент"
+      className={className}
+    >
       <SelectItem
         items={clients}
         itemComponent={PersonaItem}
@@ -276,8 +291,8 @@ export const SelectClient = ({
   )
 }
 
-const SelectItemContainer = ({ required, label, children }) => (
-  <div className="flex flex-col">
+const SelectItemContainer = ({ required, label, className, children }) => (
+  <div className={'flex flex-col' + (className ? ' ' + className : '')}>
     <label htmlFor="client">
       {label}
       {required && <span className="text-red-700">*</span>}
@@ -291,11 +306,16 @@ export const SelectDeliver = ({
   selectedId = null,
   exceptedIds = [],
   required = false,
+  className = null,
 }) => {
   const { users } = useSelector((state) => state)
   const delivers = users.filter((user) => user.role === 'deliver')
   return (
-    <SelectItemContainer required={required} label="Курьер">
+    <SelectItemContainer
+      required={required}
+      label="Курьер"
+      className={className}
+    >
       <SelectItem
         items={delivers}
         itemComponent={PersonaItem}

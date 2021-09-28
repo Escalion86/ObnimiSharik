@@ -1,3 +1,4 @@
+import React from 'react'
 import Button from '@components/Button'
 
 const Form = ({
@@ -13,6 +14,25 @@ const Form = ({
   onClose = () => {},
   componentBeforeButton = null,
 }) => {
+  let childrenWithProps = children
+  if (twoCols) {
+    const updatedChildren = []
+    children.forEach((child, index) => {
+      if (index > 0)
+        updatedChildren.push(
+          <div className="w-0 border-gray-400 border-l-1 laptop:visible" />
+        )
+      updatedChildren.push(child)
+    })
+    childrenWithProps = React.Children.map(updatedChildren, (child, index) => {
+      // Checking isValidElement is the safe way and avoids a typescript
+      // error too.
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child, { key: 'formChild' + index })
+      }
+      return child
+    })
+  }
   return (
     <>
       <div className="flex flex-col gap-y-2">
@@ -21,11 +41,11 @@ const Form = ({
         )}
         <div
           className={
-            'flex gap-y-1 ' +
-            (twoCols ? 'flex-col laptop:flex-row' : 'flex-col')
+            'flex gap-y-1 gap-x-2' +
+            (twoCols ? ' flex-col laptop:flex-row' : ' flex-col')
           }
         >
-          {children}
+          {childrenWithProps}
         </div>
         {componentBeforeButton}
         <div className="flex justify-center gap-2">

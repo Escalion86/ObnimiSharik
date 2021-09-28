@@ -60,6 +60,46 @@ export const ROLES = [
   { name: 'Разработчик', value: 'dev', hidden: true },
 ]
 
+export const ORDER_STATUSES = [
+  { name: 'Черновик', value: 'draft', roles: ['operator', 'admin'] },
+  {
+    name: 'Передан аэродизайнеру',
+    value: 'aerodesigner',
+    roles: ['operator', 'aerodesigner', 'admin'],
+  },
+  {
+    name: 'Товар отложен',
+    value: 'postponed',
+    roles: ['operator', 'aerodesigner', 'admin'],
+  },
+  {
+    name: 'Готов к выдаче',
+    value: 'readyForReceive',
+    roles: ['operator', 'aerodesigner', 'admin'],
+    requirements: { deliveryPickup: true },
+  },
+  {
+    name: 'Готов к доставке',
+    value: 'readyForDelivery',
+    roles: ['operator', 'aerodesigner', 'deliver', 'admin'],
+    requirements: { deliveryPickup: false },
+  },
+  {
+    name: 'Доставляется',
+    value: 'deliveryInProcess',
+    roles: ['operator', 'deliver', 'admin'],
+    requirements: { deliveryPickup: false },
+  },
+  {
+    name: 'Доставлен',
+    value: 'delivered',
+    roles: ['operator', 'deliver', 'admin'],
+    requirements: { deliveryPickup: false },
+  },
+  { name: 'Выполнен', value: 'completed', roles: ['operator', 'admin'] },
+  { name: 'Отменен', value: 'canceled', roles: ['operator', 'admin'] },
+]
+
 export const DEFAULT_PRODUCT_CIRCULATION = {
   productId: '',
   price: 0,
@@ -85,7 +125,7 @@ export const DEFAULT_ORDER = {
   setsCount: [],
   discount: 0,
   fullPrice: 0,
-  status: 'created',
+  status: 'draft',
   comment: '',
   deliveryPickup: true,
   deliveryAddress: DEFAULT_DELIVERY_ADDRESS,
