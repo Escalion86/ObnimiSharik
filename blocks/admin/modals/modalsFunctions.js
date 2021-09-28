@@ -138,7 +138,7 @@ const modals = (dispatch, data) => {
           />
         ))
       ),
-    openTildaImportModal: () =>
+    openTildaImportModal: (afterConfirm) =>
       dispatch(
         addModal((modalId) => (
           <TildaImportModal
