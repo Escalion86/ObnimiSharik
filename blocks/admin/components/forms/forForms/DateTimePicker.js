@@ -1,23 +1,4 @@
-function formatDateTime(dateTime) {
-  if (!dateTime) return undefined
-  var d = new Date(dateTime),
-    minutes = '' + d.getMinutes(),
-    hours = '' + d.getHours(),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear()
-
-  if (month.length < 2) month = '0' + month
-  if (day.length < 2) day = '0' + day
-  if (hours.length < 2) hours = '0' + hours
-  if (minutes.length < 2) minutes = '0' + minutes
-  // if (minutes == 60) {
-  //   minutes = 59
-  //   hours -= 1
-  // }
-
-  return [year, month, day].join('-') + 'T' + [hours, minutes].join(':')
-}
+import formatDateTime from '@helpers/formatDateTime'
 
 const DateTimePicker = ({
   label = '',
