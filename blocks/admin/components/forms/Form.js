@@ -11,6 +11,7 @@ const Form = ({
   cancelButton = false,
   twoCols = false,
   onClose = () => {},
+  componentBeforeButton = null,
 }) => {
   return (
     <>
@@ -26,6 +27,7 @@ const Form = ({
         >
           {children}
         </div>
+        {componentBeforeButton}
         <div className="flex justify-center gap-2">
           <Button
             onClick={() => {
