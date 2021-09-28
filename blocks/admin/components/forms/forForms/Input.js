@@ -2,7 +2,7 @@ const InputComponent = (props) => {
   const newProps = { ...props }
   delete newProps['textarea']
   return props.textarea ? (
-    <textarea {...newProps} rows={4} />
+    <textarea {...newProps} rows={3} />
   ) : (
     <input {...newProps} />
   )
