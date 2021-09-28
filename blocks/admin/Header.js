@@ -44,7 +44,7 @@ const UserMenu = ({
               >
                 <Menu.Items
                   static
-                  className="absolute z-0 w-56 py-1 mt-2 origin-top-right bg-white border divide-y divide-gray-100 rounded-md shadow-lg border-primary -top-2 right-5 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="absolute w-56 py-1 mt-2 origin-top-right bg-white border divide-y divide-gray-100 rounded-md shadow-lg border-primary -top-2 right-5 ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
                   <div>
                     <div className="flex items-center pt-1 pl-3 pr-6 text-sm italic font-semibold text-gray-900 min-h-11">
@@ -142,7 +142,7 @@ const Header = ({
   onSignOut = () => {},
 }) => {
   return (
-    <div className="top-0 z-30 border-b border-primary bg-primary">
+    <div className="top-0 z-40 border-b border-primary bg-primary">
       <header className="px-6">
         <div className="flex items-center justify-between py-3 border-gray-200">
           <div className="flex items-center flex-1 gap-2">
