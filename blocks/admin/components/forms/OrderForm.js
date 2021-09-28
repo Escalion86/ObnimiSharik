@@ -56,6 +56,7 @@ const OrderForm = ({
     discount: order.discount,
     fullPrice: order.fullPrice,
     status: order.status,
+    comment: order.comment,
     deliveryPickup: order.deliveryPickup,
     deliveryAddress: order.deliveryAddress,
     deliveryDateFrom: order.deliveryDateFrom,
@@ -93,15 +94,19 @@ const OrderForm = ({
     }
   }, [])
 
-  const productsIdCount = {}
-  form.productsCount.forEach((productCount) => {
-    productsIdCount[productCount.product ? productCount.product._id : '?'] =
-      productCount.count
-  })
-  const setsIdCount = {}
-  form.setsCount.forEach((setCount) => {
-    setsIdCount[setCount.set ? setCount.set._id : '?'] = setCount.count
-  })
+  const productsIdCount = form.productsCount.reduce((total, productCount) => {
+    return {
+      ...total,
+      [productCount.product ? productCount.product._id : '?']:
+        productCount.count,
+    }
+  }, {})
+  const setsIdCount = form.setsCount.reduce((total, setCount) => {
+    return {
+      ...total,
+      [setCount.set ? setCount.set._id : '?']: setCount.count,
+    }
+  }, {})
 
   const forNew = order._id === undefined
 
@@ -130,20 +135,27 @@ const OrderForm = ({
     })
   }
 
-  let catalogPrice = 0
-  form.productsCount.forEach((productCount) => {
-    if (productCount.product)
-      catalogPrice +=
-        products.find((product) => product._id === productCount.product._id)
-          .price * productCount.count
-  })
-  form.setsCount.forEach((setCount) => {
-    if (setCount.set)
-      catalogPrice +=
-        sets.find((set) => set._id === setCount.set._id).price * setCount.count
-  })
-  catalogPrice = catalogPrice / 100
-  let totalPrice = catalogPrice - form.discount / 100
+  const catalogProductsPrice = form.productsCount.reduce(
+    (totalProductsCount, productCount) => {
+      if (productCount.product) {
+        const product = products.find(
+          (product) => product._id === productCount.product._id
+        )
+        if (product) totalProductsCount += product.price * productCount.count
+      }
+      return totalProductsCount
+    },
+    0
+  )
+  const catalogSetsPrice = form.setsCount.reduce((totalSetsCount, setCount) => {
+    if (setCount.set) {
+      const set = sets.find((set) => set._id === setCount.set._id)
+      if (set) totalSetsCount += set.price * setCount.count
+    }
+    return totalSetsCount
+  }, 0)
+  const catalogPrice = (catalogProductsPrice + catalogSetsPrice) / 100
+  const totalPrice = catalogPrice - form.discount / 100
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -193,6 +205,11 @@ const OrderForm = ({
         Object.keys(formValidate()).length !== 0 || compareObjects(form, order)
       }
       twoCols={true}
+      componentBeforeButton={
+        <div className="flex items-end justify-center flex-1 h-8 font-bold gap-x-1">
+          Итого сумма:<span className="text-lg">{totalPrice}</span> ₽
+        </div>
+      }
     >
       <FormColumn>
         <div className="flex items-center">
@@ -285,20 +302,25 @@ const OrderForm = ({
           labelStyle="w-min pr-1 whitespace-nowrap"
           inLine
         /> */}
-        <div className="flex flex-col items-center justify-start mt-1 phoneH:justify-between tablet:flex-row">
-          <PriceInput
-            value={form.discount / 100}
-            onChange={handleChange}
-            title="Скидка"
-            className="flex-1 w-full"
-            name="discount"
-            labelStyle="w-min pr-1 whitespace-nowrap"
-            inLine
-          />
-          <div className="flex items-center h-8 font-bold gap-x-1">
-            Итого сумма:<span className="text-lg">{totalPrice}</span> ₽
-          </div>
-        </div>
+        <PriceInput
+          value={form.discount / 100}
+          onChange={handleChange}
+          title="Скидка"
+          className="flex-1 w-full"
+          name="discount"
+          labelStyle="w-min pr-1 whitespace-nowrap"
+          inLine
+        />
+        <Input
+          key="comment"
+          label="Комментарий"
+          type="text"
+          maxLength="600"
+          name="comment"
+          value={form.comment}
+          onChange={handleChange}
+          textarea
+        />
       </FormColumn>
       <FormColumn>
         <div className="flex gap-x-6">
