@@ -1,6 +1,7 @@
 import Card from './Card'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
+import formatDateTime from '@helpers/formatDateTime'
 
 export const OrderCard = ({
   order,
@@ -11,9 +12,13 @@ export const OrderCard = ({
   return (
     <Card inLine onClick={() => onClick(order)}>
       <CardContainer>
-        <div className="items-center flex-1">
-          <div className="flex flex-col flex-wrap justify-between gap-x-4 phoneH:flex-row">
-            <div className="font-semibold">Номер заказа: {order.number}</div>
+        <div className="flex items-center flex-1 gap-x-2">
+          <div>{formatDateTime(order.deliveryDateFrom, true)}</div>
+          <div className="flex flex-col flex-wrap justify-between flex-1 gap-x-4 phoneH:flex-row">
+            <div className="font-semibold">№ {order.number}</div>
+          </div>
+          <div className="font-bold whitespace-nowrap">
+            {order.fullPrice / 100} ₽
           </div>
         </div>
         {/* <div className="text-right"> */}
