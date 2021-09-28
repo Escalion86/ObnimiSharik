@@ -140,8 +140,8 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
             product &&
             // !product['Text'] &&
             product['Category'] &&
-            !product['Text']
-          // !product['Category'].includes('Набор')
+            // !product['Text']
+            !product['Category'].includes('Набор')
         )
         .map(mapProduct)
       const parsedSets = parseResult['data']
@@ -150,8 +150,8 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
             product &&
             // product['Text']
             product['Category'] &&
-            product['Text']
-          // product['Category'].includes('Набор')
+            // product['Text']
+            product['Category'].includes('Набор')
         )
         .map(mapSet)
 
