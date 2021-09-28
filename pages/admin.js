@@ -87,21 +87,20 @@ import { setPage } from '@state/actions/pageActions'
 // import { setProductCirculations } from '@state/actions/productCirculationsActions'
 import { pages, pagesGroups } from '@adminblocks/pages'
 
-const menuCfg = (pages, pagesGroups, userRole) => {
-  let result = []
-  pagesGroups.forEach((group) => {
-    let items = []
-    pages.forEach((page) => {
+const menuCfg = (pages, pagesGroups, userRole) =>
+  pagesGroups.reduce((totalGroups, group) => {
+    const pagesItems = pages.reduce((totalPages, page) => {
       if (
         page.group === group.id &&
         (userRole === 'dev' || page.accessRoles.includes(userRole))
       )
-        items.push(page)
-    })
-    if (items.length > 0) result.push({ name: group.name, items })
-  })
-  return result
-}
+        totalPages.push(page)
+      return totalPages
+    }, [])
+    if (pagesItems.length > 0)
+      totalGroups.push({ name: group.name, items: pagesItems })
+    return totalGroups
+  }, [])
 
 export default function Admin() {
   const [session, loading] = useSession()
