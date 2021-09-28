@@ -167,6 +167,26 @@ export const pages = [
     accessRoles: [],
     variable: null,
   },
+  {
+    id: 13,
+    group: 0,
+    name: 'Аэродизайнер',
+    pageContent: OrdersContent,
+    pageButtons: [],
+    backToPageId: 0,
+    accessRoles: ['aerodesigner'],
+    variable: 'orders',
+  },
+  {
+    id: 14,
+    group: 0,
+    name: 'Курьер',
+    pageContent: OrdersContent,
+    pageButtons: [],
+    backToPageId: 0,
+    accessRoles: ['deliver'],
+    variable: 'orders',
+  },
 ]
 
 export const pagesGroups = [

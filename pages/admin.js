@@ -121,6 +121,16 @@ export default function Admin() {
   // const [page, setPage] = useState(pages[0])
   const { page } = state
 
+  const setPageId = (id, props = {}) => {
+    pages.some((page) => {
+      if (page.id === id) {
+        dispatch(setPage(page))
+        // setPage({ ...page, ...props })
+        return true
+      }
+    })
+  }
+
   useEffect(() => {
     if (!session && !loading) {
       signIn('google')
@@ -134,18 +144,11 @@ export default function Admin() {
         // await dispatch(setModalsFunctions(result))
       }
       fetching()
+      const role = session.user.role
+      if (role === 'deliver') setPageId(14)
+      if (role === 'aerodesigner') setPageId(13)
     }
   }, [!!session, loading])
-
-  const setPageId = (id, props = {}) => {
-    pages.some((page) => {
-      if (page.id === id) {
-        dispatch(setPage(page))
-        // setPage({ ...page, ...props })
-        return true
-      }
-    })
-  }
 
   const haveAccess =
     session?.user?.role &&
@@ -153,12 +156,12 @@ export default function Admin() {
 
   return (
     <>
-      {(!session || loading) && (
+      {!state.loaded && (
         <div className="flex items-center justify-center h-screen">
           <Spinner />
         </div>
       )}
-      {session && !loading && (
+      {state.loaded && (
         <>
           {haveAccess ? (
             <>

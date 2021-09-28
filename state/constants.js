@@ -30,3 +30,5 @@ export const SET_FILTER = 'SET_FILTER'
 export const SET_SORTING = 'SET_SORTING'
 
 export const SET_PAGE = 'SET_PAGE'
+
+export const SET_LOADED = 'SET_LOADED'
