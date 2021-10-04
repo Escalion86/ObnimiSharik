@@ -2,7 +2,13 @@ import { useState } from 'react'
 
 import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 
-import { ComboBox, Input, PriceInput, SelectProduct } from './forForms'
+import {
+  CheckBox,
+  ComboBox,
+  Input,
+  PriceInput,
+  SelectProduct,
+} from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -30,6 +36,7 @@ const ProductCirculationForm = ({
     orderId: productCirculation.orderId,
     purchase: productCirculation.purchase,
     purchasedAt: productCirculation.purchasedAt,
+    defective: productCirculation.defective,
   })
 
   const forNew = productCirculation._id === undefined
@@ -40,8 +47,14 @@ const ProductCirculationForm = ({
 
   const handleChange = (e) => {
     const target = e.target
-    const value = target.name === 'price' ? target.value * 100 : target.value
+    const value =
+      target.name === 'price'
+        ? target.value * 100
+        : // : target.name === 'defective'
+          // ? target.value === 'on'
+          target.value
     const name = target.name
+
     setForm({
       ...form,
       [name]: value,
@@ -150,7 +163,7 @@ const ProductCirculationForm = ({
       />
       <div className="flex justify-between gap-x-1">
         <PriceInput
-          title="Стоимость за шт"
+          label="Стоимость за шт"
           value={form.price / 100}
           onChange={handleChange}
           required
@@ -204,6 +217,17 @@ const ProductCirculationForm = ({
         // value={productCirculation.createdAt}
         onChange={handleChange}
         required
+      />
+      <CheckBox
+        label="Брак"
+        checked={form.defective}
+        // name="defective"
+        onChange={() =>
+          setForm({
+            ...form,
+            defective: !form.defective,
+          })
+        }
       />
     </Form>
   )

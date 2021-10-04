@@ -107,6 +107,7 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
   orderId: '',
   purchase: false,
   purchasedAt: new Date().toISOString(),
+  defective: false,
 }
 
 export const DEFAULT_DELIVERY_ADDRESS = {
