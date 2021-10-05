@@ -107,6 +107,16 @@ export const SelectItem = ({
   const filteredItems = (
     searchText || exceptedIds.length > 0
       ? items.filter((item) => {
+          if (searchText[0] === '>') {
+            return item.price > parseInt(searchText.substr(1)) * 100
+          }
+          if (searchText[0] === '<') {
+            return item.price < parseInt(searchText.substr(1)) * 100
+          }
+          if (searchText[0] === '=') {
+            return item.price === parseInt(searchText.substr(1)) * 100
+          }
+
           const searchTextLowerCase = searchText.toLowerCase()
           const itemNameLowerCase = item.name.toLowerCase()
           return (
@@ -114,7 +124,8 @@ export const SelectItem = ({
             (itemNameLowerCase.includes(searchTextLowerCase) ||
               item.article?.includes(searchTextLowerCase) ||
               item.phone?.toString().includes(searchTextLowerCase) ||
-              item.whatsapp?.toString().includes(searchTextLowerCase))
+              item.whatsapp?.toString().includes(searchTextLowerCase) ||
+              item.price?.toString().includes(searchTextLowerCase))
           )
         })
       : items
