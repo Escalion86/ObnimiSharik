@@ -12,3 +12,4 @@ export {
   SelectClient,
 } from './SelectItem'
 export { ItemsList, ProductsList, SetsList } from './ItemsList'
+export { default as CheckBox } from './CheckBox'
