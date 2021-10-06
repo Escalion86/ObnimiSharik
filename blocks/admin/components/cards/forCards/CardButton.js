@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { Tooltip } from '@material-ui/core'
 
 const CardButton = ({
   name = '',
@@ -7,18 +8,25 @@ const CardButton = ({
   className = '',
   icon = faQuestion,
   disabled = false,
+  tooltip = null,
 }) => (
-  <button
-    onClick={onClick}
-    className={
-      'h-full w-8 whitespace-nowrap shadow font-futuraDemi flex items-center justify-center hover:bg-toxic' +
-      (className ? ' ' + className : '')
-    }
-    disabled={disabled}
+  <Tooltip
+    title={<div className="text-xs">{tooltip}</div>}
+    arrow
+    placement="top"
   >
-    <FontAwesomeIcon className="w-3 h-3 text-white" icon={icon} />
-    {name}
-  </button>
+    <button
+      onClick={onClick}
+      className={
+        'h-full w-8 whitespace-nowrap shadow font-futuraDemi flex items-center justify-center hover:bg-toxic' +
+        (className ? ' ' + className : '')
+      }
+      disabled={disabled}
+    >
+      <FontAwesomeIcon className="w-3 h-3 text-white" icon={icon} />
+      {name}
+    </button>
+  </Tooltip>
 )
 
 export default CardButton

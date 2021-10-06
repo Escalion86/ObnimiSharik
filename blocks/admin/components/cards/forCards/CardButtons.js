@@ -35,6 +35,7 @@ const CardButtons = ({
         className="bg-yellow-400"
         inverse
         icon={faCartPlus}
+        tooltip="Покупка"
       />
     )}
     {onAdd && (
@@ -46,6 +47,7 @@ const CardButtons = ({
         className="bg-green-400"
         inverse
         icon={faPlus}
+        tooltip="Создать"
       />
     )}
     {onEdit && (
@@ -57,6 +59,7 @@ const CardButtons = ({
         className="bg-primary"
         inverse
         icon={faPencilAlt}
+        tooltip="Редактировать"
       />
     )}
     {onClone && (
@@ -68,6 +71,7 @@ const CardButtons = ({
         className="bg-purple-400"
         inverse
         icon={faClone}
+        tooltip="Создать копию"
       />
     )}
     {onDelete && (
@@ -79,6 +83,7 @@ const CardButtons = ({
         className="bg-red-400"
         inverse
         icon={faTrash}
+        tooltip="Удалить"
       />
     )}
   </div>
