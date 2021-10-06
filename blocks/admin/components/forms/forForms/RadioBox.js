@@ -6,7 +6,12 @@ const RadioBox = ({
   label = null,
   labelPos = 'right',
   className = null,
+  readOnly = false,
 }) => {
+  if (readOnly && !checked) return null
+  if (readOnly)
+    return <span className="font-normal dark:text-white">{label}</span>
+
   const Label = () => (
     <span className="font-normal text-gray-700 dark:text-white">{label}</span>
   )
