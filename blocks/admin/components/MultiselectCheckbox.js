@@ -10,6 +10,7 @@ const MultiselectCheckbox = ({
   className = null,
   getAll = false,
   noScroll = false,
+  readOnly = false,
 }) => {
   const [data, setData] = useState(options)
 
@@ -35,6 +36,22 @@ const MultiselectCheckbox = ({
     setData(newData)
     onChange(getAll ? newData : newData.filter((x) => x.checked))
   }
+
+  if (readOnly)
+    return (
+      <div className="">
+        <div className="border-b-1 border-primary max-w-min whitespace-nowrap">
+          {title}:
+        </div>
+        <div className="flex flex-col ml-2 italic">
+          {data
+            .filter((item) => item.checked)
+            .map((item) => (
+              <span>- {item.label}</span>
+            ))}
+        </div>
+      </div>
+    )
 
   return (
     <div
