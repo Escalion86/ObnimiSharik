@@ -22,6 +22,7 @@ const SetForm = ({
   set = DEFAULT_SET,
   afterConfirm = () => {},
   onClose = () => {},
+  readOnly = true,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -111,7 +112,13 @@ const SetForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние набора' : 'Редактирование набора'}
+      title={
+        readOnly
+          ? 'Набор: ' + form.name
+          : forNew
+          ? 'Создние набора'
+          : 'Редактирование набора'
+      }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
@@ -119,6 +126,7 @@ const SetForm = ({
         Object.keys(formValidate()).length !== 0 || compareObjects(form, set)
       }
       twoCols={true}
+      readOnly={readOnly}
     >
       <FormColumn>
         <Input
@@ -130,6 +138,8 @@ const SetForm = ({
           value={form.name}
           onChange={handleChange}
           required
+          // readOnly={readOnly}
+          hidden={readOnly}
         />
         <Input
           key="description"
@@ -140,6 +150,7 @@ const SetForm = ({
           value={form.description}
           onChange={handleChange}
           textarea
+          readOnly={readOnly}
         />
         <RowContainer>
           <Input
@@ -151,12 +162,16 @@ const SetForm = ({
             value={form.article}
             onChange={handleChange}
             className="flex-1"
+            readOnly={readOnly}
+            inLine={readOnly}
           />
           <PriceInput
             value={form.price / 100}
             onChange={handleChange}
             required
             className="flex-1"
+            readOnly={readOnly}
+            inLine={readOnly}
           />
         </RowContainer>
         <MultiselectCheckbox
@@ -175,6 +190,7 @@ const SetForm = ({
             })
             // console.log('checked', data)
           }}
+          readOnly={readOnly}
         />
       </FormColumn>
       <FormColumn className="flex flex-col flex-1">
@@ -186,6 +202,7 @@ const SetForm = ({
               productsIdCount: newProductsIdCount,
             })
           }
+          readOnly={readOnly}
         />
         <InputImages
           images={form.images}
@@ -203,6 +220,7 @@ const SetForm = ({
               })
             )
           }
+          readOnly={readOnly}
         />
       </FormColumn>
     </Form>
