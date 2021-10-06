@@ -1,4 +1,4 @@
-function formatDateTime(dateTime, noT = false) {
+function formatDateTime(dateTime, forComponent = false) {
   if (!dateTime) return undefined
   var d = new Date(dateTime),
     minutes = '' + d.getMinutes(),
@@ -12,11 +12,9 @@ function formatDateTime(dateTime, noT = false) {
   if (hours.length < 2) hours = '0' + hours
   if (minutes.length < 2) minutes = '0' + minutes
 
-  return (
-    [year, month, day].join('-') +
-    (noT ? ' ' : 'T') +
-    [hours, minutes].join(':')
-  )
+  if (forComponent)
+    return [year, month, day].join('-') + 'T' + [hours, minutes].join(':')
+  else return [day, month, year].join('.') + ' ' + [hours, minutes].join(':')
 }
 
 export default formatDateTime
