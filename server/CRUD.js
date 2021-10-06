@@ -1,6 +1,6 @@
 import dbConnect from '@utils/dbConnect'
 
-export default async function handler(Schema, req, res) {
+export default async function handler(Schema, req, res, param = null) {
   const {
     query: { id },
     method,
@@ -11,14 +11,19 @@ export default async function handler(Schema, req, res) {
   switch (method) {
     case 'GET':
       try {
-        if (id) {
+        if (id && !param) {
           const data = await Schema.findById(id)
           if (!data) {
             return res.status(400).json({ success: false })
           }
           res.status(200).json({ success: true, data })
         } else {
-          const data = await Schema.find({})
+          let data
+          if (id && param) {
+            data = await Schema.find({ [param]: id })
+          } else {
+            data = await Schema.find({})
+          }
           res.status(200).json({ success: true, data })
         }
       } catch (error) {
@@ -28,7 +33,7 @@ export default async function handler(Schema, req, res) {
       break
     case 'POST':
       try {
-        if (id) {
+        if (id && !param) {
           return res
             .status(400)
             .json({ success: false, error: 'No need to set Id' })
@@ -43,7 +48,7 @@ export default async function handler(Schema, req, res) {
       break
     case 'PUT' /* Edit a model by its ID */:
       try {
-        if (id) {
+        if (id && !param) {
           const body = { ...req.body, updatedAt: Date.now() }
           const data = await Schema.findByIdAndUpdate(id, body, {
             new: true,
@@ -63,7 +68,7 @@ export default async function handler(Schema, req, res) {
       break
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        if (id) {
+        if (id && !param) {
           const deletedData = await Schema.deleteOne({
             _id: id,
           })
@@ -71,7 +76,13 @@ export default async function handler(Schema, req, res) {
             return res.status(400).json({ success: false })
           }
         } else {
-          const deletedData = await Schema.deleteMany({})
+          let deletedData
+          if (id && param) {
+            console.log(`[param]: id`, { [param]: id })
+            deletedData = await Schema.deleteMany({ [param]: id })
+          } else {
+            deletedData = await Schema.deleteMany({})
+          }
           if (!deletedData) {
             return res.status(400).json({ success: false })
           }
