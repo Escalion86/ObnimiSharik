@@ -61,43 +61,73 @@ export const ROLES = [
 ]
 
 export const ORDER_STATUSES = [
-  { name: 'Черновик', value: 'draft', roles: ['operator', 'admin'] },
+  {
+    name: 'Черновик',
+    value: 'draft',
+    roles: ['operator', 'admin'],
+    color: 'bg-gray-200',
+  },
   {
     name: 'Передан аэродизайнеру',
     value: 'aerodesigner',
     roles: ['operator', 'aerodesigner', 'admin'],
+    color: 'bg-blue-200',
   },
   {
     name: 'Товар отложен',
-    value: 'postponed',
+    value: 'deferred',
     roles: ['operator', 'aerodesigner', 'admin'],
+    requirements: { productCirculationsIdCount: true },
+    color: 'bg-blue-400',
   },
   {
     name: 'Готов к выдаче',
     value: 'readyForReceive',
     roles: ['operator', 'aerodesigner', 'admin'],
-    requirements: { deliveryPickup: true },
+    requirements: { deliveryPickup: true, productCirculationsIdCount: true },
+    color: 'bg-green-200',
   },
   {
     name: 'Готов к доставке',
     value: 'readyForDelivery',
     roles: ['operator', 'aerodesigner', 'deliver', 'admin'],
-    requirements: { deliveryPickup: false },
+    requirements: { deliveryPickup: false, productCirculationsIdCount: true },
+    color: 'bg-yellow-200',
   },
   {
     name: 'Доставляется',
     value: 'deliveryInProcess',
     roles: ['operator', 'deliver', 'admin'],
-    requirements: { deliveryPickup: false },
+    requirements: { deliveryPickup: false, productCirculationsIdCount: true },
+    color: 'bg-yellow-400',
   },
   {
     name: 'Доставлен',
     value: 'delivered',
     roles: ['operator', 'deliver', 'admin'],
-    requirements: { deliveryPickup: false },
+    requirements: { deliveryPickup: false, productCirculationsIdCount: true },
+    color: 'bg-green-300',
   },
-  { name: 'Выполнен', value: 'completed', roles: ['operator', 'admin'] },
-  { name: 'Отменен', value: 'canceled', roles: ['operator', 'admin'] },
+  {
+    name: 'Получен',
+    value: 'recived',
+    roles: ['operator', 'admin'],
+    requirements: { deliveryPickup: true, productCirculationsIdCount: true },
+    color: 'bg-green-300',
+  },
+  {
+    name: 'Выполнен',
+    value: 'completed',
+    roles: ['operator', 'admin'],
+    requirements: { productCirculationsIdCount: true },
+    color: 'bg-green-400',
+  },
+  {
+    name: 'Отменен',
+    value: 'canceled',
+    roles: ['operator', 'admin'],
+    color: 'bg-red-400',
+  },
 ]
 
 export const DEFAULT_PRODUCT_CIRCULATION = {

@@ -33,6 +33,13 @@ const OrdersContent = ({ data, modals, user }) => {
           onClick={() => modals.openOrderModal(order)}
           onEdit={() => modals.openOrderModal(order, true)}
           onDelete={() => modals.openDeleteOrder(order)}
+          onClone={() => {
+            const orderClone = { ...order }
+            delete orderClone._id
+            modals.openOrderModal(orderClone)
+          }}
+          onProductClick={(product) => modals.openProductModal(product)}
+          onSetClick={(set) => modals.openSetModal(set)}
         />
       )}
     />
