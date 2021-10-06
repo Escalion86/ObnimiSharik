@@ -21,6 +21,7 @@ const ProductForm = ({
   product = DEFAULT_PRODUCT,
   afterConfirm = () => {},
   onClose = () => {},
+  readOnly = true,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -127,12 +128,17 @@ const ProductForm = ({
     // if (!form.images) err.image = 'Image URL is required'
     return err
   }
-  console.log(`form`, form)
 
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние товара' : 'Редактирование товара'}
+      title={
+        readOnly
+          ? 'Товар: ' + form.name
+          : forNew
+          ? 'Создние товара'
+          : 'Редактирование товара'
+      }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
@@ -140,6 +146,7 @@ const ProductForm = ({
         Object.keys(formValidate()).length !== 0 ||
         compareObjects(form, product)
       }
+      readOnly={readOnly}
     >
       <Input
         key="name"
@@ -150,6 +157,7 @@ const ProductForm = ({
         value={form.name}
         onChange={handleChange}
         required
+        hidden={readOnly}
       />
       <Input
         key="description"
@@ -160,6 +168,7 @@ const ProductForm = ({
         value={form.description}
         onChange={handleChange}
         textarea
+        readOnly={readOnly}
       />
       <RowContainer>
         <Input
@@ -171,12 +180,16 @@ const ProductForm = ({
           value={form.article}
           onChange={handleChange}
           className="flex-1"
+          readOnly={readOnly}
+          inLine={readOnly}
         />
         <PriceInput
           value={form.price / 100}
           onChange={handleChange}
           required
           className="flex-1"
+          readOnly={readOnly}
+          inLine={readOnly}
         />
       </RowContainer>
       {/* <Input
@@ -203,6 +216,7 @@ const ProductForm = ({
             typesId: data.map((type) => type.id),
           })
         }}
+        readOnly={readOnly}
       />
       <InputImages
         images={form.images}
@@ -220,6 +234,7 @@ const ProductForm = ({
             })
           )
         }
+        readOnly={readOnly}
       />
       {/* <Input
         key="image"
