@@ -8,9 +8,19 @@ const ProductModal = ({
   afterConfirm = () => {},
   onDelete = null,
 }) => {
+  const readOnly = !['dev', 'admin'].includes(role)
   return (
-    <Modal onClose={onClose} onDelete={product?._id && onDelete}>
-      <ProductForm product={product} afterConfirm={afterConfirm} role={role} />
+    <Modal
+      onClose={onClose}
+      onDelete={product?._id && onDelete}
+      readOnly={readOnly}
+    >
+      <ProductForm
+        product={product}
+        afterConfirm={afterConfirm}
+        role={role}
+        readOnly={readOnly}
+      />
     </Modal>
   )
 }

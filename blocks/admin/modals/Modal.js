@@ -7,6 +7,7 @@ const Modal = ({
   onClose = () => {},
   onDelete = null,
   twoCols = false,
+  readOnly = false,
 }) => {
   const [rendered, setRendered] = useState(false)
   const onCloseWithDelay = () => {
@@ -28,6 +29,7 @@ const Modal = ({
         'absolute transform duration-200 top-0 left-0 z-50 flex bg-opacity-80 items-center justify-center w-screen h-screen p-5 overflow-y-auto bg-gray-800' +
         (rendered ? ' opacity-100' : ' opacity-0')
       }
+      onMouseDown={onCloseWithDelay}
     >
       <div
         className={
@@ -35,6 +37,8 @@ const Modal = ({
           (twoCols ? ' laptop:w-9/12 laptop:min-w-228 laptop:max-w-248' : ' ') +
           (rendered ? '' : ' scale-50')
         }
+        onClick={(e) => e?.stopPropagation()}
+        onMouseDown={(e) => e?.stopPropagation()}
       >
         <FontAwesomeIcon
           className="absolute w-6 h-6 text-black duration-200 transform cursor-pointer right-4 top-4 hover:scale-110"
@@ -42,7 +46,7 @@ const Modal = ({
           size="1x"
           onClick={onCloseWithDelay}
         />
-        {onDelete && (
+        {!readOnly && onDelete && (
           <FontAwesomeIcon
             className="absolute w-5 h-5 text-red-700 duration-200 transform cursor-pointer top-4 left-4 hover:scale-110"
             icon={faTrash}

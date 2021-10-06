@@ -8,9 +8,20 @@ const SetModal = ({
   afterConfirm = () => {},
   onDelete = null,
 }) => {
+  const readOnly = !['dev', 'admin'].includes(role)
   return (
-    <Modal onClose={onClose} onDelete={set?._id && onDelete} twoCols>
-      <SetForm set={set} afterConfirm={afterConfirm} role={role} />
+    <Modal
+      onClose={onClose}
+      onDelete={set?._id && onDelete}
+      twoCols
+      readOnly={readOnly}
+    >
+      <SetForm
+        set={set}
+        afterConfirm={afterConfirm}
+        role={role}
+        readOnly={readOnly}
+      />
     </Modal>
   )
 }
