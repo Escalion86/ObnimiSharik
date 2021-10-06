@@ -19,13 +19,15 @@ const ProductCirculationsContent = ({ data, modals, user }) => {
           onAdd={() =>
             modals.openProductCirculationModal({
               ...DEFAULT_PRODUCT_CIRCULATION,
-              productId: [productCirculation.productId],
+              productId: productCirculation.productId,
             })
           }
           onEdit={() =>
             modals.openProductCirculationModal(productCirculation, true)
           }
-          onDelete={() => modals.openDeleteProductCirculation(productType)}
+          onDelete={() =>
+            modals.openDeleteProductCirculation(productCirculation)
+          }
         />
       )}
     />
