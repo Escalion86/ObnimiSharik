@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
+import formatDateTime from '@helpers/formatDateTime'
+import CardButton from '@admincomponents/cards/forCards/CardButton'
 
 const Item = ({ item, onClick = null, active = false }) => (
   // <Tooltip
@@ -86,6 +88,37 @@ const PersonaItem = ({ item, onClick = null, active = false }) => (
   // </Tooltip>
 )
 
+const OrderItem = ({ item, onClick = null, active = false }) => (
+  <div
+    className={
+      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer h-10 last:border-0' +
+      (onClick ? ' hover:bg-blue-200' : '') +
+      (active ? ' bg-green-200' : '')
+    }
+    onClick={
+      onClick
+        ? (e) => {
+            e.stopPropagation()
+            onClick()
+          }
+        : null
+    }
+  >
+    <div className="h-5 text-sm text-gray-800 truncate">№ {item.number}</div>
+    <div className="flex items-center text-xs text-gray-600 gap-x-2">
+      {/* <div className="flex-2 whitespace-nowrap">
+        Артикул: {item.а || '[нет]'}
+      </div> */}
+      <div className="flex-1 whitespace-nowrap">
+        {formatDateTime(item.deliveryDateFrom, false)}
+      </div>
+      <div className="flex-1 text-right whitespace-nowrap">
+        {item.fullPrice / 100} ₽
+      </div>
+    </div>
+  </div>
+)
+
 export const SelectItem = ({
   items,
   itemComponent = Item,
@@ -118,14 +151,19 @@ export const SelectItem = ({
           }
 
           const searchTextLowerCase = searchText.toLowerCase()
-          const itemNameLowerCase = item.name.toLowerCase()
+          // const itemNameLowerCase = item.name?.toLowerCase()
           return (
             !exceptedIds.includes(item._id) &&
-            (itemNameLowerCase.includes(searchTextLowerCase) ||
-              item.article?.includes(searchTextLowerCase) ||
+            (item.name
+              ?.toString()
+              .toLowerCase()
+              .includes(searchTextLowerCase) ||
+              item.number?.toString().includes(searchTextLowerCase) ||
+              item.article?.toString().includes(searchTextLowerCase) ||
               item.phone?.toString().includes(searchTextLowerCase) ||
               item.whatsapp?.toString().includes(searchTextLowerCase) ||
-              item.price?.toString().includes(searchTextLowerCase))
+              item.price?.toString().includes(searchTextLowerCase) ||
+              item.fullPrice?.toString().includes(searchTextLowerCase))
           )
         })
       : items
@@ -231,6 +269,7 @@ export const SelectProduct = ({
   exceptedIds = [],
   required = false,
   className = null,
+  clearButton = null,
 }) => {
   const { products } = useSelector((state) => state)
   return (
@@ -238,12 +277,18 @@ export const SelectProduct = ({
       required={required}
       label="Товар"
       className={className}
+      onClickClearButton={
+        selectedId && clearButton ? () => onChange(null) : null
+      }
     >
       <SelectItem
         items={products}
         onChange={onChange}
         selectedId={selectedId}
-        className={'flex-1 rounded-lg'}
+        className={
+          'flex-1' +
+          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+        }
         exceptedIds={exceptedIds}
       />
     </SelectItemContainer>
@@ -256,6 +301,7 @@ export const SelectSet = ({
   exceptedIds = [],
   required = false,
   className = null,
+  clearButton = null,
 }) => {
   const { sets } = useSelector((state) => state)
   return (
@@ -263,13 +309,19 @@ export const SelectSet = ({
       required={required}
       label="Набор"
       className={className}
+      onClickClearButton={
+        selectedId && clearButton ? () => onChange(null) : null
+      }
     >
       <SelectItem
         items={sets}
         onChange={onChange}
         selectedId={selectedId}
         className={className}
-        className={'flex-1 rounded-lg'}
+        className={
+          'flex-1' +
+          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+        }
         exceptedIds={exceptedIds}
       />
     </SelectItemContainer>
@@ -282,6 +334,7 @@ export const SelectClient = ({
   exceptedIds = [],
   required = false,
   className = null,
+  clearButton = null,
 }) => {
   const { clients } = useSelector((state) => state)
   return (
@@ -289,26 +342,86 @@ export const SelectClient = ({
       required={required}
       label="Клиент"
       className={className}
+      onClickClearButton={
+        selectedId && clearButton ? () => onChange(null) : null
+      }
     >
       <SelectItem
         items={clients}
         itemComponent={PersonaItem}
         onChange={onChange}
         selectedId={selectedId}
-        className={'flex-1 rounded-lg'}
+        className={
+          'flex-1' +
+          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+        }
         exceptedIds={exceptedIds}
       />
     </SelectItemContainer>
   )
 }
 
-const SelectItemContainer = ({ required, label, className, children }) => (
+export const SelectOrder = ({
+  onChange,
+  selectedId = null,
+  exceptedIds = [],
+  required = false,
+  className = null,
+  clearButton = null,
+}) => {
+  const { orders } = useSelector((state) => state)
+  return (
+    <SelectItemContainer
+      required={required}
+      label="Заказ"
+      className={className}
+      onClickClearButton={
+        selectedId && clearButton ? () => onChange(null) : null
+      }
+    >
+      <SelectItem
+        items={orders}
+        itemComponent={OrderItem}
+        onChange={onChange}
+        selectedId={selectedId}
+        className={
+          'flex-1' +
+          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+        }
+        exceptedIds={exceptedIds}
+      />
+    </SelectItemContainer>
+  )
+}
+
+const SelectItemContainer = ({
+  required,
+  label,
+  className,
+  onClickClearButton = null,
+  children,
+}) => (
   <div className={'flex flex-col' + (className ? ' ' + className : '')}>
     <label htmlFor="client">
       {label}
       {required && <span className="text-red-700">*</span>}
     </label>
-    <div className="flex border border-gray-700 rounded-lg">{children}</div>
+    <div className="flex border border-gray-700 rounded-lg">
+      {children}
+      {onClickClearButton && (
+        <div className="flex items-center justify-center border-l border-gray-700">
+          <button
+            onClick={onClickClearButton}
+            className="flex items-center justify-center w-8 h-full rounded-r-lg shadow group whitespace-nowrap font-futuraDemi"
+          >
+            <FontAwesomeIcon
+              className="w-3 h-3 text-red-700 duration-300 group-hover:scale-125"
+              icon={faTrash}
+            />
+          </button>
+        </div>
+      )}
+    </div>
   </div>
 )
 
@@ -318,6 +431,7 @@ export const SelectDeliver = ({
   exceptedIds = [],
   required = false,
   className = null,
+  clearButton = null,
 }) => {
   const { users } = useSelector((state) => state)
   const delivers = users.filter((user) => user.role === 'deliver')
@@ -326,13 +440,19 @@ export const SelectDeliver = ({
       required={required}
       label="Курьер"
       className={className}
+      onClickClearButton={
+        selectedId && clearButton ? () => onChange(null) : null
+      }
     >
       <SelectItem
         items={delivers}
         itemComponent={PersonaItem}
         onChange={onChange}
         selectedId={selectedId}
-        className={'flex-1 rounded-lg'}
+        className={
+          'flex-1' +
+          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+        }
         exceptedIds={exceptedIds}
       />
     </SelectItemContainer>
