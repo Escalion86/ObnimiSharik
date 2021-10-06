@@ -13,7 +13,7 @@ import CardButton from './CardButton'
 const CardButtons = ({
   className = null,
   onBuying = null,
-  onAdd = null,
+  // onAdd = null,
   onEdit = null,
   onClone = null,
   onDelete = null,
@@ -38,7 +38,7 @@ const CardButtons = ({
         tooltip="Покупка"
       />
     )}
-    {onAdd && (
+    {/* {onAdd && (
       <CardButton
         onClick={(event) => {
           event.stopPropagation()
@@ -49,7 +49,7 @@ const CardButtons = ({
         icon={faPlus}
         tooltip="Создать"
       />
-    )}
+    )} */}
     {onEdit && (
       <CardButton
         onClick={(event) => {

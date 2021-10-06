@@ -16,12 +16,15 @@ const ProductCirculationsContent = ({ data, modals, user }) => {
           productCirculation={productCirculation}
           role={user.role}
           onClick={() => modals.openProductCirculationModal(productCirculation)}
-          onAdd={() =>
-            modals.openProductCirculationModal({
-              ...DEFAULT_PRODUCT_CIRCULATION,
-              productId: productCirculation.productId,
-            })
-          }
+          onClone={() => {
+            // modals.openProductCirculationModal({
+            //   ...DEFAULT_PRODUCT_CIRCULATION,
+            //   productId: productCirculation.productId,
+            // })
+            const productCirculationClone = { ...productCirculation }
+            delete productCirculationClone._id
+            modals.openProductCirculationModal(productCirculationClone)
+          }}
           onEdit={() =>
             modals.openProductCirculationModal(productCirculation, true)
           }

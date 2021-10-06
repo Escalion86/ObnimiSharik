@@ -206,8 +206,8 @@ const ProductCirculationForm = ({
         handleChange={handleChange}
         defaultValue={form.purchase}
         items={[
-          { name: 'Закуп', value: false },
-          { name: 'Продажа', value: true },
+          { name: 'Закуп на склад', value: false },
+          { name: 'Продажа клиенту', value: true },
         ]}
       />
       <DatePicker

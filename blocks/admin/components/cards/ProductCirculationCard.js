@@ -12,7 +12,7 @@ export const ProductCirculationCard = ({
   onClick = () => {},
   onDelete = null,
   onEdit = null,
-  onAdd = null,
+  onClone = null,
 }) => {
   const { count, purchase, productId } = productCirculation
   const { products } = useSelector((state) => state)
@@ -42,7 +42,7 @@ export const ProductCirculationCard = ({
           <span className="text-sm"> шт.</span>
         </span>
       </div>
-      <CardButtons onAdd={onAdd} onEdit={onEdit} onDelete={onDelete} />
+      <CardButtons onEdit={onEdit} onDelete={onDelete} onClone={onClone} />
       {/* <div
       className={
         'absolute bottom-0 right-0 flex items-center justify-center w-24 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
