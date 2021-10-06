@@ -6,6 +6,7 @@ const CheckBox = ({
   label = null,
   labelPos = 'right',
   className = null,
+  name,
 }) => {
   const Label = () => (
     <span className="font-normal text-gray-700 dark:text-white">{label}</span>
@@ -16,6 +17,7 @@ const CheckBox = ({
         'flex items-center cursor-pointer space-x-2' +
         (className ? ' ' + className : '')
       }
+      htmlFor={name}
     >
       {label && labelPos === 'left' && <Label />}
       <input
@@ -28,6 +30,7 @@ const CheckBox = ({
         }
         onClick={onClick}
         onChange={onChange}
+        name={name}
       />
       {label && labelPos !== 'left' && <Label />}
     </label>
