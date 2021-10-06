@@ -49,6 +49,8 @@ import {
 } from '@adminblocks/modals'
 import addCountToProductTypes from '@helpers/addCountToProductTypes'
 import addCountToSetTypes from '@helpers/addCountToSetTypes'
+import findDataWithId from '@helpers/findDataWithId'
+import formatDateTime from '@helpers/formatDateTime'
 
 const modals = (dispatch, data, role) => {
   const modals = {
@@ -394,7 +396,9 @@ const modals = (dispatch, data, role) => {
           product.article +
           ') "' +
           product.name +
-          '"?',
+          '" от ' +
+          formatDateTime(productCirculation.purchasedAt) +
+          '?',
         () => {
           deleteData(
             '/api/productcirculations/' + productCirculation._id,
