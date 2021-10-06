@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faEquals } from '@fortawesome/free-solid-svg-icons'
+import { SelectOrder } from './forForms/SelectItem'
 
 const ProductCirculationForm = ({
   role,
@@ -228,6 +229,18 @@ const ProductCirculationForm = ({
             defective: !form.defective,
           })
         }
+      />
+      <SelectOrder
+        onChange={(item) =>
+          setForm({
+            ...form,
+            orderId: item ? item._id : '',
+          })
+        }
+        selectedId={form.orderId}
+        clearButton
+        // required
+        // exceptedIds={selectedItemsIds}
       />
     </Form>
   )
