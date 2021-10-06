@@ -156,12 +156,12 @@ export default function Admin() {
 
   return (
     <>
-      {!state.loaded && (
+      {(!state.loaded || loading) && (
         <div className="flex items-center justify-center h-screen">
           <Spinner />
         </div>
       )}
-      {state.loaded && (
+      {state.loaded && !loading && (
         <>
           {haveAccess ? (
             <>
