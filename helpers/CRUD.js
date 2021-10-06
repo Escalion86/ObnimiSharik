@@ -7,8 +7,8 @@ export const putData = async (
   url,
   form,
   callback = null,
-  toastOnSuccess = '',
-  toastOnError = ''
+  toastOnSuccess = null,
+  toastOnError = null
 ) => {
   // const { id } = router.query
 
@@ -44,8 +44,8 @@ export const postData = async (
   url,
   form,
   callback = null,
-  toastOnSuccess = '',
-  toastOnError = ''
+  toastOnSuccess = null,
+  toastOnError = null
 ) => {
   try {
     const res = await fetch(url, {
@@ -76,8 +76,8 @@ export const postData = async (
 export const deleteData = async (
   url,
   callback = null,
-  toastOnSuccess = '',
-  toastOnError = ''
+  toastOnSuccess = null,
+  toastOnError = null
 ) => {
   try {
     const res = await fetch(url, {
