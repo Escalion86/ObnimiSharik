@@ -71,23 +71,24 @@ const SortTitleButtonMenu = ({ state, variable }) => {
   const buttonRef = useRef()
   const dispatch = useDispatch()
 
-  const onClickUp = (key) => dispatch(setSorting({ [variable]: [key, 'DESC'] }))
+  const onClickUp = (key) =>
+    dispatch(
+      setSorting({
+        [variable]: [key, 'DESC', sortingVariables[variable][key].type],
+      })
+    )
 
   const onClickDown = (key) =>
     dispatch(setSorting({ [variable]: [key, 'ASC'] }))
 
   const sortItems = []
   for (const [key, value] of Object.entries(sortingVariables[variable])) {
-    const numericValue =
-      key === 'price' ||
-      key === 'count' ||
-      key === 'date' ||
-      key === 'purchasedAt' ||
-      key === 'createdAt'
+    const numericValue = value.type === Number || value.type === Date
+
     sortItems.push(
       <SortItem
         key={key}
-        name={value}
+        name={value.text}
         // iconUp={faSortAmountUp}
         // iconDown={faSortAmountDown}
         onClickUp={() => {
@@ -106,14 +107,11 @@ const SortTitleButtonMenu = ({ state, variable }) => {
       />
     )
   }
-  const key = state.sorting[variable][0]
+
   const value = state.sorting[variable][1]
-  const numericValue =
-    key === 'price' ||
-    key === 'count' ||
-    key === 'date' ||
-    key === 'purchasedAt' ||
-    key === 'createdAt'
+  const type = state.sorting[variable][2]
+  const numericValue = type === Number || type === Date
+
   const activeIcon = numericValue
     ? value === 'DESC'
       ? faSortNumericDownAlt
@@ -123,7 +121,6 @@ const SortTitleButtonMenu = ({ state, variable }) => {
     : faSortAlphaDown
 
   return (
-    // <div className="z-20 ml-5 -mt-1 -mb-1 h-11 w-11">
     <Menu as="div" className="relative z-30 inline-block h-10 text-left">
       {({ open }) => {
         return (
@@ -143,7 +140,9 @@ const SortTitleButtonMenu = ({ state, variable }) => {
                 <IconButton
                   inverse
                   icon={activeIcon}
-                  name={sortingVariables[variable][state.sorting[variable][0]]}
+                  name={
+                    sortingVariables[variable][state.sorting[variable][0]].text
+                  }
                   textPos="left"
                 />
               </Menu.Button>

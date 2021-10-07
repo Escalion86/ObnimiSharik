@@ -11,37 +11,47 @@ import {
 
 export const sortingVariables = {
   products: {
-    name: 'по названию',
-    price: 'по цене',
-    count: 'по количеству',
-    article: 'по артикулу',
+    name: { text: 'по названию', type: String },
+    price: { text: 'по цене', type: Number },
+    count: { text: 'по количеству', type: Number },
+    article: { text: 'по артикулу', type: String },
   },
   sets: {
-    name: 'по названию',
-    price: 'по цене',
-    count: 'по количеству',
-    article: 'по артикулу',
+    name: { text: 'по названию', type: String },
+    price: { text: 'по цене', type: Number },
+    count: { text: 'по количеству', type: Number },
+    article: { text: 'по артикулу', type: String },
   },
   productCirculations: {
-    purchasedAt: 'по дате',
-    count: 'по количеству',
+    purchasedAt: { text: 'по дате', type: Date },
+    count: { text: 'по количеству', type: Number },
   },
   productTypes: {
-    name: 'по названию',
-    count: 'по количеству',
+    name: { text: 'по названию', type: String },
+    count: { text: 'по количеству', type: Number },
   },
   setTypes: {
-    name: 'по названию',
-    count: 'по количеству',
+    name: { text: 'по названию', type: String },
+    count: { text: 'по количеству', type: Number },
   },
   users: {
-    name: 'по имени',
-    role: 'по должности',
+    name: { text: 'по имени', type: String },
+    role: { text: 'по должности', type: String },
   },
   invitations: {
-    createdAt: 'по дате',
-    role: 'по должности',
-    status: 'по статусу',
+    createdAt: { text: 'по дате', type: Date },
+    role: { text: 'по должности', type: String },
+    status: { text: 'по статусу', type: String },
+  },
+  orders: {
+    deliveryDateFrom: { text: 'по дате', type: Date },
+    fullPrice: { text: 'по стоимости', type: Number },
+    // status: 'по статусу',
+  },
+  payments: {
+    payAt: { text: 'по дате', type: Date },
+    // fullPrice: 'по стоимости',
+    // status: 'по статусу',
   },
 }
 
@@ -62,6 +72,8 @@ export const initialState = {
   users: ['name', 'ASC'],
   // date, role,status
   invitations: ['createdAt', 'DESC'],
+  orders: ['deliveryDateFrom', 'DESC'],
+  payments: ['payAt', 'DESC'],
 }
 
 const filterReducer = (state = initialState, action) => {
