@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import formatDateTime from '@helpers/formatDateTime'
 import CardButton from '@admincomponents/cards/forCards/CardButton'
 
-const Item = ({ item, onClick = null, active = false }) => (
+export const ProductItem = ({ item, onClick = null, active = false }) => (
   // <Tooltip
   //   title={
   //     <div className="text-xs">
@@ -52,7 +52,7 @@ const Item = ({ item, onClick = null, active = false }) => (
   // </Tooltip>
 )
 
-const PersonaItem = ({ item, onClick = null, active = false }) => (
+export const PersonaItem = ({ item, onClick = null, active = false }) => (
   <div
     className={
       'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer h-10 last:border-0' +
@@ -88,7 +88,7 @@ const PersonaItem = ({ item, onClick = null, active = false }) => (
   // </Tooltip>
 )
 
-const OrderItem = ({ item, onClick = null, active = false }) => (
+export const OrderItem = ({ item, onClick = null, active = false }) => (
   <div
     className={
       'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer h-10 last:border-0' +
@@ -121,7 +121,7 @@ const OrderItem = ({ item, onClick = null, active = false }) => (
 
 export const SelectItem = ({
   items,
-  itemComponent = Item,
+  itemComponent = ProductItem,
   onChange,
   selectedId = null,
   exceptedIds = [],

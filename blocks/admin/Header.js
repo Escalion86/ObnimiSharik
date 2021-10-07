@@ -9,6 +9,7 @@ import { Fragment } from 'react'
 import { DEFAULT_USER } from '@helpers/constants'
 import roleRus from '@helpers/roleRus'
 import DeviceCheck from '@components/DeviceCheck'
+import SearchBox from '@admincomponents/SearchBox'
 
 const UserMenu = ({
   user = DEFAULT_USER,
@@ -140,6 +141,7 @@ const Header = ({
   onClickBurger = () => {},
   closeMenu = () => {},
   onSignOut = () => {},
+  modals = null,
 }) => {
   return (
     <div className="top-0 z-40 border-b border-primary bg-primary">
@@ -151,6 +153,7 @@ const Header = ({
               menuOpen={menuOpen}
               onClick={onClickBurger}
             />
+            <SearchBox modals={modals} />
             {user.role === 'dev' && (
               <DeviceCheck className="text-white text-bold" />
             )}
