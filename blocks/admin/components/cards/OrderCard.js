@@ -6,6 +6,7 @@ import formatDateTime from '@helpers/formatDateTime'
 import ProductsInCard from './forCards/ProductsInCard'
 import SetsInCard from './forCards/SetsInCard'
 import { ORDER_STATUSES } from '@helpers/constants'
+import formatDeliveryAddress from '@helpers/formatDeliveryAddress'
 
 export const OrderCard = ({
   order,
@@ -40,7 +41,7 @@ export const OrderCard = ({
             <div className="font-semibold">№ {order.number}</div>
           </div>
         </div>
-        <div className="mr-12">
+        <div>
           <ProductsInCard
             label="Товары"
             productsIdCount={productsIdCount}
@@ -53,6 +54,9 @@ export const OrderCard = ({
             // productsWithCount={productsWithCount}
             onClick={onSetClick}
           />
+          <div className="text-sm tablet:whitespace-nowrap">
+            Адрес: {formatDeliveryAddress(order.deliveryAddress)}
+          </div>
         </div>
         {/* <div className="text-right"> */}
         {/* <div className="font-bold">{roleRus(user.role)}</div> */}
