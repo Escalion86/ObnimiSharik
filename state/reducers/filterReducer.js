@@ -28,6 +28,10 @@ export const initialState = {
   setTypes: {},
   users: {},
   invitations: {},
+  orders: {
+    fullPrice: [null, null],
+    status: null,
+  },
 }
 
 const filterReducer = (state = initialState, action) => {

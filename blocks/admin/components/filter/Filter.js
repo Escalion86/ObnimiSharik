@@ -19,6 +19,9 @@ const Filter = ({
 
   const priceFilterExists =
     state.filter[variable].price !== undefined && filter.price !== undefined
+  const fullPriceFilterExists =
+    state.filter[variable].fullPrice !== undefined &&
+    filter.fullPrice !== undefined
   const countFilterExists =
     state.filter[variable].count !== undefined && filter.count !== undefined
   const productTypesFilterExists =
@@ -34,19 +37,28 @@ const Filter = ({
   let maxPrice = 0
   let minPrice = 0
   let sliderPriceValue = [0, 0]
+  const priceVariable = priceFilterExists
+    ? 'price'
+    : fullPriceFilterExists
+    ? 'fullPrice'
+    : null
 
-  if (state[variable] && state[variable].length > 0 && priceFilterExists) {
+  if (
+    state[variable] &&
+    state[variable].length > 0 &&
+    (priceFilterExists || fullPriceFilterExists)
+  ) {
     maxPrice =
       state[variable].reduce(function (prev, current) {
-        return prev.price > current.price ? prev : current
-      }).price / 100
+        return prev[priceVariable] > current[priceVariable] ? prev : current
+      })[priceVariable] / 100
     minPrice =
       state[variable].reduce(function (prev, current) {
-        return prev.price < current.price ? prev : current
-      }).price / 100
+        return prev[priceVariable] < current[priceVariable] ? prev : current
+      })[priceVariable] / 100
     sliderPriceValue = [
-      filter.price[0] === null ? minPrice : filter.price[0],
-      filter.price[1] === null ? maxPrice : filter.price[1],
+      filter[priceVariable][0] === null ? minPrice : filter[priceVariable][0],
+      filter[priceVariable][1] === null ? maxPrice : filter[priceVariable][1],
     ]
   }
 
@@ -169,13 +181,13 @@ const Filter = ({
         />
       )}
       <div className="flex flex-col justify-between flex-1 h-full gap-y-1">
-        {priceFilterExists && (
+        {(priceFilterExists || fullPriceFilterExists) && (
           <div>
             <div>Стоимость</div>
             <Slider
               value={sliderPriceValue}
               onChange={(event, value) =>
-                onChangeSlider(event, value, 'price', minPrice, maxPrice)
+                onChangeSlider(event, value, priceVariable, minPrice, maxPrice)
               }
               valueLabelDisplay="on"
               aria-labelledby="range-slider"
