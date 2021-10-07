@@ -9,7 +9,35 @@ const DateTimePicker = ({
   className,
   disabled = false,
   inLine = false,
+  readOnly = false,
 }) => {
+  if (readOnly)
+    return (
+      <div
+        className={
+          'flex' +
+          (inLine ? ' flex-row items-center' : ' flex-col') +
+          (className ? ' ' + className : '')
+        }
+      >
+        <label
+          className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''}
+          htmlFor={name}
+        >
+          {label}
+          {required && <span className="text-red-700">*</span>}
+        </label>
+        {/* <div
+          className={
+            'px-2 py-1 border rounded-lg w-52' +
+            (required && !value ? ' border-red-700' : ' border-gray-700')
+          }
+        > */}
+        {formatDateTime(value)}
+        {/* </div> */}
+      </div>
+    )
+
   return (
     <div
       className={
