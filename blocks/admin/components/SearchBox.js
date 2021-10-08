@@ -2,7 +2,11 @@ import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
-import { ProductItem, ClientItem } from './forms/forForms/SelectItem'
+import {
+  ProductItem,
+  ClientItem,
+  PersonaItem,
+} from './forms/forForms/SelectItem'
 
 const SearchBox = ({ modals }) => {
   // const inputRef = useRef()
@@ -29,11 +33,12 @@ const SearchBox = ({ modals }) => {
 
     return (
       <>
-        <div className="sticky top-0 font-bold bg-white border-b border-gray-700">
+        <div className="sticky top-0 font-bold bg-gray-200 border-b border-gray-700">
           Продукты
         </div>
         {filteredProducts.map((product) => (
           <ProductItem
+            key={'product' + product._id}
             item={product}
             onClick={() => modals.openProductModal(product)}
           />
@@ -49,11 +54,36 @@ const SearchBox = ({ modals }) => {
 
     return (
       <>
-        <div className="sticky top-0 font-bold bg-white border-b border-gray-700">
+        <div className="sticky top-0 font-bold bg-gray-200 border-b border-gray-700">
           Наборы
         </div>
         {filteredSets.map((set) => (
-          <ProductItem item={set} onClick={() => modals.openSetModal(set)} />
+          <ProductItem
+            key={'set' + set._id}
+            item={set}
+            onClick={() => modals.openSetModal(set)}
+          />
+        ))}
+      </>
+    )
+  }
+
+  const SearchedClients = () => {
+    const filteredClients = clients.filter((client) => filter(client))
+
+    if (filteredClients.length === 0) return null
+
+    return (
+      <>
+        <div className="sticky top-0 font-bold bg-gray-200 border-b border-gray-700">
+          Клиенты
+        </div>
+        {filteredClients.map((client) => (
+          <PersonaItem
+            key={'client' + client._id}
+            item={client}
+            onClick={() => modals.openClientModal(client)}
+          />
         ))}
       </>
     )
@@ -85,6 +115,7 @@ const SearchBox = ({ modals }) => {
         <div className="relative overflow-x-hidden overflow-y-scroll">
           <SearchedProducts />
           <SearchedSets />
+          <SearchedClients />
           {/* {filteredItems.map((item) => (
             <Item
               key={item._id}
