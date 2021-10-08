@@ -105,12 +105,80 @@ const ItemRow = ({
 
 export const ItemsList = ({
   items = [],
+  subItems = [],
+  subItemsIdCountKey = null,
   itemsIdCount = null,
   title = '',
   // products = {},
   onChange = () => {},
   required = false,
+  readOnly = false,
 }) => {
+  if (readOnly && Object.keys(itemsIdCount).length === 0) return null
+  const itemRows = []
+
+  if (readOnly) {
+    const ItemRows = ({ itemsIdCount, items }) => {
+      const itemRows = []
+      for (const [id, count] of Object.entries(itemsIdCount))
+        if (id !== '?') itemRows.push(items.find((item) => item._id === id))
+
+      return itemRows.map((item, index) => (
+        <div className="flex flex-col ml-2 italic gap-y-1">
+          <div
+            className={
+              'flex gap-x-1' + (item[subItemsIdCountKey] ? ' text-primary' : '')
+            }
+          >
+            <div>({item.article ? item.article : 'без артикула'})</div>
+            <div>{item.name}</div>
+            <div> - {itemsIdCount[item._id]} шт.</div>
+          </div>
+          {item[subItemsIdCountKey] && (
+            <ItemRows
+              items={subItems}
+              itemsIdCount={item[subItemsIdCountKey]}
+            />
+          )}
+        </div>
+      ))
+    }
+
+    return (
+      <div className="flex flex-col">
+        <label
+          htmlFor="itemsIds"
+          className="border-b-1 border-primary max-w-min whitespace-nowrap"
+        >
+          {title}:
+        </label>
+        <ItemRows items={items} itemsIdCount={itemsIdCount} />
+        {/* {itemRows.map((item, index) => (
+          <div className="flex ml-2 italic gap-x-1">
+            <div>({item.article ? item.article : 'без артикула'})</div>
+            <div>{item.name}</div>
+            <div> - {itemsIdCount[item._id]} шт.</div>
+          </div>
+        ))} */}
+      </div>
+    )
+  }
+
+  const selectedItemsIds = Object.keys(itemsIdCount)
+  for (const [id, count] of Object.entries(itemsIdCount)) {
+    itemRows.push(({ index }) => (
+      <ItemRow
+        items={items}
+        onChange={onChangeItemRow}
+        onDelete={deleteRow}
+        selectedId={id}
+        count={count}
+        index={index}
+        selectedItemsIds={selectedItemsIds}
+      />
+    ))
+  }
+
   const onChangeItemRow = (id, count, index) => {
     const tempItemsIdCount = {}
     let i = 0
@@ -140,26 +208,6 @@ export const ItemsList = ({
     }
     onChange(tempItemsIdCount)
   }
-
-  // const itemRows = () => {
-  const itemRows = []
-  // let i = 0
-  const selectedItemsIds = Object.keys(itemsIdCount)
-  for (const [id, count] of Object.entries(itemsIdCount)) {
-    itemRows.push(({ index }) => (
-      <ItemRow
-        items={items}
-        onChange={onChangeItemRow}
-        onDelete={deleteRow}
-        selectedId={id}
-        count={count}
-        index={index}
-        selectedItemsIds={selectedItemsIds}
-      />
-    ))
-    // i++
-  }
-  // }
 
   const addButtonIsActive = !('?' in itemsIdCount)
 
@@ -193,7 +241,7 @@ export const ItemsList = ({
           <div
             className={
               'flex items-center justify-center flex-1 transparent' +
-              (addButtonIsActive ? ' duration-200 group-hover:scale-150' : '')
+              (addButtonIsActive ? ' duration-200 group-hover:scale-125' : '')
             }
           >
             <FontAwesomeIcon
@@ -212,15 +260,33 @@ export const ProductsList = ({
   productsIdCount = null,
   onChange = () => {},
   required = false,
+  readOnly = false,
+  title = 'Список товаров',
+  callbackArray = false,
 }) => {
   const { products } = useSelector((state) => state)
   return (
     <ItemsList
       items={products}
       itemsIdCount={productsIdCount}
-      title="Список товаров"
-      onChange={onChange}
+      title={title}
+      onChange={(itemsIdCount) => {
+        if (callbackArray) {
+          const tempItemsIdCount = []
+          for (const [id, count] of Object.entries(itemsIdCount)) {
+            tempItemsIdCount.push({
+              product:
+                id === '?'
+                  ? null
+                  : products.find((product) => product._id === id),
+              count,
+            })
+          }
+          onChange(tempItemsIdCount)
+        } else onChange(itemsIdCount)
+      }}
       required={required}
+      readOnly={readOnly}
     />
   )
 }
@@ -229,15 +295,32 @@ export const SetsList = ({
   setsIdCount = null,
   onChange = () => {},
   required = false,
+  readOnly = false,
+  title = 'Список наборов',
+  callbackArray = false,
 }) => {
-  const { sets } = useSelector((state) => state)
+  const { products, sets } = useSelector((state) => state)
   return (
     <ItemsList
       items={sets}
+      subItems={products}
+      subItemsIdCountKey="productsIdCount"
       itemsIdCount={setsIdCount}
-      title="Список наборов"
-      onChange={onChange}
+      title={title}
+      onChange={(itemsIdCount) => {
+        if (callbackArray) {
+          const tempItemsIdCount = []
+          for (const [id, count] of Object.entries(itemsIdCount)) {
+            tempItemsIdCount.push({
+              set: id === '?' ? null : sets.find((set) => set._id === id),
+              count,
+            })
+          }
+          onChange(tempItemsIdCount)
+        } else onChange(itemsIdCount)
+      }}
       required={required}
+      readOnly={readOnly}
     />
   )
 }
