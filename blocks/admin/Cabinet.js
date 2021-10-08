@@ -115,6 +115,13 @@ const Cabinet = ({
               item.price >= state.filter[page.variable].price[0] * 100) &&
               (state.filter[page.variable].price[1] === null ||
                 item.price <= state.filter[page.variable].price[1] * 100))) &&
+          (state.filter[page.variable].fullPrice === undefined ||
+            ((state.filter[page.variable].fullPrice[0] === null ||
+              item.fullPrice >=
+                state.filter[page.variable].fullPrice[0] * 100) &&
+              (state.filter[page.variable].fullPrice[1] === null ||
+                item.fullPrice <=
+                  state.filter[page.variable].fullPrice[1] * 100))) &&
           (state.filter[page.variable].count === undefined ||
             ((state.filter[page.variable].count[0] === null ||
               item.count >= state.filter[page.variable].count[0]) &&
@@ -171,6 +178,7 @@ const Cabinet = ({
           onClickBurger={toggleMenu}
           closeMenu={closeMenu}
           onSignOut={onSignOut}
+          modals={modals}
         />
         {/* <ContentContainer page={page} data={data}>
           <PageContent
