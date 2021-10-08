@@ -82,8 +82,8 @@ const ProductsInCard = ({
       {productItems.length > 0 ? (
         <div className="flex flex-wrap gap-x-2">
           {productItems.map((Item, index) => (
-            <div className="flex">
-              <Item key={'ItemRow' + index} index={index} />
+            <div key={'ItemRow' + index} className="flex">
+              <Item index={index} />
               {index < productItems.length - 1 && <span className="">,</span>}
             </div>
           ))}
