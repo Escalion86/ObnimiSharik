@@ -21,7 +21,10 @@ const DateTimePicker = ({
         }
       >
         <label
-          className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''}
+          className={
+            'border-b-1 border-primary max-w-min whitespace-nowrap' +
+            (inLine ? ' min-w-24 max-w-40 w-1/4' : '')
+          }
           htmlFor={name}
         >
           {label}
@@ -52,7 +55,7 @@ const DateTimePicker = ({
       </label>
       <input
         className={
-          'px-2 py-1 border rounded-lg w-52' +
+          'px-2 py-1 border rounded-lg w-50' +
           (required && !value ? ' border-red-700' : ' border-gray-700') +
           (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
         }

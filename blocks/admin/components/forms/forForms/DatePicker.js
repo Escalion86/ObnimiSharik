@@ -23,11 +23,12 @@ const DatePicker = ({
       >
         <label
           className={
-            labelStyle
+            'border-b-1 border-primary max-w-min whitespace-nowrap' +
+            (labelStyle
               ? ' ' + labelStyle
               : inLine
-              ? 'min-w-24 max-w-40 w-1/4'
-              : ''
+              ? ' min-w-24 max-w-40 w-1/4'
+              : '')
           }
           htmlFor={name}
         >
