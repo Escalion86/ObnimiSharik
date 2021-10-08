@@ -13,10 +13,12 @@ const Form = ({
   twoCols = false,
   onClose = () => {},
   componentBeforeButton = null,
+  readOnly = false,
 }) => {
   let childrenWithProps = children
-  if (twoCols) {
+  if (twoCols && children.length) {
     const updatedChildren = []
+
     children.forEach((child, index) => {
       if (index > 0)
         updatedChildren.push(
@@ -41,36 +43,38 @@ const Form = ({
         )}
         <div
           className={
-            'flex gap-y-1 gap-x-2' +
+            'flex gap-y-2 gap-x-2' +
             (twoCols ? ' flex-col laptop:flex-row' : ' flex-col')
           }
         >
           {childrenWithProps}
         </div>
         {componentBeforeButton}
-        <div className="flex justify-center gap-2">
-          <Button
-            onClick={() => {
-              handleSubmit()
-              onClose()
-            }}
-            name={buttonName}
-            small
-            inverse
-            disabled={buttonDisabled}
-            className="flex-1 max-w-md"
-          />
-          {cancelButton && (
+        {!readOnly && (
+          <div className="flex justify-center gap-2">
             <Button
-              onClick={onClose}
-              name="Отмена"
+              onClick={() => {
+                handleSubmit()
+                onClose()
+              }}
+              name={buttonName}
               small
               inverse
-              type="cancel"
+              disabled={buttonDisabled}
               className="flex-1 max-w-md"
             />
-          )}
-        </div>
+            {cancelButton && (
+              <Button
+                onClick={onClose}
+                name="Отмена"
+                small
+                inverse
+                type="cancel"
+                className="flex-1 max-w-md"
+              />
+            )}
+          </div>
+        )}
       </div>
       <p>{message}</p>
       <div>
