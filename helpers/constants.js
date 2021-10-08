@@ -70,14 +70,29 @@ export const ORDER_STATUSES = [
   {
     name: 'Передан аэродизайнеру',
     value: 'aerodesigner',
+    roles: ['operator', 'aerodesigner', 'deliver', 'admin'],
+    requirements: { deliveryPickup: false },
+    color: 'bg-blue-200',
+  },
+  {
+    name: 'Товар отложен',
+    value: 'deferred',
+    roles: ['operator', 'aerodesigner', 'deliver', 'admin'],
+    requirements: { deliveryPickup: false, productCirculationsIdCount: true },
+    color: 'bg-blue-400',
+  },
+  {
+    name: 'Передан аэродизайнеру',
+    value: 'aerodesigner',
     roles: ['operator', 'aerodesigner', 'admin'],
+    requirements: { deliveryPickup: true },
     color: 'bg-blue-200',
   },
   {
     name: 'Товар отложен',
     value: 'deferred',
     roles: ['operator', 'aerodesigner', 'admin'],
-    requirements: { productCirculationsIdCount: true },
+    requirements: { deliveryPickup: true, productCirculationsIdCount: true },
     color: 'bg-blue-400',
   },
   {
@@ -143,6 +158,7 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
 export const DEFAULT_DELIVERY_ADDRESS = {
   town: '',
   street: '',
+  house: '',
   entrance: '',
   floor: '',
   flat: '',
