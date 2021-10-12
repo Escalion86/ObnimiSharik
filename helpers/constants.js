@@ -182,7 +182,7 @@ export const DEFAULT_ORDER = {
 }
 
 export const DEFAULT_PAYMENT = {
-  number: 0,
+  // number: 0,
   clientId: '',
   orderId: '',
   way: 'card',

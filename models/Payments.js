@@ -1,11 +1,12 @@
 import mongoose from 'mongoose'
+const autoIncrement = require('mongoose-auto-increment')
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const PaymentsSchema = new mongoose.Schema({
-  number: {
-    type: Number,
-    default: 0,
-  },
+  // number: {
+  //   type: Number,
+  //   default: 0,
+  // },
   clientId: {
     type: String,
     required: [true, 'Необходимо указать id клиента'],
@@ -40,6 +41,15 @@ const PaymentsSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+})
+
+PaymentsSchema.plugin(autoIncrement.plugin, {
+  model: 'Payments',
+  field: 'number',
+  startAt: 1,
+  incrementBy: 1,
+  type: Number,
+  unique: false,
 })
 
 export default mongoose.models.Payments ||
