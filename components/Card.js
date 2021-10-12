@@ -78,7 +78,6 @@ const Card = ({ card }) => {
   const { size = 'normal', active = false } = card
   const CardComponent =
     size === 'small' ? CardSmall : size === 'big' ? CardBig : CardStandart
-  console.log(`card`, card)
   return (
     <div
       className={
