@@ -1,3 +1,20 @@
+import { cloneElement } from 'react'
+
+const months = [
+  'янв',
+  'фев',
+  'мар',
+  'апр',
+  'май',
+  'июн',
+  'июл',
+  'авг',
+  'сен',
+  'окт',
+  'ноя',
+  'дек',
+]
+
 function formatDateTime(dateTime, forComponent = false) {
   if (!dateTime) return undefined
   var d = new Date(dateTime),
@@ -7,14 +24,25 @@ function formatDateTime(dateTime, forComponent = false) {
     day = '' + d.getDate(),
     year = d.getFullYear()
 
-  if (month.length < 2) month = '0' + month
-  if (day.length < 2) day = '0' + day
-  if (hours.length < 2) hours = '0' + hours
   if (minutes.length < 2) minutes = '0' + minutes
 
-  if (forComponent)
+  if (forComponent) {
+    if (day.length < 2) day = '0' + day
+    if (hours.length < 2) hours = '0' + hours
+    if (month.length < 2) month = '0' + month
     return [year, month, day].join('-') + 'T' + [hours, minutes].join(':')
-  else return [day, month, year].join('.') + ' ' + [hours, minutes].join(':')
+  } else
+    return (
+      day +
+      ' ' +
+      months[month] +
+      ' ' +
+      year.toString().substr(2, 2) +
+      ' ' +
+      hours +
+      ':' +
+      minutes
+    )
 }
 
 export default formatDateTime
