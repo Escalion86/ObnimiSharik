@@ -5,6 +5,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './blocks/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
+    './helpers/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class', // or 'media' or 'class'
   i18n: {
@@ -101,6 +102,7 @@ module.exports = {
         // 8: '2rem',
         // 12: '3rem',
         // 16: '4rem',
+        20: '5rem',
         // 32: '8rem',
         30: '7.5rem',
         40: '10rem',
@@ -162,6 +164,7 @@ module.exports = {
         18: '4.5rem',
         26: '6.65rem',
         34: '8.25rem',
+        50: '12.5rem',
         84: '21rem',
         88: '22rem',
         100: '25rem',
