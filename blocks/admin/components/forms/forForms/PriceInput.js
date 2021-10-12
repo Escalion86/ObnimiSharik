@@ -14,7 +14,8 @@ const PriceInput = ({
   return (
     <Input
       label={label}
-      className={'max-w-40' + (className ? ' ' + className : '')}
+      className={className}
+      inputStyle="max-w-30"
       labelStyle={labelStyle}
       type="number"
       name={name}

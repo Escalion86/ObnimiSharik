@@ -9,7 +9,7 @@ const InputComponent = (props) => {
 }
 
 const Input = ({
-  label = '',
+  label = null,
   type,
   maxLength,
   name,
@@ -18,7 +18,7 @@ const Input = ({
   required = false,
   textarea = false,
   accept,
-  className,
+  className = null,
   disabled = false,
   inLine = false,
   labelStyle = null,
@@ -27,6 +27,7 @@ const Input = ({
   prefix = null,
   readOnly = false,
   hidden = false,
+  defaultValue,
 }) => {
   if (hidden) return null
   if (readOnly)
@@ -38,15 +39,17 @@ const Input = ({
           (className ? ' ' + className : '')
         }
       >
-        <label
-          className={
-            'border-b-1 border-primary max-w-min whitespace-nowrap' +
-            (labelStyle ? ' ' + labelStyle : '')
-          }
-          htmlFor={name}
-        >
-          {label}:
-        </label>
+        {label && (
+          <label
+            className={
+              'border-b-1 border-primary max-w-min whitespace-nowrap' +
+              (labelStyle ? ' ' + labelStyle : '')
+            }
+            htmlFor={name}
+          >
+            {label}:
+          </label>
+        )}
         <div className="flex flex-nowrap gap-x-1">
           {prefix && <div>{prefix}</div>}
           <div className="ml-2 italic">
@@ -65,19 +68,21 @@ const Input = ({
         (className ? ' ' + className : '')
       }
     >
-      <label
-        className={
-          labelStyle
-            ? ' ' + labelStyle
-            : inLine
-            ? 'min-w-24 max-w-40 w-1/4'
-            : ''
-        }
-        htmlFor={name}
-      >
-        {label}
-        {required && <span className="text-red-700">*</span>}
-      </label>
+      {label && (
+        <label
+          className={
+            labelStyle
+              ? ' ' + labelStyle
+              : inLine
+              ? 'min-w-24 max-w-40 w-1/4'
+              : ''
+          }
+          htmlFor={name}
+        >
+          {label}
+          {required && <span className="text-red-700">*</span>}
+        </label>
+      )}
       <div
         className={
           'flex flex-1 border rounded-lg flex-nowrap overflow-hidden ' +
@@ -122,6 +127,7 @@ const Input = ({
                   }
                 : null
             }
+            defaultValue={defaultValue}
           />
         </div>
         {postfix && (
