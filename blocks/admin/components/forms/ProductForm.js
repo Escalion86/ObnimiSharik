@@ -4,7 +4,7 @@ import { DEFAULT_PRODUCT } from '@helpers/constants'
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 
-import { Input, PriceInput, InputImages } from './forForms'
+import { Input, PriceInput, InputImages, RowContainer } from './forForms'
 
 import { sendImage, deleteImages } from '@helpers/cloudinary'
 import { postData, putData } from '@helpers/CRUD'
@@ -14,7 +14,6 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
-import RowContainer from './forForms/RowContainer'
 
 const ProductForm = ({
   role,

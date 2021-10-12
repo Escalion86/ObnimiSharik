@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { DEFAULT_PAYMENT, ROLES } from '@helpers/constants'
 
-import { ComboBox, Input } from './forForms'
+import { ComboBox, Input, SelectOrder, SelectClient } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -78,8 +78,8 @@ const PaymentForm = ({
 
   const formValidate = () => {
     let err = {}
-    // if (!form.email) err.email = 'Email is required'
-    // if (!form.role) err.role = 'Role is required'
+    if (!form.clientId) err.clientId = 'clientId is required'
+    if (!form.orderId) err.orderId = 'orderId is required'
     return err
   }
 
@@ -128,6 +128,30 @@ const PaymentForm = ({
           <option value="deliver">Курьер</option>
         </select>
       </div> */}
+      <SelectClient
+        onChange={(item) =>
+          setForm({
+            ...form,
+            clientId: item._id,
+          })
+        }
+        selectedId={form.clientId}
+        required
+        className="flex-1"
+        // exceptedIds={selectedItemsIds}
+      />
+      <SelectOrder
+        onChange={(item) =>
+          setForm({
+            ...form,
+            orderId: item ? item._id : '',
+          })
+        }
+        selectedId={form.orderId}
+        // clearButton
+        required
+        // exceptedIds={selectedItemsIds}
+      />
     </Form>
   )
 }

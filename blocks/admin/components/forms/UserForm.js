@@ -2,13 +2,18 @@ import { useState } from 'react'
 
 import { ROLES, DEFAULT_USER } from '@helpers/constants'
 
-import { ComboBox, DatePicker, Input, PhoneInput } from './forForms'
+import {
+  ComboBox,
+  DatePicker,
+  Input,
+  PhoneInput,
+  RowContainer,
+} from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
-import RowContainer from './forForms/RowContainer'
 
 const UserForm = ({
   role,

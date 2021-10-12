@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { DEFAULT_CLIENT } from '@helpers/constants'
 
-import { ComboBox, DatePicker, Input, PhoneInput } from './forForms'
+import { DatePicker, Input, PhoneInput } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 

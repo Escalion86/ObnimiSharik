@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-import { SelectItem, SelectProduct } from './SelectItem'
+import { SelectItem, SelectPayment, SelectProduct } from './SelectItem'
 import { useSelector } from 'react-redux'
+import { PaymentItem, ProductItem } from './ItemCards'
 
 // const СomboList = ({ onChange, selectedId, products }) => (
 //   <select
@@ -29,130 +30,124 @@ const ItemRow = ({
   items,
   onChange,
   onDelete,
+  onCreateNew,
+  onEdit,
+  onClick,
   selectedId,
-  count = 1,
   index,
   selectedItemsIds,
+  SelectItemComponent = SelectItem,
+  dropDownList,
 }) => {
-  const onChangeCount = (e) =>
-    onChange(selectedId, Number(e.target.value), index)
-  // const onChangeItem = (e) => onChange(e.target.value, count, index)
-  const onChangeItem = (value) => onChange(value, count, index)
-  const incCount = () => onChange(selectedId, count + 1, index)
-
-  const decCount = () => onChange(selectedId, count - 1, index)
+  const onChangeItem = (value) => onChange(value, index)
 
   return (
     <div className="flex border-b border-gray-700">
-      {/* <СomboList
-        onChange={onChangeItem}
-        selectedId={selectedId}
-        products={products}
-      /> */}
-      <SelectItem
+      <SelectItemComponent
         items={items}
         className={'flex-1' + (index === 0 ? ' rounded-tl-lg' : '')}
         onChange={(item) => onChangeItem(item._id)}
         selectedId={selectedId}
         exceptedIds={selectedItemsIds}
+        clearButton={dropDownList && onDelete}
+        onDelete={onDelete ? (item) => onDelete(index, item) : null}
+        onCreateNew={onCreateNew ? () => onCreateNew(index) : null}
+        onEdit={onEdit ? (item) => onEdit(index, item) : null}
+        onClick={onClick ? (item) => onClick(index, item) : null}
+        dropDownList={dropDownList}
       />
-      <div className="flex items-center justify-between border-l border-gray-700">
-        <div
-          className={
-            'flex items-center justify-center h-full px-1 group cursor-pointer'
-            // (count > 0 ? 'cursor-pointer' : 'cursor-not-allowed')
-          }
-          onClick={count > 1 ? decCount : () => onDelete(index)}
-        >
-          <FontAwesomeIcon
+      {/* {count !== undefined && (
+        <div className="flex items-center justify-between border-l border-gray-700">
+          <div
             className={
-              count > 1
-                ? 'text-gray-700 transform group-hover:hover:scale-125 duration-200 '
-                : // : 'text-gray-400'
-                  'text-red-700'
+              'flex items-center justify-center h-full px-1 group cursor-pointer'
+              // (count > 0 ? 'cursor-pointer' : 'cursor-not-allowed')
             }
-            icon={count > 1 ? faMinus : faTrash}
-            size="sm"
+            onClick={count > 1 ? decCount : () => onDelete(index)}
+          >
+            <FontAwesomeIcon
+              className={
+                count > 1
+                  ? 'text-gray-700 transform group-hover:hover:scale-125 duration-200 '
+                  : // : 'text-gray-400'
+                    'text-red-700'
+              }
+              icon={count > 1 ? faMinus : faTrash}
+              size="sm"
+            />
+          </div>
+          <input
+            className="w-10 text-sm text-center bg-gray-200 border-l border-r border-gray-700 outline-none"
+            type="text"
+            value={parseInt(count)}
+            onChange={onChangeCount}
+            onKeyPress={(e) => {
+              e = e || window.event
+              var charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
+              if (!(charCode >= 48 && charCode <= 57)) {
+                e?.preventDefault()
+              }
+            }}
           />
+          <div
+            className="flex items-center justify-center h-full px-1 cursor-pointer group"
+            onClick={incCount}
+          >
+            <FontAwesomeIcon
+              className="text-gray-700 duration-200 transform group-hover:hover:scale-125"
+              icon={faPlus}
+              size="sm"
+            />
+          </div>
         </div>
-        <input
-          className="w-10 text-sm text-center bg-gray-200 border-l border-r border-gray-700 outline-none"
-          type="text"
-          value={parseInt(count)}
-          onChange={onChangeCount}
-          onKeyPress={(e) => {
-            e = e || window.event
-            var charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
-            if (!(charCode >= 48 && charCode <= 57)) {
-              e?.preventDefault()
-            }
-          }}
-        />
-        <div
-          className="flex items-center justify-center h-full px-1 cursor-pointer group"
-          onClick={incCount}
-        >
-          <FontAwesomeIcon
-            className="text-gray-700 duration-200 transform group-hover:hover:scale-125"
-            icon={faPlus}
-            size="sm"
-          />
-        </div>
-      </div>
+      )} */}
     </div>
   )
 }
 
-export const ItemsList = ({
+export const SelectItemList = ({
   items = [],
-  subItems = [],
-  subItemsIdCountKey = null,
-  itemsIdCount = null,
+  itemsId = [],
+  ItemComponent = ProductItem,
+  SelectItemComponent = SelectProduct,
   title = '',
-  // products = {},
   onChange = () => {},
+  onCreateNew = null,
+  onEdit = null,
+  onDelete = null,
+  onClick = null,
   required = false,
   readOnly = false,
+  dropDownList = true,
 }) => {
-  if (readOnly && Object.keys(itemsIdCount).length === 0) return null
+  if (!itemsId) itemsId = []
+  if (readOnly && itemsId.length === 0) return null
+
   const itemRows = []
 
   if (readOnly) {
-    const ItemRows = ({ itemsIdCount, items }) => {
+    const ItemRows = ({ itemsId, items }) => {
       const itemRows = []
-      for (const [id, count] of Object.entries(itemsIdCount))
-        if (id !== '?') itemRows.push(items.find((item) => item._id === id))
+      itemsId.forEach((itemId) => {
+        if (id !== '?') itemRows.push(items.find((item) => item._id === itemId))
+      })
 
       return itemRows.map((item, index) => (
-        <div className="flex flex-col ml-2 italic gap-y-1">
-          <div
-            className={
-              'flex gap-x-1' + (item[subItemsIdCountKey] ? ' text-primary' : '')
-            }
-          >
-            <div>({item.article ? item.article : 'без артикула'})</div>
-            <div>{item.name}</div>
-            <div> - {itemsIdCount[item._id]} шт.</div>
-          </div>
-          {item[subItemsIdCountKey] && (
-            <ItemRows
-              items={subItems}
-              itemsIdCount={item[subItemsIdCountKey]}
-            />
-          )}
-        </div>
+        <ItemComponent item={item} readOnly />
       ))
     }
 
     return (
       <div className="flex flex-col">
-        <label
-          htmlFor="itemsIds"
-          className="border-b-1 border-primary max-w-min whitespace-nowrap"
-        >
-          {title}:
-        </label>
-        <ItemRows items={items} itemsIdCount={itemsIdCount} />
+        {title && (
+          <label
+            htmlFor="itemsIds"
+            className="border-b-1 border-primary max-w-min whitespace-nowrap"
+          >
+            {title}:
+          </label>
+        )}
+        <ItemRows items={items} itemsId={itemsId} />
         {/* {itemRows.map((item, index) => (
           <div className="flex ml-2 italic gap-x-1">
             <div>({item.article ? item.article : 'без артикула'})</div>
@@ -164,52 +159,46 @@ export const ItemsList = ({
     )
   }
 
-  const selectedItemsIds = Object.keys(itemsIdCount)
-  for (const [id, count] of Object.entries(itemsIdCount)) {
+  itemsId.forEach((itemId) =>
     itemRows.push(({ index }) => (
       <ItemRow
         items={items}
         onChange={onChangeItemRow}
-        onDelete={deleteRow}
-        selectedId={id}
-        count={count}
+        onDelete={(index, payment) => {
+          if (onDelete) onDelete(payment, () => deleteRow(index))
+          else deleteRow(index)
+        }}
+        onCreateNew={onCreateNew}
+        onEdit={onEdit}
+        onClick={onClick}
+        selectedId={itemId}
         index={index}
-        selectedItemsIds={selectedItemsIds}
+        selectedItemsIds={itemsId}
+        SelectItemComponent={SelectItemComponent}
+        dropDownList={dropDownList}
       />
     ))
-  }
+  )
 
-  const onChangeItemRow = (id, count, index) => {
-    const tempItemsIdCount = {}
-    let i = 0
-    for (const [id_old, count_old] of Object.entries(itemsIdCount)) {
-      if (i === index) tempItemsIdCount[id] = count
-      else tempItemsIdCount[id_old] = count_old
-      i++
-    }
-    onChange(tempItemsIdCount)
-    // const newProductsIdCount = productsIdCount.map((item, index) => {
-    //   if (index === e.index) return { id: e.id, count: e.count }
-    //   return item
-    // })
-    // onChange(newProductsIdCount)
+  const onChangeItemRow = (id, index) => {
+    const tempItemsId = [...itemsId]
+    tempItemsId[index] = id
+    onChange(tempItemsId)
   }
 
   const addRow = () => {
-    onChange(Object.assign(itemsIdCount, { ['?']: 1 }))
+    const tempItemsId = [...itemsId]
+    tempItemsId.push('?')
+    onChange(tempItemsId)
   }
 
   const deleteRow = (index) => {
-    const tempItemsIdCount = {}
-    let i = 0
-    for (const [id, count] of Object.entries(itemsIdCount)) {
-      if (i !== index) tempItemsIdCount[id] = count
-      i++
-    }
-    onChange(tempItemsIdCount)
+    const tempItemsId = [...itemsId]
+    tempItemsId.splice(index, 1)
+    onChange(tempItemsId)
   }
 
-  const addButtonIsActive = !('?' in itemsIdCount)
+  const addButtonIsActive = !itemsId.includes('?')
 
   return (
     <div className="flex flex-col">
@@ -223,7 +212,7 @@ export const ItemsList = ({
           'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg ' +
           (required &&
           required !== 'star' &&
-          (selectedItemsIds.length === 0 || selectedItemsIds[0] === '?')
+          (itemsId.length === 0 || itemsId[0] === '?')
             ? 'border-red-700'
             : 'border-gray-700')
         }
@@ -232,7 +221,9 @@ export const ItemsList = ({
           <Item key={'ItemRow' + index} index={index} />
         ))}
         <div
-          onClick={addButtonIsActive ? addRow : null}
+          onClick={
+            addButtonIsActive ? (dropDownList ? addRow : onCreateNew) : null
+          }
           className={
             'group flex items-center justify-center h-6 bg-white rounded-lg' +
             (addButtonIsActive ? ' cursor-pointer' : '')
@@ -256,8 +247,8 @@ export const ItemsList = ({
   )
 }
 
-export const ProductsList = ({
-  productsIdCount = null,
+export const SelectProductList = ({
+  productsId = null,
   onChange = () => {},
   required = false,
   readOnly = false,
@@ -266,9 +257,9 @@ export const ProductsList = ({
 }) => {
   const { products } = useSelector((state) => state)
   return (
-    <ItemsList
+    <SelectItemList
       items={products}
-      itemsIdCount={productsIdCount}
+      itemsId={productsId}
       title={title}
       onChange={(itemsIdCount) => {
         if (callbackArray) {
@@ -291,7 +282,7 @@ export const ProductsList = ({
   )
 }
 
-export const SetsList = ({
+export const SelectSetList = ({
   setsIdCount = null,
   onChange = () => {},
   required = false,
@@ -301,7 +292,7 @@ export const SetsList = ({
 }) => {
   const { products, sets } = useSelector((state) => state)
   return (
-    <ItemsList
+    <SelectItemList
       items={sets}
       subItems={products}
       subItemsIdCountKey="productsIdCount"
@@ -321,6 +312,39 @@ export const SetsList = ({
       }}
       required={required}
       readOnly={readOnly}
+    />
+  )
+}
+
+export const SelectPaymentList = ({
+  paymentsId = null,
+  onChange = () => {},
+  onCreateNew = null,
+  onEdit = null,
+  onDelete = null,
+  onClick = null,
+  required = false,
+  readOnly = false,
+  title = 'Транзакции',
+  callbackArray = false,
+  dropDownList = true,
+}) => {
+  const { payments } = useSelector((state) => state)
+  return (
+    <SelectItemList
+      items={payments}
+      itemsId={paymentsId}
+      ItemComponent={PaymentItem}
+      SelectItemComponent={SelectPayment}
+      onCreateNew={onCreateNew}
+      onEdit={onEdit}
+      onDelete={onDelete}
+      onClick={onClick}
+      title={title}
+      onChange={onChange}
+      required={required}
+      readOnly={readOnly}
+      dropDownList={dropDownList}
     />
   )
 }

@@ -4,7 +4,14 @@ import { DEFAULT_SET } from '@helpers/constants'
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 
-import { Input, PriceInput, InputImages, ProductsList } from './forForms'
+import {
+  Input,
+  PriceInput,
+  InputImages,
+  SelectProductsList,
+  FormColumn,
+  RowContainer,
+} from './forForms'
 
 import { sendImage, deleteImages } from '@helpers/cloudinary'
 import { postData, putData } from '@helpers/CRUD'
@@ -14,8 +21,6 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import { useSelector } from 'react-redux'
-import RowContainer from './forForms/RowContainer'
-import FormColumn from './forForms/FromColumn'
 
 const SetForm = ({
   role,
@@ -194,7 +199,7 @@ const SetForm = ({
         />
       </FormColumn>
       <FormColumn className="flex flex-col flex-1">
-        <ProductsList
+        <SelectProductsList
           productsIdCount={form.productsIdCount}
           onChange={(newProductsIdCount) =>
             setForm({

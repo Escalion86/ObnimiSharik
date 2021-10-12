@@ -8,18 +8,18 @@ import {
   Input,
   PriceInput,
   SelectProduct,
+  SelectOrder,
+  DatePicker,
 } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import findDataWithId from '@helpers/findDataWithId'
-import DatePicker from './forForms/DatePicker'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faEquals } from '@fortawesome/free-solid-svg-icons'
-import { SelectOrder } from './forForms/SelectItem'
 
 const ProductCirculationForm = ({
   role,

@@ -2,18 +2,24 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import {
   DEFAULT_ORDER,
+  DEFAULT_PAYMENT,
   DEFAULT_PRODUCT_CIRCULATION,
   ORDER_STATUSES,
   ROLES,
 } from '@helpers/constants'
 
 import {
-  ComboBox,
   Input,
   PriceInput,
-  ProductsList,
   SelectClient,
-  SetsList,
+  SelectDeliver,
+  SelectPaymentList,
+  SelectProductsList,
+  SelectSetsList,
+  RadioBox,
+  RowContainer,
+  DateTimePicker,
+  FormColumn,
 } from './forForms'
 
 import { deleteData, postData, putData } from '@helpers/CRUD'
@@ -22,11 +28,6 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
 import { useDispatch, useSelector } from 'react-redux'
-import RadioBox from './forForms/RadioBox'
-import RowContainer from './forForms/RowContainer'
-import { SelectDeliver } from './forForms/SelectItem'
-import DateTimePicker from './forForms/DateTimePicker'
-import FormColumn from './forForms/FromColumn'
 
 import {
   faPencilAlt,
@@ -39,16 +40,13 @@ import modalsFunctions from '@adminblocks/modals/modalsFunctions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { getSession } from 'next-auth/client'
-import Button from '@components/Button'
 import IconButton from '@components/IconButton'
 import { fetchingProductCirculations } from '@helpers/fetchers'
 import { setProductCirculations } from '@state/actions'
 
-import useWindowDimensions, {
-  useWindowDimensionsTailwind,
-} from '@helpers/useWindowDimensions'
+import { useWindowDimensionsTailwind } from '@helpers/useWindowDimensions'
 import formatDateTime from '@helpers/formatDateTime'
+import formatDeliveryAddress from '@helpers/formatDeliveryAddress'
 
 {
   /* <FontAwesomeIcon
@@ -118,8 +116,9 @@ const FormMenuItem = ({
 
 const FormMenu = ({ twoCols = false, config = null }) => {
   const tailwindWidth = useWindowDimensionsTailwind()
+
   const [activeFormItemIndex, setActiveFormItemIndex] = useState(
-    config ? config.findIndex((item) => item.access) : 0
+    config ? config.findIndex((item) => item.visible && !item.disabled) : 0
   )
   return (
     <>
@@ -363,95 +362,116 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
               />
             )}
             <div>
-              <label>
-                Адрес<span className="text-red-700">*</span>
-              </label>
-              <div className="flex flex-col p-1 border border-gray-700 rounded-lg gap-y-2">
-                <Input
-                  key="town"
-                  label="Город"
-                  type="text"
-                  maxLength="100"
-                  name="town"
-                  value={form.deliveryAddress.town}
-                  onChange={handleAddressChange}
-                  className="flex-1"
-                  labelStyle="w-18"
-                  inLine
-                  required
-                  readOnly={role === 'deliver'}
-                />
-                <Input
-                  key="street"
-                  label="Улица"
-                  type="text"
-                  maxLength="100"
-                  name="street"
-                  value={form.deliveryAddress.street}
-                  onChange={handleAddressChange}
-                  className="flex-1"
-                  labelStyle="w-18"
-                  inLine
-                  required
-                  readOnly={role === 'deliver'}
-                />
-                <RowContainer className="flex-col tablet:flex-row gap-y-2">
-                  <Input
-                    key="entrance"
-                    type="text"
-                    label="Подъезд"
-                    maxLength="10"
-                    name="entrance"
-                    value={form.deliveryAddress.entrance}
-                    onChange={handleAddressChange}
-                    inLine
-                    labelStyle="w-18 pr-1 tablet:w-min"
-                    inputStyle="tablet:w-16"
-                    readOnly={role === 'deliver'}
-                  />
-                  <Input
-                    key="floor"
-                    type="text"
-                    label="Этаж"
-                    maxLength="10"
-                    name="floor"
-                    value={form.deliveryAddress.floor}
-                    onChange={handleAddressChange}
-                    // className="w-16"
-                    inLine
-                    labelStyle="w-18 pr-1 tablet:w-min"
-                    inputStyle="tablet:w-16"
-                    readOnly={role === 'deliver'}
-                  />
-                  <Input
-                    key="flat"
-                    type="text"
-                    label="Квартира"
-                    maxLength="10"
-                    name="flat"
-                    value={form.deliveryAddress.flat}
-                    onChange={handleAddressChange}
-                    // className="w-16"
-                    inLine
-                    labelStyle="pr-1 tablet:w-min"
-                    inputStyle="tablet:w-16"
-                    required
-                    readOnly={role === 'deliver'}
-                  />
-                </RowContainer>
-                <Input
-                  key="comment"
-                  label="Комментарий по адресу"
-                  type="text"
-                  maxLength="300"
-                  name="comment"
-                  value={form.deliveryAddress.comment}
-                  onChange={handleAddressChange}
-                  textarea
-                  readOnly={role === 'deliver'}
-                />
+              {role === 'deliver' ? (
+                'Адрес: ' + formatDeliveryAddress(form.deliveryAddress)
+              ) : (
+                <>
+                  <label>
+                    Адрес<span className="text-red-700">*</span>
+                  </label>
+                  <div className="flex flex-col p-1 border border-gray-700 rounded-lg gap-y-2">
+                    <Input
+                      key="town"
+                      label="Город"
+                      type="text"
+                      maxLength="100"
+                      name="town"
+                      value={form.deliveryAddress.town}
+                      onChange={handleAddressChange}
+                      className="flex-1"
+                      labelStyle="w-18"
+                      inLine
+                      required
+                      readOnly={role === 'deliver'}
+                    />
+                    <RowContainer className="flex-col tablet:flex-row gap-y-2">
+                      <Input
+                        key="street"
+                        label="Улица"
+                        type="text"
+                        maxLength="100"
+                        name="street"
+                        value={form.deliveryAddress.street}
+                        onChange={handleAddressChange}
+                        className="flex-1"
+                        labelStyle="w-18"
+                        inLine
+                        required
+                        readOnly={role === 'deliver'}
+                      />
+                      <Input
+                        key="house"
+                        label="Дом"
+                        type="text"
+                        maxLength="100"
+                        name="house"
+                        value={form.deliveryAddress.house}
+                        onChange={handleAddressChange}
+                        // className="w-80"
+                        labelStyle="w-18 pr-1 tablet:w-min"
+                        inputStyle="w-16"
+                        inLine
+                        required
+                        readOnly={role === 'deliver'}
+                      />
+                    </RowContainer>
+                    <RowContainer className="flex-col tablet:flex-row gap-y-2">
+                      <Input
+                        key="entrance"
+                        type="text"
+                        label="Подъезд"
+                        maxLength="10"
+                        name="entrance"
+                        value={form.deliveryAddress.entrance}
+                        onChange={handleAddressChange}
+                        inLine
+                        labelStyle="w-18 pr-1 tablet:w-min"
+                        inputStyle="tablet:w-16"
+                        readOnly={role === 'deliver'}
+                      />
+                      <Input
+                        key="floor"
+                        type="text"
+                        label="Этаж"
+                        maxLength="10"
+                        name="floor"
+                        value={form.deliveryAddress.floor}
+                        onChange={handleAddressChange}
+                        // className="w-16"
+                        inLine
+                        labelStyle="w-18 pr-1 tablet:w-min"
+                        inputStyle="tablet:w-16"
+                        readOnly={role === 'deliver'}
+                      />
+                      <Input
+                        key="flat"
+                        type="text"
+                        label="Квартира"
+                        maxLength="10"
+                        name="flat"
+                        value={form.deliveryAddress.flat}
+                        onChange={handleAddressChange}
+                        // className="w-16"
+                        inLine
+                        labelStyle="pr-1 tablet:w-min"
+                        inputStyle="tablet:w-16"
+                        required
+                        readOnly={role === 'deliver'}
+                      />
+                    </RowContainer>
+                    <Input
+                      key="comment"
+                      label="Комментарий по адресу"
+                      type="text"
+                      maxLength="300"
+                      name="comment"
+                      value={form.deliveryAddress.comment}
+                      onChange={handleAddressChange}
+                      textarea
+                      readOnly={role === 'deliver'}
+                    />
 
-                {/* <Input
+                    {/* <Input
                 key="comment"
                 label="Комментарий"
                 type="text"
@@ -464,7 +484,9 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                 inputStyle="flex-1 w-0"
                 inLine
               /> */}
-              </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -505,7 +527,7 @@ const ProductsContent = ({
   return (
     (operator || aerodesigner) && (
       <div>
-        <ProductsList
+        <SelectProductsList
           productsIdCount={productsIdCount}
           onChange={(productsCount) => {
             // const tempProductsCount = []
@@ -532,7 +554,7 @@ const ProductsContent = ({
           }
           readOnly={readOnly}
         />
-        <SetsList
+        <SelectSetsList
           setsIdCount={setsIdCount}
           onChange={(setsCount) => {
             // const tempSetsCount = []
@@ -577,6 +599,7 @@ const ProductsContent = ({
 
 const PaymentContent = ({
   form,
+  order,
   products,
   sets,
   setForm,
@@ -585,22 +608,94 @@ const PaymentContent = ({
   catalogPrice,
   handleChange,
   totalPrice,
+  paymentsId,
+  setPaymentsId,
+  modals,
 }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
 
+  const handleChangeDiscount = (e) => {
+    const value = e.target.value
+    const discountValue = Math.ceil(catalogPrice * value) / 100
+    handleChange({
+      ...e,
+      target: { ...e.target, name: e.target.name, value: discountValue },
+    })
+  }
+
   return (
     operator && (
-      <div>
+      <div className="flex flex-col gap-y-1">
         <div>Cумма по каталогу: {catalogPrice} ₽</div>
-        <PriceInput
-          value={form.discount / 100}
-          onChange={handleChange}
-          label="Скидка"
-          className="w-full"
-          name="discount"
-          labelStyle="w-min pr-1 whitespace-nowrap"
-          inLine
-        />
+        <div className="flex gap-x-2">
+          <PriceInput
+            value={form.discount / 100}
+            onChange={handleChange}
+            label="Скидка"
+            // className="w-full"
+            name="discount"
+            labelStyle="w-min pr-1 whitespace-nowrap"
+            inLine
+          />
+          <Input
+            value={
+              catalogPrice > 0
+                ? Math.ceil((form.discount / catalogPrice) * 100) / 100
+                : 0
+            }
+            type="number"
+            onChange={handleChangeDiscount}
+            postfix="%"
+            // label="Скидка"
+            inputStyle="max-w-20"
+            name="discount"
+            inLine
+          />
+        </div>
+        {order._id ? (
+          <SelectPaymentList
+            paymentsId={paymentsId}
+            onChange={setPaymentsId}
+            onCreateNew={(index) =>
+              modals.openPaymentModal(
+                {
+                  ...DEFAULT_PAYMENT,
+                  orderId: order._id,
+                },
+                (data) => {
+                  const tempPaymentsId = [...paymentsId]
+                  tempPaymentsId.push(data._id)
+                  setPaymentsId(tempPaymentsId)
+                }
+              )
+            }
+            // onEdit={(index, payment) =>
+            //   modals.openPaymentModal(payment, (data) => {
+            //     const tempPaymentsId = [...paymentsId]
+            //     tempPaymentsId[index] = data._id
+            //     setPaymentsId(tempPaymentsId)
+            //   })
+            // }
+            // onDelete={(payment, onConfirm) => {
+            //   payment
+            //     ? modals.openDeletePayment(payment, onConfirm)
+            //     : onConfirm()
+            // }}
+            onClick={(index, payment) =>
+              modals.openPaymentModal(payment, (data) => {
+                const tempPaymentsId = [...paymentsId]
+                tempPaymentsId[index] = data._id
+                setPaymentsId(tempPaymentsId)
+              })
+            }
+            dropDownList={false}
+          />
+        ) : (
+          <div>
+            <label htmlFor="itemsIds">Транзакции</label>
+            <div>Чтобы добавить транзакции - сначала сохраните заказ</div>
+          </div>
+        )}
         <div className="flex items-end justify-center flex-1 h-8 font-bold gap-x-1">
           Итого сумма:<span className="text-lg">{totalPrice}</span> ₽
         </div>
@@ -611,7 +706,7 @@ const PaymentContent = ({
 
 const ProductCirculationContent = ({
   form,
-  // setForm,
+  setForm,
   // role,
   productCirculationsIdCountDefective,
   setProductCirculationsIdCountDefective,
@@ -650,12 +745,12 @@ const ProductCirculationContent = ({
         icon={faCog}
         small
       />
-      <ProductsList
+      <SelectProductsList
         title="Список израсходованных товаров"
         productsIdCount={productCirculationsIdCount}
         onChange={(newProductsIdCount) => {
           setProductCirculationsIdCount(newProductsIdCount)
-          // setForm({ ...form })
+          setForm({ ...form })
         }}
         // required={
         //   (!setsIdCount['?'] && Object.keys(setsIdCount).length > 0) ||
@@ -665,13 +760,13 @@ const ProductCirculationContent = ({
         // }
         // readOnly={readOnly}
       />
-      <ProductsList
+      <SelectProductsList
         title="Список отбракованных товаров"
         productsIdCount={productCirculationsIdCountDefective}
         onChange={(newProductsIdCount) => {
           setProductCirculationsIdCountDefective(newProductsIdCount)
           // TODO Очень странная фигняююю без строчки ниже компонент не обновляется если добавить новый товар
-          // setForm({ ...form })
+          setForm({ ...form })
         }}
         // required={
         //   (!setsIdCount['?'] && Object.keys(setsIdCount).length > 0) ||
@@ -701,7 +796,8 @@ const OrderForm = ({
     productsCount: order.productsCount,
     setsCount: order.setsCount,
     discount: order.discount,
-    fullPrice: order.fullPrice,
+    // fullPrice: order.fullPrice,
+    price: order.price,
     status: order.status,
     comment: order.comment,
     deliveryPickup: order.deliveryPickup,
@@ -710,6 +806,7 @@ const OrderForm = ({
     deliveryDateTo: order.deliveryDateTo,
     deliverId: order.deliverId,
   })
+  const [paymentsId, setPaymentsId] = useState([])
 
   const [productCirculationsIdCount, setProductCirculationsIdCount] = useState(
     {}
@@ -720,7 +817,15 @@ const OrderForm = ({
   ] = useState({})
 
   const state = useSelector((state) => state)
-  const { products, sets, users, orders, clients, productCirculations } = state
+  const {
+    products,
+    sets,
+    users,
+    orders,
+    clients,
+    productCirculations,
+    payments,
+  } = state
 
   const dispatch = useDispatch()
 
@@ -749,6 +854,11 @@ const OrderForm = ({
     setProductCirculationsIdCountDefective(
       tempProductCirculationsIdCountDefective
     )
+
+    const tempPayments = payments
+      .filter((payment) => payment.orderId === order._id)
+      .map((payment) => payment._id)
+    setPaymentsId(tempPayments)
   }, [])
 
   // const session = getSession().then((data) => console.log(data))
@@ -796,12 +906,12 @@ const OrderForm = ({
     },
     0
   )
-  const catalogSetsPrice = form.setsCount.reduce((totalSetsCount, setCount) => {
+  const catalogSetsPrice = form.setsCount.reduce((totalSetsPrice, setCount) => {
     if (setCount.set) {
       const set = sets.find((set) => set._id === setCount.set._id)
-      if (set) totalSetsCount += set.price * setCount.count
+      if (set) totalSetsPrice += set.price * setCount.count
     }
-    return totalSetsCount
+    return totalSetsPrice
   }, 0)
   const catalogPrice = (catalogProductsPrice + catalogSetsPrice) / 100
   const totalPrice = catalogPrice - form.discount / 100
@@ -862,7 +972,7 @@ const OrderForm = ({
       forNew
         ? postData(
             '/api/orders',
-            { ...form, fullPrice: totalPrice * 100 },
+            { ...form, price: totalPrice * 100 },
             (data) => {
               createProductCirculationsForOrder(data._id)
               afterConfirm(data)
@@ -906,6 +1016,7 @@ const OrderForm = ({
     clients,
     readOnly,
     form,
+    order,
     setForm,
     handleChange,
     role,
@@ -916,7 +1027,27 @@ const OrderForm = ({
     setProductCirculationsIdCountDefective,
     productCirculationsIdCount,
     setProductCirculationsIdCount,
+    paymentsId,
+    setPaymentsId,
   }
+
+  const sumObjectValues = (obj) => {
+    var sum = 0
+    for (var el in obj) {
+      if (obj.hasOwnProperty(el) && el !== '?') {
+        sum += parseFloat(obj[el])
+      }
+    }
+    return sum
+  }
+
+  const cartEmpty = !(
+    (Object.keys(form.productsCount).length !== 0 &&
+      (Object.keys(form.productsCount).length > 1 ||
+        form.productsCount[0].product)) ||
+    (Object.keys(form.setsCount).length !== 0 &&
+      (Object.keys(form.setsCount).length > 1 || form.setsCount[0].set))
+  )
 
   return (
     <Form
@@ -1006,9 +1137,16 @@ const OrderForm = ({
             title: 'Состав заказа',
             content: <ProductsContent {...contentParams} />,
             text:
-              form.productsCount.length +
+              form.productsCount.reduce((totalProductsCount, productCount) => {
+                if (productCount.product)
+                  return (totalProductsCount += productCount.count)
+                return totalProductsCount
+              }, 0) +
               ' товаров, ' +
-              form.setsCount.length +
+              form.setsCount.reduce((totalSetsCount, setCount) => {
+                if (setCount.set) return (totalSetsCount += setCount.count)
+                return totalSetsCount
+              }, 0) +
               ' наборов',
             visible: operator || aerodesigner,
           },
@@ -1026,20 +1164,18 @@ const OrderForm = ({
             title: 'Расчёт',
             content: <PaymentContent {...contentParams} />,
             text: totalPrice + ' ₽',
-            visible: operator,
+            visible: operator && !cartEmpty,
           },
           {
             title: 'Расход товаров',
             content: <ProductCirculationContent {...contentParams} />,
             // text: form.deliveryPickup ? 'Самовывоз' : 'Курьером',
-            visible:
-              (operator || aerodesigner) &&
-              ((Object.keys(form.productsCount).length !== 0 &&
-                (Object.keys(form.productsCount).length > 1 ||
-                  form.productsCount[0].product)) ||
-                (Object.keys(form.setsCount).length !== 0 &&
-                  (Object.keys(form.setsCount).length > 1 ||
-                    form.setsCount[0].set))),
+            text:
+              sumObjectValues(productCirculationsIdCount) +
+              ' товаров, ' +
+              sumObjectValues(productCirculationsIdCountDefective) +
+              ' брак',
+            visible: aerodesigner && !cartEmpty,
             // disabled: role === 'aerodesigner',
           },
         ]}

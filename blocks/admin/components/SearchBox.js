@@ -6,7 +6,7 @@ import {
   ProductItem,
   ClientItem,
   PersonaItem,
-} from './forms/forForms/SelectItem'
+} from './forms/forForms/SelectItemsList/ItemCards'
 
 const SearchBox = ({ modals }) => {
   // const inputRef = useRef()
