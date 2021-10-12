@@ -86,6 +86,9 @@ import { setPage } from '@state/actions/pageActions'
 // import { setInvitations } from '@state/actions/invitationsActions'
 // import { setProductCirculations } from '@state/actions/productCirculationsActions'
 import { pages, pagesGroups } from '@adminblocks/pages'
+// import dbConnect from '@utils/dbConnect'
+// import Orders from '@models/Orders'
+// import Orders from '@models/Orders'
 
 const menuCfg = (pages, pagesGroups, userRole) =>
   pagesGroups.reduce((totalGroups, group) => {
@@ -147,6 +150,9 @@ export default function Admin() {
       const role = session.user.role
       if (role === 'deliver') setPageId(14)
       if (role === 'aerodesigner') setPageId(13)
+      if (role === 'operator') setPageId(11)
+
+      // const ordersListener = Orders.watch()
     }
   }, [!!session, loading])
 
@@ -193,7 +199,9 @@ export default function Admin() {
           ) : (
             <div className="flex items-center justify-center h-screen">
               <div className="flex flex-col items-center justify-center p-10 bg-gray-400 rounded-2xl w-92">
-                <div>Вы авторизировались как {session.user.email}</div>
+                {session.user?.email && (
+                  <div>Вы авторизировались как {session.user.email}</div>
+                )}
                 <div>У Вас нет доступа к панели администратора</div>
                 <Button
                   name="Авторизироваться под другой учетной записью"
@@ -238,4 +246,16 @@ export default function Admin() {
 
 // return { props: { balloons: balloons, types: types, sets: sets } }
 // return { props: { db_uri: process.env.MONGODB_URI } }
+// }
+
+// export async function getInitialProps() {
+//   await dbConnect()
+//   let result = await Products.find({})
+//   const orders = result.map((doc) => {
+//     const order = doc.toObject()
+//     order._id = order._id.toString()
+//     return order
+//   })
+//   console.log(`orders`, orders)
+//   return { props: {} }
 // }
