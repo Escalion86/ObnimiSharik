@@ -71,11 +71,11 @@ export const OrderCard = ({
           topRight
         />
         <div className="px-1 font-bold text-right whitespace-nowrap min-w-min">
-          {order.fullPrice / 100} ₽
+          {order.price / 100} ₽
         </div>
         <div
           className={
-            'flex items-center justify-center w-28 h-12 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg ' +
+            'flex items-center bg-white justify-center w-28 h-12 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg ' +
             orderStatus.color
           }
         >

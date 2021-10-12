@@ -19,9 +19,9 @@ const Filter = ({
 
   const priceFilterExists =
     state.filter[variable].price !== undefined && filter.price !== undefined
-  const fullPriceFilterExists =
-    state.filter[variable].fullPrice !== undefined &&
-    filter.fullPrice !== undefined
+  // const fullPriceFilterExists =
+  //   state.filter[variable].fullPrice !== undefined &&
+  //   filter.fullPrice !== undefined
   const countFilterExists =
     state.filter[variable].count !== undefined && filter.count !== undefined
   const productTypesFilterExists =
@@ -39,14 +39,15 @@ const Filter = ({
   let sliderPriceValue = [0, 0]
   const priceVariable = priceFilterExists
     ? 'price'
-    : fullPriceFilterExists
-    ? 'fullPrice'
-    : null
+    : // : fullPriceFilterExists
+      // ? 'fullPrice'
+      null
 
   if (
     state[variable] &&
     state[variable].length > 0 &&
-    (priceFilterExists || fullPriceFilterExists)
+    priceFilterExists
+    // || fullPriceFilterExists
   ) {
     maxPrice =
       state[variable].reduce(function (prev, current) {
@@ -181,7 +182,8 @@ const Filter = ({
         />
       )}
       <div className="flex flex-col justify-between flex-1 h-full gap-y-1">
-        {(priceFilterExists || fullPriceFilterExists) && (
+        {priceFilterExists && (
+          // || fullPriceFilterExists
           <div>
             <div>Стоимость</div>
             <Slider

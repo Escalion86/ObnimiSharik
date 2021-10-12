@@ -24,7 +24,7 @@ const OrdersSchema = new mongoose.Schema({
     default: 0,
     maxlength: [8, 'Скидка не может превышать 999999,99 руб'],
   },
-  fullPrice: {
+  price: {
     type: Number,
     required: [true, 'Пожалуйста укажите стоимость за штуку'],
     maxlength: [8, 'Стоимость не может превышать 999999,99 руб'],
@@ -90,5 +90,9 @@ OrdersSchema.plugin(autoIncrement.plugin, {
   type: Number,
   unique: false,
 })
+
+// const Orders = mongoose.models.Orders || mongoose.model('Orders', OrdersSchema)
+
+// Orders.watch().on('change', (data) => console.log(new Date(), data))
 
 export default mongoose.models.Orders || mongoose.model('Orders', OrdersSchema)

@@ -79,7 +79,7 @@ export const ORDER_STATUSES = [
     value: 'deferred',
     roles: ['operator', 'aerodesigner', 'deliver', 'admin'],
     requirements: { deliveryPickup: false, productCirculationsIdCount: true },
-    color: 'bg-blue-400',
+    color: 'bg-blue-300',
   },
   {
     name: 'Передан аэродизайнеру',
@@ -93,7 +93,7 @@ export const ORDER_STATUSES = [
     value: 'deferred',
     roles: ['operator', 'aerodesigner', 'admin'],
     requirements: { deliveryPickup: true, productCirculationsIdCount: true },
-    color: 'bg-blue-400',
+    color: 'bg-blue-300',
   },
   {
     name: 'Готов к выдаче',
@@ -171,7 +171,7 @@ export const DEFAULT_ORDER = {
   productsCount: [],
   setsCount: [],
   discount: 0,
-  fullPrice: 0,
+  price: 0,
   status: 'draft',
   comment: '',
   deliveryPickup: true,

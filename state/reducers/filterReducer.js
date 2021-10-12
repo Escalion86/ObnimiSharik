@@ -29,7 +29,7 @@ export const initialState = {
   users: {},
   invitations: {},
   orders: {
-    fullPrice: [null, null],
+    price: [null, null],
     status: null,
   },
 }

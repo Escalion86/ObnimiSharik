@@ -45,7 +45,7 @@ export const sortingVariables = {
   },
   orders: {
     deliveryDateFrom: { text: 'по дате', type: Date },
-    fullPrice: { text: 'по стоимости', type: Number },
+    price: { text: 'по стоимости', type: Number },
     // status: 'по статусу',
   },
   payments: {

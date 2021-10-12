@@ -23,8 +23,9 @@ const SearchBox = ({ modals }) => {
     item.article?.toString().includes(searchTextLowerCase) ||
     item.phone?.toString().includes(searchTextLowerCase) ||
     item.whatsapp?.toString().includes(searchTextLowerCase) ||
-    item.price?.toString().includes(searchTextLowerCase) ||
-    item.fullPrice?.toString().includes(searchTextLowerCase)
+    item.price?.toString().includes(searchTextLowerCase)
+  // ||
+  // item.fullPrice?.toString().includes(searchTextLowerCase)
 
   const SearchedProducts = () => {
     const filteredProducts = products.filter((product) => filter(product))
