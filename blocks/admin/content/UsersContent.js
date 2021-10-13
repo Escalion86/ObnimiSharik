@@ -18,7 +18,7 @@ const UsersContent = ({ data, modals, user }) => {
       data={showedUsers}
       itemContent={(index, showedUser) => (
         <UserCard
-          role={role}
+          role={user.role}
           key={showedUser._id}
           user={showedUser}
           onClick={() => modals.openUserModal(showedUser)}
