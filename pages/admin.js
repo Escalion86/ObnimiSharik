@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getSession, signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, signOut, useSession } from 'next-auth/client'
 
 import { faPlus, faBug } from '@fortawesome/free-solid-svg-icons'
 
@@ -107,8 +107,6 @@ const menuCfg = (pages, pagesGroups, userRole) =>
 
 export default function Admin() {
   const [session, loading] = useSession()
-  // console.log(`session.user`, session.user)
-  // getSession().then((result) => console.log(`getSession`, result))
 
   const state = useSelector((state) => state)
 
