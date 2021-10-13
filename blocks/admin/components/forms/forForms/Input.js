@@ -53,7 +53,7 @@ const Input = ({
         <div className="flex flex-nowrap gap-x-1">
           {prefix && <div>{prefix}</div>}
           <div className="ml-2 italic">
-            {type === 'number' ? parseInt(value) : value}
+            {type === 'number' ? parseInt(value) : value ? value : ''}
           </div>
           {postfix && <div>{postfix}</div>}
         </div>
@@ -102,7 +102,7 @@ const Input = ({
             type={type === 'number' ? 'text' : type}
             maxLength={maxLength}
             name={name}
-            value={type === 'number' ? parseInt(value) : value}
+            value={type === 'number' ? parseInt(value) : value ? value : ''}
             onChange={
               type === 'number'
                 ? (e) => {
