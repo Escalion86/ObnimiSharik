@@ -8,8 +8,6 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
-import formatDateTime from '@helpers/formatDateTime'
-import CardButton from '@admincomponents/cards/forCards/CardButton'
 import { Virtuoso } from 'react-virtuoso'
 import {
   OrderItem,
@@ -18,6 +16,7 @@ import {
   PersonaItem,
   PaymentItem,
 } from './ItemCards'
+// import useClickOutside from '@helpers/hooks/21-useClickOutside/useClickOutside'
 
 const filteredItems = (items, searchText, exceptedIds, itemComponentFunction) =>
   (searchText || exceptedIds.length > 0
@@ -73,6 +72,11 @@ export const SelectItem = ({
   const ref = useRef()
   const inputRef = useRef()
 
+  // useClickOutside(inputRef, () => {
+  //   console.log(`OUTSIDE`)
+  //   if (isMenuOpen) setIsMenuOpen(false)
+  // })
+
   const selectedItem = selectedId
     ? items.find((item) => item._id === selectedId)
     : null
@@ -86,7 +90,12 @@ export const SelectItem = ({
   const toggleIsMenuOpen = () => setIsMenuOpen((state) => !state)
 
   useEffect(() => {
+    // console.log(`ref.current`, ref.current)
     const checkIfClickedOutside = (e) => {
+      // console.log(
+      //   `ref.current.contains(e.target)`,
+      //   ref.current.contains(e.target)
+      // )
       if (
         dropDownList &&
         isMenuOpen &&
@@ -104,7 +113,7 @@ export const SelectItem = ({
     return () => {
       document.removeEventListener('mousedown', checkIfClickedOutside)
     }
-  }, [dropDownList, isMenuOpen])
+  }, [dropDownList, isMenuOpen, ref, inputRef])
 
   return (
     <div
