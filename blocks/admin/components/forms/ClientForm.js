@@ -2,12 +2,21 @@ import { useState } from 'react'
 
 import { DEFAULT_CLIENT } from '@helpers/constants'
 
-import { DatePicker, Input, PhoneInput } from './forForms'
+import {
+  DatePicker,
+  GenderPicker,
+  Input,
+  PhoneInput,
+  RowContainer,
+} from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
+import birthDateToAge from '@helpers/birthDateToAge'
+import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const ClientForm = ({
   role,
@@ -23,6 +32,9 @@ const ClientForm = ({
     email: client.email,
     phone: client.phone,
     whatsapp: client.whatsapp,
+    viber: client.viber,
+    telegram: client.telegram,
+    gender: client.gender,
     birthday: client.birthday,
     image: client.image,
   })
@@ -115,35 +127,65 @@ const ClientForm = ({
         value={form.email}
         onChange={handleChange}
       />
-      <div className="flex">
-        <div className="flex-1">
-          <PhoneInput
-            key="phone"
-            label="Телефон"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="flex-1">
-          <PhoneInput
-            key="whatsapp"
-            label="WhatsApp"
-            name="whatsapp"
-            value={form.whatsapp}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
+      <RowContainer>
+        <PhoneInput
+          key="phone"
+          label="Телефон"
+          name="phone"
+          value={form.phone}
+          onChange={handleChange}
+          required
+        />
+        <PhoneInput
+          key="whatsapp"
+          label="WhatsApp"
+          name="whatsapp"
+          value={form.whatsapp}
+          onChange={handleChange}
+        />
+      </RowContainer>
+      <RowContainer>
+        <PhoneInput
+          key="viber"
+          label="Viber"
+          name="viber"
+          value={form.viber}
+          onChange={handleChange}
+          // required
+        />
+        <Input
+          key="telegram"
+          label="Telegram"
+          inputStyle="max-w-40"
+          type="text"
+          maxLength="80"
+          name="telegram"
+          value={form.telegram}
+          onChange={handleChange}
+        />
+      </RowContainer>
 
-      <DatePicker
-        key="birthday"
-        label="День рождения"
-        name="birthday"
-        value={form.birthday}
-        // value={productCirculation.createdAt}
-        onChange={handleChange}
+      <div className="flex">
+        <DatePicker
+          key="birthday"
+          label="День рождения"
+          name="birthday"
+          value={form.birthday}
+          // value={productCirculation.createdAt}
+          onChange={handleChange}
+        />
+        {form.birthday && (
+          <div className="ml-2 mt-7">{birthDateToAge(form.birthday)}</div>
+        )}
+      </div>
+      <GenderPicker
+        gender={form.gender}
+        onChange={(gender) =>
+          setForm({
+            ...form,
+            gender,
+          })
+        }
       />
       {/* <ComboBox
         name="role"

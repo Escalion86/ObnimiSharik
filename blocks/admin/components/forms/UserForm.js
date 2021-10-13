@@ -5,6 +5,7 @@ import { ROLES, DEFAULT_USER } from '@helpers/constants'
 import {
   ComboBox,
   DatePicker,
+  GenderPicker,
   Input,
   PhoneInput,
   RowContainer,
@@ -14,6 +15,7 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
+import birthDateToAge from '@helpers/birthDateToAge'
 
 const UserForm = ({
   role,
@@ -29,6 +31,9 @@ const UserForm = ({
     name: user.name,
     phone: user.phone,
     whatsapp: user.whatsapp,
+    viber: user.viber,
+    telegram: user.telegram,
+    gender: user.gender,
     role: user.role,
     birthday: user.birthday,
   })
@@ -141,13 +146,47 @@ const UserForm = ({
           // required
         />
       </RowContainer>
-      <DatePicker
-        key="birthday"
-        label="День рождения"
-        name="birthday"
-        value={form.birthday}
-        // value={productCirculation.createdAt}
-        onChange={handleChange}
+      <RowContainer>
+        <PhoneInput
+          key="viber"
+          label="Viber"
+          name="viber"
+          value={form.viber}
+          onChange={handleChange}
+          // required
+        />
+        <Input
+          key="telegram"
+          label="Telegram"
+          inputStyle="max-w-40"
+          type="text"
+          maxLength="80"
+          name="telegram"
+          value={form.telegram}
+          onChange={handleChange}
+        />
+      </RowContainer>
+      <div className="flex">
+        <DatePicker
+          key="birthday"
+          label="День рождения"
+          name="birthday"
+          value={form.birthday}
+          // value={productCirculation.createdAt}
+          onChange={handleChange}
+        />
+        {form.birthday && (
+          <div className="ml-2 mt-7">{birthDateToAge(form.birthday)}</div>
+        )}
+      </div>
+      <GenderPicker
+        gender={form.gender}
+        onChange={(gender) =>
+          setForm({
+            ...form,
+            gender,
+          })
+        }
       />
       {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>

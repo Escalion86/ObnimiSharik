@@ -23,8 +23,20 @@ const UsersSchema = new mongoose.Schema({
     type: Number,
     default: null,
   },
+  viber: {
+    type: Number,
+    default: null,
+  },
+  telegram: {
+    type: String,
+    default: null,
+  },
   birthday: {
     type: Date,
+    default: null,
+  },
+  gender: {
+    type: String,
     default: null,
   },
   role: {

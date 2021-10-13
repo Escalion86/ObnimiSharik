@@ -1,9 +1,12 @@
 export const DEFAULT_USER = {
   name: 'Гость',
   email: '',
-  phone: 0,
-  whatsapp: 0,
+  phone: null,
+  whatsapp: null,
+  viber: null,
+  telegram: null,
   birthday: null,
+  gender: null,
   image: null,
   role: 'client',
 }
@@ -13,7 +16,10 @@ export const DEFAULT_CLIENT = {
   email: '',
   phone: null,
   whatsapp: null,
+  viber: null,
+  telegram: null,
   birthday: null,
+  gender: null,
   image: null,
 }
 

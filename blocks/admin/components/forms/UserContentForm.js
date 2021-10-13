@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { DEFAULT_USER } from '@helpers/constants'
 
-import { DatePicker, Input, PhoneInput } from './forForms'
+import { DatePicker, GenderPicker, Input, PhoneInput } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -24,6 +24,9 @@ const UserContentForm = ({
     name: user.name,
     phone: user.phone,
     whatsapp: user.whatsapp,
+    viber: user.viber,
+    telegram: user.telegram,
+    gender: user.gender,
     birthday: user.birthday,
   })
 
@@ -129,6 +132,26 @@ const UserContentForm = ({
         // required
         inLine
       />
+      <PhoneInput
+        key="viber"
+        label="Viber"
+        name="viber"
+        value={form.viber}
+        onChange={handleChange}
+        // required
+        inLine
+      />
+      <Input
+        inputStyle="max-w-40"
+        key="telegram"
+        label="Telegram"
+        type="text"
+        maxLength="80"
+        name="telegram"
+        value={form.telegram}
+        onChange={handleChange}
+        inLine
+      />
       <DatePicker
         key="birthday"
         label="День рождения"
@@ -136,6 +159,16 @@ const UserContentForm = ({
         value={form.birthday}
         // value={productCirculation.createdAt}
         onChange={handleChange}
+        inLine
+      />
+      <GenderPicker
+        gender={form.gender}
+        onChange={(gender) =>
+          setForm({
+            ...form,
+            gender,
+          })
+        }
         inLine
       />
       {/* <div className="flex flex-col">

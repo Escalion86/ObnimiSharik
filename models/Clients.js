@@ -12,7 +12,7 @@ const ClientsSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    default: '',
+    default: null,
   },
   phone: {
     type: Number,
@@ -20,10 +20,22 @@ const ClientsSchema = new mongoose.Schema({
   },
   whatsapp: {
     type: Number,
-    default: 0,
+    default: null,
+  },
+  viber: {
+    type: Number,
+    default: null,
+  },
+  telegram: {
+    type: String,
+    default: null,
   },
   birthday: {
     type: Date,
+  },
+  gender: {
+    type: String,
+    default: null,
   },
   createdAt: {
     type: Date,

@@ -9,6 +9,9 @@ const defaultUserProps = {
   birthday: null,
   phone: null,
   whatsapp: null,
+  viber: null,
+  telegram: null,
+  gender: null,
   updatedAt: Date.now(),
   lastActivityAt: Date.now(),
   lastAutorizationAt: Date.now(),
@@ -37,6 +40,9 @@ export default NextAuth({
       session.user.role = result[0].role
       session.user.phone = result[0].phone
       session.user.whatsapp = result[0].whatsapp
+      session.user.viber = result[0].viber
+      session.user.telegram = result[0].telegram
+      session.user.gender = result[0].gender
       session.user.birthday = result[0].birthday
       session.user._id = result[0]._id
       // console.log(`result[0]`, result[0])
