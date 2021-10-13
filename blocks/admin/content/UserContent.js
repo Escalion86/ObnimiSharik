@@ -3,19 +3,21 @@ import IconButton from '@components/IconButton'
 import { faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
 import SubTitle from '@admincomponents/SubTitle'
 import { UserContentForm } from '@admincomponents/forms'
+import { useDispatch } from 'react-redux'
+import { fetchingUsers } from '@helpers/fetchers'
+import { setUsers } from '@state/actions'
 
 // const
 
 const UserContent = ({ data, modals, user }) => {
+  const dispatch = useDispatch()
   return (
     <div className="px-3">
       {/* <SubTitle title="Экспорт/Импорт" /> */}
       <UserContentForm
         user={user}
-        afterConfirm={(data) => {
-          // afterConfirm(data)
-          console.log(`data`, data)
-          // onClose()
+        afterConfirm={() => {
+          fetchingUsers((result) => dispatch(setUsers(result)))
         }}
       />
       {/* <IconButton

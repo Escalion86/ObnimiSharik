@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { getSession, signIn, signOut, useSession } from 'next-auth/client'
 
 import { faPlus, faBug } from '@fortawesome/free-solid-svg-icons'
 
@@ -107,6 +107,8 @@ const menuCfg = (pages, pagesGroups, userRole) =>
 
 export default function Admin() {
   const [session, loading] = useSession()
+  // console.log(`session.user`, session.user)
+  // getSession().then((result) => console.log(`getSession`, result))
 
   const state = useSelector((state) => state)
 
@@ -156,9 +158,10 @@ export default function Admin() {
     }
   }, [!!session, loading])
 
+  const user = state.users.find((user) => session.user._id === user._id)
+
   const haveAccess =
-    session?.user?.role &&
-    ROLES.filter((role) => role.value === session.user.role).length > 0
+    user?.role && ROLES.filter((role) => role.value === user.role).length > 0
 
   return (
     <>
@@ -189,8 +192,8 @@ export default function Admin() {
               <Cabinet
                 page={page}
                 setPageId={setPageId}
-                menuCfg={menuCfg(pages, pagesGroups, session.user.role)}
-                user={session.user}
+                menuCfg={menuCfg(pages, pagesGroups, user.role)}
+                user={user}
                 onSignOut={signOut}
                 modals={modals}
                 state={state}
@@ -199,9 +202,7 @@ export default function Admin() {
           ) : (
             <div className="flex items-center justify-center h-screen">
               <div className="flex flex-col items-center justify-center p-10 bg-gray-400 rounded-2xl w-92">
-                {session.user?.email && (
-                  <div>Вы авторизировались как {session.user.email}</div>
-                )}
+                {user.email && <div>Вы авторизировались как {user.email}</div>}
                 <div>У Вас нет доступа к панели администратора</div>
                 <Button
                   name="Авторизироваться под другой учетной записью"
