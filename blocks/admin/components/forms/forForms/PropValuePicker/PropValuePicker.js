@@ -52,43 +52,70 @@ const PropValuePicker = ({
   labelStyle = null,
   name = 'prop',
   required = false,
-}) => (
-  <div
-    className={
-      'flex' +
-      (inLine ? ' flex-row items-center' : ' flex-col') +
-      (className ? ' ' + className : '')
-    }
-  >
-    {label && (
-      <label
-        className={
-          labelStyle
-            ? ' ' + labelStyle
-            : inLine
-            ? 'min-w-24 max-w-40 w-1/5'
-            : ''
-        }
-        htmlFor={name}
+  readOnly = false,
+}) => {
+  if (readOnly) {
+    const itemInArray = valuesArray.find((item) => item.value === value)
+    return (
+      <div
+        className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
       >
-        {label}
-        {required && <span className="text-red-700">*</span>}
-      </label>
-    )}
-    <div className="flex flex-wrap gap-x-2 gap-y-1">
-      {valuesArray.map((item) => (
-        <PropValueItem
-          key={name + item.value}
-          active={item.value === value}
-          value={item.value}
-          name={item.name}
-          icon={item.icon}
-          color={item.color}
-          onClick={() => onChange(item.value)}
-        />
-      ))}
+        {label && (
+          <div>
+            <label
+              className={
+                'border-b-1 border-primary max-w-min whitespace-nowrap' +
+                (labelStyle ? ' ' + labelStyle : '')
+              }
+              htmlFor={name}
+            >
+              {label}:
+            </label>
+          </div>
+        )}
+        <div className="ml-2 italic">{itemInArray ? itemInArray.name : ''}</div>
+      </div>
+    )
+  }
+
+  return (
+    <div
+      className={
+        'flex' +
+        (inLine ? ' flex-row items-center' : ' flex-col') +
+        (className ? ' ' + className : '')
+      }
+    >
+      {label && (
+        <label
+          className={
+            labelStyle
+              ? ' ' + labelStyle
+              : inLine
+              ? 'min-w-24 max-w-40 w-1/5'
+              : ''
+          }
+          htmlFor={name}
+        >
+          {label}
+          {required && <span className="text-red-700">*</span>}
+        </label>
+      )}
+      <div className="flex flex-wrap gap-x-2 gap-y-1">
+        {valuesArray.map((item) => (
+          <PropValueItem
+            key={name + item.value}
+            active={item.value === value}
+            value={item.value}
+            name={item.name}
+            icon={item.icon}
+            color={item.color}
+            onClick={() => onChange(item.value)}
+          />
+        ))}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default PropValuePicker

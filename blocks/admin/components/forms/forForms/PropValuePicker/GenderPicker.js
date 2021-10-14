@@ -8,6 +8,7 @@ const GenderPicker = ({
   className = null,
   labelStyle = null,
   required = false,
+  readOnly = false,
 }) => (
   <PropValuePicker
     value={gender}
@@ -19,6 +20,7 @@ const GenderPicker = ({
     labelStyle={labelStyle}
     name="gender"
     required={required}
+    readOnly={readOnly}
   />
 )
 

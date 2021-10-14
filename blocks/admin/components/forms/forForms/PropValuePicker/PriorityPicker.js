@@ -8,6 +8,7 @@ const PriorityPicker = ({
   className = null,
   labelStyle = null,
   required = false,
+  readOnly = false,
 }) => (
   <PropValuePicker
     value={priority}
@@ -19,6 +20,7 @@ const PriorityPicker = ({
     labelStyle={labelStyle}
     name="priority"
     required={required}
+    readOnly={readOnly}
   />
 )
 

@@ -8,6 +8,7 @@ const DevToDoStatusPicker = ({
   className = null,
   labelStyle = null,
   required = false,
+  readOnly = false,
 }) => (
   <PropValuePicker
     value={status}
@@ -19,6 +20,7 @@ const DevToDoStatusPicker = ({
     labelStyle={labelStyle}
     name="status"
     required={required}
+    readOnly={readOnly}
   />
 )
 
