@@ -11,7 +11,7 @@ import Spinner from '@admincomponents/Spinner'
 
 import { fetchingAll } from '@helpers/fetchers'
 
-import { ROLES } from '@helpers/constants'
+import { DEFAULT_USER, ROLES } from '@helpers/constants'
 import { setAllData } from '@state/actions'
 // import { addModal, removeModal } from '@state/actions/modalsActions'
 import {
@@ -51,7 +51,7 @@ export default function Admin() {
     ? modalsFunctions(
         dispatch,
         state,
-        session?.user ? session?.user?.role : 'client'
+        session?.user ? session.user : DEFAULT_USER
       )
     : null
 
@@ -91,10 +91,11 @@ export default function Admin() {
     }
   }, [!!session, loading])
 
-  const user = state.users.find((user) => session.user._id === user._id)
+  const loggedUser = state.users.find((user) => session.user._id === user._id)
 
   const haveAccess =
-    user?.role && ROLES.filter((role) => role.value === user.role).length > 0
+    loggedUser?.role &&
+    ROLES.filter((role) => role.value === loggedUser.role).length > 0
 
   return (
     <>
@@ -125,8 +126,8 @@ export default function Admin() {
               <Cabinet
                 page={page}
                 setPageId={setPageId}
-                menuCfg={menuCfg(pages, pagesGroups, user.role)}
-                user={user}
+                menuCfg={menuCfg(pages, pagesGroups, loggedUser.role)}
+                loggedUser={loggedUser}
                 onSignOut={signOut}
                 modals={modals}
                 state={state}
@@ -135,7 +136,9 @@ export default function Admin() {
           ) : (
             <div className="flex items-center justify-center h-screen">
               <div className="flex flex-col items-center justify-center p-10 bg-gray-400 rounded-2xl w-92">
-                {user.email && <div>Вы авторизировались как {user.email}</div>}
+                {loggedUser.email && (
+                  <div>Вы авторизировались как {loggedUser.email}</div>
+                )}
                 <div>У Вас нет доступа к панели администратора</div>
                 <Button
                   name="Авторизироваться под другой учетной записью"

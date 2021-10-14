@@ -3,7 +3,7 @@ import IconButton from '@components/IconButton'
 import { faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
 import SubTitle from '@admincomponents/SubTitle'
 
-const SettingsContent = ({ data, modals, user }) => {
+const SettingsContent = ({ data, modals, loggedUser }) => {
   return (
     <div className="px-3">
       <SubTitle title="Экспорт/Импорт" />

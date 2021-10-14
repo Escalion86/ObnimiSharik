@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setFilter } from '@state/actions'
 import toasts from '@helpers/toasts'
 
-const SetsContent = ({ data, modals, user }) => {
+const SetsContent = ({ data, modals, loggedUser }) => {
   const { filter } = useSelector((state) => state)
 
   const dispatch = useDispatch()
@@ -20,7 +20,7 @@ const SetsContent = ({ data, modals, user }) => {
         <SetCard
           key={set._id}
           set={set}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openSetModal(set)}
           onEdit={() => modals.openSetModal(set, true)}
           onClone={() => {

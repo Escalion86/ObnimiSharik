@@ -2,7 +2,7 @@ import React from 'react'
 import { PaymentCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
-const PaymentsContent = ({ data, modals, user }) => {
+const PaymentsContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Транзакций нет'</div>
 
@@ -13,7 +13,7 @@ const PaymentsContent = ({ data, modals, user }) => {
         <PaymentCard
           key={payment._id}
           payment={payment}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openPaymentModal(payment)}
           onEdit={() => modals.openPaymentModal(payment, true)}
           onDelete={() => modals.openDeletePayment(payment)}

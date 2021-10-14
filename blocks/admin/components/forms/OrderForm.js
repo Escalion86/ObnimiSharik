@@ -781,7 +781,7 @@ const ProductCirculationContent = ({
 }
 
 const OrderForm = ({
-  role,
+  loggedUser,
   order = DEFAULT_ORDER,
   afterConfirm = () => {},
   onClose = () => {},
@@ -796,7 +796,6 @@ const OrderForm = ({
     productsCount: order.productsCount,
     setsCount: order.setsCount,
     discount: order.discount,
-    // fullPrice: order.fullPrice,
     price: order.price,
     status: order.status,
     comment: order.comment,
@@ -829,7 +828,7 @@ const OrderForm = ({
 
   const dispatch = useDispatch()
 
-  const modals = modalsFunctions(dispatch, state)
+  const modals = modalsFunctions(dispatch, state, loggedUser)
 
   useEffect(() => {
     const tempProductCirculationsIdCount = {}
@@ -1004,11 +1003,11 @@ const OrderForm = ({
     return err
   }
 
-  const operator = ['operator', 'dev', 'admin'].includes(role)
-  const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
-  const deliver = ['deliver', 'dev', 'admin'].includes(role)
+  const operator = ['operator', 'dev', 'admin'].includes(loggedUser)
+  const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(loggedUser)
+  const deliver = ['deliver', 'dev', 'admin'].includes(loggedUser)
 
-  const twoCols = role !== 'deliver' && role !== 'aerodesigner'
+  const twoCols = loggedUser !== 'deliver' && loggedUser !== 'aerodesigner'
 
   const contentParams = {
     products,
@@ -1019,7 +1018,7 @@ const OrderForm = ({
     order,
     setForm,
     handleChange,
-    role,
+    role: loggedUser.role,
     catalogPrice,
     totalPrice,
     modals,
@@ -1098,7 +1097,7 @@ const OrderForm = ({
                   }
                 }
 
-                if (status.roles.includes(role) || role === 'dev')
+                if (status.roles.includes(loggedUser) || loggedUser === 'dev')
                   return (
                     <RadioBox
                       key={status.value}

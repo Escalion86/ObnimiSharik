@@ -6,7 +6,7 @@ import { setFilter } from '@state/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import toasts from '@helpers/toasts'
 
-const ProductsContent = ({ data, modals, user }) => {
+const ProductsContent = ({ data, modals, loggedUser }) => {
   const { filter } = useSelector((state) => state)
 
   const dispatch = useDispatch()
@@ -21,7 +21,7 @@ const ProductsContent = ({ data, modals, user }) => {
         <ProductCard
           key={product._id}
           product={product}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openProductModal(product)}
           onEdit={() => modals.openProductModal(product, true)}
           onBuying={() =>

@@ -19,7 +19,7 @@ const Cabinet = ({
   setPageId,
   // courses,
   menuCfg,
-  user = DEFAULT_USER,
+  loggedUser = DEFAULT_USER,
   // setUser,
   onSignOut,
   modals,
@@ -172,7 +172,7 @@ const Cabinet = ({
         style={{ gridTemplateRows: '3.8rem 1fr' }}
       >
         <Header
-          user={user}
+          loggedUser={loggedUser}
           menuOpen={menuOpen}
           setPageId={setPageId}
           onClickBurger={toggleMenu}
@@ -180,20 +180,12 @@ const Cabinet = ({
           onSignOut={onSignOut}
           modals={modals}
         />
-        {/* <ContentContainer page={page} data={data}>
-          <PageContent
-            // data={data}
-            // setModal={setModal}
-            // updateData={updateData}
-            modals={modals}
-            user={user}
-          />
-        </ContentContainer> */}
         <main className="flex flex-col flex-1 overflow-y-auto">
           <Title
             title={
               page.name +
-              (filterExists && (user.role === 'admin' || user.role === 'dev')
+              (filterExists &&
+              (loggedUser.role === 'admin' || loggedUser.role === 'dev')
                 ? ' ' +
                   filteredData.length +
                   ' / ' +
@@ -221,7 +213,7 @@ const Cabinet = ({
               // setModal={setModal}
               // updateData={updateData}
               modals={modals}
-              user={user}
+              loggedUser={loggedUser}
             />
           </div>
           {/* </div>

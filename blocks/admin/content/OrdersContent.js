@@ -3,10 +3,10 @@ import { OrderCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 import { ORDER_STATUSES } from '@helpers/constants'
 
-const OrdersContent = ({ data, modals, user }) => {
-  const role = user.role
+const OrdersContent = ({ data, modals, loggedUser }) => {
+  const role = loggedUser.role
   const orderStatusesAccessed =
-    user.role === 'dev' || user.role === 'admin'
+    loggedUser.role === 'dev' || loggedUser.role === 'admin'
       ? ORDER_STATUSES
       : ORDER_STATUSES.filter((status) => status.roles.includes(role))
   const orderStatusesValues = orderStatusesAccessed.map(
@@ -16,7 +16,7 @@ const OrdersContent = ({ data, modals, user }) => {
     (order) =>
       orderStatusesValues.includes(order.status) &&
       (role !== 'deliver' ||
-        (order.deliveryPickup === false && order.deliverId === user._id))
+        (order.deliveryPickup === false && order.deliverId === loggedUser._id))
   )
 
   if (!(roleFilteredOrders && roleFilteredOrders.length > 0))
@@ -29,7 +29,7 @@ const OrdersContent = ({ data, modals, user }) => {
         <OrderCard
           key={order._id}
           order={order}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openOrderModal(order)}
           onEdit={() => modals.openOrderModal(order, true)}
           onDelete={() => modals.openDeleteOrder(order)}

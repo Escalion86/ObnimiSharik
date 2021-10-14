@@ -9,13 +9,13 @@ import { setUsers } from '@state/actions'
 
 // const
 
-const UserContent = ({ data, modals, user }) => {
+const UserContent = ({ data, modals, loggedUser }) => {
   const dispatch = useDispatch()
   return (
     <div className="px-3">
       {/* <SubTitle title="Экспорт/Импорт" /> */}
       <UserContentForm
-        user={user}
+        loggedUser={loggedUser}
         afterConfirm={() => {
           fetchingUsers((result) => dispatch(setUsers(result)))
         }}

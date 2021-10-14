@@ -12,7 +12,6 @@ import compareObjects from '@helpers/compareObjects'
 
 const UserContentForm = ({
   loggedUser,
-  user = DEFAULT_USER,
   afterConfirm = () => {},
   onClose = () => {},
 }) => {
@@ -20,14 +19,14 @@ const UserContentForm = ({
   const [message, setMessage] = useState('')
 
   const [form, setForm] = useState({
-    email: user.email,
-    name: user.name,
-    phone: user.phone,
-    whatsapp: user.whatsapp,
-    viber: user.viber,
-    telegram: user.telegram,
-    gender: user.gender,
-    birthday: user.birthday,
+    email: loggedUser.email,
+    name: loggedUser.name,
+    phone: loggedUser.phone,
+    whatsapp: loggedUser.whatsapp,
+    viber: loggedUser.viber,
+    telegram: loggedUser.telegram,
+    gender: loggedUser.gender,
+    birthday: loggedUser.birthday,
   })
 
   const handleChange = (e) => {
@@ -43,7 +42,7 @@ const UserContentForm = ({
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
       putData(
-        `/api/users/${user._id}`,
+        `/api/users/${loggedUser._id}`,
         form,
         (data) => {
           afterConfirm(data)
@@ -72,12 +71,13 @@ const UserContentForm = ({
       message={message}
       errors={errors}
       buttonDisabled={
-        Object.keys(formValidate()).length !== 0 || compareObjects(form, user)
+        Object.keys(formValidate()).length !== 0 ||
+        compareObjects(form, loggedUser)
       }
     >
       <div className="flex">
         <div className="w-24">Должность</div>
-        <div className="italic">{roleRus(user.role)}</div>
+        <div className="italic">{roleRus(loggedUser.role)}</div>
       </div>
       <Input
         key="email"

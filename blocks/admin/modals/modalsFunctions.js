@@ -54,14 +54,15 @@ import addCountToProductTypes from '@helpers/addCountToProductTypes'
 import addCountToSetTypes from '@helpers/addCountToSetTypes'
 import findDataWithId from '@helpers/findDataWithId'
 import formatDateTime from '@helpers/formatDateTime'
+import { DEFAULT_USER } from '@helpers/constants'
 
-const modals = (dispatch, data, role) => {
+const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
   const modals = {
     openProductModal: (product, afterConfirm, edit) =>
       dispatch(
         addModal((modalId) => (
           <ProductModal
-            role={role}
+            loggedUser={loggedUser}
             product={product}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -85,7 +86,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <SetModal
-            role={role}
+            loggedUser={loggedUser}
             set={set}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -109,7 +110,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <ProductTypeModal
-            role={role}
+            loggedUser={loggedUser}
             productType={productType}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -131,7 +132,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <SetTypeModal
-            role={role}
+            loggedUser={loggedUser}
             setType={setType}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -164,7 +165,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <UserModal
-            role={role}
+            loggedUser={loggedUser}
             user={user}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -182,7 +183,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <InvitationModal
-            role={role}
+            loggedUser={loggedUser}
             invitation={invitation}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -200,7 +201,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <ProductCirculationModal
-            role={role}
+            loggedUser={loggedUser}
             productCirculation={productCirculation}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -220,7 +221,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <ClientModal
-            role={role}
+            loggedUser={loggedUser}
             client={client}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -238,7 +239,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <DevToDoModal
-            role={role}
+            loggedUser={loggedUser}
             devToDo={devToDo}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -256,7 +257,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <OrderModal
-            role={role}
+            loggedUser={loggedUser}
             order={order}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
@@ -274,7 +275,7 @@ const modals = (dispatch, data, role) => {
       dispatch(
         addModal((modalId) => (
           <PaymentModal
-            role={role}
+            loggedUser={loggedUser}
             payment={payment}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {

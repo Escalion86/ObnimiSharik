@@ -2,7 +2,7 @@ import React from 'react'
 import { InvitationCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
-const InvitationsContent = ({ data, modals, user }) => {
+const InvitationsContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Приглашений нет'</div>
 
@@ -13,7 +13,7 @@ const InvitationsContent = ({ data, modals, user }) => {
         <InvitationCard
           key={invitation._id}
           invitation={invitation}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openInvitationModal(invitation)}
           onEdit={() => modals.openInvitationModal(invitation, true)}
           onDelete={() => modals.openDeleteInvitation(invitation)}

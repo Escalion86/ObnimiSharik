@@ -2,7 +2,7 @@ import React from 'react'
 import { ClientCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
-const ClientsContent = ({ data, modals, user }) => {
+const ClientsContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Клиентов нет'</div>
 
@@ -13,7 +13,7 @@ const ClientsContent = ({ data, modals, user }) => {
         <ClientCard
           key={client._id}
           client={client}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openClientModal(client)}
           onEdit={() => modals.openClientModal(client, true)}
           onDelete={() => modals.openDeleteClient(client)}

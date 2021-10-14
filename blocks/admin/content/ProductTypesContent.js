@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { DEFAULT_PRODUCT } from '@helpers/constants'
 import { Virtuoso } from 'react-virtuoso'
 
-const ProductTypesContent = ({ data, modals, user }) => {
+const ProductTypesContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Типов продуктов нет'</div>
 
@@ -15,7 +15,7 @@ const ProductTypesContent = ({ data, modals, user }) => {
         <TypeCard
           key={productType._id}
           type={productType}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openProductTypeModal(productType)}
           onAdd={() =>
             modals.openProductModal({

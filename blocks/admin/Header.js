@@ -12,7 +12,7 @@ import DeviceCheck from '@components/DeviceCheck'
 import SearchBox from '@admincomponents/SearchBox'
 
 const UserMenu = ({
-  user = DEFAULT_USER,
+  loggedUser = DEFAULT_USER,
   setPageId = () => {},
   onSignOut = () => {},
   closeMenu = () => {},
@@ -28,7 +28,7 @@ const UserMenu = ({
                   <img
                     onClick={() => closeMenu()}
                     className="object-cover rounded-full cursor-pointer h-11 w-11 min-w-9"
-                    src={user.image}
+                    src={loggedUser.image}
                     alt="Avatar"
                   />
                 </Menu.Button>
@@ -49,10 +49,10 @@ const UserMenu = ({
                 >
                   <div>
                     <div className="flex items-center pt-1 pl-3 pr-6 text-sm italic font-semibold text-gray-900 min-h-11">
-                      {user.name}
+                      {loggedUser.name}
                     </div>
                     <div className="flex items-center pb-1 pl-3 pr-6 text-xs italic font-semibold text-gray-900 min-h-11">
-                      {roleRus(user.role)}
+                      {roleRus(loggedUser.role)}
                     </div>
                   </div>
                   <div className="px-1">
@@ -135,7 +135,7 @@ const Burger = ({
 }
 
 const Header = ({
-  user = DEFAULT_USER,
+  loggedUser = DEFAULT_USER,
   menuOpen = false,
   setPageId = () => {},
   onClickBurger = () => {},
@@ -154,7 +154,7 @@ const Header = ({
               onClick={onClickBurger}
             />
             <SearchBox modals={modals} />
-            {/* {user.role === 'dev' && (
+            {/* {loggedUser.role === 'dev' && (
               <DeviceCheck className="text-white text-bold" />
             )} */}
           </div>
@@ -175,7 +175,7 @@ const Header = ({
             </div>
 
             <UserMenu
-              user={user}
+              loggedUser={loggedUser}
               setPageId={setPageId}
               onSignOut={onSignOut}
               closeMenu={closeMenu}

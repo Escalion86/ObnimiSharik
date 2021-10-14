@@ -3,7 +3,7 @@ import { ProductCirculationCard } from '@admincomponents/cards'
 import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
 import { Virtuoso } from 'react-virtuoso'
 
-const ProductCirculationsContent = ({ data, modals, user }) => {
+const ProductCirculationsContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Товарооборота нет'</div>
 
@@ -14,7 +14,7 @@ const ProductCirculationsContent = ({ data, modals, user }) => {
         <ProductCirculationCard
           key={productCirculation._id}
           productCirculation={productCirculation}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openProductCirculationModal(productCirculation)}
           onClone={() => {
             // modals.openProductCirculationModal({

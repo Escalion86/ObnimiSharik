@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { DEFAULT_SET } from '@helpers/constants'
 import { Virtuoso } from 'react-virtuoso'
 
-const SetTypesContent = ({ data, modals, user }) => {
+const SetTypesContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Типов наборов нет'</div>
 
@@ -15,7 +15,7 @@ const SetTypesContent = ({ data, modals, user }) => {
         <TypeCard
           key={setType._id}
           type={setType}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openSetTypeModal(setType)}
           onAdd={() =>
             modals.openSetModal({

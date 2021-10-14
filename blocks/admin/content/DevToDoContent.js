@@ -2,7 +2,7 @@ import React from 'react'
 import { DevToDoCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
-const DevToDoContent = ({ data, modals, user }) => {
+const DevToDoContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Заявок разработчику нет'</div>
 
@@ -13,7 +13,7 @@ const DevToDoContent = ({ data, modals, user }) => {
         <DevToDoCard
           key={devToDo._id}
           devToDo={devToDo}
-          role={user.role}
+          loggedUser={loggedUser}
           onClick={() => modals.openDevToDoModal(devToDo)}
           onEdit={() => modals.openDevToDoModal(devToDo, true)}
           onDelete={() => modals.openDeleteDevToDo(devToDo)}
