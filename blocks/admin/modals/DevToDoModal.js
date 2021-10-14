@@ -8,9 +8,12 @@ const DevToDoModal = ({
   afterConfirm = () => {},
   onDelete = null,
 }) => {
-  const readOnly =
-    !['dev'].includes(loggedUser.role) &&
-    (loggedUser._id !== devToDo.userId || devToDo.status !== 'created')
+  const readOnly = !(
+    !devToDo ||
+    loggedUser.role === 'dev' ||
+    (loggedUser._id === devToDo.userId && devToDo.status === 'created')
+  )
+
   return (
     <Modal
       onClose={onClose}
