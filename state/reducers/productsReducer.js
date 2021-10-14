@@ -6,8 +6,8 @@ const productsReducer = (state = [], action) => {
     case ADD_COUNT_TO_PRODUCTS:
       return addCountToProducts(state)
     case SET_PRODUCTS:
-      if (action.addCount) return addCountToProducts(action.products)
-      else return action.products
+      if (action.addCount) return addCountToProducts(action.products ?? state)
+      else return action.products ?? state
     default:
       return state
   }

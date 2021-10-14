@@ -3,7 +3,7 @@ import { SET_SET_TYPES } from 'state/constants'
 const setTypesReducer = (state = [], action) => {
   switch (action.type) {
     case SET_SET_TYPES:
-      return action.setTypes
+      return action.setTypes ?? state
     default:
       return state
   }

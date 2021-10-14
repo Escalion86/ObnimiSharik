@@ -6,8 +6,8 @@ const setsReducer = (state = [], action) => {
     case ADD_COUNT_TO_SETS:
       return addCountToSets(state)
     case SET_SETS:
-      if (action.addCount) return addCountToSets(action.sets)
-      else return action.sets
+      if (action.addCount) return addCountToSets(action.sets ?? state)
+      else return action.sets ?? state
     default:
       return state
   }
