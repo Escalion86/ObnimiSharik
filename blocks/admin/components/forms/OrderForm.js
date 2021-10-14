@@ -1003,11 +1003,14 @@ const OrderForm = ({
     return err
   }
 
-  const operator = ['operator', 'dev', 'admin'].includes(loggedUser)
-  const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(loggedUser)
-  const deliver = ['deliver', 'dev', 'admin'].includes(loggedUser)
+  const operator = ['operator', 'dev', 'admin'].includes(loggedUser.role)
+  const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(
+    loggedUser.role
+  )
+  const deliver = ['deliver', 'dev', 'admin'].includes(loggedUser.role)
 
-  const twoCols = loggedUser !== 'deliver' && loggedUser !== 'aerodesigner'
+  const twoCols =
+    loggedUser.role !== 'deliver' && loggedUser.role !== 'aerodesigner'
 
   const contentParams = {
     products,
@@ -1097,7 +1100,10 @@ const OrderForm = ({
                   }
                 }
 
-                if (status.roles.includes(loggedUser) || loggedUser === 'dev')
+                if (
+                  status.roles.includes(loggedUser.role) ||
+                  loggedUser.role === 'dev'
+                )
                   return (
                     <RadioBox
                       key={status.value}
@@ -1157,7 +1163,7 @@ const OrderForm = ({
               ' ' +
               formatDateTime(form.deliveryDateFrom),
             visible: true,
-            disabled: role === 'aerodesigner',
+            disabled: loggedUser.role === 'aerodesigner',
           },
           {
             title: 'Расчёт',
@@ -1175,7 +1181,7 @@ const OrderForm = ({
               sumObjectValues(productCirculationsIdCountDefective) +
               ' брак',
             visible: aerodesigner && !cartEmpty,
-            // disabled: role === 'aerodesigner',
+            // disabled: loggedUser.role === 'aerodesigner',
           },
         ]}
       />
