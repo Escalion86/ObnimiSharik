@@ -26,23 +26,28 @@ export const ProductCirculationCard = ({
           <div className="flex-1 font-semibold">
             {product ? product.name : '? [товар не найден в базе]'}
           </div>
-          <div className="font-bold whitespace-nowrap">
+          <div className="hidden font-bold whitespace-nowrap laptop:block">
             {(productCirculation.price * productCirculation.count) / 100} ₽
           </div>
         </div>
       </CardContainer>
-      <div
-        className={
-          'flex justify-center items-center w-20 h-full ' +
-          (purchase ? 'bg-red-200' : 'bg-green-200')
-        }
-      >
-        <span className="text-gray-800">
-          <span>{count}</span>
-          <span className="text-sm"> шт.</span>
-        </span>
+      <div className="flex flex-col-reverse items-end justify-between gap-y-1 laptop:flex-row laptop:items-center">
+        <div
+          className={
+            'flex justify-center rounded-tl-lg laptop:rounded-none laptop:h-full py-0.5 items-center w-20 ' +
+            (purchase ? 'bg-red-200' : 'bg-green-200')
+          }
+        >
+          <span className="text-gray-800">
+            <span>{count}</span>
+            <span className="text-sm"> шт.</span>
+          </span>
+        </div>
+        <div className="font-bold whitespace-nowrap laptop:hidden">
+          {(productCirculation.price * productCirculation.count) / 100} ₽
+        </div>
+        <CardButtons onEdit={onEdit} onDelete={onDelete} onClone={onClone} />
       </div>
-      <CardButtons onEdit={onEdit} onDelete={onDelete} onClone={onClone} />
       {/* <div
       className={
         'absolute bottom-0 right-0 flex items-center justify-center w-24 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
