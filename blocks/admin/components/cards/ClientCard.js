@@ -25,18 +25,16 @@ export const ClientCard = ({
       />
       <CardContainer className="items-center">
         <div className="items-center flex-1">
-          <div className="flex flex-col flex-wrap justify-between gap-x-4 phoneH:flex-row">
+          <div className="flex flex-col justify-between gap-x-4 laptop:flex-row">
             <div className="font-semibold">{client.name}</div>
             <div className="flex-1 italic">{client.email}</div>
           </div>
         </div>
-        {/* <div className="text-right"> */}
-        {/* <div className="font-bold">{roleRus(user.role)}</div> */}
-        {/* <div className="italic">{'123'}</div> */}
-        {/* </div> */}
-        <ContactsIconsButtons user={client} />
       </CardContainer>
-      <CardButtons onEdit={onEdit} onDelete={onDelete} />
+      <div className="flex flex-col-reverse items-end justify-between laptop:flex-row laptop:items-center">
+        <ContactsIconsButtons user={client} />
+        <CardButtons onEdit={onEdit} onDelete={onDelete} />
+      </div>
     </Card>
   )
 }
