@@ -2,7 +2,7 @@ import { OrderForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const OrderModal = ({
-  role,
+  loggedUser,
   order,
   onClose = () => {},
   afterConfirm = () => {},
@@ -13,13 +13,15 @@ const OrderModal = ({
     <Modal
       onClose={onClose}
       onDelete={order?._id && onDelete}
-      twoCols={role !== 'deliver' && role !== 'aerodesigner'}
+      twoCols={
+        loggedUser.role !== 'deliver' && loggedUser.role !== 'aerodesigner'
+      }
       readOnly={readOnly}
     >
       <OrderForm
         order={order}
         afterConfirm={afterConfirm}
-        role={role}
+        loggedUser={loggedUser}
         readOnly={readOnly}
       />
     </Modal>

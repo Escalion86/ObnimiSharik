@@ -2,7 +2,7 @@ import { ProductCirculationForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const ProductCirculationModal = ({
-  role,
+  loggedUser,
   productCirculation,
   onClose = () => {},
   afterConfirm = () => {},
@@ -13,7 +13,7 @@ const ProductCirculationModal = ({
       <ProductCirculationForm
         productCirculation={productCirculation}
         afterConfirm={afterConfirm}
-        role={role}
+        loggedUser={loggedUser}
       />
     </Modal>
   )

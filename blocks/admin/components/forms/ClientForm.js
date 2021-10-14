@@ -19,7 +19,7 @@ import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const ClientForm = ({
-  role,
+  loggedUser,
   client = DEFAULT_CLIENT,
   afterConfirm = () => {},
   onClose = () => {},
@@ -92,8 +92,6 @@ const ClientForm = ({
     if (!form.name) err.name = 'Name is required'
     if (!form.phone) err.phone = 'Phone is required'
     else if (form.phone.length <= 11) err.phone = 'Wrong phone'
-    // if (!form.email) err.email = 'Email is required'
-    // if (!form.role) err.role = 'Role is required'
     return err
   }
 
@@ -188,15 +186,6 @@ const ClientForm = ({
         }
         inLine
       />
-      {/* <ComboBox
-        name="role"
-        title="Должность"
-        handleChange={handleChange}
-        defaultValue={form.role}
-        placeholder="Выберите должность"
-        items={ROLES.filter((role) => !role.hidden)}
-        required
-      /> */}
     </Form>
   )
 }

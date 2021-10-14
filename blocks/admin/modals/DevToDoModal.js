@@ -2,7 +2,7 @@ import { DevToDoForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const DevToDoModal = ({
-  role,
+  loggedUser,
   devToDo,
   onClose = () => {},
   afterConfirm = () => {},
@@ -10,7 +10,11 @@ const DevToDoModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={devToDo?._id && onDelete}>
-      <DevToDoForm devToDo={devToDo} afterConfirm={afterConfirm} role={role} />
+      <DevToDoForm
+        devToDo={devToDo}
+        afterConfirm={afterConfirm}
+        loggedUser={loggedUser}
+      />
     </Modal>
   )
 }

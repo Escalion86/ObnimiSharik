@@ -2,13 +2,13 @@ import { ProductForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const ProductModal = ({
-  role,
+  loggedUser,
   product,
   onClose = () => {},
   afterConfirm = () => {},
   onDelete = null,
 }) => {
-  const readOnly = !['dev', 'admin'].includes(role)
+  const readOnly = !['dev', 'admin'].includes(loggedUser.role)
   return (
     <Modal
       onClose={onClose}
@@ -18,7 +18,7 @@ const ProductModal = ({
       <ProductForm
         product={product}
         afterConfirm={afterConfirm}
-        role={role}
+        loggedUser={loggedUser}
         readOnly={readOnly}
       />
     </Modal>

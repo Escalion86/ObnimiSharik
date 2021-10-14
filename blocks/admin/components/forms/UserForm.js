@@ -18,7 +18,7 @@ import compareObjects from '@helpers/compareObjects'
 import birthDateToAge from '@helpers/birthDateToAge'
 
 const UserForm = ({
-  role,
+  loggedUser,
   user = DEFAULT_USER,
   afterConfirm = () => {},
   onClose = () => {},

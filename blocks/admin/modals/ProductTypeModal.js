@@ -2,7 +2,7 @@ import { ProductTypeForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const ProductTypeModal = ({
-  role,
+  loggedUser,
   productType,
   onClose = () => {},
   afterConfirm = () => {},
@@ -13,7 +13,7 @@ const ProductTypeModal = ({
       <ProductTypeForm
         productType={productType}
         afterConfirm={afterConfirm}
-        role={role}
+        loggedUser={loggedUser}
       />
     </Modal>
   )

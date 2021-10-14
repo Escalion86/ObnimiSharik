@@ -2,7 +2,7 @@ import { UserForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const UserModal = ({
-  role,
+  loggedUser,
   user,
   onClose = () => {},
   afterConfirm = () => {},
@@ -10,7 +10,11 @@ const UserModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={user?._id && onDelete}>
-      <UserForm user={user} afterConfirm={afterConfirm} role={role} />
+      <UserForm
+        user={user}
+        afterConfirm={afterConfirm}
+        loggedUser={loggedUser}
+      />
     </Modal>
   )
 }

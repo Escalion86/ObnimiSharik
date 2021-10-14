@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
 
 const ProductForm = ({
-  role,
+  loggedUser,
   product = DEFAULT_PRODUCT,
   afterConfirm = () => {},
   onClose = () => {},

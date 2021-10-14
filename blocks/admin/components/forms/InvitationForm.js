@@ -10,7 +10,7 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 
 const InvitationForm = ({
-  role,
+  loggedUser,
   invitation = DEFAULT_INVITATION,
   afterConfirm = () => {},
   onClose = () => {},

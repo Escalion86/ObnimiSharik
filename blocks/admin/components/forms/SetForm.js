@@ -23,7 +23,7 @@ import compareObjects from '@helpers/compareObjects'
 import { useSelector } from 'react-redux'
 
 const SetForm = ({
-  role,
+  loggedUser,
   set = DEFAULT_SET,
   afterConfirm = () => {},
   onClose = () => {},

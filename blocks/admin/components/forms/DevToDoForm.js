@@ -11,7 +11,7 @@ import compareObjects from '@helpers/compareObjects'
 import { getSession } from 'next-auth/client'
 
 const DevToDoForm = ({
-  role,
+  loggedUser,
   devToDo = DEFAULT_DEVTODO,
   afterConfirm = () => {},
   onClose = () => {},
@@ -146,29 +146,6 @@ const DevToDoForm = ({
         }
         inLine
       />
-      {/* <ComboBox
-        name="role"
-        title="Статус"
-        handleChange={handleChange}
-        defaultValue={form.role}
-        placeholder="Выберите должность"
-        items={ROLES.filter((role) => !role.hidden)}
-        required
-      /> */}
-      {/* <div className="flex flex-col">
-        <label htmlFor="role">Должность</label>
-        <select
-          name="role"
-          className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
-          onChange={handleChange}
-          defaultValue={form.role}
-        >
-          <option>Выберите должность</option>
-          <option value="admin">Администратор</option>
-          <option value="aerodesigner">Аэродизайнер</option>
-          <option value="deliver">Курьер</option>
-        </select>
-      </div> */}
     </Form>
   )
 }

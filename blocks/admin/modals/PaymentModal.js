@@ -2,7 +2,7 @@ import { PaymentForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const PaymentModal = ({
-  role,
+  loggedUser,
   payment,
   onClose = () => {},
   afterConfirm = () => {},
@@ -10,7 +10,11 @@ const PaymentModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={payment?._id && onDelete}>
-      <PaymentForm payment={payment} afterConfirm={afterConfirm} role={role} />
+      <PaymentForm
+        payment={payment}
+        afterConfirm={afterConfirm}
+        loggedUser={loggedUser}
+      />
     </Modal>
   )
 }

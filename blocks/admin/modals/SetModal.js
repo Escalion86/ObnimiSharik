@@ -2,13 +2,13 @@ import { SetForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const SetModal = ({
-  role,
+  loggedUser,
   set,
   onClose = () => {},
   afterConfirm = () => {},
   onDelete = null,
 }) => {
-  const readOnly = !['dev', 'admin'].includes(role)
+  const readOnly = !['dev', 'admin'].includes(loggedUser.role)
   return (
     <Modal
       onClose={onClose}
@@ -19,7 +19,7 @@ const SetModal = ({
       <SetForm
         set={set}
         afterConfirm={afterConfirm}
-        role={role}
+        loggedUser={loggedUser}
         readOnly={readOnly}
       />
     </Modal>

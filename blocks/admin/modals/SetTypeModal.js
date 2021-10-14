@@ -2,7 +2,7 @@ import { SetTypeForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const SetTypeModal = ({
-  role,
+  loggedUser,
   setType,
   onClose = () => {},
   afterConfirm = () => {},
@@ -10,7 +10,11 @@ const SetTypeModal = ({
 }) => {
   return (
     <Modal onClose={onClose} onDelete={setType?._id && onDelete}>
-      <SetTypeForm setType={setType} afterConfirm={afterConfirm} role={role} />
+      <SetTypeForm
+        setType={setType}
+        afterConfirm={afterConfirm}
+        loggedUser={loggedUser}
+      />
     </Modal>
   )
 }

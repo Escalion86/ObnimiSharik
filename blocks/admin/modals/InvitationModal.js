@@ -2,7 +2,7 @@ import { InvitationForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
 
 const InvitationModal = ({
-  role,
+  loggedUser,
   invitation,
   onClose = () => {},
   afterConfirm = () => {},
@@ -13,7 +13,7 @@ const InvitationModal = ({
       <InvitationForm
         invitation={invitation}
         afterConfirm={afterConfirm}
-        role={role}
+        loggedUser={loggedUser}
       />
     </Modal>
   )
