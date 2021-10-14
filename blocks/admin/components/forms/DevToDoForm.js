@@ -15,6 +15,7 @@ const DevToDoForm = ({
   devToDo = DEFAULT_DEVTODO,
   afterConfirm = () => {},
   onClose = () => {},
+  readOnly = true,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -94,9 +95,11 @@ const DevToDoForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={
-        forNew
+        readOnly
+          ? 'Заявка разработчку №' + form.number
+          : forNew
           ? 'Создние заявки разработчку'
-          : 'Редактирование заявки разработчку'
+          : 'Редактирование заявки разработчку №' + form.number
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
@@ -115,6 +118,7 @@ const DevToDoForm = ({
         value={form.title}
         onChange={handleChange}
         required
+        readOnly={readOnly}
       />
       <Input
         key="description"
@@ -125,6 +129,8 @@ const DevToDoForm = ({
         value={form.description}
         onChange={handleChange}
         required
+        readOnly={readOnly}
+        textarea
       />
       <PriorityPicker
         priority={form.priority}
@@ -135,6 +141,7 @@ const DevToDoForm = ({
           })
         }
         inLine
+        readOnly={readOnly}
       />
       {loggedUser.role === 'dev' && (
         <DevToDoStatusPicker
