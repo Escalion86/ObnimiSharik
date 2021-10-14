@@ -37,7 +37,7 @@ export const ProductCirculationCard = ({
           (purchase ? 'bg-red-200' : 'bg-green-200')
         }
       >
-        <span>
+        <span className="text-gray-800">
           <span>{count}</span>
           <span className="text-sm"> шт.</span>
         </span>
