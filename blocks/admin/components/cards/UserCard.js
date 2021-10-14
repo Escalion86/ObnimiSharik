@@ -1,16 +1,5 @@
 import roleRus from '@helpers/roleRus'
 import Card from './Card'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faPhone,
-  faSignOutAlt,
-  faQuestion,
-} from '@fortawesome/free-solid-svg-icons'
-import {
-  faWhatsapp,
-  faViber,
-  faTelegramPlane,
-} from '@fortawesome/free-brands-svg-icons'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import ContactsIconsButtons from './forCards/ContactsIconsButtons'
@@ -22,13 +11,12 @@ export const UserCard = ({
   onEdit = null,
   onDelete = null,
 }) => {
+  const gender = GENDERS.find((genderItem) => genderItem.value === user.gender)
   return (
     <Card className="items-center" inLine onClick={() => onClick(user)}>
       <div
         className={
-          'w-2 rounded-l-lg bg-' +
-            GENDERS.find((genderItem) => genderItem.value === user.gender)
-              ?.color ?? 'gray-400'
+          'w-2 rounded-l-lg bg-' + (gender ? gender.color + '-400' : 'gray-400')
         }
       />
       <CardContainer className="items-center">
