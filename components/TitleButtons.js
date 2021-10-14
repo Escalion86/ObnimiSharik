@@ -80,3 +80,11 @@ export const BtnAddPayment = ({ key, modals }) => (
     key={key}
   />
 )
+
+export const BtnAddDevToDo = ({ key, modals }) => (
+  <TitleButton
+    onClick={() => modals.openDevToDoModal()}
+    icon={faPlus}
+    key={key}
+  />
+)

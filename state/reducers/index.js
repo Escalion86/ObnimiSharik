@@ -14,6 +14,7 @@ import clientsReducer from './clientsReducer'
 import ordersReducer from './ordersReducer'
 import paymentsReducer from './paymentsReducer'
 import appReducer from './appReducer '
+import devToDoReducer from './devToDoReducer'
 
 const allReducers = combineReducers({
   products: productsReducer,
@@ -31,6 +32,7 @@ const allReducers = combineReducers({
   orders: ordersReducer,
   payments: paymentsReducer,
   loaded: appReducer,
+  devToDo: devToDoReducer,
 })
 
 export default allReducers

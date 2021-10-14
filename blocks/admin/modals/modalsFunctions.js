@@ -3,6 +3,7 @@ import addCountToSets from '@helpers/addCountToSets'
 import {
   fetchingAll,
   fetchingClients,
+  fetchingDevToDo,
   fetchingInvitations,
   fetchingOrders,
   fetchingPayments,
@@ -25,6 +26,7 @@ import {
   setClients,
   setOrders,
   setPayments,
+  setDevToDo,
 } from '@state/actions'
 import {
   addModal,
@@ -46,6 +48,7 @@ import {
   ClientModal,
   OrderModal,
   PaymentModal,
+  DevToDoModal,
 } from '@adminblocks/modals'
 import addCountToProductTypes from '@helpers/addCountToProductTypes'
 import addCountToSetTypes from '@helpers/addCountToSetTypes'
@@ -227,6 +230,24 @@ const modals = (dispatch, data, role) => {
             edit={edit}
             onDelete={(onConfirm) => {
               modals.openDeleteClient(client, onConfirm)
+            }}
+          />
+        ))
+      ),
+    openDevToDoModal: (devToDo, afterConfirm, edit) =>
+      dispatch(
+        addModal((modalId) => (
+          <DevToDoModal
+            role={role}
+            devToDo={devToDo}
+            onClose={() => modals.closeModal(modalId)}
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
+              fetchingDevToDo((result) => dispatch(setDevToDo(result)))
+            }}
+            edit={edit}
+            onDelete={(onConfirm) => {
+              modals.openDeleteDevToDo(devToDo, onConfirm)
             }}
           />
         ))
@@ -431,6 +452,20 @@ const modals = (dispatch, data, role) => {
             () => fetchingClients((result) => dispatch(setClients(result))),
             'Клиент "' + client.name + '" удален',
             'Ошибка при удалении клиента "' + client.name + '"'
+          )
+          if (onConfirm) onConfirm()
+        }
+      ),
+    openDeleteDevToDo: (devToDo, onConfirm = null) =>
+      modals.openConfirmModal(
+        'Удаление заявки',
+        'Вы уверены что хотите удалить заявку № ' + devToDo.number + '?',
+        () => {
+          deleteData(
+            '/api/devtodo/' + devToDo._id,
+            () => fetchingDevToDo((result) => dispatch(setDevToDo(result))),
+            'Заявка № ' + devToDo.number + '" удалена',
+            'Ошибка при удалении заявки № ' + devToDo.number + '"'
           )
           if (onConfirm) onConfirm()
         }

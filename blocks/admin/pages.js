@@ -1,5 +1,6 @@
 import {
   BtnAddClient,
+  BtnAddDevToDo,
   BtnAddInvitation,
   BtnAddOrder,
   BtnAddPayment,
@@ -26,6 +27,7 @@ import {
   OrdersContent,
   PaymentsContent,
 } from './content'
+import DevToDoContent from './content/DevToDoContent'
 
 export const pages = [
   {
@@ -186,6 +188,16 @@ export const pages = [
     backToPageId: 0,
     accessRoles: ['deliver'],
     variable: 'orders',
+  },
+  {
+    id: 15,
+    group: 10,
+    name: 'Заявки',
+    pageContent: DevToDoContent,
+    pageButtons: [BtnAddDevToDo],
+    backToPageId: 0,
+    accessRoles: ['all'],
+    variable: 'devToDo',
   },
 ]
 

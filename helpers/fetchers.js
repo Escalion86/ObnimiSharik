@@ -102,3 +102,12 @@ export async function fetchingPayments(updateData = () => {}) {
   updateData(resp)
   return resp
 }
+
+export async function fetchingDevToDo(updateData = () => {}) {
+  console.log('Запущен fetchingDevToDo')
+  const resp = await fetch('/api/devtodo')
+    .then((res) => res.json())
+    .then((json) => json.data)
+  updateData(resp)
+  return resp
+}

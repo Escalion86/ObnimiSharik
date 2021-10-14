@@ -32,3 +32,5 @@ export const SET_SORTING = 'SET_SORTING'
 export const SET_PAGE = 'SET_PAGE'
 
 export const SET_LOADED = 'SET_LOADED'
+
+export const SET_DEVTODO = 'SET_DEVTODO'
