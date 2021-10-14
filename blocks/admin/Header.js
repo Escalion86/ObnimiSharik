@@ -18,7 +18,7 @@ const UserMenu = ({
   closeMenu = () => {},
 }) => {
   return (
-    <div className="z-50 ml-5 -mt-1 -mb-1 h-11 w-11">
+    <div className="z-50 -mt-1 -mb-1 h-11 w-11">
       <Menu as="div" className="relative inline-block text-left h-11 w-11">
         {({ open }) => {
           return (
@@ -145,21 +145,21 @@ const Header = ({
 }) => {
   return (
     <div className="top-0 z-40 border-b border-primary bg-primary">
-      <header className="px-6">
-        <div className="flex items-center justify-between py-3 border-gray-200">
-          <div className="flex items-center flex-1 gap-2">
+      <header className="px-2 phoneH:px-3">
+        <div className="flex items-center justify-between gap-1 py-3 border-gray-200 phoneH:gap-2">
+          <div className="flex items-center flex-1 gap-1 phoneH:gap-2">
             <Burger
               className="z-20 flex laptop:hidden"
               menuOpen={menuOpen}
               onClick={onClickBurger}
             />
             <SearchBox modals={modals} />
-            {user.role === 'dev' && (
+            {/* {user.role === 'dev' && (
               <DeviceCheck className="text-white text-bold" />
-            )}
+            )} */}
           </div>
-          <div className="flex items-center">
-            <div className="ml-5 cursor-pointer">
+          <div className="flex items-center gap-2 phoneH:gap-4">
+            <div className="cursor-pointer">
               <svg
                 className="w-6 h-6 text-white"
                 viewBox="0 0 24 24"
