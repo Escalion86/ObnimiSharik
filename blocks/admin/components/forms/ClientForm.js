@@ -186,6 +186,7 @@ const ClientForm = ({
             gender,
           })
         }
+        inLine
       />
       {/* <ComboBox
         name="role"
