@@ -211,12 +211,19 @@ export const DEFAULT_PAYMENT = {
 }
 
 export const PRIORITIES = [
-  { value: 0, name: 'Низкий', color: 'green-400' },
-  { value: 1, name: 'Обычный', color: 'yellow-400' },
-  { value: 2, name: 'Высокий', color: 'red-400' },
+  { value: 0, name: 'Низкий', color: 'green' },
+  { value: 1, name: 'Обычный', color: 'yellow' },
+  { value: 2, name: 'Высокий', color: 'red' },
 ]
 
 export const GENDERS = [
-  { value: 'male', name: 'Мужчина', color: 'blue-400', icon: faMars },
-  { value: 'famale', name: 'Женщина', color: 'red-400', icon: faVenus },
+  { value: 'male', name: 'Мужчина', color: 'blue', icon: faMars },
+  { value: 'famale', name: 'Женщина', color: 'red', icon: faVenus },
+]
+
+export const DEVTODO_STATUSES = [
+  { value: 'created', name: 'Создана', color: 'gray' },
+  { value: 'inProgress', name: 'В работе', color: 'yellow' },
+  { value: 'finished', name: 'Исполнена', color: 'green' },
+  { value: 'declined', name: 'Отклонена', color: 'red' },
 ]
