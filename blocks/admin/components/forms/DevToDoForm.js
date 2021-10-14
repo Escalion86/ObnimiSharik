@@ -143,7 +143,7 @@ const DevToDoForm = ({
         inLine
         readOnly={readOnly}
       />
-      {loggedUser.role === 'dev' && (
+      {(loggedUser.role === 'dev' || readOnly) && (
         <DevToDoStatusPicker
           status={form.status}
           onChange={(status) =>
@@ -153,6 +153,7 @@ const DevToDoForm = ({
             })
           }
           inLine
+          readOnly={readOnly}
         />
       )}
     </Form>
