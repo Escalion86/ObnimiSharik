@@ -16,7 +16,7 @@ export const DevToDoCard = ({
     (priorityItem) => priorityItem.value === devToDo.priority
   )
   return (
-    <Card inLine onClick={() => onClick(devToDo)}>
+    <Card onClick={() => onClick(devToDo)}>
       <div
         className={
           'w-2 rounded-l-lg bg-' +
@@ -31,18 +31,21 @@ export const DevToDoCard = ({
           </div>
         </div>
       </CardContainer>
-      <div
-        className={
-          'flex justify-center items-center w-24 h-full bg-' +
-          devStatus.color +
-          '-400'
-        }
-      >
-        <span>
-          <span className="text-sm text-gray-800">{devStatus.name}</span>
-        </span>
+
+      <div className="flex flex-col-reverse items-end justify-between gap-y-1">
+        <div
+          className={
+            'flex justify-center rounded-tl-lg py-0.5 items-center w-24 bg-' +
+            devStatus.color +
+            '-400'
+          }
+        >
+          <span>
+            <span className="text-sm text-gray-800">{devStatus.name}</span>
+          </span>
+        </div>
+        <CardButtons onEdit={onEdit} onDelete={onDelete} topRight />
       </div>
-      <CardButtons onEdit={onEdit} onDelete={onDelete} />
     </Card>
   )
 }
