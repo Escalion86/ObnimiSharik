@@ -187,21 +187,8 @@ const UserForm = ({
             gender,
           })
         }
+        inLine
       />
-      {/* <div className="flex flex-col">
-        <label htmlFor="role">Должность</label>
-        <select
-          name="role"
-          className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
-          onChange={handleChange}
-          defaultValue={form.role}
-        >
-          <option>Выберите должность</option>
-          <option value="admin">Администратор</option>
-          <option value="aerodesigner">Аэродизайнер</option>
-          <option value="deliver">Курьер</option>
-        </select>
-      </div> */}
     </Form>
   )
 }
