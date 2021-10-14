@@ -14,6 +14,7 @@ import {
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import ContactsIconsButtons from './forCards/ContactsIconsButtons'
+import { GENDERS } from '@helpers/constants'
 
 export const UserCard = ({
   user,
@@ -25,12 +26,9 @@ export const UserCard = ({
     <Card inLine onClick={() => onClick(user)}>
       <div
         className={
-          'w-2 rounded-l-lg' +
-          (user.gender === 'male'
-            ? ' bg-blue-400'
-            : user.gender === 'famale'
-            ? ' bg-red-400'
-            : '')
+          'w-2 rounded-l-lg bg-' +
+            GENDERS.find((genderItem) => genderItem.value === user.gender)
+              ?.color ?? 'gray-400'
         }
       />
       <CardContainer className="items-center">

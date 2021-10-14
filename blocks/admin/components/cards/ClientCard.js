@@ -6,6 +6,7 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import ContactsIconsButtons from './forCards/ContactsIconsButtons'
+import { GENDERS } from '@helpers/constants'
 
 export const ClientCard = ({
   client,
@@ -17,12 +18,9 @@ export const ClientCard = ({
     <Card inLine onClick={() => onClick(client)}>
       <div
         className={
-          'w-2 rounded-l-lg' +
-          (client.gender === 'male'
-            ? ' bg-blue-400'
-            : client.gender === 'famale'
-            ? ' bg-red-400'
-            : '')
+          'w-2 rounded-l-lg bg-' +
+            GENDERS.find((genderItem) => genderItem.value === client.gender)
+              ?.color ?? 'gray-400'
         }
       />
       <CardContainer className="items-center">
