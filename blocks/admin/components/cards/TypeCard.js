@@ -33,7 +33,7 @@ export const TypeCard = ({
         {/* <div className="">{products.price} ₽</div> */}
       </div>
     </CardContainer>
-    <CardButtons onAdd={onAdd} onEdit={onEdit} onDelete={onDelete} />
+    <CardButtons onAdd={onAdd} onEdit={onEdit} onDelete={onDelete} stretch />
   </Card>
 )
 
