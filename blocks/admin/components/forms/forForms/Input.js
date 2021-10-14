@@ -33,22 +33,20 @@ const Input = ({
   if (readOnly)
     return (
       <div
-        className={
-          'flex gap-x-1' +
-          (inLine ? ' flex-row items-center' : ' flex-col') +
-          (className ? ' ' + className : '')
-        }
+        className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
       >
         {label && (
-          <label
-            className={
-              'border-b-1 border-primary max-w-min whitespace-nowrap' +
-              (labelStyle ? ' ' + labelStyle : '')
-            }
-            htmlFor={name}
-          >
-            {label}:
-          </label>
+          <div>
+            <label
+              className={
+                'border-b-1 border-primary max-w-min whitespace-nowrap' +
+                (labelStyle ? ' ' + labelStyle : '')
+              }
+              htmlFor={name}
+            >
+              {label}:
+            </label>
+          </div>
         )}
         <div className="flex flex-nowrap gap-x-1">
           {prefix && <div>{prefix}</div>}
