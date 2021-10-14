@@ -136,16 +136,18 @@ const DevToDoForm = ({
         }
         inLine
       />
-      <DevToDoStatusPicker
-        status={form.status}
-        onChange={(status) =>
-          setForm({
-            ...form,
-            status,
-          })
-        }
-        inLine
-      />
+      {loggedUser.role === 'dev' && (
+        <DevToDoStatusPicker
+          status={form.status}
+          onChange={(status) =>
+            setForm({
+              ...form,
+              status,
+            })
+          }
+          inLine
+        />
+      )}
     </Form>
   )
 }
