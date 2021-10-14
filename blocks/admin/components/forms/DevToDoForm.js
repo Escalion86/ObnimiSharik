@@ -8,8 +8,9 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
-import PriorityPicker from './forForms/PriorityPicker'
+import PriorityPicker from './forForms/PropValuePicker/PriorityPicker'
 import { getSession } from 'next-auth/client'
+import DevToDoStatusPicker from './forForms/PropValuePicker/DevToDoStatusPicker'
 
 const DevToDoForm = ({
   role,
@@ -133,6 +134,16 @@ const DevToDoForm = ({
           setForm({
             ...form,
             priority,
+          })
+        }
+        inLine
+      />
+      <DevToDoStatusPicker
+        status={form.status}
+        onChange={(status) =>
+          setForm({
+            ...form,
+            status,
           })
         }
         inLine
