@@ -3,62 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
 
-import { faPlus, faBug } from '@fortawesome/free-solid-svg-icons'
-
 import Button from '@components/Button'
 
 import Cabinet from '@adminblocks/Cabinet'
 
 import Spinner from '@admincomponents/Spinner'
 
-import {
-  ProductsContent,
-  ProductTypesContent,
-  SetTypesContent,
-  SetsContent,
-  UsersContent,
-  InvitationsContent,
-  SettingsContent,
-  TestContent,
-  ProductCirculationsContent,
-  UserContent,
-} from '@adminblocks/content'
-
-import {
-  ProductModal,
-  SetModal,
-  ProductTypeModal,
-  SetTypeModal,
-  InvitationModal,
-  TildaImportModal,
-  UserModal,
-  MessageModal,
-  ConfirmModal,
-  ProductCirculationModal,
-} from '@adminblocks/modals'
-
-import {
-  fetchingAll,
-  fetchingProducts,
-  fetchingProductTypes,
-  fetchingSets,
-  fetchingSetTypes,
-  fetchingInvitations,
-  fetchingUsers,
-  fetchingProductCirculations,
-} from '@helpers/fetchers'
+import { fetchingAll } from '@helpers/fetchers'
 
 import { ROLES } from '@helpers/constants'
-import {
-  setAllData,
-  setSets,
-  setProducts,
-  setSetTypes,
-  setProductTypes,
-  setUsers,
-  setInvitations,
-  setProductCirculations,
-} from '@state/actions'
+import { setAllData } from '@state/actions'
 // import { addModal, removeModal } from '@state/actions/modalsActions'
 import {
   addModal,
@@ -66,36 +20,17 @@ import {
   removeModal,
 } from '@state/actions/modalsActions'
 import modalsFunctions from '@adminblocks/modals/modalsFunctions'
-import TitleButton from '@admincomponents/TitleButton'
-import OverviewContent from '@adminblocks/content/OverviewContent'
-import {
-  BtnAddInvitation,
-  BtnAddProduct,
-  BtnAddProductCirculation,
-  BtnAddProductType,
-  BtnAddSet,
-  BtnAddSetType,
-  BtnTest,
-} from '@components/TitleButtons'
 import { setPage } from '@state/actions/pageActions'
-// import { setSets } from '@state/actions/setsActions'
-// import { setProducts } from '@state/actions/productsActions'
-// import { setSetTypes } from '@state/actions/setTypesActions'
-// import { setProductTypes } from '@state/actions/productTypesActions'
-// import { setUsers } from '@state/actions/usersActions'
-// import { setInvitations } from '@state/actions/invitationsActions'
-// import { setProductCirculations } from '@state/actions/productCirculationsActions'
 import { pages, pagesGroups } from '@adminblocks/pages'
-// import dbConnect from '@utils/dbConnect'
-// import Orders from '@models/Orders'
-// import Orders from '@models/Orders'
 
 const menuCfg = (pages, pagesGroups, userRole) =>
   pagesGroups.reduce((totalGroups, group) => {
     const pagesItems = pages.reduce((totalPages, page) => {
       if (
         page.group === group.id &&
-        (userRole === 'dev' || page.accessRoles.includes(userRole))
+        (userRole === 'dev' ||
+          page.accessRoles.includes('all') ||
+          page.accessRoles.includes(userRole))
       )
         totalPages.push(page)
       return totalPages
