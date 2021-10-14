@@ -8,7 +8,7 @@ const OrderModal = ({
   afterConfirm = () => {},
   onDelete = null,
 }) => {
-  const readOnly = !['dev', 'admin'].includes(role)
+  const readOnly = !['dev', 'admin'].includes(loggedUser.role)
   return (
     <Modal
       onClose={onClose}
