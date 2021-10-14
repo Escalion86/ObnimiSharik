@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 
 const productsIdCountSchema = new mongoose.Schema({})
 
-/* PetSchema will correspond to a collection in your MongoDB database. */
 const SetsSchema = new mongoose.Schema({
   article: {
     type: String,

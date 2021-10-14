@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 const autoIncrement = require('mongoose-auto-increment')
 
-/* PetSchema will correspond to a collection in your MongoDB database. */
 const PaymentsSchema = new mongoose.Schema({
   // number: {
   //   type: Number,

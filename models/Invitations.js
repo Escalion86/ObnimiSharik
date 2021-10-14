@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 
-/* PetSchema will correspond to a collection in your MongoDB database. */
 const InvitationsSchema = new mongoose.Schema({
   email: {
     type: String,

@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 const autoIncrement = require('mongoose-auto-increment')
-// import DeliveryAddressesSchema from './DeliveryAddresses'
 
 const OrdersSchema = new mongoose.Schema({
   clientId: {

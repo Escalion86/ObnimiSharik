@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 
-/* PetSchema will correspond to a collection in your MongoDB database. */
 const ProductCirculationsSchema = new mongoose.Schema({
   productId: {
     type: String,

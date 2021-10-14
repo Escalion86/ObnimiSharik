@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 
-/* PetSchema will correspond to a collection in your MongoDB database. */
 const UsersSchema = new mongoose.Schema({
   name: {
     type: String,
