@@ -18,6 +18,7 @@ const ContactIconBtn = ({ url, icon, className = null }) => (
       event.stopPropagation()
       window.open(url)
     }}
+    size="lg"
   />
 )
 
