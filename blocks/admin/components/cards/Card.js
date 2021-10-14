@@ -5,7 +5,7 @@ const Card = ({ className, inLine = false, onClick = null, children }) => (
       'relative items-stretch flex justify-between mx-1 my-1.5 bg-white rounded-lg shadow-large hover:shadow-medium-active' +
       (onClick ? ' cursor-pointer' : '') +
       (className ? ' ' + className : '') +
-      (inLine ? ' h-10' : '')
+      (inLine ? ' laptop:h-10' : '')
     }
   >
     {children}

@@ -21,8 +21,10 @@ const CardButtons = ({
 }) => (
   <div
     className={
-      'flex items-center justify-end overflow-hidden border-l border-gray-200' +
-      (topRight ? ' h-8 rounded-tr-lg rounded-bl-lg' : ' h-full rounded-r-lg') +
+      'flex max-w-min items-center justify-end overflow-hidden border-l border-gray-200' +
+      (topRight
+        ? ' h-8 rounded-tr-lg rounded-bl-lg'
+        : ' laptop:h-full laptop:rounded-br-lg h-8 laptop:rounded-l-none rounded-tr-lg rounded-bl-lg ') +
       (className ? ' ' + className : '')
     }
   >

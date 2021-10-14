@@ -10,7 +10,7 @@ const { faPhone } = require('@fortawesome/free-solid-svg-icons')
 const ContactIconBtn = ({ url, icon, className = null }) => (
   <FontAwesomeIcon
     className={
-      'ml-4 cursor-pointer text-primary hover:text-toxic duration-300 hover:scale-125' +
+      'cursor-pointer text-primary hover:text-toxic duration-300 hover:scale-125' +
       (className ? ' ' + className : '')
     }
     icon={icon}
@@ -22,7 +22,7 @@ const ContactIconBtn = ({ url, icon, className = null }) => (
 )
 
 const ContactsIconsButtons = ({ user }) => (
-  <>
+  <div className="flex items-center p-2 gap-x-4 flex-nowrap">
     {user.phone && (
       <ContactIconBtn
         icon={faPhone}
@@ -50,7 +50,7 @@ const ContactsIconsButtons = ({ user }) => (
         url={'https://t.me/' + user.telegram}
       />
     )}
-  </>
+  </div>
 )
 
 export default ContactsIconsButtons
