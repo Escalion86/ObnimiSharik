@@ -139,6 +139,7 @@ module.exports = {
         'medium-active': '0 1px 4px 5px rgba(38, 163, 212, 0.5)',
       },
       spacing: {
+        15: '3.75rem',
         90: '22.5rem',
         100: '25rem',
       },
