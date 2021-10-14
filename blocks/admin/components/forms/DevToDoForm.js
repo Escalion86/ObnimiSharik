@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react'
 
 import { DEFAULT_DEVTODO } from '@helpers/constants'
 
-import { ComboBox, Input, SelectOrder, SelectClient } from './forForms'
+import { Input, DevToDoStatusPicker, PriorityPicker } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
-import PriorityPicker from './forForms/PropValuePicker/PriorityPicker'
 import { getSession } from 'next-auth/client'
-import DevToDoStatusPicker from './forForms/PropValuePicker/DevToDoStatusPicker'
 
 const DevToDoForm = ({
   role,
