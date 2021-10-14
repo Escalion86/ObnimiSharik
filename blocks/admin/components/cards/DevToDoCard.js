@@ -1,7 +1,7 @@
 import Card from './Card'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
-import { PRIORITIES } from '@helpers/constants'
+import { DEVTODO_STATUSES, PRIORITIES } from '@helpers/constants'
 
 export const DevToDoCard = ({
   devToDo,
@@ -9,14 +9,18 @@ export const DevToDoCard = ({
   onEdit = null,
   onDelete = null,
 }) => {
+  const devStatus = DEVTODO_STATUSES.find(
+    (item) => item.value === devToDo.status
+  )
+  const priority = PRIORITIES.find(
+    (priorityItem) => priorityItem.value === devToDo.priority
+  )
   return (
     <Card inLine onClick={() => onClick(devToDo)}>
       <div
         className={
           'w-2 rounded-l-lg bg-' +
-            PRIORITIES.find(
-              (priorityItem) => priorityItem.value === devToDo.priority
-            )?.color ?? 'gray-400'
+          (priority ? priority.color + '-400' : 'gray-400')
         }
       />
       <CardContainer className="items-center">
@@ -27,6 +31,17 @@ export const DevToDoCard = ({
           </div>
         </div>
       </CardContainer>
+      <div
+        className={
+          'flex justify-center items-center w-24 h-full bg-' +
+          devStatus.color +
+          '-400'
+        }
+      >
+        <span>
+          <span className="text-sm text-gray-800">{devStatus.name}</span>
+        </span>
+      </div>
       <CardButtons onEdit={onEdit} onDelete={onDelete} />
     </Card>
   )
