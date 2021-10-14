@@ -1,3 +1,5 @@
+import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+
 export const DEFAULT_USER = {
   name: 'Гость',
   email: '',
@@ -56,6 +58,17 @@ export const DEFAULT_INVITATION = {
   email: '',
   role: '',
   status: 'created',
+}
+
+export const DEFAULT_DEVTODO = {
+  // number: 0,
+  title: '',
+  description: '',
+  images: [],
+  userId: null,
+  status: 'created',
+  priority: 0,
+  finishedAt: null,
 }
 
 export const ROLES = [
@@ -196,3 +209,14 @@ export const DEFAULT_PAYMENT = {
   status: 'created',
   payAt: new Date().toISOString(),
 }
+
+export const PRIORITIES = [
+  { value: 0, name: 'Низкий', color: 'green-400' },
+  { value: 1, name: 'Обычный', color: 'yellow-400' },
+  { value: 2, name: 'Высокий', color: 'red-400' },
+]
+
+export const GENDERS = [
+  { value: 'male', name: 'Мужчина', color: 'blue-400', icon: faMars },
+  { value: 'famale', name: 'Женщина', color: 'red-400', icon: faVenus },
+]
