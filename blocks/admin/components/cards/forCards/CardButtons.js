@@ -20,9 +20,6 @@ const CardButtons = ({
   topRight = false,
   stretch = false,
 }) => {
-  console.log(`topRight`, topRight)
-  console.log(`stretch`, stretch)
-  console.log(`!topRight && !stretch`, !topRight && !stretch)
   return (
     <div
       className={
