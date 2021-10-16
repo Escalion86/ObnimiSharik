@@ -47,7 +47,7 @@ const MultiselectCheckbox = ({
           {data
             .filter((item) => item.checked)
             .map((item) => (
-              <span>- {item.label}</span>
+              <span key={item.label}>- {item.label}</span>
             ))}
         </div>
       </div>
