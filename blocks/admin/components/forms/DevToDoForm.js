@@ -58,10 +58,12 @@ const DevToDoForm = ({
     e?.preventDefault()
     const errs = formValidate()
     if (Object.keys(errs).length === 0) {
+      const finishedAt =
+        form.status === 'finished' ? new Date().toISOString() : null
       forNew
         ? postData(
             '/api/devtodo',
-            form,
+            { ...form, finishedAt },
             (data) => {
               afterConfirm(data)
               onClose()
@@ -71,7 +73,7 @@ const DevToDoForm = ({
           )
         : putData(
             `/api/devtodo/${devToDo._id}`,
-            form,
+            { ...form, finishedAt },
             (data) => {
               afterConfirm(data)
               onClose()
