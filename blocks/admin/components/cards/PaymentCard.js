@@ -19,7 +19,7 @@ export const PaymentCard = ({
     (payTypeItem) => payTypeItem.value === payment.payType
   )
   return (
-    <Card inLine onClick={() => onClick(payment)}>
+    <Card onClick={() => onClick(payment)}>
       <div
         className={
           'flex justify-center items-center w-9 rounded-l-lg text-white bg-' +
@@ -29,7 +29,7 @@ export const PaymentCard = ({
         <FontAwesomeIcon icon={payType?.icon ?? faQuestion} size="lg" />
       </div>
       <CardContainer className="justify-between">
-        <div className="items-center flex-1">
+        {/* <div className="items-center flex-1">
           <div className="flex flex-col flex-wrap justify-between gap-x-4 phoneH:flex-row">
             <div>
               <span className="font-semibold">№ {payment.number}</span> от{' '}
@@ -41,12 +41,29 @@ export const PaymentCard = ({
         </div>
         <div className="flex-1 italic">
           Заказ № {order.number} на {formatDateTime(order.deliveryDateFrom)}
-        </div>
-        <div className="text-right">
-          <div className="font-bold">{payment.sum} ₽</div>
+        </div> */}
+
+        <div className="items-center flex-1">
+          <div className="flex flex-col gap-y-1">
+            <div className="whitespace-nowrap">
+              <span className="font-semibold">№ {payment.number}</span> от{' '}
+              <span className="font-semibold">
+                {formatDateTime(payment.payAt)}
+              </span>
+            </div>
+            <div className="flex-1 italic">
+              Заказ № {order.number} на {formatDateTime(order.deliveryDateFrom)}
+            </div>
+          </div>
         </div>
       </CardContainer>
-      <CardButtons onEdit={onEdit} onDelete={onDelete} />
+      {/* <div className="text-right">
+        <div className="font-bold">{payment.sum} ₽</div>
+      </div> */}
+      <div className="flex flex-col-reverse items-end justify-between laptop:flex-row laptop:items-center">
+        <div className="px-1 font-bold">{payment.sum} ₽</div>
+        <CardButtons onEdit={onEdit} onDelete={onDelete} />
+      </div>
     </Card>
   )
 }
