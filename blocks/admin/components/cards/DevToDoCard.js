@@ -30,7 +30,7 @@ export const DevToDoCard = ({
       />
       <CardContainer className="items-center">
         <div className="items-center flex-1">
-          <div className="flex flex-col justify-between gap-x-4">
+          <div className="flex flex-col gap-y-1">
             <div className="font-semibold">{devToDo.title}</div>
             <div className="flex-1 italic">{devToDo.description}</div>
             <div className="flex-1">
