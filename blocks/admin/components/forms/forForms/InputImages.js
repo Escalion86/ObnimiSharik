@@ -39,8 +39,8 @@ const InputImages = ({
             ? ''
             : ' bg-gray-200 border' +
               (required && !images?.length
-                ? 'border-red-700'
-                : 'border-gray-700'))
+                ? ' border-red-700'
+                : ' border-gray-700'))
         }
       >
         {images.map((image, index) => (
