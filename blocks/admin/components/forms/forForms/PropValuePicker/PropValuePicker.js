@@ -110,7 +110,9 @@ const PropValuePicker = ({
             name={item.name}
             icon={item.icon}
             color={item.color}
-            onClick={() => onChange(item.value)}
+            onClick={() =>
+              item.value === value ? onChange(null) : onChange(item.value)
+            }
           />
         ))}
       </div>
