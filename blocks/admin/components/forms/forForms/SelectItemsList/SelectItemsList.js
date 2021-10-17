@@ -45,11 +45,6 @@ const ItemRow = ({
 
   return (
     <div className="flex border-b border-gray-700">
-      {/* <СomboList
-        onChange={onChangeItem}
-        selectedId={selectedId}
-        products={products}
-      /> */}
       <SelectItem
         items={items}
         className={'flex-1' + (index === 0 ? ' rounded-tl-lg' : '')}
@@ -121,7 +116,7 @@ export const SelectItemsList = ({
 }) => {
   if (
     readOnly &&
-    (Object.keys(itemsIdCount).length === 0 || itemsId.length === 0)
+    (Object.keys(itemsIdCount).length === 0 || itemsId?.length === 0)
   )
     return null
 
@@ -141,7 +136,7 @@ export const SelectItemsList = ({
           if (id !== '?') itemRows.push(items.find((item) => item._id === id))
 
       return itemRows.map((item, index) => (
-        <div className="flex flex-col ml-2 italic gap-y-1">
+        <div key={item._id} className="flex flex-col ml-2 italic gap-y-1">
           <div
             className={
               'flex gap-x-1' + (item[subItemsIdCountKey] ? ' text-primary' : '')
@@ -151,7 +146,12 @@ export const SelectItemsList = ({
               <div>({item.article ? item.article : 'без артикула'})</div>
             )}
             {item.name && <div>{item.name}</div>}
-            {itemsIdCount && <div> - {itemsIdCount[item._id]} шт.</div>}
+            {itemsIdCount && (
+              <div className="whitespace-nowrap">
+                {' '}
+                - {itemsIdCount[item._id]} шт.
+              </div>
+            )}
           </div>
           {item[subItemsIdCountKey] && (
             <ItemRows
@@ -174,13 +174,6 @@ export const SelectItemsList = ({
           </label>
         )}
         <ItemRows items={items} itemsIdCount={itemsIdCount} />
-        {/* {itemRows.map((item, index) => (
-          <div className="flex ml-2 italic gap-x-1">
-            <div>({item.article ? item.article : 'без артикула'})</div>
-            <div>{item.name}</div>
-            <div> - {itemsIdCount[item._id]} шт.</div>
-          </div>
-        ))} */}
       </div>
     )
   }
