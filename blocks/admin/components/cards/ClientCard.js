@@ -3,6 +3,8 @@ import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import ContactsIconsButtons from './forCards/ContactsIconsButtons'
 import { GENDERS } from '@helpers/constants'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 
 export const ClientCard = ({
   client,
@@ -17,9 +19,12 @@ export const ClientCard = ({
     <Card inLine onClick={() => onClick(client)}>
       <div
         className={
-          'w-2 rounded-l-lg bg-' + (gender ? gender.color + '-400' : 'gray-400')
+          'flex justify-center items-center w-9 rounded-l-lg text-white bg-' +
+          (gender ? gender.color + '-400' : 'gray-400')
         }
-      />
+      >
+        <FontAwesomeIcon icon={gender?.icon ?? faQuestion} size="lg" />
+      </div>
       <CardContainer className="items-center">
         <div className="items-center flex-1">
           <div className="flex flex-col justify-between gap-x-4 laptop:flex-row">
