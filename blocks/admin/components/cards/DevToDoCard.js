@@ -2,6 +2,7 @@ import Card from './Card'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import { DEVTODO_STATUSES, PRIORITIES } from '@helpers/constants'
+import { useSelector } from 'react-redux'
 
 export const DevToDoCard = ({
   devToDo,
@@ -9,6 +10,10 @@ export const DevToDoCard = ({
   onEdit = null,
   onDelete = null,
 }) => {
+  const { users } = useSelector((state) => state)
+
+  const user = users.find((user) => user._id === devToDo.userId)
+
   const devStatus = DEVTODO_STATUSES.find(
     (item) => item.value === devToDo.status
   )
@@ -25,9 +30,12 @@ export const DevToDoCard = ({
       />
       <CardContainer className="items-center">
         <div className="items-center flex-1">
-          <div className="flex flex-col flex-wrap justify-between gap-x-4 phoneH:flex-row">
+          <div className="flex flex-col justify-between gap-x-4">
             <div className="font-semibold">{devToDo.title}</div>
             <div className="flex-1 italic">{devToDo.description}</div>
+            <div className="flex-1">
+              Создано: <span className="italic">{user.name}</span>
+            </div>
           </div>
         </div>
       </CardContainer>
