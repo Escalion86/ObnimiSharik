@@ -1,4 +1,11 @@
-import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import {
+  faMars,
+  faMoneyBill,
+  faSign,
+  faVenus,
+  faCreditCard,
+  faSignInAlt,
+} from '@fortawesome/free-solid-svg-icons'
 
 export const DEFAULT_USER = {
   name: 'Гость',
@@ -204,7 +211,7 @@ export const DEFAULT_PAYMENT = {
   // number: 0,
   clientId: '',
   orderId: '',
-  way: 'card',
+  payType: null,
   sum: 0,
   status: 'created',
   payAt: new Date().toISOString(),
@@ -226,4 +233,10 @@ export const DEVTODO_STATUSES = [
   { value: 'inProgress', name: 'В работе', color: 'yellow' },
   { value: 'finished', name: 'Исполнена', color: 'green' },
   { value: 'declined', name: 'Отклонена', color: 'red' },
+]
+
+export const PAY_TYPES = [
+  { value: 'card', name: 'Картой', color: 'blue', icon: faCreditCard },
+  { value: 'cash', name: 'Наличными', color: 'green', icon: faMoneyBill },
+  { value: 'remittance', name: 'Перевод', color: 'yellow', icon: faSignInAlt },
 ]

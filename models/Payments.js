@@ -14,7 +14,7 @@ const PaymentsSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Необходимо указать id заказа'],
   },
-  way: {
+  payType: {
     type: String,
     default: 'cash',
   },

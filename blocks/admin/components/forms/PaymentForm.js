@@ -8,6 +8,7 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
+import PayTypePicker from './forForms/PropValuePicker/PayTypePicker'
 
 const PaymentForm = ({
   loggedUser,
@@ -22,7 +23,7 @@ const PaymentForm = ({
     number: payment.number,
     clientId: payment.clientId,
     orderId: payment.orderId,
-    way: payment.way,
+    payType: payment.payType,
     sum: payment.sum,
     status: payment.status,
     payAt: payment.payAt,
@@ -118,6 +119,16 @@ const PaymentForm = ({
         // clearButton
         required
         // exceptedIds={selectedItemsIds}
+      />
+      <PayTypePicker
+        payType={form.payType}
+        onChange={(payType) =>
+          setForm({
+            ...form,
+            payType,
+          })
+        }
+        inLine
       />
     </Form>
   )
