@@ -7,7 +7,7 @@ const MenuItem = ({ item, setPageId = () => {}, active = false }) => {
   return (
     <div className="mt-2 -mx-3">
       <a
-        className="flex items-center justify-between px-3 py-1 bg-gray-200 rounded-lg cursor-pointer hover:bg-hover"
+        className="flex items-center justify-between px-3 py-1 duration-300 bg-gray-200 rounded-lg cursor-pointer hover:bg-hover"
         onClick={() => {
           setPageId(item.id)
         }}
