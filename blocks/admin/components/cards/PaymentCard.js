@@ -51,9 +51,14 @@ export const PaymentCard = ({
                 {formatDateTime(payment.payAt)}
               </span>
             </div>
-            <div className="flex-1 italic">
-              Заказ № {order.number} на {formatDateTime(order.deliveryDateFrom)}
-            </div>
+            {order ? (
+              <div className="flex-1 italic">
+                Заказ № {order.number} на{' '}
+                {formatDateTime(order.deliveryDateFrom)}
+              </div>
+            ) : (
+              <div className="flex-1 italic text-red-600">Заказ не найден</div>
+            )}
           </div>
         </div>
       </CardContainer>
