@@ -3,6 +3,7 @@ import Providers from 'next-auth/providers'
 import dbConnect from '@utils/dbConnect'
 import Users from '@models/Users'
 import Invitations from '@models/Invitations'
+import CRUD from '@server/CRUD'
 
 const defaultUserProps = {
   role: 'client',
@@ -37,6 +38,43 @@ export default NextAuth({
       const result = await Users.find({
         email: user.email,
       })
+      // Если аватарка пользователя не сохранена в cloudinary, то сохраняем в cloudinary и обнояем данные пользователя
+      if (
+        result[0].image &&
+        !result[0].image.includes('https://res.cloudinary.com')
+      ) {
+        await fetch(
+          'https://api.cloudinary.com/v1_1/escalion-ru/image/upload',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify({
+              file: result[0].image,
+              upload_preset: 'obnimisharik_users',
+              public_id: result[0]._id,
+            }),
+          }
+        )
+          .then((response) => response.json())
+          .then(async (data) => {
+            if (data.secure_url !== '') {
+              await CRUD(Users, {
+                method: 'PUT',
+                query: { id: result[0]._id },
+                body: { image: data.secure_url },
+              })
+              session.user.image = data.secure_url
+            }
+          })
+          .catch((err) => console.error(err))
+      } else {
+        session.user.image = result[0].image
+      }
+
+      session.user._id = result[0]._id
+      session.user.name = result[0].name
       session.user.role = result[0].role
       session.user.phone = result[0].phone
       session.user.whatsapp = result[0].whatsapp
@@ -44,7 +82,7 @@ export default NextAuth({
       session.user.telegram = result[0].telegram
       session.user.gender = result[0].gender
       session.user.birthday = result[0].birthday
-      session.user._id = result[0]._id
+
       // console.log(`result[0]`, result[0])
       if (result) {
         if (result[0].role === 'client') {
