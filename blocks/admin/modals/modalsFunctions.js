@@ -58,7 +58,7 @@ import { DEFAULT_USER } from '@helpers/constants'
 
 const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
   const modals = {
-    openProductModal: (product, afterConfirm, edit) =>
+    openProductModal: (product, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <ProductModal
@@ -77,12 +77,15 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteProduct(product, onConfirm)
+              modals.openDeleteProduct(product, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(product._id)
+              })
             }}
           />
         ))
       ),
-    openSetModal: (set, afterConfirm, edit) =>
+    openSetModal: (set, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <SetModal
@@ -101,12 +104,15 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteSet(set, onConfirm)
+              modals.openDeleteSet(set, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(set._id)
+              })
             }}
           />
         ))
       ),
-    openProductTypeModal: (productType, afterConfirm, edit) =>
+    openProductTypeModal: (productType, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <ProductTypeModal
@@ -123,12 +129,15 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteProductType(productType, onConfirm)
+              modals.openDeleteProductType(productType, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(productType._id)
+              })
             }}
           />
         ))
       ),
-    openSetTypeModal: (setType, afterConfirm, edit) =>
+    openSetTypeModal: (setType, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <SetTypeModal
@@ -143,7 +152,10 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteSetType(setType, onConfirm)
+              modals.openDeleteSetType(setType, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(setType._id)
+              })
             }}
           />
         ))
@@ -161,7 +173,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           />
         ))
       ),
-    openUserModal: (user, afterConfirm, edit) =>
+    openUserModal: (user, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <UserModal
@@ -174,12 +186,15 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteUser(user, onConfirm)
+              modals.openDeleteUser(user, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(user._id)
+              })
             }}
           />
         ))
       ),
-    openInvitationModal: (invitation, afterConfirm, edit) =>
+    openInvitationModal: (invitation, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <InvitationModal
@@ -192,12 +207,20 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteInvitation(invitation, onConfirm)
+              modals.openDeleteInvitation(invitation, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(invitation._id)
+              })
             }}
           />
         ))
       ),
-    openProductCirculationModal: (productCirculation, afterConfirm, edit) =>
+    openProductCirculationModal: (
+      productCirculation,
+      afterConfirm,
+      afterDelete,
+      edit
+    ) =>
       dispatch(
         addModal((modalId) => (
           <ProductCirculationModal
@@ -212,12 +235,15 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteProductCirculation(productCirculation, onConfirm)
+              modals.openDeleteProductCirculation(productCirculation, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(productCirculation._id)
+              })
             }}
           />
         ))
       ),
-    openClientModal: (client, afterConfirm, edit) =>
+    openClientModal: (client, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <ClientModal
@@ -230,12 +256,15 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteClient(client, onConfirm)
+              modals.openDeleteClient(client, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(client._id)
+              })
             }}
           />
         ))
       ),
-    openDevToDoModal: (devToDo, afterConfirm, edit) =>
+    openDevToDoModal: (devToDo, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <DevToDoModal
@@ -248,12 +277,15 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteDevToDo(devToDo, onConfirm)
+              modals.openDeleteDevToDo(devToDo, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(devToDo._id)
+              })
             }}
           />
         ))
       ),
-    openOrderModal: (order, afterConfirm, edit) =>
+    openOrderModal: (order, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
           <OrderModal
@@ -266,12 +298,15 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeleteOrder(order, onConfirm)
+              modals.openDeleteOrder(order, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(order._id)
+              })
             }}
           />
         ))
       ),
-    openPaymentModal: (payment, afterConfirm, edit) =>
+    openPaymentModal: (payment, afterConfirm, afterDelete, edit = false) =>
       dispatch(
         addModal((modalId) => (
           <PaymentModal
@@ -284,7 +319,10 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             }}
             edit={edit}
             onDelete={(onConfirm) => {
-              modals.openDeletePayment(payment, onConfirm)
+              modals.openDeletePayment(payment, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(payment._id)
+              })
             }}
           />
         ))

@@ -15,7 +15,7 @@ const PaymentsContent = ({ data, modals, loggedUser }) => {
           payment={payment}
           loggedUser={loggedUser}
           onClick={() => modals.openPaymentModal(payment)}
-          onEdit={() => modals.openPaymentModal(payment, true)}
+          onEdit={() => modals.openPaymentModal(payment, null, null, true)}
           onDelete={() => modals.openDeletePayment(payment)}
         />
       )}

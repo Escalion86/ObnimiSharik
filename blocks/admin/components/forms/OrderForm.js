@@ -602,6 +602,7 @@ const PaymentContent = ({
   order,
   products,
   sets,
+  totalPaymentsSum,
   setForm,
   role,
   readOnly,
@@ -621,6 +622,11 @@ const PaymentContent = ({
       ...e,
       target: { ...e.target, name: e.target.name, value: discountValue },
     })
+  }
+
+  const onDeletePayment = (id) => {
+    const tempPaymentsId = paymentsId.filter((paymentId) => paymentId !== id)
+    setPaymentsId(tempPaymentsId)
   }
 
   return (
@@ -661,12 +667,14 @@ const PaymentContent = ({
                 {
                   ...DEFAULT_PAYMENT,
                   orderId: order._id,
+                  clientId: form.clientId ? form.clientId : '',
                 },
                 (data) => {
                   const tempPaymentsId = [...paymentsId]
                   tempPaymentsId.push(data._id)
                   setPaymentsId(tempPaymentsId)
-                }
+                },
+                (id) => onDeletePayment(id)
               )
             }
             // onEdit={(index, payment) =>
@@ -682,11 +690,15 @@ const PaymentContent = ({
             //     : onConfirm()
             // }}
             onClick={(index, payment) =>
-              modals.openPaymentModal(payment, (data) => {
-                const tempPaymentsId = [...paymentsId]
-                tempPaymentsId[index] = data._id
-                setPaymentsId(tempPaymentsId)
-              })
+              modals.openPaymentModal(
+                payment,
+                (data) => {
+                  const tempPaymentsId = [...paymentsId]
+                  tempPaymentsId[index] = data._id
+                  setPaymentsId(tempPaymentsId)
+                },
+                (id) => onDeletePayment(id)
+              )
             }
             dropDownList={false}
           />
@@ -696,9 +708,30 @@ const PaymentContent = ({
             <div>Чтобы добавить транзакции - сначала сохраните заказ</div>
           </div>
         )}
-        <div className="flex items-end justify-center flex-1 h-8 font-bold gap-x-1">
-          Итого сумма:<span className="text-lg">{totalPrice}</span> ₽
+        <div className="flex items-end justify-center flex-1 gap-x-1">
+          <span className="text-lg">Итого сумма:</span>
+          <span className="text-lg font-bold ">{totalPrice}</span> ₽
         </div>
+        {totalPaymentsSum ? (
+          <div className="flex justify-between">
+            <div className="flex items-end justify-center flex-1 gap-x-1">
+              <span className="text-md">Оплачено:</span>
+              <span className="font-bold text-md ">{totalPaymentsSum}</span> ₽
+            </div>
+            <div className="flex items-end justify-center flex-1 gap-x-1">
+              <span className="text-md">
+                {totalPrice - totalPaymentsSum >= 0
+                  ? 'Остаток'
+                  : ' из них чаевые'}
+                :
+              </span>
+              <span className="font-bold text-md ">
+                {Math.abs(totalPrice - totalPaymentsSum)}
+              </span>{' '}
+              ₽
+            </div>
+          </div>
+        ) : null}
       </div>
     )
   )
@@ -915,6 +948,12 @@ const OrderForm = ({
   const catalogPrice = (catalogProductsPrice + catalogSetsPrice) / 100
   const totalPrice = catalogPrice - form.discount / 100
 
+  const totalPaymentsSum =
+    payments.reduce((prev, current) => {
+      if (paymentsId.includes(current._id)) return prev + current.sum
+      return prev
+    }, 0) / 100
+
   const createProductCirculationsForOrder = (orderId) => {
     deleteData(
       '/api/productcirculations/order/' + orderId
@@ -1016,6 +1055,7 @@ const OrderForm = ({
     products,
     sets,
     clients,
+    payments,
     readOnly,
     form,
     order,
@@ -1031,6 +1071,7 @@ const OrderForm = ({
     setProductCirculationsIdCount,
     paymentsId,
     setPaymentsId,
+    totalPaymentsSum,
   }
 
   const sumObjectValues = (obj) => {
@@ -1168,7 +1209,15 @@ const OrderForm = ({
           {
             title: 'Расчёт',
             content: <PaymentContent {...contentParams} />,
-            text: totalPrice + ' ₽',
+            text:
+              (totalPaymentsSum && totalPaymentsSum >= totalPrice
+                ? 'Оплачен '
+                : 'Аванс ' + totalPaymentsSum + ' / ') +
+              totalPrice +
+              (totalPaymentsSum && totalPaymentsSum > totalPrice
+                ? ' + Чаевые ' + (totalPaymentsSum - totalPrice)
+                : '') +
+              ' ₽',
             visible: operator && !cartEmpty,
           },
           {
