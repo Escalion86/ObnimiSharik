@@ -2,7 +2,13 @@ import { useState } from 'react'
 
 import { DEFAULT_PAYMENT, ROLES } from '@helpers/constants'
 
-import { ComboBox, Input, SelectOrder, SelectClient } from './forForms'
+import {
+  ComboBox,
+  Input,
+  SelectOrder,
+  SelectClient,
+  PriceInput,
+} from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -34,7 +40,7 @@ const PaymentForm = ({
   const handleChange = (e) => {
     const target = e.target
     const value =
-      target.name === 'price'
+      target.name === 'sum'
         ? target.value * 100
         : target.name === 'images'
         ? [target.value]
@@ -81,6 +87,8 @@ const PaymentForm = ({
     let err = {}
     if (!form.clientId) err.clientId = 'clientId is required'
     if (!form.orderId) err.orderId = 'orderId is required'
+    if (!form.sum) err.sum = 'sum is required'
+    if (!form.payType) err.payType = 'payType is required'
     return err
   }
 
@@ -129,6 +137,18 @@ const PaymentForm = ({
           })
         }
         inLine
+        required
+      />
+      <PriceInput
+        value={form.sum / 100}
+        name="sum"
+        label="Сумма"
+        onChange={handleChange}
+        required
+        className="flex-1"
+        inLine
+        // readOnly={readOnly}
+        // inLine={readOnly}
       />
     </Form>
   )
