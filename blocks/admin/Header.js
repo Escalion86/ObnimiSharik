@@ -28,7 +28,10 @@ const UserMenu = ({
                   <img
                     onClick={() => closeMenu()}
                     className="object-cover rounded-full cursor-pointer h-11 w-11 min-w-9"
-                    src={loggedUser.image}
+                    src={
+                      loggedUser.image ??
+                      `/img/users/${loggedUser.gender ?? 'male'}.jpg`
+                    }
                     alt="Avatar"
                   />
                 </Menu.Button>
