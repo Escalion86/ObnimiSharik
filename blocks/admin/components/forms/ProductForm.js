@@ -226,11 +226,14 @@ const ProductForm = ({
           })
         }
         onAddImage={(image) =>
-          sendImage(image, (imageUrl) =>
-            setForm({
-              ...form,
-              images: [...form.images, imageUrl],
-            })
+          sendImage(
+            image,
+            (imageUrl) =>
+              setForm({
+                ...form,
+                images: [...form.images, imageUrl],
+              }),
+            'products'
           )
         }
         readOnly={readOnly}
