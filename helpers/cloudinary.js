@@ -29,22 +29,42 @@ export const deleteImages = async (arrayOfImagesUrls) => {
   if (arrayOfImagesUrls.length > 0)
     await Promise.all(
       arrayOfImagesUrls.map(async (imageUrl) => {
-        if (imageUrl.lastIndexOf('obnimisharik/') > 0)
+        if (imageUrl.lastIndexOf('obnimisharik/') > 0) {
           await deleteImage(
             imageUrl.substring(
               imageUrl.lastIndexOf('obnimisharik/'),
               imageUrl.lastIndexOf('.')
             )
           )
+        } else if (!imageUrl.includes('https://res.cloudinary.com')) {
+          await deleteImage('obnimisharik/' + imageUrl)
+        }
       })
     )
 }
 
-export const sendImage = async (image, callback) => {
+export const sendImage = async (
+  image,
+  callback,
+  folder = null,
+  imageName = null
+) => {
   if (typeof image === 'object') {
     const formData = new FormData()
     formData.append('file', image)
-    formData.append('upload_preset', 'obnimisharik')
+    formData.append(
+      'upload_preset',
+      folder ? 'obnimisharik_' + folder : 'obnimisharik'
+    )
+    if (imageName) {
+      // console.log(`imageName`, imageName)
+      // await deleteImage(imageName)
+      // await deleteImages([(folder ? folder + '/' : '') + imageName])
+
+      formData.append('public_id', imageName)
+      // formData.append('filename_override', true)
+      // formData.append('use_filename', true)
+    }
 
     await fetch('https://api.cloudinary.com/v1_1/escalion-ru/image/upload', {
       method: 'POST',
