@@ -114,7 +114,9 @@ export const PaymentItem = ({ item, onClick = null, active = false }) => {
         <div className="flex-1 whitespace-nowrap">
           {formatDateTime(item.payAt, false)}
         </div>
-        <div className="flex-1 text-right whitespace-nowrap">{item.way}</div>
+        <div className="flex-1 text-right whitespace-nowrap">
+          {item.payType}
+        </div>
         <div className="flex-1 text-right whitespace-nowrap">
           {item.sum / 100} ₽
         </div>
