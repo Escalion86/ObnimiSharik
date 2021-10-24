@@ -1,3 +1,4 @@
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const {
@@ -7,7 +8,7 @@ const {
 } = require('@fortawesome/free-brands-svg-icons')
 const { faPhone } = require('@fortawesome/free-solid-svg-icons')
 
-const ContactIconBtn = ({ url, icon, className = null }) => (
+const ContactIconBtn = ({ url, icon, size = 'lg', className = null }) => (
   <FontAwesomeIcon
     className={
       'cursor-pointer text-primary hover:text-toxic duration-300 hover:scale-125' +
@@ -18,12 +19,12 @@ const ContactIconBtn = ({ url, icon, className = null }) => (
       event.stopPropagation()
       window.open(url)
     }}
-    size="lg"
+    size={size}
   />
 )
 
 const ContactsIconsButtons = ({ user }) => (
-  <div className="flex items-center p-2 gap-x-4 flex-nowrap">
+  <div className="flex items-center p-2 gap-x-2 tablet:gap-x-4 flex-nowrap">
     {user.phone && (
       <ContactIconBtn
         icon={faPhone}
@@ -50,6 +51,9 @@ const ContactsIconsButtons = ({ user }) => (
         icon={faTelegramPlane}
         url={'https://t.me/' + user.telegram}
       />
+    )}
+    {user.email && (
+      <ContactIconBtn icon={faEnvelope} url={'mailto:' + user.email} />
     )}
   </div>
 )
