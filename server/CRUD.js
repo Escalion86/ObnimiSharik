@@ -14,9 +14,9 @@ export default async function handler(Schema, req, res, param = null) {
         if (id && !param) {
           const data = await Schema.findById(id)
           if (!data) {
-            return res.status(400).json({ success: false })
+            return res?.status(400).json({ success: false })
           }
-          res.status(200).json({ success: true, data })
+          res?.status(200).json({ success: true, data })
         } else {
           let data
           if (id && param) {
@@ -24,26 +24,26 @@ export default async function handler(Schema, req, res, param = null) {
           } else {
             data = await Schema.find({})
           }
-          res.status(200).json({ success: true, data })
+          res?.status(200).json({ success: true, data })
         }
       } catch (error) {
         console.log(error)
-        res.status(400).json({ success: false, error })
+        res?.status(400).json({ success: false, error })
       }
       break
     case 'POST':
       try {
         if (id && !param) {
           return res
-            .status(400)
+            ?.status(400)
             .json({ success: false, error: 'No need to set Id' })
         } else {
           const data = await Schema.create(req.body)
-          res.status(201).json({ success: true, data })
+          res?.status(201).json({ success: true, data })
         }
       } catch (error) {
         console.log(error)
-        res.status(400).json({ success: false, error })
+        res?.status(400).json({ success: false, error })
       }
       break
     case 'PUT' /* Edit a model by its ID */:
@@ -55,15 +55,15 @@ export default async function handler(Schema, req, res, param = null) {
             runValidators: true,
           })
           if (!data) {
-            return res.status(400).json({ success: false })
+            return res?.status(400).json({ success: false })
           }
-          res.status(200).json({ success: true, data })
+          res?.status(200).json({ success: true, data })
         } else {
-          return res.status(400).json({ success: false, error: 'No Id' })
+          return res?.status(400).json({ success: false, error: 'No Id' })
         }
       } catch (error) {
         console.log(error)
-        res.status(400).json({ success: false })
+        res?.status(400).json({ success: false })
       }
       break
     case 'DELETE' /* Delete a model by its ID */:
@@ -73,7 +73,7 @@ export default async function handler(Schema, req, res, param = null) {
             _id: id,
           })
           if (!deletedData) {
-            return res.status(400).json({ success: false })
+            return res?.status(400).json({ success: false })
           }
         } else {
           let deletedData
@@ -84,16 +84,16 @@ export default async function handler(Schema, req, res, param = null) {
             deletedData = await Schema.deleteMany({})
           }
           if (!deletedData) {
-            return res.status(400).json({ success: false })
+            return res?.status(400).json({ success: false })
           }
         }
-        res.status(200).json({ success: true, data: {} })
+        res?.status(200).json({ success: true, data: {} })
       } catch (error) {
-        res.status(400).json({ success: false, error })
+        res?.status(400).json({ success: false, error })
       }
       break
     default:
-      res.status(400).json({ success: false })
+      res?.status(400).json({ success: false })
       break
   }
 }
