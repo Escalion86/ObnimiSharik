@@ -8,6 +8,7 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
+import InputImage from './forForms/InputImage'
 
 const ProductTypeForm = ({
   loggedUser,
@@ -20,6 +21,7 @@ const ProductTypeForm = ({
 
   const [form, setForm] = useState({
     name: productType.name,
+    image: productType.image,
   })
 
   const forNew = productType._id === undefined
@@ -80,6 +82,16 @@ const ProductTypeForm = ({
         compareObjects(form, productType)
       }
     >
+      <InputImage
+        image={form.image}
+        label="Картинка"
+        onChange={(imageUrl) => setForm({ ...form, image: imageUrl })}
+        noImage={`/img/noImage.jpg`}
+        inLine
+        directory="product_types"
+        imageName={productType._id}
+        noEditButton
+      />
       <Input
         key="name"
         label="Название"
