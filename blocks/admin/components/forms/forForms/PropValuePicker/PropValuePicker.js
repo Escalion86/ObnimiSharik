@@ -92,7 +92,7 @@ const PropValuePicker = ({
             labelStyle
               ? ' ' + labelStyle
               : inLine
-              ? 'min-w-24 max-w-40 w-1/5'
+              ? 'min-w-24 max-w-40 w-1/4'
               : ''
           }
           htmlFor={name}
