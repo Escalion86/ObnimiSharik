@@ -3,6 +3,7 @@ import Zoom from 'react-medium-image-zoom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { deleteImages, sendImage } from '@helpers/cloudinary'
 
 const InputImage = ({
   label = 'Картинка',
@@ -12,24 +13,42 @@ const InputImage = ({
   required = false,
   readOnly = false,
   noEditButton = false,
+  inLine = false,
+  directory = null,
+  imageName = null,
 }) => {
   const hiddenFileInput = useRef(null)
   const selectImageClick = (event) => {
     hiddenFileInput.current.click()
   }
 
-  const handleChange = (e) => {
-    onChange(e.target.files[0])
+  const onChangeImage = async (newImage) => {
+    if (newImage) {
+      if (image) await deleteImages([image])
+      sendImage(
+        newImage,
+        (imageUrl) => {
+          console.log(`imageUrl`, imageUrl)
+          onChange(imageUrl)
+        },
+        directory,
+        imageName
+      )
+    } else {
+      if (imageName)
+        await deleteImages([(directory ? directory + '/' : '') + imageName])
+      onChange(null)
+    }
   }
 
   return (
-    <div className="">
+    <div className={inLine ? 'flex' : ''}>
       {label && (
         <label
           className={
-            readOnly
+            (readOnly
               ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
-              : ''
+              : '') + (inLine ? 'min-w-24 max-w-40 w-1/4' : '')
           }
         >
           {label}
@@ -67,7 +86,7 @@ const InputImage = ({
             icon={faTrash}
             size="1x"
             onClick={() => {
-              onChange(null)
+              onChangeImage(null)
             }}
           />
         )}
@@ -79,7 +98,7 @@ const InputImage = ({
             onClick={() => selectImageClick()}
           />
         )}
-        {!readOnly && !noEditButton && (
+        {!readOnly && !noEditButton && image && (
           <FontAwesomeIcon
             className="absolute duration-200 transform cursor-pointer -top-4 -left-4 group-hover:top-1 group-hover:left-1 text-primary hover:scale-125"
             icon={faPencilAlt}
@@ -94,7 +113,7 @@ const InputImage = ({
       <input
         type="file"
         ref={hiddenFileInput}
-        onChange={handleChange}
+        onChange={(e) => onChangeImage(e.target.files[0])}
         style={{ display: 'none' }}
         accept="image/jpeg,image/png"
       />

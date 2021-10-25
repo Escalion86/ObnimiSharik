@@ -16,7 +16,6 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import birthDateToAge from '@helpers/birthDateToAge'
-import { deleteImages, sendImage } from '@helpers/cloudinary'
 import InputAvatar from './forForms/InputAvatar'
 
 const UserForm = ({
@@ -29,6 +28,7 @@ const UserForm = ({
   const [message, setMessage] = useState('')
 
   const [form, setForm] = useState({
+    _id: user._id,
     image: user.image,
     email: user.email,
     name: user.name,
@@ -101,30 +101,13 @@ const UserForm = ({
       }
     >
       <InputAvatar
-        avatar={form.image}
-        gender={form.gender}
-        onChange={(image) => {
-          if (image) {
-            sendImage(
-              image,
-              (imageUrl) => {
-                console.log(`imageUrl`, imageUrl)
-                setForm({
-                  ...form,
-                  image: imageUrl,
-                })
-              },
-              'users',
-              loggedUser._id
-            )
-          } else {
-            deleteImages(['users/' + loggedUser._id])
-            setForm({
-              ...form,
-              image: null,
-            })
-          }
-        }}
+        user={form}
+        onChange={(imageUrl) =>
+          setForm({
+            ...form,
+            image: imageUrl,
+          })
+        }
       />
       <Input
         key="email"

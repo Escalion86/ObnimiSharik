@@ -1,20 +1,23 @@
 import InputImage from './InputImage'
 
 const InputAvatar = ({
-  avatar = null,
-  gender = 'male',
+  user = null, // need _id, gender and image props
   onChange = () => {},
   required = false,
   readOnly = false,
+  inLine = false,
 }) => (
   <InputImage
-    image={avatar}
+    image={user.image}
     label="Аватар"
     onChange={onChange}
     noEditButton
-    noImage={`/img/users/${gender}.jpg`}
+    noImage={`/img/users/${user.gender}.jpg`}
     required={required}
     readOnly={readOnly}
+    inLine={inLine}
+    directory="users"
+    imageName={user._id}
   />
 )
 

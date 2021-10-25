@@ -10,7 +10,6 @@ import Form from './Form'
 import roleRus from '@helpers/roleRus'
 import compareObjects from '@helpers/compareObjects'
 import InputAvatar from './forForms/InputAvatar'
-import { deleteImages, sendImage } from '@helpers/cloudinary'
 
 const UserContentForm = ({
   loggedUser,
@@ -21,6 +20,7 @@ const UserContentForm = ({
   const [message, setMessage] = useState('')
 
   const [form, setForm] = useState({
+    _id: loggedUser._id,
     image: loggedUser.image,
     email: loggedUser.email,
     name: loggedUser.name,
@@ -31,8 +31,6 @@ const UserContentForm = ({
     gender: loggedUser.gender,
     birthday: loggedUser.birthday,
   })
-
-  console.log(`form.image`, form.image)
 
   const handleChange = (e) => {
     const { value, name } = e.target
@@ -85,29 +83,14 @@ const UserContentForm = ({
         <div className="italic">{roleRus(loggedUser.role)}</div>
       </div>
       <InputAvatar
-        avatar={form.image}
-        gender={form.gender}
-        onChange={(image) => {
-          if (image) {
-            sendImage(
-              image,
-              (imageUrl) => {
-                setForm({
-                  ...form,
-                  image: imageUrl,
-                })
-              },
-              'users',
-              loggedUser._id
-            )
-          } else {
-            deleteImages(['users/' + loggedUser._id])
-            setForm({
-              ...form,
-              image: null,
-            })
-          }
-        }}
+        user={form}
+        onChange={(imageUrl) =>
+          setForm({
+            ...form,
+            image: imageUrl,
+          })
+        }
+        inLine
       />
       <Input
         key="email"
