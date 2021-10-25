@@ -128,6 +128,7 @@ module.exports = {
       maxHeight: {
         1000: '250rem',
         200: '50rem',
+        22: '5.5rem',
       },
       cursor: {
         'zoom-in': 'zoom-in',
