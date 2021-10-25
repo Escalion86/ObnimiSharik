@@ -4,6 +4,7 @@ import Zoom from 'react-medium-image-zoom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 
+// TODO переделать сохранение самих картинок в этот компонент, аналогично InputImage компоненту
 const InputImages = ({
   images = [],
   onChange = () => {},
