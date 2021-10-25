@@ -25,7 +25,7 @@ export const deleteImage = async (imagePublicId) => {
   }
 }
 
-export const deleteImages = async (arrayOfImagesUrls) => {
+export const deleteImages = async (arrayOfImagesUrls, callback = null) => {
   if (arrayOfImagesUrls.length > 0)
     await Promise.all(
       arrayOfImagesUrls.map(async (imageUrl) => {
@@ -41,6 +41,7 @@ export const deleteImages = async (arrayOfImagesUrls) => {
         }
       })
     )
+  if (callback) callback()
 }
 
 export const sendImage = async (
