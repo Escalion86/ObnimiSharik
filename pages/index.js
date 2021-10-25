@@ -24,11 +24,11 @@ import DeliveryBlock from '@blocks/DeliveryBlock'
 
 import { catalogData, setsData } from '@utils/temp_db'
 
-import dbConnect from '@utils/dbConnect'
-import Products from '@models/Products'
-import ProductTypes from '@models/ProductTypes'
-import SetTypes from '@models/SetTypes'
-import Sets from '@models/Sets'
+// import dbConnect from '@utils/dbConnect'
+// import Products from '@models/Products'
+// import ProductTypes from '@models/ProductTypes'
+// import SetTypes from '@models/SetTypes'
+// import Sets from '@models/Sets'
 
 import { signIn, signOut, useSession } from 'next-auth/client'
 import prepareFetchProps from '@helpers/prepareFetchProps'
@@ -101,13 +101,13 @@ export default function Home({ products, sets, productTypes, setTypes }) {
 }
 
 /* Retrieves pet(s) data from mongodb database */
-export async function getServerSideProps() {
-  await dbConnect()
+// export async function getServerSideProps() {
+//   await dbConnect()
 
-  const productTypes = prepareFetchProps(await ProductTypes.find({}))
-  const setTypes = prepareFetchProps(await SetTypes.find({}))
-  const sets = prepareFetchProps(await Sets.find({}))
-  const products = prepareFetchProps(await Products.find({}))
+//   const productTypes = prepareFetchProps(await ProductTypes.find({}))
+//   const setTypes = prepareFetchProps(await SetTypes.find({}))
+//   const sets = prepareFetchProps(await Sets.find({}))
+//   const products = prepareFetchProps(await Products.find({}))
 
-  return { props: { products, productTypes, sets, setTypes } }
-}
+//   return { props: { products, productTypes, sets, setTypes } }
+// }
