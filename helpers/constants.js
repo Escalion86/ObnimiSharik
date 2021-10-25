@@ -55,10 +55,16 @@ export const DEFAULT_SET = {
 
 export const DEFAULT_PRODUCT_TYPE = {
   name: '',
+  description: '',
+  image: '',
+  cardSize: 'normal', // big, small
 }
 
 export const DEFAULT_SET_TYPE = {
   name: '',
+  description: '',
+  image: '',
+  cardSize: 'normal', // big, small
 }
 
 export const DEFAULT_INVITATION = {
