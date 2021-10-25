@@ -25,7 +25,7 @@ export const UserCard = ({
         <FontAwesomeIcon icon={gender?.icon ?? faQuestion} size="lg" />
       </div> */}
       <img
-        className="object-cover w-24 h-24 rounded-l-lg"
+        className="object-cover rounded-l-lg max-h-22"
         src={
           user.image ? user.image : `/img/users/${user.gender ?? 'male'}.jpg`
         }
