@@ -67,15 +67,18 @@ export const sendImage = async (
       // formData.append('use_filename', true)
     }
 
-    await fetch('https://api.cloudinary.com/v1_1/escalion-ru/image/upload', {
-      method: 'POST',
-      body: formData,
-    })
+    return await fetch(
+      'https://api.cloudinary.com/v1_1/escalion-ru/image/upload',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.secure_url !== '') {
-          // return data.secure_url
-          callback(data.secure_url)
+          if (callback) callback(data.secure_url)
+          return data.secure_url
         }
       })
       .catch((err) => console.error(err))

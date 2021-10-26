@@ -10,6 +10,7 @@ import {
 
 import { toast } from 'react-toastify'
 import replaceSpecialSymbols from '@helpers/replaceSpecialSymbols'
+import { sendImage } from '@helpers/cloudinary'
 
 const concatArrays = (setArray, addArray) => {
   addArray.forEach((arr) => {
@@ -261,17 +262,45 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
 
       const newSetTypes = await fetchingSetTypes()
 
-      let newProducts = products.map((product) => {
-        return {
-          ...product,
-          typesId: product.typesId.map(
-            (type) =>
-              newProductTypes.find((productType) => productType.name === type)
-                ._id
-          ),
-        }
-      })
+      let newProducts = await Promise.all(
+        products.map(async (product) => {
+          return {
+            ...product,
+            typesId: product.typesId.map(
+              (type) =>
+                newProductTypes.find((productType) => productType.name === type)
+                  ._id
+            ),
+            images: await Promise.all(
+              product.images.map(async (image) => {
+                const imageBlob = await fetch(image)
+                  .then((response) => response.blob())
+                  .catch((err) => {
+                    console.log(`err image`, image)
+                    return null
+                  })
+                if (imageBlob)
+                  return await sendImage(imageBlob, null, 'products')
+                return image
+              })
+            ),
 
+            // images: product.images.map(async (image) => {
+            //   let newImageUrl = await sendImage(
+            //     image,
+            //     (imageUrl) => console.log(`imageUrl`, imageUrl),
+            //     'products'
+            //   )
+            //   console.log(`newImageUrl`, newImageUrl)
+            //   return newImageUrl
+            // }),
+          }
+        })
+      )
+
+      // ADD
+
+      // Удаляем старые данные по товарам
       res = await fetch('/api/products', {
         method: 'DELETE',
         headers: {
@@ -283,6 +312,7 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
         throw new Error(res.status)
       }
 
+      // Добавляем новые данные по товарам
       res = await fetch('/api/products', {
         method: 'POST',
         headers: {
@@ -297,37 +327,50 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
       }
 
       newProducts = await fetchingProducts()
-      // console.log(`sets`, sets)
-      const newSets = sets.map((set) => {
-        const productsIdCount = {}
-        set.productCountArticles.map((countArticle) => {
-          const article = countArticle
-            .substring(countArticle.indexOf('-') + 1)
-            .replace('/([^()]*)/g', '')
-          const product = newProducts.find(
-            (product) => product.article === article
-          )
-          const count = Number(
-            countArticle
-              .substring(0, countArticle.indexOf('-'))
-              .replace(/[^+\d]/g, '')
-          )
-          if (product) productsIdCount[product._id] = count
+
+      const newSets = await Promise.all(
+        sets.map(async (set) => {
+          const productsIdCount = {}
+          set.productCountArticles.map((countArticle) => {
+            const article = countArticle
+              .substring(countArticle.indexOf('-') + 1)
+              .replace('/([^()]*)/g', '')
+            const product = newProducts.find(
+              (product) => product.article === article
+            )
+            const count = Number(
+              countArticle
+                .substring(0, countArticle.indexOf('-'))
+                .replace(/[^+\d]/g, '')
+            )
+            if (product) productsIdCount[product._id] = count
+          })
+
+          const newSet = {
+            ...set,
+            typesId: set.typesId.map(
+              (type) => newSetTypes.find((setType) => setType.name === type)._id
+            ),
+            productsIdCount,
+            images: await Promise.all(
+              set.images.map(async (image) => {
+                const imageBlob = await fetch(image)
+                  .then((response) => response.blob())
+                  .catch((err) => {
+                    console.log(`err image`, image)
+                    return null
+                  })
+                if (imageBlob) return await sendImage(imageBlob, null, 'sets')
+                return image
+              })
+            ),
+          }
+          delete newSet.productCountArticles
+          return newSet
         })
+      )
 
-        const newSet = {
-          ...set,
-          typesId: set.typesId.map(
-            (type) => newSetTypes.find((setType) => setType.name === type)._id
-          ),
-          productsIdCount,
-        }
-        delete newSet.productCountArticles
-        return newSet
-      })
-
-      console.log(`newSets`, newSets)
-
+      // Удаляем старые данные по наборам
       res = await fetch('/api/sets', {
         method: 'DELETE',
         headers: {
@@ -339,6 +382,7 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
         throw new Error(res.status)
       }
 
+      // Сохраняем новые данные по наборам
       res = await fetch('/api/sets', {
         method: 'POST',
         headers: {
@@ -352,6 +396,7 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
         throw new Error(res.status)
       }
 
+      // Чистим товарооборот, так как он никак не будет соответствовать новым данным
       res = await fetch('/api/productcirculations', {
         method: 'DELETE',
         headers: {
