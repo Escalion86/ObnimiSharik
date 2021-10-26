@@ -22,7 +22,7 @@ const SetsContent = ({ data, modals, loggedUser }) => {
           set={set}
           loggedUser={loggedUser}
           onClick={() => modals.openSetModal(set)}
-          onEdit={() => modals.openSetModal(set, true)}
+          onEdit={() => modals.openSetModal(set, null, null, true)}
           onClone={() => {
             const setClone = { ...set }
             delete setClone._id

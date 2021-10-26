@@ -23,7 +23,7 @@ const ProductsContent = ({ data, modals, loggedUser }) => {
           product={product}
           loggedUser={loggedUser}
           onClick={() => modals.openProductModal(product)}
-          onEdit={() => modals.openProductModal(product, true)}
+          onEdit={() => modals.openProductModal(product, null, null, true)}
           onBuying={() =>
             modals.openProductCirculationModal({
               ...DEFAULT_PRODUCT_CIRCULATION,

@@ -26,7 +26,12 @@ const ProductCirculationsContent = ({ data, modals, loggedUser }) => {
             modals.openProductCirculationModal(productCirculationClone)
           }}
           onEdit={() =>
-            modals.openProductCirculationModal(productCirculation, true)
+            modals.openProductCirculationModal(
+              productCirculation,
+              null,
+              null,
+              true
+            )
           }
           onDelete={() =>
             modals.openDeleteProductCirculation(productCirculation)

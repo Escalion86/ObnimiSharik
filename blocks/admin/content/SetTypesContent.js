@@ -23,7 +23,7 @@ const SetTypesContent = ({ data, modals, loggedUser }) => {
               typesId: [setType._id],
             })
           }
-          onEdit={() => modals.openSetTypeModal(setType, true)}
+          onEdit={() => modals.openSetTypeModal(setType, null, null, true)}
           onDelete={() => modals.openDeleteSetType(setType)}
         />
       )}

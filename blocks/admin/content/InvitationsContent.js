@@ -15,7 +15,9 @@ const InvitationsContent = ({ data, modals, loggedUser }) => {
           invitation={invitation}
           loggedUser={loggedUser}
           onClick={() => modals.openInvitationModal(invitation)}
-          onEdit={() => modals.openInvitationModal(invitation, true)}
+          onEdit={() =>
+            modals.openInvitationModal(invitation, null, null, true)
+          }
           onDelete={() => modals.openDeleteInvitation(invitation)}
         />
       )}

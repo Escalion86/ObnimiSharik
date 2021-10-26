@@ -15,7 +15,7 @@ const ClientsContent = ({ data, modals, loggedUser }) => {
           client={client}
           loggedUser={loggedUser}
           onClick={() => modals.openClientModal(client)}
-          onEdit={() => modals.openClientModal(client, true)}
+          onEdit={() => modals.openClientModal(client, null, null, true)}
           onDelete={() => modals.openDeleteClient(client)}
         />
       )}
