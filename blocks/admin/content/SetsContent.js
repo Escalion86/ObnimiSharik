@@ -42,7 +42,7 @@ const SetsContent = ({ data, modals, loggedUser }) => {
               toasts.info(
                 <div>
                   <div>Применен фильтр</div>
-                  <div className="italic">"{productType.name}"</div>
+                  <div className="italic">"{setType.name}"</div>
                 </div>
               )
             }
