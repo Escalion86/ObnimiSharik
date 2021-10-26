@@ -246,3 +246,19 @@ export const PAY_TYPES = [
   { value: 'cash', name: 'Наличными', color: 'green', icon: faMoneyBill },
   { value: 'remittance', name: 'Перевод', color: 'yellow', icon: faSignInAlt },
 ]
+
+export const ACCESS_TO_COLLECTION = (collection, collectionItem, user) => {
+  if (!collectionItem) return false
+  if (user.role === 'dev') return true
+
+  return {
+    devToDo: {
+      edit:
+        user._id === collectionItem.userId &&
+        collectionItem.status === 'created',
+      delete:
+        user._id === collectionItem.userId &&
+        collectionItem.status === 'created',
+    },
+  }
+}
