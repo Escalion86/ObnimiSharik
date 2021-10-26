@@ -83,7 +83,6 @@ export default NextAuth({
       session.user.gender = result[0].gender
       session.user.birthday = result[0].birthday
 
-      // console.log(`result[0]`, result[0])
       if (result) {
         if (result[0].role === 'client') {
           const invitation = await Invitations.find({
