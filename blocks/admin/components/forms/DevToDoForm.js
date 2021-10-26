@@ -113,7 +113,7 @@ const DevToDoForm = ({
     >
       <Input
         key="title"
-        label="Заголовок"
+        label="Проблема/Предложение"
         type="text"
         maxLength="100"
         name="title"
