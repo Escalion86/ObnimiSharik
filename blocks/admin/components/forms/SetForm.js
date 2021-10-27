@@ -211,24 +211,15 @@ const SetForm = ({
         />
         <InputImages
           images={form.images}
+          label="Картинки"
           onChange={(images) =>
             setForm({
               ...form,
               images,
             })
           }
-          onAddImage={(image) =>
-            sendImage(
-              image,
-              (imageUrl) =>
-                setForm({
-                  ...form,
-                  images: [...form.images, imageUrl],
-                }),
-              'sets'
-            )
-          }
           readOnly={readOnly}
+          directory="sets"
         />
       </FormColumn>
     </Form>

@@ -52,12 +52,7 @@ const ProductForm = ({
     // if (name === 'image') {
     //   setImages([...images, target.files[0]])
     // } else {
-    const value =
-      name === 'price'
-        ? target.value * 100
-        : // : name === 'images'
-          // ? [target.value]
-          target.value
+    const value = name === 'price' ? target.value * 100 : target.value
     setForm({
       ...form,
       [name]: value,
@@ -65,33 +60,6 @@ const ProductForm = ({
     // }
   }
 
-  // const sendImages = async (images) => {
-  //   const images = await Promise.all(
-  //     images.map(async (file) => {
-  //       const formData = new FormData()
-  //       formData.append('file', file)
-  //       formData.append('upload_preset', 'obnimisharik')
-
-  //       const res = await fetch(
-  //         'https://api.cloudinary.com/v1_1/escalion-ru/image/upload',
-  //         {
-  //           method: 'POST',
-  //           body: formData,
-  //         }
-  //       )
-  //         .then((response) => response.json())
-  //         .then((data) => {
-  //           if (data.secure_url !== '') {
-  //             return data.secure_url
-  //           }
-  //         })
-  //         .catch((err) => console.error(err))
-  //       return res
-  //     })
-  //   )
-
-  //   return images
-  // }
   const sendForm = async () => {
     forNew
       ? postData(
@@ -191,15 +159,6 @@ const ProductForm = ({
           inLine={readOnly}
         />
       </RowContainer>
-      {/* <Input
-        key="images"
-        label="Ссылка на картинку"
-        type="url"
-        name="images"
-        value={form.images[0]}
-        onChange={handleChange}
-        required
-      /> */}
       <MultiselectCheckbox
         title="Типы"
         options={productTypes.map((type) => {
@@ -219,35 +178,16 @@ const ProductForm = ({
       />
       <InputImages
         images={form.images}
+        label="Картинки"
         onChange={(images) =>
           setForm({
             ...form,
             images,
           })
         }
-        onAddImage={(image) =>
-          sendImage(
-            image,
-            (imageUrl) =>
-              setForm({
-                ...form,
-                images: [...form.images, imageUrl],
-              }),
-            'products'
-          )
-        }
         readOnly={readOnly}
+        directory="products"
       />
-      {/* <Input
-        key="image"
-        label="Картинка"
-        type="file"
-        name="image"
-        // value={form.image}
-        onChange={handleChange}
-        accept="image/jpeg,image/png"
-        required
-      /> */}
     </Form>
   )
 }
