@@ -10,15 +10,15 @@ const ZoomImage = ({
   image ? (
     <div
       className={
-        'h-24 overflow-hidden' +
-        (containerClassName ? ' ' + containerClassName : '')
+        'overflow-hidden' +
+        (containerClassName ? ' ' + containerClassName : ' h-24')
       }
       onClick={(event) => event.stopPropagation()}
     >
       <Zoom zoomMargin={20}>
         <img
           className={
-            'h-24 object-cover' + (imageClassName ? ' ' + imageClassName : '')
+            'object-cover' + (imageClassName ? ' ' + imageClassName : ' h-24')
           }
           src={image}
           alt={alt}
@@ -26,13 +26,21 @@ const ZoomImage = ({
       </Zoom>
     </div>
   ) : (
-    <img
+    <div
       className={
-        'h-24 object-cover' + (imageClassName ? ' ' + imageClassName : '')
+        'overflow-hidden' +
+        (containerClassName ? ' ' + containerClassName : ' h-24')
       }
-      src={noImage ?? '/img/no_image.png'}
-      alt={alt}
-    />
+      // onClick={(event) => event.stopPropagation()}
+    >
+      <img
+        className={
+          'object-cover' + (imageClassName ? ' ' + imageClassName : ' h-24')
+        }
+        src={noImage ?? '/img/no_image.png'}
+        alt={alt}
+      />
+    </div>
   )
 
 export default ZoomImage
