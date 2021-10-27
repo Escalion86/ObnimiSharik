@@ -1,4 +1,4 @@
-import { MenuItem } from '@admincomponents/Menu'
+import MenuItem from '@admincomponents/MenuItem'
 import {
   faCartPlus,
   faFilter,
