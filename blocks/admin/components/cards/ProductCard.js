@@ -5,6 +5,7 @@ import Card from './Card'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import { useSelector } from 'react-redux'
+import ZoomImage from '@admincomponents/ZoomImage'
 
 export const ProductCard = ({
   product,
@@ -34,36 +35,7 @@ export const ProductCard = ({
       height={56}
     /> */}
       <CardContainer className="flex-col phoneH:flex-row">
-        {product.images[0] ? (
-          <div onClick={(event) => event.stopPropagation()}>
-            {/* <ImageZoom
-              image={{
-                src: product.images[0],
-                alt: 'product',
-                className: imageClassName,
-                // style: { width: '50em' }
-              }}
-              zoomImage={{
-                src: product.images[0],
-                alt: 'product',
-              }}
-            /> */}
-            <Zoom zoomMargin={20}>
-              <img
-                className={imageClassName}
-                src={product.images[0]}
-                alt="product"
-              />
-              {/* <div className="border border-gray-700">Привет</div> */}
-            </Zoom>
-          </div>
-        ) : (
-          <img
-            className={imageClassName}
-            src="/img/no_image.png"
-            alt="product"
-          />
-        )}
+        <ZoomImage image={product.images[0]} alt="product" />
         <div className="flex-1 ml-3">
           <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
             <div className="w-5/12 font-semibold min-w-40">{product.name}</div>
