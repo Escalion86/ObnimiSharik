@@ -26,6 +26,9 @@ export const ProductCirculationCard = ({
           <div className="flex-1 font-semibold">
             {product ? product.name : '? [товар не найден в базе]'}
           </div>
+          {productCirculation.defective && (
+            <div className="font-bold text-red-700">Брак</div>
+          )}
           <div className="hidden font-bold whitespace-nowrap laptop:block">
             {(productCirculation.price * productCirculation.count) / 100} ₽
           </div>
