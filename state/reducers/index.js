@@ -15,6 +15,7 @@ import ordersReducer from './ordersReducer'
 import paymentsReducer from './paymentsReducer'
 import appReducer from './appReducer '
 import devToDoReducer from './devToDoReducer'
+import districtsReducer from './districtsReducer'
 
 const allReducers = combineReducers({
   products: productsReducer,
@@ -33,6 +34,7 @@ const allReducers = combineReducers({
   payments: paymentsReducer,
   loaded: appReducer,
   devToDo: devToDoReducer,
+  districts: districtsReducer,
 })
 
 export default allReducers

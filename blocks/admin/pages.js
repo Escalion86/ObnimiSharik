@@ -10,7 +10,8 @@ import {
   BtnAddSet,
   BtnAddSetType,
   BtnTest,
-} from '@components/TitleButtons'
+  BtnAddDistrict,
+} from '@admincomponents/TitleButtons'
 import {
   InvitationsContent,
   ProductCirculationsContent,
@@ -26,6 +27,7 @@ import {
   ClientsContent,
   OrdersContent,
   PaymentsContent,
+  DistrictsContent,
 } from './content'
 import DevToDoContent from './content/DevToDoContent'
 
@@ -91,7 +93,7 @@ export const pages = [
   }, // 3
   {
     id: 6,
-    group: 4,
+    group: 5,
     name: 'Сотрудники',
     pageContent: UsersContent,
     pageButtons: [],
@@ -101,7 +103,7 @@ export const pages = [
   }, // 3
   {
     id: 7,
-    group: 4,
+    group: 5,
     name: 'Приглашения',
     pageContent: InvitationsContent,
     pageButtons: [BtnAddInvitation],
@@ -111,7 +113,7 @@ export const pages = [
   },
   {
     id: 8,
-    group: 5,
+    group: 6,
     name: 'Настройки',
     pageContent: SettingsContent,
     pageButtons: [],
@@ -199,6 +201,16 @@ export const pages = [
     accessRoles: ['all'],
     variable: 'devToDo',
   },
+  {
+    id: 16,
+    group: 4,
+    name: 'Районы доставки',
+    pageContent: DistrictsContent,
+    pageButtons: [BtnAddDistrict],
+    backToPageId: 0,
+    accessRoles: ['admin'],
+    variable: 'districts',
+  },
 ]
 
 export const pagesGroups = [
@@ -206,7 +218,8 @@ export const pagesGroups = [
   { id: 1, name: 'Продукция' },
   { id: 2, name: 'Склад' },
   { id: 3, name: 'Воронка' },
-  { id: 4, name: 'Пользователи' },
-  { id: 5, name: 'Настройки' },
+  { id: 4, name: 'Прочее' },
+  { id: 5, name: 'Пользователи' },
+  { id: 6, name: 'Настройки' },
   { id: 10, name: 'Разработка' },
 ]

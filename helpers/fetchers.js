@@ -111,3 +111,11 @@ export async function fetchingDevToDo(updateData = () => {}) {
   updateData(resp)
   return resp
 }
+export async function fetchingDistricts(updateData = () => {}) {
+  console.log('Запущен fetchingDistrict')
+  const resp = await fetch('/api/districts')
+    .then((res) => res.json())
+    .then((json) => json.data)
+  updateData(resp)
+  return resp
+}

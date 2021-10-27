@@ -247,6 +247,11 @@ export const PAY_TYPES = [
   { value: 'remittance', name: 'Перевод', color: 'yellow', icon: faSignInAlt },
 ]
 
+export const DEFAULT_DISTRICT = {
+  name: '',
+  deliveryPrice: 0,
+}
+
 export const ACCESS_TO_COLLECTION = (collection, collectionItem, user) => {
   if (!collectionItem) return false
   if (user.role === 'dev') return true
