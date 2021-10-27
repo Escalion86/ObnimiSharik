@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react'
 
 import { DEFAULT_DEVTODO } from '@helpers/constants'
 
-import { Input, DevToDoStatusPicker, PriorityPicker } from './forForms'
+import {
+  Input,
+  DevToDoStatusPicker,
+  PriorityPicker,
+  InputImages,
+} from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -133,6 +138,17 @@ const DevToDoForm = ({
         required
         readOnly={readOnly}
         textarea
+      />
+      <InputImages
+        images={form.images}
+        label="Скриншоты"
+        onChange={(images) =>
+          setForm({
+            ...form,
+            images,
+          })
+        }
+        directory="devtodo"
       />
       <PriorityPicker
         priority={form.priority}
