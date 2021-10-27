@@ -82,7 +82,7 @@ export default function Admin() {
         // await dispatch(setModalsFunctions(result))
       }
       fetching()
-      const role = session.user.role
+      const role = session.user?.role
       if (role === 'deliver') setPageId(14)
       if (role === 'aerodesigner') setPageId(13)
       if (role === 'operator') setPageId(11)
@@ -91,11 +91,13 @@ export default function Admin() {
     }
   }, [!!session, loading])
 
-  const loggedUser = state.users.find((user) => session.user._id === user._id)
+  const loggedUser = session?.user
+    ? state.users.find((user) => session.user._id === user._id)
+    : null
 
   const haveAccess =
     loggedUser?.role &&
-    ROLES.filter((role) => role.value === loggedUser.role).length > 0
+    ROLES.filter((role) => role.value === loggedUser?.role).length > 0
 
   return (
     <>
