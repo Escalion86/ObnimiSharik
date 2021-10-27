@@ -88,3 +88,11 @@ export const BtnAddDevToDo = ({ key, modals }) => (
     key={key}
   />
 )
+
+export const BtnAddDistrict = ({ key, modals }) => (
+  <TitleButton
+    onClick={() => modals.openDistrictModal()}
+    icon={faPlus}
+    key={key}
+  />
+)
