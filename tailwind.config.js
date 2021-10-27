@@ -55,6 +55,7 @@ module.exports = {
         title: '3.80rem',
         18: '4.5rem',
         '-18': '-4.5rem',
+        22: '5.5rem',
         15: '3.75rem',
       },
       rotate: {
@@ -167,6 +168,7 @@ module.exports = {
       },
       width: {
         18: '4.5rem',
+        22: '5.5rem',
         26: '6.65rem',
         34: '8.25rem',
         50: '12.5rem',
