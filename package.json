@@ -41,6 +41,7 @@
     "react-tiny-fab": "^4.0.3",
     "react-toastify": "^7.0.4",
     "react-virtuoso": "^2.2.0",
+    "reactjs-popup": "^2.0.5",
     "redux": "^4.1.1",
     "redux-batched-subscribe": "^0.1.6",
     "redux-thunk": "^2.3.0",
