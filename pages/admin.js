@@ -70,6 +70,7 @@ export default function Admin() {
   }
 
   useEffect(() => {
+    if (!loading) alert(session)
     if (!session && !loading) {
       signIn('google')
     } else if (!loading) {
