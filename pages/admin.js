@@ -72,7 +72,7 @@ export default function Admin() {
   useEffect(() => {
     if (!loading) alert(session)
     if (!session && !loading) {
-      signIn('google')
+      signIn()
     } else if (!loading) {
       const fetching = async () => {
         // const result = await fetchingAll(setData)
@@ -146,7 +146,7 @@ export default function Admin() {
                 <Button
                   name="Авторизироваться под другой учетной записью"
                   className="mt-4"
-                  onClick={() => signIn('google')}
+                  onClick={() => signIn()}
                   small
                 />
               </div>

@@ -31,6 +31,10 @@ export default NextAuth({
       authorizationUrl:
         'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
     }),
+    Providers.VK({
+      clientId: process.env.VK_CLIENT_ID,
+      clientSecret: process.env.VK_CLIENT_SECRET,
+    }),
     // ...add more providers here
   ],
   callbacks: {
