@@ -94,6 +94,7 @@ const DistrictForm = ({
         value={form.deliveryPrice / 100}
         onChange={handleChange}
         className="flex-1"
+        name="deliveryPrice"
       />
     </Form>
   )
