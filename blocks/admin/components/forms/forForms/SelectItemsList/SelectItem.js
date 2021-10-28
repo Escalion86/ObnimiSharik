@@ -15,10 +15,11 @@ import {
   SetItem,
   PersonaItem,
   PaymentItem,
+  DistrictItem,
 } from './ItemCards'
 // import useClickOutside from '@helpers/hooks/21-useClickOutside/useClickOutside'
 
-const filteredItems = (items, searchText, exceptedIds, itemComponentFunction) =>
+const filteredItems = (items, searchText, exceptedIds) =>
   (searchText || exceptedIds.length > 0
     ? items.filter((item) => {
         if (searchText[0] === '>') {
@@ -65,6 +66,9 @@ export const SelectItem = ({
   className = '',
   dropDownList = true,
   onClick = null,
+  itemHeight = 40,
+  noSearch = false,
+  itemWidth = 0,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchText, setSearchText] = useState('')
@@ -108,7 +112,7 @@ export const SelectItem = ({
 
     document.addEventListener('mousedown', checkIfClickedOutside)
 
-    if (isMenuOpen) inputRef.current.focus()
+    if (isMenuOpen && !noSearch) inputRef.current.focus()
 
     return () => {
       document.removeEventListener('mousedown', checkIfClickedOutside)
@@ -118,9 +122,10 @@ export const SelectItem = ({
   return (
     <div
       className={
-        'relative bg-gray-200 cursor-pointer h-10 w-0 flex justify-center items-center' +
-        (className ? ' ' + className : '')
+        (className ? className + ' ' : '') +
+        'relative bg-gray-200 cursor-pointer flex justify-center items-center'
       }
+      style={{ height: itemHeight, width: itemWidth }}
       onClick={() => {
         if (dropDownList) toggleIsMenuOpen()
         if (onClick) onClick(selectedItem)
@@ -133,31 +138,34 @@ export const SelectItem = ({
             'absolute overflow-hidden max-h-64 transform duration-300 ease-out flex flex-col top-full left-0 right-0 bg-white shadow-sm border border-gray-700 z-50 ' +
             (isMenuOpen ? '' : 'opacity-0') // scale-y-0 -translate-y-1/2
           }
+          // style={{ width: itemWidth }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div
-            className={
-              'flex gap-1 items-center border-gray-700 border-b p-1 ' +
-              (isMenuOpen ? '' : 'hidden')
-            }
-          >
-            <input
-              ref={inputRef}
-              className="flex-1 outline-none"
-              type="text"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            <FontAwesomeIcon
-              className={'w-6 h-6 text-gray-700 cursor-pointer'}
-              icon={searchText ? faTimes : faSearch}
-              onClick={
-                searchText
-                  ? () => setSearchText('')
-                  : () => inputRef.current.focus()
+          {!noSearch && (
+            <div
+              className={
+                'flex gap-1 items-center border-gray-700 border-b p-1 ' +
+                (isMenuOpen ? '' : 'hidden')
               }
-            />
-          </div>
+            >
+              <input
+                ref={inputRef}
+                className="flex-1 outline-none"
+                type="text"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              <FontAwesomeIcon
+                className={'w-6 h-6 text-gray-700 cursor-pointer'}
+                icon={searchText ? faTimes : faSearch}
+                onClick={
+                  searchText
+                    ? () => setSearchText('')
+                    : () => inputRef.current.focus()
+                }
+              />
+            </div>
+          )}
           {/* <div className="h-80">
           {/* <div className="h-20 overflow-x-hidden overflow-y-scroll"> */}
           {/* {filteredItemsArray} */}
@@ -167,7 +175,10 @@ export const SelectItem = ({
           {isMenuOpen && (
             <Virtuoso
               totalCount={filteredItemsArray.length}
-              style={{ maxHeight: 400, height: filteredItemsArray.length * 40 }}
+              style={{
+                maxHeight: 400,
+                height: filteredItemsArray.length * itemHeight,
+              }}
               // style={{ flex: 1 }}
               className={isMenuOpen ? '' : 'hidden'}
               // useWindowScroll
@@ -413,18 +424,23 @@ const SelectItemContainer = ({
   onCreateNew,
   onEdit,
   children,
+  inLine = false,
 }) => {
   const Container = ({ children }) => {
     if (label)
       return (
-        <div className={'flex flex-col' + (className ? ' ' + className : '')}>
-          {label && (
-            <label htmlFor="client">
-              {label}
-              {required && <span className="text-red-700">*</span>}
-            </label>
-          )}
-          <div className="flex border border-gray-700 rounded-lg">
+        <div
+          className={
+            'flex' +
+            (className ? ' ' + className : '') +
+            (inLine ? ' items-center w-full' : ' flex-col')
+          }
+        >
+          <label className={inLine ? 'w-18' : ''} htmlFor="client">
+            {label}
+            {required && <span className="text-red-700">*</span>}
+          </label>
+          <div className="flex flex-1 border border-gray-700 rounded-lg">
             {children}
           </div>
         </div>
@@ -512,6 +528,44 @@ export const SelectDeliver = ({
           (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
+      />
+    </SelectItemContainer>
+  )
+}
+
+export const SelectDistrict = ({
+  onChange,
+  selectedId = null,
+  exceptedIds = [],
+  required = false,
+  className = null,
+  clearButton = true,
+}) => {
+  const { districts } = useSelector((state) => state)
+  return (
+    <SelectItemContainer
+      required={required}
+      label="Район"
+      className={className ? ' ' + className : ''}
+      onClickClearButton={
+        selectedId && clearButton ? () => onChange(null) : null
+      }
+      inLine
+    >
+      <SelectItem
+        items={districts}
+        itemComponent={DistrictItem}
+        onChange={onChange}
+        selectedId={selectedId}
+        className={
+          'flex-1' +
+          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+        }
+        exceptedIds={exceptedIds}
+        itemHeight={24}
+        itemWidth="100%"
+        noSearch
+        sort="name"
       />
     </SelectItemContainer>
   )
