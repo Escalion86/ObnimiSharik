@@ -28,7 +28,7 @@ export default NextAuth({
     Providers.Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      // authorizationUrl: process.env.GOOGLE_AUTHORIZATION_URL,
+      authorizationUrl: process.env.GOOGLE_AUTHORIZATION_URL,
     }),
     // ...add more providers here
   ],
