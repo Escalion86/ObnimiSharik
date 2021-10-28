@@ -17,7 +17,7 @@ export const DistrictCard = ({
           </div>
         </div>
         <div className="px-1 font-bold text-right whitespace-nowrap min-w-min">
-          {district.deliveryPrice} ₽
+          {district.deliveryPrice / 100} ₽
         </div>
       </CardContainer>
       {/* <div className="flex flex-col items-end justify-between"> */}
