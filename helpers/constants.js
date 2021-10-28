@@ -206,6 +206,7 @@ export const DEFAULT_ORDER = {
   price: 0,
   status: 'draft',
   comment: '',
+  deliveryPrice: 0,
   deliveryPickup: true,
   deliveryAddress: DEFAULT_DELIVERY_ADDRESS,
   deliveryDateFrom: new Date().toISOString(),

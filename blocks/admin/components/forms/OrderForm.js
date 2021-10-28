@@ -20,6 +20,7 @@ import {
   RowContainer,
   DateTimePicker,
   FormColumn,
+  SelectDistrict,
 } from './forForms'
 
 import { deleteData, postData, putData } from '@helpers/CRUD'
@@ -201,7 +202,8 @@ const FormMenu = ({ twoCols = false, config = null }) => {
   )
 }
 
-const ClientContent = ({ form, setForm, modals, clients, role }) => {
+const ClientContent = ({ form, setForm, modals, state, role }) => {
+  const { clients } = state
   const operator = ['operator', 'dev', 'admin'].includes(role)
   // const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   // const deliver = ['deliver', 'dev', 'admin'].includes(role)
@@ -384,6 +386,21 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                       required
                       readOnly={role === 'deliver'}
                     />
+                    <SelectDistrict
+                      onChange={(item) =>
+                        setForm({
+                          ...form,
+                          deliveryPrice: item?.deliveryPrice ?? 0,
+                          deliveryAddress: {
+                            ...form.deliveryAddress,
+                            district: item,
+                          },
+                        })
+                      }
+                      selectedId={form.deliveryAddress.district?._id}
+                      required
+                      // exceptedIds={selectedItemsIds}
+                    />
                     <RowContainer className="flex-col tablet:flex-row gap-y-2">
                       <Input
                         key="street"
@@ -470,20 +487,6 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                       textarea
                       readOnly={role === 'deliver'}
                     />
-
-                    {/* <Input
-                key="comment"
-                label="Комментарий"
-                type="text"
-                maxLength="200"
-                name="comment"
-                value={form.deliveryAddress.comment}
-                onChange={handleAddressChange}
-                className="flex flex-1"
-                labelStyle="w-min pr-1"
-                inputStyle="flex-1 w-0"
-                inLine
-              /> */}
                   </div>
                 </>
               )}
@@ -495,17 +498,7 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
   )
 }
 
-const ProductsContent = ({
-  form,
-  // products,
-  // sets,
-  setForm,
-  role,
-  readOnly,
-  // catalogPrice,
-  handleChange,
-  // totalPrice,
-}) => {
+const ProductsContent = ({ form, setForm, role, readOnly, handleChange }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
   const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   // const deliver = ['deliver', 'dev', 'admin'].includes(role)
@@ -600,8 +593,6 @@ const ProductsContent = ({
 const PaymentContent = ({
   form,
   order,
-  products,
-  sets,
   totalPaymentsSum,
   setForm,
   role,
@@ -657,6 +648,21 @@ const PaymentContent = ({
             name="discount"
             inLine
           />
+        </div>
+        <div className="flex items-center gap-x-2">
+          <PriceInput
+            value={form.deliveryPrice / 100}
+            onChange={handleChange}
+            label="Доставка"
+            // className="w-full"
+            name="deliveryPrice"
+            labelStyle="w-min pr-1 whitespace-nowrap"
+            inLine
+          />
+          <div>
+            по умолчанию:{' '}
+            {(form.deliveryAddress?.district?.deliveryPrice ?? 0) / 100} ₽
+          </div>
         </div>
         {order._id ? (
           <SelectPaymentList
@@ -832,12 +838,16 @@ const OrderForm = ({
     price: order.price,
     status: order.status,
     comment: order.comment,
+    deliveryPrice: order.deliveryPrice,
     deliveryPickup: order.deliveryPickup,
     deliveryAddress: order.deliveryAddress,
     deliveryDateFrom: order.deliveryDateFrom,
     deliveryDateTo: order.deliveryDateTo,
     deliverId: order.deliverId,
   })
+
+  console.log(`form`, form)
+
   const [paymentsId, setPaymentsId] = useState([])
 
   const [productCirculationsIdCount, setProductCirculationsIdCount] = useState(
@@ -849,15 +859,8 @@ const OrderForm = ({
   ] = useState({})
 
   const state = useSelector((state) => state)
-  const {
-    products,
-    sets,
-    users,
-    orders,
-    clients,
-    productCirculations,
-    payments,
-  } = state
+  const { products, sets, users, clients, productCirculations, payments } =
+    state
 
   const dispatch = useDispatch()
 
@@ -913,7 +916,9 @@ const OrderForm = ({
   const handleChange = (e) => {
     const target = e.target
     const value =
-      target.name === 'totalPrice' || target.name === 'discount'
+      target.name === 'totalPrice' ||
+      target.name === 'discount' ||
+      target.name === 'deliveryPrice'
         ? target.value * 100
         : target.name === 'images'
         ? [target.value]
@@ -946,7 +951,12 @@ const OrderForm = ({
     return totalSetsPrice
   }, 0)
   const catalogPrice = (catalogProductsPrice + catalogSetsPrice) / 100
-  const totalPrice = catalogPrice - form.discount / 100
+  const totalPrice =
+    catalogPrice +
+    (!form.deliveryPickup && form.deliveryPrice
+      ? form.deliveryPrice / 100
+      : 0) -
+    form.discount / 100
 
   const totalPaymentsSum =
     payments.reduce((prev, current) => {
@@ -1052,10 +1062,7 @@ const OrderForm = ({
     loggedUser.role !== 'deliver' && loggedUser.role !== 'aerodesigner'
 
   const contentParams = {
-    products,
-    sets,
-    clients,
-    payments,
+    state,
     readOnly,
     form,
     order,
