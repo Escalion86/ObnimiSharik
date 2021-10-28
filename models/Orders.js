@@ -1,5 +1,37 @@
 import mongoose from 'mongoose'
+// import { DistrictsSchema } from './Districts'
 const autoIncrement = require('mongoose-auto-increment')
+
+const districtsSchema = new mongoose.Schema({
+  name: { type: String },
+  deliveryPrice: { type: Number },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+})
+
+const deliveryAddressSchema = new mongoose.Schema({
+  town: { type: String },
+  district: { type: districtsSchema },
+  street: { type: String },
+  house: { type: String },
+  entrance: { type: String },
+  floor: { type: String },
+  comment: { type: String },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+})
 
 const OrdersSchema = new mongoose.Schema({
   clientId: {
@@ -40,9 +72,13 @@ const OrdersSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  deliveryPrice: {
+    type: Number,
+    default: 0,
+    maxlength: [8, 'Доставка не может превышать 999999,99 руб'],
+  },
   deliveryAddress: {
-    type: Map,
-    of: String,
+    type: deliveryAddressSchema,
     // of: new mongoose.Schema({
     //   town: String,
     //   street: String,
