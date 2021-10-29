@@ -15,23 +15,18 @@ const districtsSchema = new mongoose.Schema({
   },
 })
 
-const deliveryAddressSchema = new mongoose.Schema({
-  town: { type: String },
-  district: { type: districtsSchema },
-  street: { type: String },
-  house: { type: String },
-  entrance: { type: String },
-  floor: { type: String },
-  comment: { type: String },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+const deliveryAddressSchema = new mongoose.Schema(
+  {
+    town: { type: String },
+    district: { type: districtsSchema },
+    street: { type: String },
+    house: { type: String },
+    entrance: { type: String },
+    floor: { type: String },
+    comment: { type: String },
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-})
+  { timestamps: true }
+)
 
 const OrdersSchema = new mongoose.Schema({
   clientId: {
