@@ -32,7 +32,9 @@ export const DevToDoCard = ({
         <div className="items-center flex-1">
           <div className="flex flex-col gap-y-1">
             <div className="font-semibold">{devToDo.title}</div>
-            <div className="flex-1 italic">{devToDo.description}</div>
+            <div className="flex-1 italic whitespace-pre-line">
+              {devToDo.description}
+            </div>
             <div className="flex-1">
               Создано: <span className="italic">{user.name}</span>
             </div>

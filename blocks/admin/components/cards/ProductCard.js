@@ -39,7 +39,7 @@ export const ProductCard = ({
         <div className="flex-1 ml-3">
           <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
             <div className="w-5/12 font-semibold min-w-40">{product.name}</div>
-            <div className="flex-1 text-sm italic min-w-40">
+            <div className="flex-1 text-sm italic whitespace-pre-line min-w-40">
               {product.description}
             </div>
           </div>
