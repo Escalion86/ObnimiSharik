@@ -39,7 +39,7 @@ export const pages = [
     pageContent: OverviewContent,
     pageButtons: [],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: null,
   }, // 3
   {
@@ -49,7 +49,7 @@ export const pages = [
     pageContent: ProductsContent,
     pageButtons: [BtnAddProduct],
     backToPageId: null,
-    accessRoles: ['admin', 'operator', 'aerodesigner'],
+    accessRoles: ['admin', 'operator', 'aerodesigner', 'dev'],
     variable: 'products',
   }, // 0
   {
@@ -59,7 +59,7 @@ export const pages = [
     pageContent: ProductTypesContent,
     pageButtons: [BtnAddProductType],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'productTypes',
   }, // 1
   {
@@ -69,7 +69,7 @@ export const pages = [
     pageContent: SetsContent,
     pageButtons: [BtnAddSet],
     backToPageId: null,
-    accessRoles: ['admin', 'operator', 'aerodesigner'],
+    accessRoles: ['admin', 'operator', 'aerodesigner', 'dev'],
     variable: 'sets',
   }, // 2
   {
@@ -79,7 +79,7 @@ export const pages = [
     pageContent: SetTypesContent,
     pageButtons: [BtnAddSetType],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'setTypes',
   }, // 1
   {
@@ -98,7 +98,7 @@ export const pages = [
     pageContent: UsersContent,
     pageButtons: [],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'users',
   }, // 3
   {
@@ -108,7 +108,7 @@ export const pages = [
     pageContent: InvitationsContent,
     pageButtons: [BtnAddInvitation],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'invitations',
   },
   {
@@ -118,7 +118,7 @@ export const pages = [
     pageContent: SettingsContent,
     pageButtons: [],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: null,
   },
   {
@@ -128,7 +128,7 @@ export const pages = [
     pageContent: ProductCirculationsContent,
     pageButtons: [BtnAddProductCirculation],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'productCirculations',
   },
   {
@@ -138,7 +138,7 @@ export const pages = [
     pageContent: ClientsContent,
     pageButtons: [BtnAddClient],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'clients',
   },
   {
@@ -148,7 +148,7 @@ export const pages = [
     pageContent: OrdersContent,
     pageButtons: [BtnAddOrder],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'orders',
   },
   {
@@ -158,7 +158,7 @@ export const pages = [
     pageContent: PaymentsContent,
     pageButtons: [BtnAddPayment],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'payments',
   },
   {
@@ -168,7 +168,7 @@ export const pages = [
     pageContent: TestContent,
     pageButtons: [BtnTest],
     backToPageId: 0,
-    accessRoles: [],
+    accessRoles: ['dev'],
     variable: null,
   },
   {
@@ -194,11 +194,11 @@ export const pages = [
   {
     id: 15,
     group: 10,
-    name: 'Заявки',
+    name: 'Заявки разработчику',
     pageContent: DevToDoContent,
     pageButtons: [BtnAddDevToDo],
     backToPageId: 0,
-    accessRoles: ['all'],
+    accessRoles: ['all', 'dev'],
     variable: 'devToDo',
   },
   {

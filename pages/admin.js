@@ -28,8 +28,7 @@ const menuCfg = (pages, pagesGroups, userRole) =>
     const pagesItems = pages.reduce((totalPages, page) => {
       if (
         page.group === group.id &&
-        (userRole === 'dev' ||
-          page.accessRoles.includes('all') ||
+        (page.accessRoles.includes('all') ||
           page.accessRoles.includes(userRole))
       )
         totalPages.push(page)
@@ -70,9 +69,6 @@ export default function Admin() {
     })
   }
 
-  console.log(`session`, session)
-  console.log(`status`, status)
-
   useEffect(() => {
     if (!session && !loading) {
       signIn('google')
@@ -97,14 +93,13 @@ export default function Admin() {
   }, [!!session, status])
 
   const loggedUser = session?.user
-    ? state.users.find((user) => session.user._id === user._id)
+    ? state.users.find((user) => session.user._id === user._id) ?? session.user
     : null
 
   const haveAccess =
     loggedUser?.role &&
     ROLES.filter((role) => role.value === loggedUser?.role).length > 0
 
-  console.log(`loggedUser`, loggedUser)
   return (
     <>
       {(!state.loaded || loading) && (
