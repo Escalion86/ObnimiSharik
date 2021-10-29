@@ -1,10 +1,9 @@
 import dbConnect from '@utils/dbConnect'
 
 export default async function handler(Schema, req, res, param = null) {
-  const {
-    query: { id },
-    method,
-  } = req
+  const { query, method } = req
+
+  const id = query?.id
 
   await dbConnect()
 

@@ -143,7 +143,7 @@ export default function Admin() {
           ) : (
             <div className="flex items-center justify-center h-screen">
               <div className="flex flex-col items-center justify-center p-10 bg-gray-400 rounded-2xl w-92">
-                {loggedUser.email && (
+                {loggedUser?.email && (
                   <div>Вы авторизировались как {loggedUser.email}</div>
                 )}
                 <div>У Вас нет доступа к панели администратора</div>
