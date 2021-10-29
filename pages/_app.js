@@ -4,6 +4,7 @@ import '../styles/global.css'
 import 'react-medium-image-zoom/dist/styles.css'
 import 'reactjs-popup/dist/index.css'
 import Head from 'next/head'
+import { SessionProvider } from 'next-auth/react'
 
 import { createStore, applyMiddleware, compose } from 'redux'
 import { batchedSubscribe } from 'redux-batched-subscribe'
@@ -38,7 +39,7 @@ const store = createStore(
   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <>
       <Head>
@@ -59,11 +60,23 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
+      <SessionProvider session={session} refetchInterval={5 * 60}>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </SessionProvider>
     </>
   )
 }
 
 export default MyApp
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx)
+  console.log(`session!!`, session)
+  return {
+    props: {
+      session: await getSession(ctx),
+    },
+  }
+}

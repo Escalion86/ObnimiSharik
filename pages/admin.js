@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 import Button from '@components/Button'
 
@@ -41,7 +41,8 @@ const menuCfg = (pages, pagesGroups, userRole) =>
   }, [])
 
 export default function Admin() {
-  const [session, loading] = useSession()
+  const { data: session, status } = useSession()
+  const loading = status === 'loading'
 
   const state = useSelector((state) => state)
 
@@ -69,11 +70,14 @@ export default function Admin() {
     })
   }
 
+  console.log(`session`, session)
+  console.log(`status`, status)
+
   useEffect(() => {
-    if (!loading) alert(session)
     if (!session && !loading) {
-      signIn()
-    } else if (!loading) {
+      signIn('google')
+    } else if (status === 'authenticated') {
+      // Если авторизированы
       const fetching = async () => {
         // const result = await fetchingAll(setData)
         await fetchingAll((result) => {
@@ -146,7 +150,7 @@ export default function Admin() {
                 <Button
                   name="Авторизироваться под другой учетной записью"
                   className="mt-4"
-                  onClick={() => signIn()}
+                  onClick={() => signIn('google')}
                   small
                 />
               </div>

@@ -13,7 +13,7 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
-import { getSession } from 'next-auth/client'
+import { getSession } from 'next-auth/react'
 
 const DevToDoForm = ({
   loggedUser,

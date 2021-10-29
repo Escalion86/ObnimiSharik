@@ -1,9 +1,43 @@
 import NextAuth from 'next-auth'
-import Providers from 'next-auth/providers'
+// import Providers from 'next-auth/providers'
 import dbConnect from '@utils/dbConnect'
 import Users from '@models/Users'
 import Invitations from '@models/Invitations'
 import CRUD from '@server/CRUD'
+// import Auth0Provider from 'next-auth/providers/auth0'
+import GoogleProvider from 'next-auth/providers/google'
+import VkProvider from 'next-auth/providers/vk'
+// import EmailProvider from 'next-auth/providers/email'
+// import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
+
+// import { MongoClient } from 'mongodb'
+
+// const uri = process.env.MONGODB_URI
+// const options = {
+//   useUnifiedTopology: true,
+//   useNewUrlParser: true,
+// }
+
+// let client
+// let clientPromise
+
+// if (!process.env.MONGODB_URI) {
+//   throw new Error('Please add your Mongo URI to .env.local')
+// }
+
+// if (process.env.NODE_ENV === 'development') {
+//   // In development mode, use a global variable so that the value
+//   // is preserved across module reloads caused by HMR (Hot Module Replacement).
+//   if (!global._mongoClientPromise) {
+//     client = new MongoClient(uri, options)
+//     global._mongoClientPromise = client.connect()
+//   }
+//   clientPromise = global._mongoClientPromise
+// } else {
+//   // In production mode, it's best to not use a global variable.
+//   client = new MongoClient(uri, options)
+//   clientPromise = client.connect()
+// }
 
 const defaultUserProps = {
   role: 'client',
@@ -25,20 +59,32 @@ export default NextAuth({
     //   server: process.env.EMAIL_SERVER,
     //   from: process.env.EMAIL_FROM,
     // }),
-    Providers.Google({
+    GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorizationUrl:
-        'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
+      // authorizationUrl:
+      //   'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
     }),
-    Providers.VK({
+    VkProvider({
       clientId: process.env.VK_CLIENT_ID,
       clientSecret: process.env.VK_CLIENT_SECRET,
     }),
     // ...add more providers here
   ],
   callbacks: {
-    session: async (session, user) => {
+    // async signIn({ user, account, profile, email, credentials }) {
+    //   return true
+    // },
+    // async redirect({ url, baseUrl }) {
+    //   return baseUrl
+    // },
+    // async jwt({ token, user, account, profile, isNewUser }) {
+    //   return token
+    // }
+    async session({ session, token }) {
+      console.log(`session2`, session)
+      console.log(`token`, token)
+      const { user } = session
       await dbConnect()
       const result = await Users.find({
         email: user.email,
@@ -70,23 +116,23 @@ export default NextAuth({
                 query: { id: result[0]._id },
                 body: { image: data.secure_url },
               })
-              session.user.image = data.secure_url
+              user.image = data.secure_url
             }
           })
           .catch((err) => console.error(err))
       } else {
-        session.user.image = result[0].image
+        user.image = result[0].image
       }
 
-      session.user._id = result[0]._id
-      session.user.name = result[0].name
-      session.user.role = result[0].role
-      session.user.phone = result[0].phone
-      session.user.whatsapp = result[0].whatsapp
-      session.user.viber = result[0].viber
-      session.user.telegram = result[0].telegram
-      session.user.gender = result[0].gender
-      session.user.birthday = result[0].birthday
+      user._id = result[0]._id
+      user.role = result[0].role
+      user.name = result[0].name
+      user.phone = result[0].phone
+      user.whatsapp = result[0].whatsapp
+      user.viber = result[0].viber
+      user.telegram = result[0].telegram
+      user.gender = result[0].gender
+      user.birthday = result[0].birthday
 
       if (result) {
         if (result[0].role === 'client') {
@@ -108,7 +154,7 @@ export default NextAuth({
               { email: user.email, status: 'created' },
               { status: 'confirmed', updatedAt: Date.now() }
             )
-            session.user.role = invitation[0].role
+            user.role = invitation[0].role
           } else {
             // Если пользователь зашел, но небыло приглаения то создаем пустую учетку с ролью client
             await Users.findOneAndUpdate(
@@ -131,5 +177,9 @@ export default NextAuth({
   },
 
   // A database is optional, but required to persist accounts in a database
-  database: process.env.MONGODB_URI,
+  // database: process.env.MONGODB_URI,
+  // adapter: TypeORMLegacyAdapter(process.env.MONGODB_URI)
+  // adapter: MongoDBAdapter({
+  //   db: (await clientPromise).db('obnimisharik'),
+  // }),
 })
