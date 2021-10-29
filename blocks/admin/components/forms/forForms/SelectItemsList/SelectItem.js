@@ -19,17 +19,43 @@ import {
 } from './ItemCards'
 // import useClickOutside from '@helpers/hooks/21-useClickOutside/useClickOutside'
 
-const filteredItems = (items, searchText, exceptedIds) =>
-  (searchText || exceptedIds.length > 0
+const filteredItems = (
+  items = [],
+  searchText = '',
+  exceptedIds = [],
+  rules = []
+) =>
+  (searchText || exceptedIds?.length || rules?.length
     ? items.filter((item) => {
+        if (Object.entries(rules).length)
+          for (const [key, rule] of Object.entries(rules)) {
+            if (rule[0] === '>') {
+              if (rule[1] === '=') {
+                if (!(item[key] >= parseInt(rule.substr(2)))) return false
+              } else if (!(item[key] > parseInt(rule.substr(1)))) return false
+            }
+            if (rule[0] === '<') {
+              if (rule[1] === '=') {
+                if (!(item[key] <= parseInt(rule.substr(2)))) return false
+              } else if (!(item[key] < parseInt(rule.substr(1)))) return false
+            }
+            if (rule[0] === '=') {
+              if (!(item[key] == parseInt(rule.substr(1)))) return false
+            }
+          }
+
         if (searchText[0] === '>') {
+          if (searchText[1] === '=')
+            return item.price >= parseInt(searchText.substr(2)) * 100
           return item.price > parseInt(searchText.substr(1)) * 100
         }
         if (searchText[0] === '<') {
+          if (searchText[1] === '=')
+            return item.price <= parseInt(searchText.substr(2)) * 100
           return item.price < parseInt(searchText.substr(1)) * 100
         }
         if (searchText[0] === '=') {
-          return item.price === parseInt(searchText.substr(1)) * 100
+          return item.price == parseInt(searchText.substr(1)) * 100
         }
 
         const searchTextLowerCase = searchText.toLowerCase()
@@ -69,9 +95,11 @@ export const SelectItem = ({
   itemHeight = 40,
   noSearch = false,
   itemWidth = 0,
+  moreOneFilterTurnOn = false,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchText, setSearchText] = useState('')
+  const [moreOneFilter, setMoreOneFilter] = useState(moreOneFilterTurnOn)
 
   const ref = useRef()
   const inputRef = useRef()
@@ -88,7 +116,12 @@ export const SelectItem = ({
   const Item = itemComponent
 
   const filteredItemsArray = isMenuOpen
-    ? filteredItems(items, searchText, exceptedIds)
+    ? filteredItems(
+        items,
+        searchText,
+        exceptedIds,
+        moreOneFilter ? { count: '>0' } : {}
+      )
     : []
 
   const toggleIsMenuOpen = () => setIsMenuOpen((state) => !state)
@@ -164,6 +197,15 @@ export const SelectItem = ({
                     : () => inputRef.current.focus()
                 }
               />
+              <div
+                className={
+                  (moreOneFilter ? 'bg-yellow-400' : 'bg-primary') +
+                  ' hover:bg-toxic text-white flex items-center justify-center font-bold rounded-lg cursor-pointer w-7 h-7'
+                }
+                onClick={() => setMoreOneFilter(!moreOneFilter)}
+              >
+                {'>0'}
+              </div>
             </div>
           )}
           {/* <div className="h-80">
