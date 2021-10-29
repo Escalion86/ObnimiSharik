@@ -94,7 +94,7 @@ export default function Admin() {
 
       // const ordersListener = Orders.watch()
     }
-  }, [!!session, loading])
+  }, [!!session, status])
 
   const loggedUser = session?.user
     ? state.users.find((user) => session.user._id === user._id)
@@ -104,6 +104,7 @@ export default function Admin() {
     loggedUser?.role &&
     ROLES.filter((role) => role.value === loggedUser?.role).length > 0
 
+  console.log(`loggedUser`, loggedUser)
   return (
     <>
       {(!state.loaded || loading) && (
