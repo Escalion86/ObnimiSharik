@@ -18,26 +18,9 @@ const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
   compose
 
-const enhancer = composeEnhancers(
-  applyMiddleware(thunk)
-  // window &&
-  //   window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  //   window.__REDUX_DEVTOOLS_EXTENSION__()
-  // batchedSubscribe((notify) => {
-  //   notify()
-  // })
-)
+const enhancer = composeEnhancers(applyMiddleware(thunk))
 
-const store = createStore(
-  allReducers,
-  enhancer /* preloadedState, */
-  // applyMiddleware(thunk),
-  // typeof window !== 'undefined' &&
-  //   window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  //   window.__REDUX_DEVTOOLS_EXTENSION__()
-  // ,
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
+const store = createStore(allReducers, enhancer)
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
