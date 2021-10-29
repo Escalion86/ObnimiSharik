@@ -21,6 +21,7 @@ import {
   DateTimePicker,
   FormColumn,
   SelectDistrict,
+  InputImages,
 } from './forForms'
 
 import { deleteData, postData, putData } from '@helpers/CRUD'
@@ -48,6 +49,7 @@ import { setProductCirculations } from '@state/actions'
 import { useWindowDimensionsTailwind } from '@helpers/useWindowDimensions'
 import formatDateTime from '@helpers/formatDateTime'
 import formatDeliveryAddress from '@helpers/formatDeliveryAddress'
+import getNoun from '@helpers/getNoun'
 
 {
   /* <FontAwesomeIcon
@@ -819,6 +821,26 @@ const ProductCirculationContent = ({
   )
 }
 
+const PhotosContent = ({ form, setForm }) => {
+  return (
+    <div>
+      <InputImages
+        images={form.photos}
+        label="Фотографии"
+        onChange={(photos) =>
+          setForm({
+            ...form,
+            photos,
+          })
+        }
+        // readOnly={readOnly}
+        directory="order_photos"
+        maxImages={10}
+      />
+    </div>
+  )
+}
+
 const OrderForm = ({
   loggedUser,
   order = DEFAULT_ORDER,
@@ -838,6 +860,7 @@ const OrderForm = ({
     price: order.price,
     status: order.status,
     comment: order.comment,
+    photos: order.photos,
     deliveryPrice: order.deliveryPrice,
     deliveryPickup: order.deliveryPickup,
     deliveryAddress: order.deliveryAddress,
@@ -845,8 +868,6 @@ const OrderForm = ({
     deliveryDateTo: order.deliveryDateTo,
     deliverId: order.deliverId,
   })
-
-  console.log(`form`, form)
 
   const [paymentsId, setPaymentsId] = useState([])
 
@@ -1190,17 +1211,29 @@ const OrderForm = ({
             title: 'Состав заказа',
             content: <ProductsContent {...contentParams} />,
             text:
-              form.productsCount.reduce((totalProductsCount, productCount) => {
-                if (productCount.product)
-                  return (totalProductsCount += productCount.count)
-                return totalProductsCount
-              }, 0) +
-              ' товаров, ' +
-              form.setsCount.reduce((totalSetsCount, setCount) => {
-                if (setCount.set) return (totalSetsCount += setCount.count)
-                return totalSetsCount
-              }, 0) +
-              ' наборов',
+              getNoun(
+                form.productsCount.reduce(
+                  (totalProductsCount, productCount) => {
+                    if (productCount.product)
+                      return (totalProductsCount += productCount.count)
+                    return totalProductsCount
+                  },
+                  0
+                ),
+                'товар',
+                'товара',
+                'товаров'
+              ) +
+              ', ' +
+              getNoun(
+                form.setsCount.reduce((totalSetsCount, setCount) => {
+                  if (setCount.set) return (totalSetsCount += setCount.count)
+                  return totalSetsCount
+                }, 0),
+                'набор',
+                'набора',
+                'наборов'
+              ),
             visible: operator || aerodesigner,
           },
           {
@@ -1232,11 +1265,29 @@ const OrderForm = ({
             content: <ProductCirculationContent {...contentParams} />,
             // text: form.deliveryPickup ? 'Самовывоз' : 'Курьером',
             text:
-              sumObjectValues(productCirculationsIdCount) +
-              ' товаров, ' +
+              getNoun(
+                sumObjectValues(productCirculationsIdCount),
+                'товар',
+                'товара',
+                'товаров'
+              ) +
+              ', ' +
               sumObjectValues(productCirculationsIdCountDefective) +
               ' брак',
             visible: aerodesigner && !cartEmpty,
+            // disabled: loggedUser.role === 'aerodesigner',
+          },
+          {
+            title: 'Контент',
+            content: <PhotosContent {...contentParams} />,
+            // text: form.deliveryPickup ? 'Самовывоз' : 'Курьером',
+            text: getNoun(
+              form.photos ? form.photos.length : 0,
+              'фотография',
+              'фотографии',
+              'фотографий'
+            ),
+            visible: true,
             // disabled: loggedUser.role === 'aerodesigner',
           },
         ]}

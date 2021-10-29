@@ -63,6 +63,10 @@ const OrdersSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  photos: {
+    type: Array,
+    default: [],
+  },
   deliveryPickup: {
     type: Boolean,
     default: true,
