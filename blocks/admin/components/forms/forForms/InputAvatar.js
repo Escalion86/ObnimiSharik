@@ -12,7 +12,7 @@ const InputAvatar = ({
     label="Аватар"
     onChange={onChange}
     noEditButton
-    noImage={`/img/users/${user.gender ?? 'male'}.jpg`}
+    noImage={`/img/users/${user.gender ?? 'noGender'}.jpg`}
     required={required}
     readOnly={readOnly}
     inLine={inLine}
