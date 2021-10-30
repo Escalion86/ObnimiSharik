@@ -10,7 +10,7 @@ const ZoomImage = ({
   image ? (
     <div
       className={
-        'overflow-hidden' +
+        'overflow-hidden flex items-center' +
         (containerClassName ? ' ' + containerClassName : ' h-24')
       }
       onClick={(event) => event.stopPropagation()}
