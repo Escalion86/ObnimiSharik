@@ -134,6 +134,8 @@ export default async function auth(req, res) {
           user.whatsapp = result[0].whatsapp
           user.viber = result[0].viber
           user.telegram = result[0].telegram
+          user.instagram = result[0].instagram
+          user.vk = result[0].vk
           user.gender = result[0].gender
           user.birthday = result[0].birthday
 
