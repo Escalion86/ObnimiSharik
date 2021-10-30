@@ -42,6 +42,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css"
           rel="stylesheet"
         />
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
       </Head>
       <SessionProvider session={session} refetchInterval={5 * 60}>
         <Provider store={store}>
