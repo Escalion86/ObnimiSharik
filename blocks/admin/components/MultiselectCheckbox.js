@@ -12,20 +12,23 @@ const MultiselectCheckbox = ({
   noScroll = false,
   readOnly = false,
 }) => {
-  const [data, setData] = useState(options)
+  // const [data, setData] = useState(options)
+  const data = options
 
   const toggle = (index) => {
     const newData = [...data]
     newData.splice(index, 1, {
-      id: data[index].id,
-      label: data[index].label,
+      value: data[index].value,
+      name: data[index].name,
       checked: !data[index].checked,
     })
-    setData(newData)
+    // setData(newData)
     onChange(getAll ? newData : newData.filter((x) => x.checked))
   }
 
-  useEffect(() => setData(options), [options])
+  // useEffect(() => {
+  // if (!compareObjects(state.filter[variable], filter))
+  // setData(options)}, [options])
 
   const checkedAll = !data.find((item) => !item.checked)
 
@@ -33,7 +36,7 @@ const MultiselectCheckbox = ({
     const newData = data.map((item) => {
       return { ...item, checked: !checkedAll }
     })
-    setData(newData)
+    // setData(newData)
     onChange(getAll ? newData : newData.filter((x) => x.checked))
   }
 
@@ -47,7 +50,7 @@ const MultiselectCheckbox = ({
           {data
             .filter((item) => item.checked)
             .map((item) => (
-              <span key={item.label}>- {item.label}</span>
+              <span key={item.name}>- {item.name}</span>
             ))}
         </div>
       </div>
@@ -55,7 +58,7 @@ const MultiselectCheckbox = ({
 
   return (
     <div
-      className={'flex flex-col max-w-xl' + (className ? +' ' + className : '')}
+      className={'flex flex-col max-w-xl' + (className ? ' ' + className : '')}
     >
       <div className="flex justify-between">
         <div>
@@ -94,20 +97,23 @@ const MultiselectCheckbox = ({
           />
         )}
       </div>
-      <div className="flex-1 overflow-hidden bg-gray-200 border border-gray-700 rounded-lg">
+      <div
+        className="flex-1 overflow-hidden bg-gray-200 border border-gray-700 rounded-lg"
+        // style={{ maxHeight: data.length >= 8 ? 216 : data.length * 27 }}
+      >
         <div
           className={
             'px-2 py-1 rounded-lg max-h-48' +
-            (!noScroll && ' overflow-y-scroll')
+            (!noScroll ? ' overflow-y-scroll' : '')
           }
         >
           {data.map((item, index) => (
-            <div key={item.label} className="flex items-center">
+            <div key={item.name} className="flex items-center">
               <CheckBox
                 checked={item.checked || false}
                 onClick={() => toggle(index)}
                 small
-                label={item.label}
+                label={item.name}
               />
               {/* <div className="ml-2">{item.label}</div> */}
             </div>
