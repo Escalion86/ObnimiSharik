@@ -1,3 +1,9 @@
+const CLOUDINARY_FOLDER = (window) =>
+  window.location.href.includes('dev.') ||
+  window.location.href.includes('localhost')
+    ? 'obnimisharik_dev'
+    : 'obnimisharik'
+
 export const deleteImage = async (imagePublicId) => {
   // const { id } = router.query
 
@@ -29,15 +35,15 @@ export const deleteImages = async (arrayOfImagesUrls, callback = null) => {
   if (arrayOfImagesUrls.length > 0)
     await Promise.all(
       arrayOfImagesUrls.map(async (imageUrl) => {
-        if (imageUrl.lastIndexOf(process.env.CLOUDINARY_FOLDER + '/') > 0) {
+        if (imageUrl.lastIndexOf(CLOUDINARY_FOLDER(window) + '/') > 0) {
           await deleteImage(
             imageUrl.substring(
-              imageUrl.lastIndexOf(process.env.CLOUDINARY_FOLDER + '/'),
+              imageUrl.lastIndexOf(CLOUDINARY_FOLDER(window) + '/'),
               imageUrl.lastIndexOf('.')
             )
           )
         } else if (!imageUrl.includes('https://res.cloudinary.com')) {
-          await deleteImage(process.env.CLOUDINARY_FOLDER + '/' + imageUrl)
+          await deleteImage(CLOUDINARY_FOLDER(window) + '/' + imageUrl)
         }
       })
     )
@@ -56,8 +62,8 @@ export const sendImage = async (
     formData.append(
       'upload_preset',
       folder
-        ? process.env.CLOUDINARY_FOLDER + '_' + folder
-        : process.env.CLOUDINARY_FOLDER
+        ? CLOUDINARY_FOLDER(window) + '_' + folder
+        : CLOUDINARY_FOLDER(window)
     )
     if (imageName) {
       // console.log(`imageName`, imageName)
@@ -69,10 +75,13 @@ export const sendImage = async (
       // formData.append('use_filename', true)
     }
 
-    return await fetch(process.env.CLOUDINARY_UPLOAD_URL, {
-      method: 'POST',
-      body: formData,
-    })
+    return await fetch(
+      'https://api.cloudinary.com/v1_1/escalion-ru/image/upload',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.secure_url !== '') {
