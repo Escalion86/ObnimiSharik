@@ -104,6 +104,8 @@ export const SelectItem = ({
   const ref = useRef()
   const inputRef = useRef()
 
+  const moreOneFilterTurnOnExists = items.length && items[0].count !== undefined
+
   // useClickOutside(inputRef, () => {
   //   console.log(`OUTSIDE`)
   //   if (isMenuOpen) setIsMenuOpen(false)
@@ -197,15 +199,17 @@ export const SelectItem = ({
                     : () => inputRef.current.focus()
                 }
               />
-              <div
-                className={
-                  (moreOneFilter ? 'bg-yellow-400' : 'bg-primary') +
-                  ' hover:bg-toxic text-white flex items-center justify-center font-bold rounded-lg cursor-pointer w-7 h-7'
-                }
-                onClick={() => setMoreOneFilter(!moreOneFilter)}
-              >
-                {'>0'}
-              </div>
+              {moreOneFilterTurnOnExists ? (
+                <div
+                  className={
+                    (moreOneFilter ? 'bg-yellow-400' : 'bg-primary') +
+                    ' hover:bg-toxic text-white flex items-center justify-center font-bold rounded-lg cursor-pointer w-7 h-7'
+                  }
+                  onClick={() => setMoreOneFilter(!moreOneFilter)}
+                >
+                  {'>0'}
+                </div>
+              ) : null}
             </div>
           )}
           {/* <div className="h-80">
