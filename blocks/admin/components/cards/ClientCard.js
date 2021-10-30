@@ -18,14 +18,6 @@ export const ClientCard = ({
   )
   return (
     <Card inLine onClick={() => onClick(client)}>
-      {/* <div
-        className={
-          'flex justify-center items-center w-9 rounded-l-lg text-white bg-' +
-          (gender ? gender.color + '-400' : 'gray-400')
-        }
-      >
-        <FontAwesomeIcon icon={gender?.icon ?? faQuestion} size="lg" />
-      </div> */}
       <ZoomImage
         image={client.image}
         noImage={`/img/users/${client.gender ?? 'noGender'}.jpg`}
