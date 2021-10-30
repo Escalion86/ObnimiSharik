@@ -30,6 +30,14 @@ const ClientsSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    instagram: {
+      type: String,
+      default: null,
+    },
+    vk: {
+      type: String,
+      default: null,
+    },
     birthday: {
       type: Date,
     },

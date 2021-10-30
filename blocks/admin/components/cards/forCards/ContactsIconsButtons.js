@@ -5,6 +5,8 @@ const {
   faWhatsapp,
   faViber,
   faTelegramPlane,
+  faInstagram,
+  faVk,
 } = require('@fortawesome/free-brands-svg-icons')
 const { faPhone } = require('@fortawesome/free-solid-svg-icons')
 
@@ -24,7 +26,7 @@ const ContactIconBtn = ({ url, icon, size = 'lg', className = null }) => (
 )
 
 const ContactsIconsButtons = ({ user }) => (
-  <div className="flex items-center p-2 gap-x-2 tablet:gap-x-4 flex-nowrap">
+  <div className="flex items-center p-2 gap-x-2 tablet:gap-x-3 flex-nowrap">
     {user.phone && (
       <ContactIconBtn
         icon={faPhone}
@@ -52,8 +54,22 @@ const ContactsIconsButtons = ({ user }) => (
         url={'https://t.me/' + user.telegram}
       />
     )}
+    {user.instagram && (
+      <ContactIconBtn
+        icon={faInstagram}
+        className="text-yellow-700"
+        url={'https://instagram.com/' + user.instagram}
+      />
+    )}
+    {user.vk && (
+      <ContactIconBtn icon={faVk} url={'https://vk.com/' + user.vk} />
+    )}
     {user.email && (
-      <ContactIconBtn icon={faEnvelope} url={'mailto:' + user.email} />
+      <ContactIconBtn
+        icon={faEnvelope}
+        className="text-red-400"
+        url={'mailto:' + user.email}
+      />
     )}
   </div>
 )
