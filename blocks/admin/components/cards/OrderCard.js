@@ -7,6 +7,7 @@ import ProductsInCard from './forCards/ProductsInCard'
 import SetsInCard from './forCards/SetsInCard'
 import { ORDER_STATUSES } from '@helpers/constants'
 import formatDeliveryAddress from '@helpers/formatDeliveryAddress'
+import { useSelector } from 'react-redux'
 
 export const OrderCard = ({
   order,
@@ -17,7 +18,7 @@ export const OrderCard = ({
   onEdit = null,
   onDelete = null,
 }) => {
-  // const { clients, products, sets } = useSelector((state) => state)
+  const { payments } = useSelector((state) => state)
   const productsIdCount = {}
   order.productsCount.forEach(
     (productCount) =>
@@ -31,6 +32,17 @@ export const OrderCard = ({
   const orderStatus = ORDER_STATUSES.find(
     (orderStatus) => orderStatus.value === order.status
   )
+
+  const orderPayments = payments
+    .filter((payment) => payment.orderId === order._id)
+    .map((payment) => payment._id)
+
+  const totalPaymentsSum = payments.reduce((prev, current) => {
+    if (orderPayments.includes(current._id)) return prev + current.sum
+    return prev
+  }, 0)
+
+  const totalPrice = order.price - order.discount
 
   return (
     <Card onClick={() => onClick(order)}>
@@ -71,7 +83,14 @@ export const OrderCard = ({
           topRight
         />
         <div className="px-1 font-bold text-right whitespace-nowrap min-w-min">
-          {order.price / 100} ₽
+          {(totalPaymentsSum && totalPaymentsSum >= order.price
+            ? 'Оплачен '
+            : 'Аванс ' + totalPaymentsSum / 100 + ' / ') +
+            totalPrice / 100 +
+            (totalPaymentsSum && totalPaymentsSum > order.price
+              ? ' + Чаевые ' + (totalPaymentsSum - totalPrice) / 100
+              : '') +
+            ' ₽'}
         </div>
         <div
           className={
