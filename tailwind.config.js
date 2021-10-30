@@ -127,9 +127,10 @@ module.exports = {
         192: '46rem',
       },
       maxHeight: {
-        1000: '250rem',
-        200: '50rem',
+        18: '4.5rem',
         22: '5.5rem',
+        200: '50rem',
+        1000: '250rem',
       },
       cursor: {
         'zoom-in': 'zoom-in',
@@ -149,6 +150,7 @@ module.exports = {
         100: '25rem',
       },
       height: {
+        17: '4.25rem',
         22: '5.5rem',
         62: '15.5rem',
         68: '17rem',
@@ -167,6 +169,7 @@ module.exports = {
         136: '34rem',
       },
       width: {
+        17: '4.25rem',
         18: '4.5rem',
         22: '5.5rem',
         26: '6.65rem',

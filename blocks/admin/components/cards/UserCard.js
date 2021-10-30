@@ -19,10 +19,10 @@ export const UserCard = ({
     <Card className="items-center" inLine onClick={() => onClick(user)}>
       <ZoomImage
         image={user.image}
-        noImage={`/img/users/${user.gender ?? 'male'}.jpg`}
+        noImage={`/img/users/${user.gender ?? 'noGender'}.jpg`}
         alt="user"
-        imageClassName="w-22 h-22"
-        containerClassName="w-22 h-22 rounded-l-lg"
+        imageClassName="h-full w-24 max-h-24 laptop:max-h-10 laptop:w-10"
+        containerClassName="h-full rounded-l-lg"
       />
       <CardContainer className="items-center">
         <div className="flex flex-col justify-between gap-x-4 laptop:flex-row">
