@@ -183,15 +183,15 @@ const SetForm = ({
           title="Типы"
           options={setTypes.map((type) => {
             return {
-              label: type.name,
-              id: type._id,
+              name: type.name,
+              value: type._id,
               checked: form.typesId.includes(type._id),
             }
           })}
           onChange={(data) => {
             setForm({
               ...form,
-              typesId: data.map((type) => type.id),
+              typesId: data.map((type) => type.value),
             })
             // console.log('checked', data)
           }}
@@ -211,24 +211,15 @@ const SetForm = ({
         />
         <InputImages
           images={form.images}
+          label="Картинки"
           onChange={(images) =>
             setForm({
               ...form,
               images,
             })
           }
-          onAddImage={(image) =>
-            sendImage(
-              image,
-              (imageUrl) =>
-                setForm({
-                  ...form,
-                  images: [...form.images, imageUrl],
-                }),
-              'sets'
-            )
-          }
           readOnly={readOnly}
+          directory="sets"
         />
       </FormColumn>
     </Form>

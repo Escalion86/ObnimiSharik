@@ -36,6 +36,8 @@ const UserForm = ({
     whatsapp: user.whatsapp,
     viber: user.viber,
     telegram: user.telegram,
+    instagram: user.instagram,
+    vk: user.vk,
     gender: user.gender,
     role: user.role,
     birthday: user.birthday,
@@ -176,6 +178,31 @@ const UserForm = ({
           name="telegram"
           value={form.telegram}
           onChange={handleChange}
+          prefix="@"
+        />
+      </RowContainer>
+      <RowContainer>
+        <Input
+          key="instagram"
+          label="Instagram"
+          inputStyle="max-w-40"
+          type="text"
+          maxLength="80"
+          name="instagram"
+          value={form.instagram}
+          onChange={handleChange}
+          prefix="@"
+        />
+        <Input
+          key="vk"
+          label="ВКонтакте"
+          inputStyle="max-w-40"
+          type="text"
+          maxLength="80"
+          name="vk"
+          value={form.vk}
+          onChange={handleChange}
+          prefix="@"
         />
       </RowContainer>
       <div className="flex">

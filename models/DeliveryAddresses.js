@@ -1,21 +1,18 @@
 import mongoose from 'mongoose'
+import { DistrictsSchema } from './Districts'
 
-const DeliveryAddressesSchema = new mongoose.Schema({
-  town: String,
-  street: String,
-  entrance: String,
-  floor: String,
-  flat: String,
-  comment: String,
-  createdAt: {
-    type: Date,
-    default: Date.now,
+const DeliveryAddressesSchema = new mongoose.Schema(
+  {
+    town: { type: String },
+    district: { type: DistrictsSchema },
+    street: { type: String },
+    house: { type: String },
+    entrance: { type: String },
+    floor: { type: String },
+    comment: { type: String },
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-})
+  { timestamps: true }
+)
 
 export default mongoose.models.DeliveryAdresses ||
   mongoose.model('DeliveryAddresses', DeliveryAddressesSchema)

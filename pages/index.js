@@ -30,7 +30,7 @@ import { catalogData, setsData } from '@utils/temp_db'
 // import SetTypes from '@models/SetTypes'
 // import Sets from '@models/Sets'
 
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, signOut, useSession, getSession } from 'next-auth/react'
 import prepareFetchProps from '@helpers/prepareFetchProps'
 
 // import csv from '../tilda.csv'
@@ -54,7 +54,8 @@ import prepareFetchProps from '@helpers/prepareFetchProps'
 
 export default function Home({ products, sets, productTypes, setTypes }) {
   const { height, width } = useWindowDimensions()
-  const [session, loading] = useSession()
+  const { data: session, status } = useSession()
+  const loading = status === 'loading'
 
   // if (session) console.log(`session`, session)
 
@@ -110,4 +111,12 @@ export default function Home({ products, sets, productTypes, setTypes }) {
 //   const products = prepareFetchProps(await Products.find({}))
 
 //   return { props: { products, productTypes, sets, setTypes } }
+// }
+
+// export async function getServerSideProps(ctx) {
+//   return {
+//     props: {
+//       session: await getSession(ctx),
+//     },
+//   }
 // }

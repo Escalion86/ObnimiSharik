@@ -10,7 +10,8 @@ import {
   BtnAddSet,
   BtnAddSetType,
   BtnTest,
-} from '@components/TitleButtons'
+  BtnAddDistrict,
+} from '@admincomponents/TitleButtons'
 import {
   InvitationsContent,
   ProductCirculationsContent,
@@ -26,6 +27,7 @@ import {
   ClientsContent,
   OrdersContent,
   PaymentsContent,
+  DistrictsContent,
 } from './content'
 import DevToDoContent from './content/DevToDoContent'
 
@@ -37,7 +39,7 @@ export const pages = [
     pageContent: OverviewContent,
     pageButtons: [],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: null,
   }, // 3
   {
@@ -47,7 +49,7 @@ export const pages = [
     pageContent: ProductsContent,
     pageButtons: [BtnAddProduct],
     backToPageId: null,
-    accessRoles: ['admin', 'operator', 'aerodesigner'],
+    accessRoles: ['admin', 'operator', 'aerodesigner', 'dev'],
     variable: 'products',
   }, // 0
   {
@@ -57,7 +59,7 @@ export const pages = [
     pageContent: ProductTypesContent,
     pageButtons: [BtnAddProductType],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'productTypes',
   }, // 1
   {
@@ -67,7 +69,7 @@ export const pages = [
     pageContent: SetsContent,
     pageButtons: [BtnAddSet],
     backToPageId: null,
-    accessRoles: ['admin', 'operator', 'aerodesigner'],
+    accessRoles: ['admin', 'operator', 'aerodesigner', 'dev'],
     variable: 'sets',
   }, // 2
   {
@@ -77,7 +79,7 @@ export const pages = [
     pageContent: SetTypesContent,
     pageButtons: [BtnAddSetType],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'setTypes',
   }, // 1
   {
@@ -91,32 +93,32 @@ export const pages = [
   }, // 3
   {
     id: 6,
-    group: 4,
+    group: 5,
     name: 'Сотрудники',
     pageContent: UsersContent,
     pageButtons: [],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'users',
   }, // 3
   {
     id: 7,
-    group: 4,
+    group: 5,
     name: 'Приглашения',
     pageContent: InvitationsContent,
     pageButtons: [BtnAddInvitation],
     backToPageId: null,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'invitations',
   },
   {
     id: 8,
-    group: 5,
+    group: 6,
     name: 'Настройки',
     pageContent: SettingsContent,
     pageButtons: [],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: null,
   },
   {
@@ -126,7 +128,7 @@ export const pages = [
     pageContent: ProductCirculationsContent,
     pageButtons: [BtnAddProductCirculation],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'productCirculations',
   },
   {
@@ -136,7 +138,7 @@ export const pages = [
     pageContent: ClientsContent,
     pageButtons: [BtnAddClient],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'clients',
   },
   {
@@ -146,7 +148,7 @@ export const pages = [
     pageContent: OrdersContent,
     pageButtons: [BtnAddOrder],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'orders',
   },
   {
@@ -156,7 +158,7 @@ export const pages = [
     pageContent: PaymentsContent,
     pageButtons: [BtnAddPayment],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'payments',
   },
   {
@@ -166,7 +168,7 @@ export const pages = [
     pageContent: TestContent,
     pageButtons: [BtnTest],
     backToPageId: 0,
-    accessRoles: [],
+    accessRoles: ['dev'],
     variable: null,
   },
   {
@@ -192,12 +194,22 @@ export const pages = [
   {
     id: 15,
     group: 10,
-    name: 'Заявки',
+    name: 'Заявки разработчику',
     pageContent: DevToDoContent,
     pageButtons: [BtnAddDevToDo],
     backToPageId: 0,
-    accessRoles: ['all'],
+    accessRoles: ['all', 'dev'],
     variable: 'devToDo',
+  },
+  {
+    id: 16,
+    group: 4,
+    name: 'Районы доставки',
+    pageContent: DistrictsContent,
+    pageButtons: [BtnAddDistrict],
+    backToPageId: 0,
+    accessRoles: ['admin'],
+    variable: 'districts',
   },
 ]
 
@@ -206,7 +218,8 @@ export const pagesGroups = [
   { id: 1, name: 'Продукция' },
   { id: 2, name: 'Склад' },
   { id: 3, name: 'Воронка' },
-  { id: 4, name: 'Пользователи' },
-  { id: 5, name: 'Настройки' },
+  { id: 4, name: 'Прочее' },
+  { id: 5, name: 'Пользователи' },
+  { id: 6, name: 'Настройки' },
   { id: 10, name: 'Разработка' },
 ]

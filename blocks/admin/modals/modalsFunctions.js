@@ -13,6 +13,7 @@ import {
   fetchingSets,
   fetchingSetTypes,
   fetchingUsers,
+  fetchingDistricts,
 } from '@helpers/fetchers'
 import {
   setAllData,
@@ -27,6 +28,7 @@ import {
   setOrders,
   setPayments,
   setDevToDo,
+  setDistricts,
 } from '@state/actions'
 import {
   addModal,
@@ -49,6 +51,7 @@ import {
   OrderModal,
   PaymentModal,
   DevToDoModal,
+  DistrictModal,
 } from '@adminblocks/modals'
 import addCountToProductTypes from '@helpers/addCountToProductTypes'
 import addCountToSetTypes from '@helpers/addCountToSetTypes'
@@ -285,6 +288,27 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           />
         ))
       ),
+    openDistrictModal: (district, afterConfirm, afterDelete, edit) =>
+      dispatch(
+        addModal((modalId) => (
+          <DistrictModal
+            loggedUser={loggedUser}
+            district={district}
+            onClose={() => modals.closeModal(modalId)}
+            afterConfirm={(res) => {
+              afterConfirm && afterConfirm(res)
+              fetchingDistricts((result) => dispatch(setDistricts(result)))
+            }}
+            edit={edit}
+            onDelete={(onConfirm) => {
+              modals.openDeleteDistrict(district, () => {
+                onConfirm && onConfirm()
+                afterDelete && afterDelete(district._id)
+              })
+            }}
+          />
+        ))
+      ),
     openOrderModal: (order, afterConfirm, afterDelete, edit) =>
       dispatch(
         addModal((modalId) => (
@@ -505,6 +529,20 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             () => fetchingDevToDo((result) => dispatch(setDevToDo(result))),
             'Заявка № ' + devToDo.number + '" удалена',
             'Ошибка при удалении заявки № ' + devToDo.number + '"'
+          )
+          if (onConfirm) onConfirm()
+        }
+      ),
+    openDeleteDistrict: (district, onConfirm = null) =>
+      modals.openConfirmModal(
+        'Удаление района',
+        'Вы уверены что хотите удалить район "' + district.name + '"?',
+        () => {
+          deleteData(
+            '/api/districts/' + district._id,
+            () => fetchingDistricts((result) => dispatch(setDistricts(result))),
+            'Район "' + district.name + '" удален',
+            'Ошибка при удалении района "' + district.name + '"'
           )
           if (onConfirm) onConfirm()
         }

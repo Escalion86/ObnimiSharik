@@ -31,7 +31,7 @@ const OrdersContent = ({ data, modals, loggedUser }) => {
           order={order}
           loggedUser={loggedUser}
           onClick={() => modals.openOrderModal(order)}
-          onEdit={() => modals.openOrderModal(order, true)}
+          onEdit={() => modals.openOrderModal(order, null, null, true)}
           onDelete={() => modals.openDeleteOrder(order)}
           onClone={() => {
             const orderClone = { ...order }

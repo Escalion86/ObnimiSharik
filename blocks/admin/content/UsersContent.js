@@ -22,7 +22,7 @@ const UsersContent = ({ data, modals, loggedUser }) => {
           key={showedUser._id}
           user={showedUser}
           onClick={() => modals.openUserModal(showedUser)}
-          onEdit={() => modals.openUserModal(showedUser, true)}
+          onEdit={() => modals.openUserModal(showedUser, null, null, true)}
           onDelete={() => modals.openDeleteUser(showedUser)}
         />
       )}

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 const ItemContainer = ({ onClick, active, children }) => (
   <div
     className={
-      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer h-10 last:border-0' +
+      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer last:border-0' +
       (onClick ? ' hover:bg-blue-200' : '') +
       (active ? ' bg-green-200' : '')
     }
@@ -124,3 +124,14 @@ export const PaymentItem = ({ item, onClick = null, active = false }) => {
     </ItemContainer>
   )
 }
+
+export const DistrictItem = ({ item, onClick = null, active = false }) => (
+  <ItemContainer onClick={onClick} active={active}>
+    <div className="flex justify-between">
+      <div className="text-sm text-gray-800 truncate">{item.name}</div>
+      <div className="flex-1 text-sm text-right whitespace-nowrap">
+        {item.deliveryPrice / 100} ₽
+      </div>
+    </div>
+  </ItemContainer>
+)

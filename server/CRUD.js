@@ -1,10 +1,9 @@
 import dbConnect from '@utils/dbConnect'
 
 export default async function handler(Schema, req, res, param = null) {
-  const {
-    query: { id },
-    method,
-  } = req
+  const { query, method } = req
+
+  const id = query?.id
 
   await dbConnect()
 
@@ -49,8 +48,8 @@ export default async function handler(Schema, req, res, param = null) {
     case 'PUT' /* Edit a model by its ID */:
       try {
         if (id && !param) {
-          const body = { ...req.body, updatedAt: Date.now() }
-          const data = await Schema.findByIdAndUpdate(id, body, {
+          // const body = { ...req.body, updatedAt: Date.now() }
+          const data = await Schema.findByIdAndUpdate(id, req.body, {
             new: true,
             runValidators: true,
           })

@@ -3,36 +3,53 @@ import Zoom from 'react-medium-image-zoom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { sendImage } from '@helpers/cloudinary'
 
-// TODO переделать сохранение самих картинок в этот компонент, аналогично InputImage компоненту
 const InputImages = ({
   images = [],
   onChange = () => {},
-  onAddImage = () => {},
   required = false,
   readOnly = false,
+  label = null,
+  directory = null,
+  maxImages = 4,
 }) => {
   const hiddenFileInput = useRef(null)
   const addImageClick = (event) => {
     hiddenFileInput.current.click()
   }
 
-  const handleChange = (e) => {
-    onAddImage(e.target.files[0])
+  // const handleChange = (e) => {
+  //   onAddImage(e.target.files[0])
+  // }
+
+  const onAddImage = async (newImage) => {
+    if (newImage) {
+      // if (image) await deleteImages([image])
+      sendImage(
+        newImage,
+        (imageUrl) => onChange([...images, imageUrl]),
+        directory
+      )
+    } else {
+      onChange(images)
+    }
   }
 
   return (
     <div className="flex flex-col">
-      <label
-        className={
-          readOnly
-            ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
-            : ''
-        }
-      >
-        Картинки
-        {readOnly ? ':' : required && <span className="text-red-700">*</span>}
-      </label>
+      {label && (
+        <label
+          className={
+            readOnly
+              ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
+              : ''
+          }
+        >
+          {label}
+          {readOnly ? ':' : required && <span className="text-red-700">*</span>}
+        </label>
+      )}
       <div
         className={
           'flex flex-wrap w-full gap-2 px-1.5 py-1 rounded-lg ' +
@@ -48,16 +65,20 @@ const InputImages = ({
           <div
             key={index}
             className={
-              'relative h-20 overflow-hidden' +
+              'relative h-20 overflow-hidden group' +
               (readOnly ? ' border border-gray-400 hover:border-primary' : '')
             }
           >
             <Zoom zoomMargin={20}>
-              <img className="w-20" src={image} alt="item_image" />
+              <img
+                className="object-cover w-20 h-20"
+                src={image}
+                alt="item_image"
+              />
             </Zoom>
             {!readOnly && (
               <FontAwesomeIcon
-                className="absolute top-0 right-0 text-red-700 duration-200 transform cursor-pointer hover:scale-125"
+                className="absolute text-red-700 duration-200 transform cursor-pointer -top-4 group-hover:top-1 -right-4 group-hover:right-1 hover:scale-125"
                 icon={faTrash}
                 size="1x"
                 onClick={() => {
@@ -67,7 +88,7 @@ const InputImages = ({
             )}
           </div>
         ))}
-        {images.length < 4 && !readOnly && (
+        {images.length < maxImages && !readOnly && (
           <div
             onClick={addImageClick}
             className="flex items-center justify-center w-20 h-20 bg-white border-2 border-gray-500 cursor-pointer rounded-xl"
@@ -85,7 +106,7 @@ const InputImages = ({
               <input
                 type="file"
                 ref={hiddenFileInput}
-                onChange={handleChange}
+                onChange={(e) => onAddImage(e.target.files[0])}
                 style={{ display: 'none' }}
                 accept="image/jpeg,image/png"
               />

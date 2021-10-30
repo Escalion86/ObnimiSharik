@@ -17,6 +17,7 @@ import {
   setSets,
   setSetTypes,
   setUsers,
+  setDistricts,
 } from '.'
 
 export const setAllData = (data) => {
@@ -52,6 +53,7 @@ export const setAllData = (data) => {
       dispatch(setOrders(data.orders))
       dispatch(setPayments(data.payments))
       dispatch(setDevToDo(data.devToDo))
+      dispatch(setDistricts(data.districts))
       dispatch(setLoaded())
     })
   }

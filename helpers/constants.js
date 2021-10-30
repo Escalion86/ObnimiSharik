@@ -206,6 +206,8 @@ export const DEFAULT_ORDER = {
   price: 0,
   status: 'draft',
   comment: '',
+  photos: [],
+  deliveryPrice: 0,
   deliveryPickup: true,
   deliveryAddress: DEFAULT_DELIVERY_ADDRESS,
   deliveryDateFrom: new Date().toISOString(),
@@ -246,6 +248,11 @@ export const PAY_TYPES = [
   { value: 'cash', name: 'Наличными', color: 'green', icon: faMoneyBill },
   { value: 'remittance', name: 'Перевод', color: 'yellow', icon: faSignInAlt },
 ]
+
+export const DEFAULT_DISTRICT = {
+  name: '',
+  deliveryPrice: 0,
+}
 
 export const ACCESS_TO_COLLECTION = (collection, collectionItem, user) => {
   if (!collectionItem) return false

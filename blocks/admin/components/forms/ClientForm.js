@@ -34,6 +34,8 @@ const ClientForm = ({
     whatsapp: client.whatsapp,
     viber: client.viber,
     telegram: client.telegram,
+    instagram: client.instagram,
+    vk: client.vk,
     gender: client.gender,
     birthday: client.birthday,
     image: client.image,
@@ -162,7 +164,30 @@ const ClientForm = ({
           onChange={handleChange}
         />
       </RowContainer>
-
+      <RowContainer>
+        <Input
+          key="instagram"
+          label="Instagram"
+          inputStyle="max-w-40"
+          type="text"
+          maxLength="80"
+          name="instagram"
+          value={form.instagram}
+          onChange={handleChange}
+          prefix="@"
+        />
+        <Input
+          key="vk"
+          label="ВКонтакте"
+          inputStyle="max-w-40"
+          type="text"
+          maxLength="80"
+          name="vk"
+          value={form.vk}
+          onChange={handleChange}
+          prefix="@"
+        />
+      </RowContainer>
       <div className="flex">
         <DatePicker
           key="birthday"

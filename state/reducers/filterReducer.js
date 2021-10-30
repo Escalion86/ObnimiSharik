@@ -1,4 +1,11 @@
 import {
+  DEVTODO_STATUSES,
+  GENDERS,
+  ORDER_STATUSES,
+  PAY_TYPES,
+  PRIORITIES,
+} from '@helpers/constants'
+import {
   // SET_INVITATIONS_FILTER,
   // SET_PRODUCTS_FILTER,
   // SET_PRODUCT_CIRCULSTIONS_FILTER,
@@ -24,13 +31,37 @@ export const initialState = {
     purchase: [true, true],
     count: [null, null],
   },
-  productTypes: {},
-  setTypes: {},
-  users: {},
+  productTypes: { count: [null, null] },
+  setTypes: { count: [null, null] },
+  users: {
+    gender: GENDERS.map(({ value, name }) => {
+      return { value, name, checked: true }
+    }),
+  },
+  clients: {
+    gender: GENDERS.map(({ value, name }) => {
+      return { value, name, checked: true }
+    }),
+  },
   invitations: {},
   orders: {
     price: [null, null],
-    status: null,
+    status: ORDER_STATUSES.map(({ value, name }) => {
+      return { value, name, checked: true }
+    }),
+  },
+  devToDo: {
+    status: DEVTODO_STATUSES.map(({ value, name }) => {
+      return { value, name, checked: true }
+    }),
+    priority: PRIORITIES.map(({ value, name }) => {
+      return { value, name, checked: true }
+    }),
+  },
+  payments: {
+    payType: PAY_TYPES.map(({ value, name }) => {
+      return { value, name, checked: true }
+    }),
   },
 }
 

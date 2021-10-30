@@ -2,13 +2,18 @@ import { useEffect, useState } from 'react'
 
 import { DEFAULT_DEVTODO } from '@helpers/constants'
 
-import { Input, DevToDoStatusPicker, PriorityPicker } from './forForms'
+import {
+  Input,
+  DevToDoStatusPicker,
+  PriorityPicker,
+  InputImages,
+} from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
-import { getSession } from 'next-auth/client'
+import { getSession } from 'next-auth/react'
 
 const DevToDoForm = ({
   loggedUser,
@@ -113,7 +118,7 @@ const DevToDoForm = ({
     >
       <Input
         key="title"
-        label="Заголовок"
+        label="Проблема/Предложение"
         type="text"
         maxLength="100"
         name="title"
@@ -133,6 +138,17 @@ const DevToDoForm = ({
         required
         readOnly={readOnly}
         textarea
+      />
+      <InputImages
+        images={form.images}
+        label="Скриншоты"
+        onChange={(images) =>
+          setForm({
+            ...form,
+            images,
+          })
+        }
+        directory="devtodo"
       />
       <PriorityPicker
         priority={form.priority}

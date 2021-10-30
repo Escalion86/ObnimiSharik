@@ -119,6 +119,12 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
       }
 
       const mapSet = (set) => {
+        const productCountArticles = set['Text']
+          ? set['Text']
+              .replace(/\s/g, '')
+              .split('<br/>')
+              .filter((item) => item)
+          : []
         return {
           ...DEFAULT_SET,
           name: replaceSpecialSymbols(set['Title']),
@@ -131,7 +137,7 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
           images: set['Photo'].split(' '),
           typesId: set['Category'].split(';'),
           article: set['SKU'],
-          productCountArticles: set['Text'].replace(/\s/g, '').split('<br/>'),
+          productCountArticles,
         }
       }
 

@@ -1,13 +1,4 @@
-import {
-  SET_INVITATIONS_FILTER,
-  SET_PRODUCTS_FILTER,
-  SET_PRODUCT_CIRCULSTIONS_FILTER,
-  SET_PRODUCT_TYPES_FILTER,
-  SET_SETS_FILTER,
-  SET_SET_TYPES_FILTER,
-  SET_USERS_FILTER,
-  SET_SORTING,
-} from 'state/constants'
+import { SET_SORTING } from 'state/constants'
 
 export const sortingVariables = {
   products: {
@@ -50,30 +41,31 @@ export const sortingVariables = {
   },
   payments: {
     payAt: { text: 'по дате', type: Date },
-    // fullPrice: 'по стоимости',
+    sum: { text: 'по сумме', type: Number },
+    // status: 'по статусу',
+  },
+  clients: {
+    name: { text: 'по имени', type: String },
+  },
+  districts: {
+    name: { text: 'по названию', type: String },
+    deliveryPrice: { text: 'по стоимости', type: Number },
     // status: 'по статусу',
   },
 }
 
 export const initialState = {
-  products:
-    // name, price, count
-    ['name', 'ASC'], // ASC - от меньшего к большему, DESC - от большего к меньшему (умолч)
-  sets:
-    // name, price, count
-    ['name', 'ASC'],
-  productCirculations:
-    // data, count
-    ['purchasedAt', 'DESC'],
+  products: ['name', 'ASC'], // ASC - от меньшего к большему, DESC - от большего к меньшему (умолч)
+  sets: ['name', 'ASC'],
+  productCirculations: ['purchasedAt', 'DESC'],
   productTypes: ['name', 'ASC'],
-  // name, count
   setTypes: ['name', 'ASC'],
-  // name, role
   users: ['name', 'ASC'],
-  // date, role,status
+  clients: ['name', 'ASC'],
   invitations: ['createdAt', 'DESC'],
   orders: ['deliveryDateFrom', 'DESC'],
   payments: ['payAt', 'DESC'],
+  districts: ['name', 'ASC'],
 }
 
 const filterReducer = (state = initialState, action) => {

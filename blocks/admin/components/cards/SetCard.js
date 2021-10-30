@@ -5,6 +5,7 @@ import Card from './Card'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import { useSelector } from 'react-redux'
+import ZoomImage from '@admincomponents/ZoomImage'
 
 export const SetCard = ({
   set,
@@ -12,7 +13,9 @@ export const SetCard = ({
   // count = null,
   onClick = () => {},
   onTypeClick = () => {},
-  onProductClick = () => {},
+  onProductEditClick = null,
+  onProductFilterClick = null,
+  onProductBuyClick = null,
   onClone = null,
   onDelete = null,
   onEdit = null,
@@ -29,39 +32,21 @@ export const SetCard = ({
   return (
     <Card onClick={() => onClick(set)}>
       <CardContainer className="flex-col phoneH:flex-row">
-        {set.images[0] ? (
-          <div onClick={(event) => event.stopPropagation()}>
-            {/* <ImageZoom
-              image={{
-                src: set.images[0],
-                alt: 'set',
-                className: imageClassName,
-                // style: { width: '50em' }
-              }}
-              zoomImage={{
-                src: set.images[0],
-                alt: 'set',
-              }}
-            />
-            <ImageZoom> */}
-            <Zoom zoomMargin={20}>
-              <img className={imageClassName} src={set.images[0]} alt="set" />
-            </Zoom>
-          </div>
-        ) : (
-          <img className={imageClassName} src="/img/no_image.png" alt="set" />
-        )}
+        <ZoomImage image={set.images[0]} alt="set" />
         <div className="flex-1 ml-3">
           <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
             <div className="w-5/12 font-semibold min-w-40 ">{set.name}</div>
-            <div className="flex-1 text-sm italic min-w-40">
+            <div className="flex-1 text-sm italic whitespace-pre-line min-w-40">
               {set.description}
             </div>
           </div>
           <ProductsInCard
             productsIdCount={set.productsIdCount}
             // productsWithCount={productsWithCount}
-            onClick={onProductClick}
+            // onClick={onProductClick}
+            onEdit={onProductEditClick}
+            onFilter={onProductFilterClick}
+            onBuy={onProductBuyClick}
           />
           <div className="mr-12">
             <TypesInCard types={types} onClick={onTypeClick} />

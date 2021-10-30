@@ -30,7 +30,7 @@ const UserMenu = ({
                     className="object-cover rounded-full cursor-pointer h-11 w-11 min-w-9"
                     src={
                       loggedUser.image ??
-                      `/img/users/${loggedUser.gender ?? 'male'}.jpg`
+                      `/img/users/${loggedUser.gender ?? 'noGender'}.jpg`
                     }
                     alt="Avatar"
                   />

@@ -25,14 +25,17 @@ const addCountToSets = (sets, productCirculations = null, formated = false) => {
 
     for (const [id, value] of Object.entries(set.productsIdCount)) {
       if (value > 0) {
-        // Если движений по пробукту небыло
+        // Если движений по пробукту небыло, тоесть его нет на складе
         if (
-          id in countProductCirculations &&
-          countProductCirculations[id] > 0
+          !(id in countProductCirculations) ||
+          countProductCirculations[id] <= 0
         ) {
-          const countSet = Math.floor(countProductCirculations[id] / value)
-          if (count === null || countSet < count) count = countSet
+          count = 0
+          break
         }
+
+        const countSet = Math.floor(countProductCirculations[id] / value)
+        if (count === null || countSet < count) count = countSet
 
         if (count === null || count <= 0) break
       }

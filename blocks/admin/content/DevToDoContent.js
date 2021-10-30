@@ -15,7 +15,7 @@ const DevToDoContent = ({ data, modals, loggedUser }) => {
           devToDo={devToDo}
           loggedUser={loggedUser}
           onClick={() => modals.openDevToDoModal(devToDo)}
-          onEdit={() => modals.openDevToDoModal(devToDo, true)}
+          onEdit={() => modals.openDevToDoModal(devToDo, null, null, true)}
           onDelete={() => modals.openDeleteDevToDo(devToDo)}
         />
       )}

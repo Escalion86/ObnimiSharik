@@ -34,3 +34,5 @@ export const SET_PAGE = 'SET_PAGE'
 export const SET_LOADED = 'SET_LOADED'
 
 export const SET_DEVTODO = 'SET_DEVTODO'
+
+export const SET_DISTRICTS = 'SET_DISTRICT'

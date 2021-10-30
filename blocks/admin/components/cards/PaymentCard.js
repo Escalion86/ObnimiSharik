@@ -66,7 +66,7 @@ export const PaymentCard = ({
         <div className="font-bold">{payment.sum} ₽</div>
       </div> */}
       <div className="flex flex-col-reverse items-end justify-between laptop:flex-row laptop:items-center">
-        <div className="px-1 font-bold">{payment.sum} ₽</div>
+        <div className="px-1 font-bold">{payment.sum / 100} ₽</div>
         <CardButtons onEdit={onEdit} onDelete={onDelete} />
       </div>
     </Card>

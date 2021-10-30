@@ -27,10 +27,7 @@ const InputImage = ({
       if (image) await deleteImages([image])
       sendImage(
         newImage,
-        (imageUrl) => {
-          console.log(`imageUrl`, imageUrl)
-          onChange(imageUrl)
-        },
+        (imageUrl) => onChange(imageUrl),
         directory,
         imageName
       )

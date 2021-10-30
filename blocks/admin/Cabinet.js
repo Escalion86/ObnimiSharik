@@ -141,7 +141,24 @@ const Cabinet = ({
             (item.purchase === true &&
               state.filter[page.variable].purchase[1]) ||
             (item.purchase === false &&
-              state.filter[page.variable].purchase[0]))
+              state.filter[page.variable].purchase[0])) &&
+          (state.filter[page.variable].status === undefined ||
+            state.filter[page.variable].status.find(
+              (stat) => stat.value === item.status
+            )?.checked) &&
+          (state.filter[page.variable].priority === undefined ||
+            state.filter[page.variable].priority.find(
+              (prior) => prior.value === item.priority
+            )?.checked) &&
+          (state.filter[page.variable].gender === undefined ||
+            !item.gender ||
+            state.filter[page.variable].gender.find(
+              (gen) => gen.value === item.gender
+            )?.checked) &&
+          (state.filter[page.variable].payType === undefined ||
+            state.filter[page.variable].payType.find(
+              (prior) => prior.value === item.payType
+            )?.checked)
       )
   }
   if (state.sorting[page.variable]) {

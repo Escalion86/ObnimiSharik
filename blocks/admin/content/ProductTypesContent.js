@@ -23,7 +23,9 @@ const ProductTypesContent = ({ data, modals, loggedUser }) => {
               typesId: [productType._id],
             })
           }
-          onEdit={() => modals.openProductTypeModal(productType, true)}
+          onEdit={() =>
+            modals.openProductTypeModal(productType, null, null, true)
+          }
           onDelete={() => modals.openDeleteProductType(productType)}
         />
       )}

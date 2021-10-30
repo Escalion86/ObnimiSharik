@@ -10,8 +10,15 @@ import {
 
 const SearchBox = ({ modals }) => {
   // const inputRef = useRef()
-
+  const [inputText, setInputText] = useState('')
   const [searchText, setSearchText] = useState('')
+  const [openList, setOpenList] = useState(false)
+
+  const eraseSearchTextAndClose = () => {
+    setOpenList(false)
+    setInputText('')
+    setTimeout(() => setSearchText(''), 400)
+  }
 
   const { products, sets, clients } = useSelector((state) => state)
 
@@ -26,10 +33,11 @@ const SearchBox = ({ modals }) => {
     item.price?.toString().includes(searchTextLowerCase)
   // ||
   // item.fullPrice?.toString().includes(searchTextLowerCase)
+  const filteredProducts = products.filter((product) => filter(product))
+  const filteredSets = sets.filter((set) => filter(set))
+  const filteredClients = clients.filter((client) => filter(client))
 
   const SearchedProducts = () => {
-    const filteredProducts = products.filter((product) => filter(product))
-
     if (filteredProducts.length === 0) return null
 
     return (
@@ -41,7 +49,10 @@ const SearchBox = ({ modals }) => {
           <ProductItem
             key={'product' + product._id}
             item={product}
-            onClick={() => modals.openProductModal(product)}
+            onClick={() => {
+              eraseSearchTextAndClose()
+              modals.openProductModal(product)
+            }}
           />
         ))}
       </>
@@ -49,8 +60,6 @@ const SearchBox = ({ modals }) => {
   }
 
   const SearchedSets = () => {
-    const filteredSets = sets.filter((set) => filter(set))
-
     if (filteredSets.length === 0) return null
 
     return (
@@ -62,7 +71,10 @@ const SearchBox = ({ modals }) => {
           <ProductItem
             key={'set' + set._id}
             item={set}
-            onClick={() => modals.openSetModal(set)}
+            onClick={() => {
+              eraseSearchTextAndClose()
+              modals.openSetModal(set)
+            }}
           />
         ))}
       </>
@@ -70,8 +82,6 @@ const SearchBox = ({ modals }) => {
   }
 
   const SearchedClients = () => {
-    const filteredClients = clients.filter((client) => filter(client))
-
     if (filteredClients.length === 0) return null
 
     return (
@@ -83,7 +93,10 @@ const SearchBox = ({ modals }) => {
           <PersonaItem
             key={'client' + client._id}
             item={client}
-            onClick={() => modals.openClientModal(client)}
+            onClick={() => {
+              eraseSearchTextAndClose()
+              modals.openClientModal(client)
+            }}
           />
         ))}
       </>
@@ -96,27 +109,39 @@ const SearchBox = ({ modals }) => {
         // ref={inputRef}
         className="flex-1 outline-none"
         type="text"
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
+        value={inputText}
+        onChange={(e) => {
+          setOpenList(e.target.value !== '')
+          setInputText(e.target.value)
+          if (e.target.value !== '' && searchText !== inputText)
+            setSearchText(inputText)
+        }}
       />
       <FontAwesomeIcon
         className={
-          'w-5 h-5 text-gray-400 ' + (searchText ? ' cursor-pointer' : '')
+          'w-5 h-5 text-gray-400 ' + (inputText ? ' cursor-pointer' : '')
         }
-        icon={searchText ? faTimes : faSearch}
-        onClick={searchText ? () => setSearchText('') : null}
+        icon={inputText ? faTimes : faSearch}
+        onClick={inputText ? () => eraseSearchTextAndClose() : null}
       />
       <div
         className={
           'absolute overflow-hidden max-h-64 transform duration-300 ease-out flex flex-col top-full left-0 right-0 bg-white shadow-sm border border-gray-700 z-50 ' +
-          (searchText ? 'scale-100' : 'scale-y-0 -translate-y-1/2 opacity-0')
+          (openList ? 'scale-100' : 'scale-y-0 -translate-y-1/2 opacity-0')
         }
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative overflow-x-hidden overflow-y-scroll">
+        <div className="relative overflow-x-hidden overflow-y-auto">
           <SearchedProducts />
           <SearchedSets />
           <SearchedClients />
+          {filteredClients.length === 0 &&
+          filteredProducts.length === 0 &&
+          filteredSets.length === 0 ? (
+            <div className="sticky top-0 text-sm bg-gray-200">
+              Ничего не найдено
+            </div>
+          ) : null}
           {/* {filteredItems.map((item) => (
             <Item
               key={item._id}

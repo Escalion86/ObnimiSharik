@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 import Button from '@components/Button'
 
@@ -28,8 +28,7 @@ const menuCfg = (pages, pagesGroups, userRole) =>
     const pagesItems = pages.reduce((totalPages, page) => {
       if (
         page.group === group.id &&
-        (userRole === 'dev' ||
-          page.accessRoles.includes('all') ||
+        (page.accessRoles.includes('all') ||
           page.accessRoles.includes(userRole))
       )
         totalPages.push(page)
@@ -41,7 +40,8 @@ const menuCfg = (pages, pagesGroups, userRole) =>
   }, [])
 
 export default function Admin() {
-  const [session, loading] = useSession()
+  const { data: session, status } = useSession()
+  const loading = status === 'loading'
 
   const state = useSelector((state) => state)
 
@@ -72,7 +72,8 @@ export default function Admin() {
   useEffect(() => {
     if (!session && !loading) {
       signIn('google')
-    } else if (!loading) {
+    } else if (status === 'authenticated') {
+      // Если авторизированы
       const fetching = async () => {
         // const result = await fetchingAll(setData)
         await fetchingAll((result) => {
@@ -82,20 +83,22 @@ export default function Admin() {
         // await dispatch(setModalsFunctions(result))
       }
       fetching()
-      const role = session.user.role
+      const role = session.user?.role
       if (role === 'deliver') setPageId(14)
       if (role === 'aerodesigner') setPageId(13)
       if (role === 'operator') setPageId(11)
 
       // const ordersListener = Orders.watch()
     }
-  }, [!!session, loading])
+  }, [!!session, status])
 
-  const loggedUser = state.users.find((user) => session.user._id === user._id)
+  const loggedUser = session?.user
+    ? state.users.find((user) => session.user._id === user._id) ?? session.user
+    : null
 
   const haveAccess =
     loggedUser?.role &&
-    ROLES.filter((role) => role.value === loggedUser.role).length > 0
+    ROLES.filter((role) => role.value === loggedUser?.role).length > 0
 
   return (
     <>
@@ -136,7 +139,7 @@ export default function Admin() {
           ) : (
             <div className="flex items-center justify-center h-screen">
               <div className="flex flex-col items-center justify-center p-10 bg-gray-400 rounded-2xl w-92">
-                {loggedUser.email && (
+                {loggedUser?.email && (
                   <div>Вы авторизировались как {loggedUser.email}</div>
                 )}
                 <div>У Вас нет доступа к панели администратора</div>
