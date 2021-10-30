@@ -61,11 +61,11 @@ export const PersonaItem = ({ item, onClick = null, active = false }) => (
     <div className="h-5 text-sm text-gray-800 truncate">{item.name}</div>
     <div className="flex items-center overflow-x-hidden text-xs text-gray-600 gap-x-2">
       <div className="flex-1 whitespace-nowrap">
-        Телефон: +{item.phone || '[нет]'}
+        Телефон: {item.phone ? '+' + item.phone : '[нет]'}
       </div>
       {item.whatsapp && (
         <div className="flex-1 text-center whitespace-nowrap">
-          WhatsApp: +{item.whatsapp}
+          WhatsApp: +{item.whatsapp ? '+' + item.whatsapp : [нет]}
         </div>
       )}
       {item.email && (

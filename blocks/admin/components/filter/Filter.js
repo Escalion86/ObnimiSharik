@@ -11,7 +11,6 @@ const Filter = ({
   setHideFilter = () => {},
 }) => {
   const [filter, setFilter] = useState(state.filter[variable])
-  console.log(`variable`, variable)
 
   useEffect(() => {
     if (!compareObjects(state.filter[variable], filter))

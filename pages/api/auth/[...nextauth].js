@@ -97,20 +97,17 @@ export default async function auth(req, res) {
             result[0].image &&
             !result[0].image.includes('https://res.cloudinary.com')
           ) {
-            await fetch(
-              'https://api.cloudinary.com/v1_1/escalion-ru/image/upload',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json;charset=utf-8',
-                },
-                body: JSON.stringify({
-                  file: result[0].image,
-                  upload_preset: 'obnimisharik_users',
-                  public_id: result[0]._id,
-                }),
-              }
-            )
+            await fetch(process.env.CLOUDINARY_UPLOAD_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+              },
+              body: JSON.stringify({
+                file: result[0].image,
+                upload_preset: process.env.CLOUDINARY_FOLDER + '_users',
+                public_id: result[0]._id,
+              }),
+            })
               .then((response) => response.json())
               .then(async (data) => {
                 if (data.secure_url !== '') {
