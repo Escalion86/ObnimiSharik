@@ -35,9 +35,11 @@ export const DevToDoCard = ({
             <div className="flex-1 italic whitespace-pre-line">
               {devToDo.description}
             </div>
-            <div className="flex-1">
-              Создано: <span className="italic">{user.name}</span>
-            </div>
+            {user ? (
+              <div className="flex-1">
+                Создано: <span className="italic">{user.name}</span>
+              </div>
+            ) : null}
           </div>
         </div>
       </CardContainer>
