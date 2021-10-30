@@ -579,6 +579,40 @@ export const SelectDeliver = ({
   )
 }
 
+export const SelectAerodesigner = ({
+  onChange,
+  selectedId = null,
+  exceptedIds = [],
+  required = false,
+  className = null,
+  clearButton = null,
+}) => {
+  const { users } = useSelector((state) => state)
+  const aerodesigners = users.filter((user) => user.role === 'aerodesigner')
+  return (
+    <SelectItemContainer
+      required={required}
+      label="Ответственный аэродизайнер"
+      className={className}
+      onClickClearButton={
+        selectedId && clearButton ? () => onChange(null) : null
+      }
+    >
+      <SelectItem
+        items={aerodesigners}
+        itemComponent={PersonaItem}
+        onChange={onChange}
+        selectedId={selectedId}
+        className={
+          'flex-1' +
+          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+        }
+        exceptedIds={exceptedIds}
+      />
+    </SelectItemContainer>
+  )
+}
+
 export const SelectDistrict = ({
   onChange,
   selectedId = null,

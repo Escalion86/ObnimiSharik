@@ -13,6 +13,7 @@ import {
   PriceInput,
   SelectClient,
   SelectDeliver,
+  SelectAerodesigner,
   SelectPaymentList,
   SelectProductsList,
   SelectSetsList,
@@ -748,13 +749,13 @@ const PaymentContent = ({
 const ProductCirculationContent = ({
   form,
   setForm,
-  // role,
+  role,
   productCirculationsIdCountDefective,
   setProductCirculationsIdCountDefective,
   productCirculationsIdCount,
   setProductCirculationsIdCount,
 }) => {
-  // const operator = ['operator', 'dev', 'admin'].includes(role)
+  const operator = ['operator', 'dev', 'admin'].includes(role)
   // const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   // const deliver = ['deliver', 'dev', 'admin'].includes(role)
 
@@ -779,6 +780,20 @@ const ProductCirculationContent = ({
 
   return (
     <div>
+      {operator && (
+        <SelectAerodesigner
+          onChange={(item) =>
+            setForm({
+              ...form,
+              aerodesignerId: item._id,
+            })
+          }
+          selectedId={form.aerodesignerId}
+          required
+          className="mb-2"
+          // exceptedIds={selectedItemsIds}
+        />
+      )}
       <IconButton
         name="Генерировать из состава заказа"
         onClick={productCirculationIdCountGenerator}
@@ -867,6 +882,7 @@ const OrderForm = ({
     deliveryDateFrom: order.deliveryDateFrom,
     deliveryDateTo: order.deliveryDateTo,
     deliverId: order.deliverId,
+    aerodesignerId: order.aerodesignerId,
   })
 
   const [paymentsId, setPaymentsId] = useState([])
@@ -1084,6 +1100,7 @@ const OrderForm = ({
 
   const contentParams = {
     state,
+    operator,
     readOnly,
     form,
     order,

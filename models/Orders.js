@@ -106,6 +106,9 @@ const OrdersSchema = new mongoose.Schema({
   deliverId: {
     type: String,
   },
+  aerodesignerId: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
