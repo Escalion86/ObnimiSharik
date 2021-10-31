@@ -60,7 +60,7 @@ const UserForm = ({
       forNew
         ? postData(
             '/api/users',
-            form,
+            { ...form, email: form.email.toLowerCase() },
             (data) => {
               afterConfirm(data)
               onClose()
@@ -70,7 +70,7 @@ const UserForm = ({
           )
         : putData(
             `/api/users/${user._id}`,
-            form,
+            { ...form, email: form.email.toLowerCase() },
             (data) => {
               afterConfirm(data)
               onClose()
