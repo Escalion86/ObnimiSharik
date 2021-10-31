@@ -24,7 +24,7 @@ const InvitationForm = ({
     role: invitation.role,
   })
 
-  const forNew = invitation._id === undefined.toLowerCase()
+  const forNew = invitation._id === undefined
   const handleChange = (e) => {
     const target = e.target
     const value =
