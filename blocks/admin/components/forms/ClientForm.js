@@ -66,7 +66,7 @@ const ClientForm = ({
       forNew
         ? postData(
             '/api/clients',
-            form,
+            { ...form, email: form.email.toLowerCase() },
             (data) => {
               afterConfirm(data)
               onClose()
@@ -76,7 +76,7 @@ const ClientForm = ({
           )
         : putData(
             `/api/clients/${client._id}`,
-            form,
+            { ...form, email: form.email.toLowerCase() },
             (data) => {
               afterConfirm(data)
               onClose()

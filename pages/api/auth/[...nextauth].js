@@ -85,9 +85,10 @@ export default async function auth(req, res) {
       // }
       async session({ session, token }) {
         const { user } = session
+        const userEmail = user.email.toLowerCase()
         await dbConnect()
         const result = await Users.find({
-          email: user.email,
+          email: userEmail,
         })
 
         // Если пользователь есть в базе
@@ -138,35 +139,35 @@ export default async function auth(req, res) {
 
           if (result[0].role === 'client') {
             const invitation = await Invitations.find({
-              email: user.email,
+              email: userEmail,
               status: 'created',
             })
 
             if (invitation && invitation.length === 1) {
               // Ели пользователь впервые зашел, но есть приглашение то создаем пустую учетку и указываем роль в приглашении
               await Users.findOneAndUpdate(
-                { email: user.email },
+                { email: userEmail },
                 {
                   ...defaultUserProps,
                   role: invitation[0].role,
                 }
               )
               await Invitations.findOneAndUpdate(
-                { email: user.email, status: 'created' },
+                { email: userEmail, status: 'created' },
                 { status: 'confirmed', updatedAt: Date.now() }
               )
               user.role = invitation[0].role
             } else {
               // Если пользователь зашел, но небыло приглаения то создаем пустую учетку с ролью client
               await Users.findOneAndUpdate(
-                { email: user.email },
+                { email: userEmail },
                 defaultUserProps
               )
             }
           } else {
             // Если пользователь авторизован, то обновляем только время активности
             await Users.findOneAndUpdate(
-              { email: user.email },
+              { email: userEmail },
               { lastActivityAt: Date.now(), lastAutorizationAt: Date.now() }
             )
           }
@@ -174,7 +175,7 @@ export default async function auth(req, res) {
         // Если пользователя нет в базе
         else {
           const invitation = await Invitations.find({
-            email: user.email,
+            email: userEmail,
             status: 'created',
           })
 
@@ -184,13 +185,13 @@ export default async function auth(req, res) {
               method: 'POST',
               body: {
                 name: user.name,
-                email: user.email,
+                email: userEmail,
                 image: user.image,
                 role: invitation[0].role,
               },
             })
             await Invitations.findOneAndUpdate(
-              { email: user.email, status: 'created' },
+              { email: userEmail, status: 'created' },
               { status: 'confirmed', updatedAt: Date.now() }
             )
             user.role = invitation[0].role
@@ -200,7 +201,7 @@ export default async function auth(req, res) {
               method: 'POST',
               body: {
                 name: user.name,
-                email: user.email,
+                email: userEmail,
                 image: user.image,
                 role: 'client',
               },

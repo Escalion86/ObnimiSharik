@@ -24,8 +24,7 @@ const InvitationForm = ({
     role: invitation.role,
   })
 
-  const forNew = invitation._id === undefined
-
+  const forNew = invitation._id === undefined.toLowerCase()
   const handleChange = (e) => {
     const target = e.target
     const value =
@@ -45,27 +44,28 @@ const InvitationForm = ({
   const handleSubmit = (e) => {
     e?.preventDefault()
     const errs = formValidate()
+    const formEmail = form.email.toLowerCase()
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
             '/api/invitations',
-            form,
+            { ...form, email: formEmail },
             (data) => {
               afterConfirm(data)
               onClose()
             },
-            'Приглашение для "' + form.email + '" создано и отправлно',
-            'Ошибка при создании пришлашения для "' + form.email + '"'
+            'Приглашение для "' + formEmail + '" создано и отправлно',
+            'Ошибка при создании пришлашения для "' + formEmail + '"'
           )
         : putData(
             `/api/invitations/${invitation._id}`,
-            form,
+            { ...form, email: formEmail },
             (data) => {
               afterConfirm(data)
               onClose()
             },
-            'Приглашение для "' + form.email + '" изменено',
-            'Ошибка при редактировании приглашения для "' + form.email + '"'
+            'Приглашение для "' + formEmail + '" изменено',
+            'Ошибка при редактировании приглашения для "' + formEmail + '"'
           )
     } else {
       setErrors(errs)
