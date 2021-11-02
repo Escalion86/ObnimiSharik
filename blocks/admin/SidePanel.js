@@ -1,3 +1,4 @@
+import versionHistory from '@helpers/versionHistory'
 import React from 'react'
 
 // import Logo from '../../public/img/'
@@ -31,7 +32,7 @@ const MenuItem = ({ item, setPageId = () => {}, active = false }) => {
 
 const Menu = ({ menuCfg, setPageId, activePageId }) => {
   return (
-    <nav className="mt-2">
+    <nav>
       {menuCfg &&
         menuCfg.length > 0 &&
         menuCfg.map((item, index) => (
@@ -72,9 +73,21 @@ const SidePanel = ({
     >
       <div className="h-full laptop:block">
         <div className="flex flex-col w-64 h-full px-8 py-4 overflow-y-auto bg-gray-100 border-r border-primary laptop:fixed z-1">
-          <div className="z-10">
+          <div className="z-10 flex flex-col justify-start h-full">
             {/* <img className="px-4" src={Logo} alt="logo" /> */}
-            <img src="/img/balloon.webp" alt="balloon" width={40} height={40} />
+            <div className="flex items-center justify-center shadow-primary bg-primary rounded-3xl">
+              <img
+                src="/img/balloon.webp"
+                alt="balloon"
+                width={40}
+                height={40}
+              />
+              <div class="text-lg text-white leading-4 font-futuraDemi">
+                Обними
+                <br />
+                шарик
+              </div>
+            </div>
             <Menu
               menuCfg={menuCfg}
               setPageId={(id) => {
@@ -83,6 +96,9 @@ const SidePanel = ({
               }}
               activePageId={activePageId}
             />
+            <div className="flex flex-col items-center justify-end flex-1 opacity-60">
+              {`ver. ${versionHistory[0].ver}`}
+            </div>
           </div>
           {/* <div className="z-0 flex-col justify-end flex-1 hidden w-full px-3 m-auto mt-6 opacity-100 lg:flex">
             <img className="object-contain" src={Aik1_alt} alt="logo" />
