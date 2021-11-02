@@ -108,7 +108,7 @@ const Input = ({
         )}
         <div className="flex-1 overflow-hidden">
           <InputComponent
-            className="flex-grow-0 w-full max-w-full px-2 py-1 bg-gray-200 outline-none"
+            className="flex-grow-0 w-full max-w-full px-1.5 py-1 bg-gray-200 outline-none"
             type={type === 'number' ? 'text' : type}
             maxLength={maxLength}
             name={name}
