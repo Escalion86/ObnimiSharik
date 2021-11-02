@@ -35,22 +35,16 @@ const PaymentForm = ({
     payAt: payment.payAt,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = payment._id === undefined
 
   const handleChange = (e) => {
     const target = e.target
-    const value =
-      target.name === 'sum'
-        ? target.value * 100
-        : target.name === 'images'
-        ? [target.value]
-        : target.value
+    const value = target.name === 'images' ? [target.value] : target.value
     const name = target.name
 
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   const handleSubmit = (e) => {
@@ -105,24 +99,14 @@ const PaymentForm = ({
       }
     >
       <SelectClient
-        onChange={(item) =>
-          setForm({
-            ...form,
-            clientId: item._id,
-          })
-        }
+        onChange={(client) => updateForm({ clientId: client._id })}
         selectedId={form.clientId}
         required
         className="flex-1"
         // exceptedIds={selectedItemsIds}
       />
       <SelectOrder
-        onChange={(item) =>
-          setForm({
-            ...form,
-            orderId: item ? item._id : '',
-          })
-        }
+        onChange={(order) => updateForm({ orderId: order._id })}
         selectedId={form.orderId}
         // clearButton
         required
@@ -130,20 +114,15 @@ const PaymentForm = ({
       />
       <PayTypePicker
         payType={form.payType}
-        onChange={(payType) =>
-          setForm({
-            ...form,
-            payType,
-          })
-        }
+        onChange={(payType) => updateForm({ payType })}
         inLine
         required
       />
       <PriceInput
-        value={form.sum / 100}
+        value={form.sum}
         name="sum"
         label="Сумма"
-        onChange={handleChange}
+        onChange={(sum) => updateForm({ sum })}
         required
         className="flex-1"
         inLine

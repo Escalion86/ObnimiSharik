@@ -36,6 +36,8 @@ const DevToDoForm = ({
     finishedAt: devToDo.finishedAt,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = devToDo._id === undefined
 
   const handleChange = (e) => {
@@ -43,17 +45,13 @@ const DevToDoForm = ({
     const value = target.name === 'images' ? [target.value] : target.value
     const name = target.name
 
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   useEffect(() => {
     if (!form.userId)
       getSession().then((session) =>
-        setForm({
-          ...form,
+        updateForm({
           userId: session.user._id,
         })
       )
@@ -143,8 +141,7 @@ const DevToDoForm = ({
         images={form.images}
         label="Скриншоты"
         onChange={(images) =>
-          setForm({
-            ...form,
+          updateForm({
             images,
           })
         }
@@ -153,8 +150,7 @@ const DevToDoForm = ({
       <PriorityPicker
         priority={form.priority}
         onChange={(priority) =>
-          setForm({
-            ...form,
+          updateForm({
             priority,
           })
         }
@@ -165,8 +161,7 @@ const DevToDoForm = ({
         <DevToDoStatusPicker
           status={form.status}
           onChange={(status) =>
-            setForm({
-              ...form,
+            updateForm({
               status,
             })
           }

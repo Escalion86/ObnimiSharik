@@ -214,6 +214,7 @@ export const DEFAULT_ORDER = {
   deliveryDateTo: new Date().toISOString(),
   deliverId: '',
   aerodesignerId: '',
+  operatorId: '',
 }
 
 export const DEFAULT_PAYMENT = {

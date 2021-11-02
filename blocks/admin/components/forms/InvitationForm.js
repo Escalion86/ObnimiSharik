@@ -24,21 +24,15 @@ const InvitationForm = ({
     role: invitation.role,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = invitation._id === undefined
   const handleChange = (e) => {
     const target = e.target
-    const value =
-      target.name === 'price'
-        ? target.value * 100
-        : target.name === 'images'
-        ? [target.value]
-        : target.value
+    const value = target.name === 'images' ? [target.value] : target.value
     const name = target.name
 
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   const handleSubmit = (e) => {

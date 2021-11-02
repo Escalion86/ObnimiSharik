@@ -14,6 +14,7 @@ export {
   SelectPayment,
   SelectDeliver,
   SelectAerodesigner,
+  SelectOperator,
   SelectDistrict,
 } from './SelectItemsList/SelectItem'
 export {

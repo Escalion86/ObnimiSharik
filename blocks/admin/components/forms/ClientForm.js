@@ -41,22 +41,16 @@ const ClientForm = ({
     image: client.image,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = client._id === undefined
 
   const handleChange = (e) => {
     const target = e.target
-    const value =
-      target.name === 'price'
-        ? target.value * 100
-        : target.name === 'images'
-        ? [target.value]
-        : target.value
+    const value = target.name === 'images' ? [target.value] : target.value
     const name = target.name
 
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   const handleSubmit = (e) => {
@@ -204,8 +198,7 @@ const ClientForm = ({
       <GenderPicker
         gender={form.gender}
         onChange={(gender) =>
-          setForm({
-            ...form,
+          updateForm({
             gender,
           })
         }

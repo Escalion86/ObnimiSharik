@@ -592,7 +592,7 @@ export const SelectAerodesigner = ({
   return (
     <SelectItemContainer
       required={required}
-      label="Ответственный аэродизайнер"
+      label="Аэродизайнер"
       className={className}
       onClickClearButton={
         selectedId && clearButton ? () => onChange(null) : null
@@ -600,6 +600,40 @@ export const SelectAerodesigner = ({
     >
       <SelectItem
         items={aerodesigners}
+        itemComponent={PersonaItem}
+        onChange={onChange}
+        selectedId={selectedId}
+        className={
+          'flex-1' +
+          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+        }
+        exceptedIds={exceptedIds}
+      />
+    </SelectItemContainer>
+  )
+}
+
+export const SelectOperator = ({
+  onChange,
+  selectedId = null,
+  exceptedIds = [],
+  required = false,
+  className = null,
+  clearButton = null,
+}) => {
+  const { users } = useSelector((state) => state)
+  const operators = users.filter((user) => user.role === 'operator')
+  return (
+    <SelectItemContainer
+      required={required}
+      label="Оператор"
+      className={className}
+      onClickClearButton={
+        selectedId && clearButton ? () => onChange(null) : null
+      }
+    >
+      <SelectItem
+        items={operators}
         itemComponent={PersonaItem}
         onChange={onChange}
         selectedId={selectedId}

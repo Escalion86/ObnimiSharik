@@ -102,7 +102,7 @@ module.exports = {
       },
       maxWidth: {
         // 4: '1rem',
-        // 8: '2rem',
+        6: '1.5rem',
         // 12: '3rem',
         // 16: '4rem',
         20: '5rem',

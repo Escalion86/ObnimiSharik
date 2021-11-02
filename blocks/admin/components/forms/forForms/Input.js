@@ -84,13 +84,15 @@ const Input = ({
       <div
         className={
           'flex flex-1 border rounded-lg flex-nowrap overflow-hidden ' +
-          (required && !value ? 'border-red-700' : 'border-gray-700') +
+          (required && (!value || value == '0')
+            ? 'border-red-700'
+            : 'border-gray-700') +
           (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ') +
           (inputStyle ? ' ' + inputStyle : '')
         }
       >
         {prefix && (
-          <div className="flex items-center justify-center bg-gray-300 border-r border-gray-700 rounded-l-lg min-w-6">
+          <div className="flex items-center justify-center bg-gray-300 border-r border-gray-700 min-w-6 px-0.5">
             {prefix}
           </div>
         )}
@@ -129,7 +131,7 @@ const Input = ({
           />
         </div>
         {postfix && (
-          <div className="flex items-center justify-center w-6 bg-gray-300 border-l border-gray-700 rounded-r-lg">
+          <div className="flex items-center justify-center bg-gray-300 border-l border-gray-700 min-w-6 px-0.5">
             {postfix}
           </div>
         )}

@@ -43,6 +43,8 @@ const SetForm = ({
     archive: set.archive,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const { setTypes } = useSelector((state) => state)
 
   const afterConfirmUpd = (data) => {
@@ -55,18 +57,10 @@ const SetForm = ({
 
   const handleChange = (e) => {
     const target = e.target
-    const value =
-      target.name === 'price'
-        ? target.value * 100
-        : target.name === 'images'
-        ? [target.value]
-        : target.value
+    const value = target.name === 'images' ? [target.value] : target.value
     const name = target.name
 
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   const handleSubmit = (e) => {
@@ -171,8 +165,8 @@ const SetForm = ({
             inLine={readOnly}
           />
           <PriceInput
-            value={form.price / 100}
-            onChange={handleChange}
+            value={form.price}
+            onChange={(price) => updateForm({ price })}
             required
             className="flex-1"
             readOnly={readOnly}
@@ -189,10 +183,7 @@ const SetForm = ({
             }
           })}
           onChange={(data) => {
-            setForm({
-              ...form,
-              typesId: data.map((type) => type.value),
-            })
+            updateForm({ typesId: data.map((type) => type.value) })
             // console.log('checked', data)
           }}
           readOnly={readOnly}
@@ -201,23 +192,13 @@ const SetForm = ({
       <FormColumn className="flex flex-col flex-1">
         <SelectProductsList
           productsIdCount={form.productsIdCount}
-          onChange={(newProductsIdCount) =>
-            setForm({
-              ...form,
-              productsIdCount: newProductsIdCount,
-            })
-          }
+          onChange={(productsIdCount) => updateForm({ productsIdCount })}
           readOnly={readOnly}
         />
         <InputImages
           images={form.images}
           label="Картинки"
-          onChange={(images) =>
-            setForm({
-              ...form,
-              images,
-            })
-          }
+          onChange={(images) => updateForm({ images })}
           readOnly={readOnly}
           directory="sets"
         />

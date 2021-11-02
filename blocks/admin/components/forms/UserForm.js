@@ -43,14 +43,13 @@ const UserForm = ({
     birthday: user.birthday,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = user._id === undefined
 
   const handleChange = (e) => {
     const { value, name } = e.target
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   const handleSubmit = (e) => {
@@ -104,12 +103,7 @@ const UserForm = ({
     >
       <InputAvatar
         user={form}
-        onChange={(imageUrl) =>
-          setForm({
-            ...form,
-            image: imageUrl,
-          })
-        }
+        onChange={(imageUrl) => updateForm({ image: imageUrl })}
       />
       <Input
         key="email"
@@ -220,12 +214,7 @@ const UserForm = ({
       </div>
       <GenderPicker
         gender={form.gender}
-        onChange={(gender) =>
-          setForm({
-            ...form,
-            gender,
-          })
-        }
+        onChange={(gender) => updateForm({ gender })}
         inLine
       />
     </Form>

@@ -32,12 +32,11 @@ const UserContentForm = ({
     birthday: loggedUser.birthday,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const handleChange = (e) => {
     const { value, name } = e.target
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   const handleSubmit = (e) => {
@@ -84,12 +83,7 @@ const UserContentForm = ({
       </div>
       <InputAvatar
         user={form}
-        onChange={(imageUrl) =>
-          setForm({
-            ...form,
-            image: imageUrl,
-          })
-        }
+        onChange={(imageUrl) => updateForm({ image: imageUrl })}
         inLine
       />
       <Input
@@ -176,12 +170,7 @@ const UserContentForm = ({
       />
       <GenderPicker
         gender={form.gender}
-        onChange={(gender) =>
-          setForm({
-            ...form,
-            gender,
-          })
-        }
+        onChange={(gender) => updateForm({ gender })}
         inLine
       />
       {/* <div className="flex flex-col">

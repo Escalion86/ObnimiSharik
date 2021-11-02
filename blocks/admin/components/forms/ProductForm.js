@@ -35,6 +35,8 @@ const ProductForm = ({
     archive: product.archive,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const { productTypes } = useSelector((state) => state)
 
   const afterConfirmUpd = (data) => {
@@ -48,15 +50,8 @@ const ProductForm = ({
   const handleChange = (e) => {
     const target = e.target
     const name = target.name
-    // deleteImage('obnimisharik/cmurzvh8hj7e7pcwefvx')
-    // if (name === 'image') {
-    //   setImages([...images, target.files[0]])
-    // } else {
-    const value = name === 'price' ? target.value * 100 : target.value
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    const value = target.value
+    updateForm({ [name]: value })
     // }
   }
 
@@ -151,8 +146,8 @@ const ProductForm = ({
           inLine={readOnly}
         />
         <PriceInput
-          value={form.price / 100}
-          onChange={handleChange}
+          value={form.price}
+          onChange={(price) => updateForm({ price })}
           required
           className="flex-1"
           readOnly={readOnly}
@@ -179,12 +174,7 @@ const ProductForm = ({
       <InputImages
         images={form.images}
         label="Картинки"
-        onChange={(images) =>
-          setForm({
-            ...form,
-            images,
-          })
-        }
+        onChange={(images) => updateForm({ images })}
         readOnly={readOnly}
         directory="products"
       />

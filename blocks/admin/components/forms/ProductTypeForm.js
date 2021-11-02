@@ -24,14 +24,13 @@ const ProductTypeForm = ({
     image: productType.image,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = productType._id === undefined
 
   const handleChange = (e) => {
     const { value, name } = e.target
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   const handleSubmit = (e) => {
@@ -85,7 +84,7 @@ const ProductTypeForm = ({
       <InputImage
         image={form.image}
         label="Картинка"
-        onChange={(imageUrl) => setForm({ ...form, image: imageUrl })}
+        onChange={(image) => updateForm({ image })}
         noImage={`/img/noImage.jpg`}
         inLine
         directory="product_types"
