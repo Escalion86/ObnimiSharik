@@ -11,13 +11,13 @@ const PriceInput = ({
   name = 'price',
   readOnly = false,
 }) => {
-  const rubles = Math.floor(value / 100)
-  const cops = Math.floor(value % 100)
+  const rubles = value ? Math.floor(value / 100) : 0
+  const cops = value ? Math.floor(value % 100) : 0
 
-  const onChangeUpd = (e, rub = true) => {
+  const onChangeUpd = (value, rub = true) => {
     let newValue
-    if (rub) newValue = Number(e.target.value * 100) + cops
-    else newValue = rubles * 100 + Number(e.target.value)
+    if (rub) newValue = Number(value * 100) + cops
+    else newValue = rubles * 100 + Number(value)
 
     onChange(newValue)
   }
@@ -60,7 +60,7 @@ const PriceInput = ({
           type="number"
           name={name + '₽'}
           value={rubles}
-          onChange={(e) => onChangeUpd(e, true)}
+          onChange={(value) => onChangeUpd(value, true)}
           // required={required}
           inLine={inLine}
           postfix="₽"
@@ -74,7 +74,7 @@ const PriceInput = ({
           type="number"
           name={name + 'коп'}
           value={cops}
-          onChange={(e) => onChangeUpd(e, false)}
+          onChange={(value) => onChangeUpd(value, false)}
           // required={required}
           inLine={inLine}
           postfix="коп"
