@@ -39,7 +39,9 @@ const Form = ({
     <>
       <div className="flex flex-col gap-y-2">
         {title && (
-          <div className="text-lg font-semibold text-center">{title}</div>
+          <div className="mx-6 text-lg font-semibold leading-5 text-center">
+            {title}
+          </div>
         )}
         <div
           className={
