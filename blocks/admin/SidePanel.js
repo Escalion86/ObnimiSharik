@@ -82,7 +82,7 @@ const SidePanel = ({
                 width={40}
                 height={40}
               />
-              <div class="text-lg text-white leading-4 font-futuraDemi">
+              <div className="text-lg leading-4 text-white font-futuraDemi">
                 Обними
                 <br />
                 шарик
