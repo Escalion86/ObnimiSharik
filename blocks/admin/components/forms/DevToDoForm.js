@@ -140,31 +140,19 @@ const DevToDoForm = ({
       <InputImages
         images={form.images}
         label="Скриншоты"
-        onChange={(images) =>
-          updateForm({
-            images,
-          })
-        }
+        onChange={(images) => updateForm({ images })}
         directory="devtodo"
       />
       <PriorityPicker
         priority={form.priority}
-        onChange={(priority) =>
-          updateForm({
-            priority,
-          })
-        }
+        onChange={(priority) => updateForm({ priority })}
         inLine
         readOnly={readOnly}
       />
       {(loggedUser.role === 'dev' || readOnly) && (
         <DevToDoStatusPicker
           status={form.status}
-          onChange={(status) =>
-            updateForm({
-              status,
-            })
-          }
+          onChange={(status) => updateForm({ status })}
           inLine
           readOnly={readOnly}
         />

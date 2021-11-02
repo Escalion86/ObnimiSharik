@@ -833,7 +833,7 @@ const ProductCirculationContent = ({
         productsIdCount={productCirculationsIdCount}
         onChange={(newProductsIdCount) => {
           setProductCirculationsIdCount(newProductsIdCount)
-          setForm({})
+          updateForm({})
         }}
       />
       <SelectProductsList
@@ -842,7 +842,7 @@ const ProductCirculationContent = ({
         onChange={(newProductsIdCount) => {
           setProductCirculationsIdCountDefective(newProductsIdCount)
           // TODO Очень странная фигняююю без строчки ниже компонент не обновляется если добавить новый товар
-          setForm({})
+          updateForm({})
         }}
       />
     </div>
@@ -972,7 +972,7 @@ const OrderForm = ({
       if (aerodesigners.length === 1 && !form.aerodesignerId)
         toForm.aerodesignerId = aerodesigners[0]._id
 
-      setForm({ ...form, ...toForm })
+      updateForm(toForm)
     }
   }, [])
 
