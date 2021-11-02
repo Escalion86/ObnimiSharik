@@ -183,6 +183,7 @@ const Cabinet = ({
         setPageId={setPageId}
         activePageId={page.id}
         closeMenu={closeMenu}
+        modals={modals}
       />
       <div
         className="relative grid flex-1 max-h-screen min-w-0 "
