@@ -37,14 +37,7 @@ const PhoneInput = ({
         alwaysShowMask
         value={value || ''}
         onChange={(e) =>
-          onChange({
-            ...e,
-            target: {
-              ...e.target,
-              name: e.target.name,
-              value: Number(e.target.value.replace(/[^0-9]/g, '')),
-            },
-          })
+          onChange(Number(e.target.value.replace(/[^0-9]/g, '')))
         }
       />
     </div>

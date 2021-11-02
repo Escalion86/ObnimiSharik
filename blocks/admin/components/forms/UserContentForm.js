@@ -32,13 +32,7 @@ const UserContentForm = ({
     birthday: loggedUser.birthday,
   })
 
-  const handleChange = (e) => {
-    const { value, name } = e.target
-    setForm({
-      ...form,
-      [name]: value,
-    })
-  }
+  const updateForm = (data) => setForm({ ...form, ...data })
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -84,12 +78,7 @@ const UserContentForm = ({
       </div>
       <InputAvatar
         user={form}
-        onChange={(imageUrl) =>
-          setForm({
-            ...form,
-            image: imageUrl,
-          })
-        }
+        onChange={(imageUrl) => updateForm({ image: imageUrl })}
         inLine
       />
       <Input
@@ -97,9 +86,8 @@ const UserContentForm = ({
         label="EMail"
         type="text"
         maxLength="80"
-        name="email"
         value={form.email}
-        onChange={handleChange}
+        onChange={(email) => updateForm({ email })}
         required
         disabled
         inLine
@@ -109,9 +97,8 @@ const UserContentForm = ({
         label="Имя"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
         inLine
       />
@@ -130,27 +117,24 @@ const UserContentForm = ({
       <PhoneInput
         key="phone"
         label="Телефон"
-        name="phone"
         value={form.phone}
-        onChange={handleChange}
+        onChange={(phone) => updateForm({ phone })}
         // required
         inLine
       />
       <PhoneInput
         key="whatsapp"
         label="WhatsApp"
-        name="whatsapp"
         value={form.whatsapp}
-        onChange={handleChange}
+        onChange={(whatsapp) => updateForm({ whatsapp })}
         // required
         inLine
       />
       <PhoneInput
         key="viber"
         label="Viber"
-        name="viber"
         value={form.viber}
-        onChange={handleChange}
+        onChange={(viber) => updateForm({ viber })}
         // required
         inLine
       />
@@ -160,28 +144,20 @@ const UserContentForm = ({
         label="Telegram"
         type="text"
         maxLength="80"
-        name="telegram"
         value={form.telegram}
-        onChange={handleChange}
+        onChange={(telegram) => updateForm({ telegram })}
         inLine
       />
       <DatePicker
         key="birthday"
         label="День рождения"
-        name="birthday"
         value={form.birthday}
-        // value={productCirculation.createdAt}
-        onChange={handleChange}
+        onChange={(birthday) => updateForm({ birthday })}
         inLine
       />
       <GenderPicker
         gender={form.gender}
-        onChange={(gender) =>
-          setForm({
-            ...form,
-            gender,
-          })
-        }
+        onChange={(gender) => updateForm({ gender })}
         inLine
       />
       {/* <div className="flex flex-col">

@@ -24,21 +24,15 @@ const InvitationForm = ({
     role: invitation.role,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = invitation._id === undefined
   const handleChange = (e) => {
     const target = e.target
-    const value =
-      target.name === 'price'
-        ? target.value * 100
-        : target.name === 'images'
-        ? [target.value]
-        : target.value
+    const value = target.name === 'images' ? [target.value] : target.value
     const name = target.name
 
-    setForm({
-      ...form,
-      [name]: value,
-    })
+    updateForm({ [name]: value })
   }
 
   const handleSubmit = (e) => {
@@ -96,15 +90,14 @@ const InvitationForm = ({
         label="EMail сотрудника"
         type="text"
         maxLength="80"
-        name="email"
         value={form.email}
-        onChange={handleChange}
+        onChange={(email) => updateForm({ email })}
         required
       />
       <ComboBox
         name="role"
         title="Должность"
-        handleChange={handleChange}
+        handleChange={(role) => updateForm({ role })}
         defaultValue={form.role}
         placeholder="Выберите должность"
         items={ROLES.filter((role) => !role.hidden)}

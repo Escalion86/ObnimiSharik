@@ -22,6 +22,7 @@ import {
 import modalsFunctions from '@adminblocks/modals/modalsFunctions'
 import { setPage } from '@state/actions/pageActions'
 import { pages, pagesGroups } from '@adminblocks/pages'
+import versionHistory from '@helpers/versionHistory'
 
 const menuCfg = (pages, pagesGroups, userRole) =>
   pagesGroups.reduce((totalGroups, group) => {
@@ -88,6 +89,17 @@ export default function Admin() {
       if (role === 'aerodesigner') setPageId(13)
       if (role === 'operator') setPageId(11)
 
+      console.log(
+        `session.user?.prevActivityAt`,
+        new Date(session.user?.prevActivityAt)
+      )
+      console.log(`versionHistory[0].date`, new Date(versionHistory[0].date))
+      if (
+        new Date(session.user?.prevActivityAt) <
+        new Date(versionHistory[0].date)
+      )
+        modals.openVersionHistoryModal()
+
       // const ordersListener = Orders.watch()
     }
   }, [!!session, status])
@@ -95,6 +107,8 @@ export default function Admin() {
   const loggedUser = session?.user
     ? state.users.find((user) => session.user._id === user._id) ?? session.user
     : null
+
+  console.log(`loggedUser`, loggedUser)
 
   const haveAccess =
     loggedUser?.role &&

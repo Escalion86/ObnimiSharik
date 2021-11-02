@@ -7,7 +7,6 @@ import Head from 'next/head'
 import { SessionProvider } from 'next-auth/react'
 
 import { createStore, applyMiddleware, compose } from 'redux'
-import { batchedSubscribe } from 'redux-batched-subscribe'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 
@@ -42,7 +41,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css"
           rel="stylesheet"
         />
-        <script src="https://smtpjs.com/v3/smtp.js"></script>
+        {/* <script src="https://smtpjs.com/v3/smtp.js"></script> */}
       </Head>
       <SessionProvider session={session} refetchInterval={5 * 60}>
         <Provider store={store}>

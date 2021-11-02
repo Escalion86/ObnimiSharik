@@ -11,21 +11,78 @@ const PriceInput = ({
   name = 'price',
   readOnly = false,
 }) => {
+  const rubles = value ? Math.floor(value / 100) : 0
+  const cops = value ? Math.floor(value % 100) : 0
+
+  const onChangeUpd = (value, rub = true) => {
+    let newValue
+    if (rub) newValue = Number(value * 100) + cops
+    else newValue = rubles * 100 + Number(value)
+
+    onChange(newValue)
+  }
   return (
-    <Input
-      label={label}
-      className={className}
-      inputStyle="max-w-30"
-      labelStyle={labelStyle}
-      type="number"
-      name={name}
-      value={value}
-      onChange={onChange}
-      required={required}
-      inLine={inLine}
-      postfix="₽"
-      readOnly={readOnly}
-    />
+    <div
+      className={
+        'flex' +
+        (inLine ? ' flex-row items-center' : ' flex-col') +
+        (className ? ' ' + className : '')
+      }
+    >
+      {label && (
+        <label
+          className={
+            labelStyle
+              ? ' ' + labelStyle
+              : inLine
+              ? 'min-w-24 max-w-40 w-1/4'
+              : ''
+          }
+          htmlFor={name}
+        >
+          {label}
+          {required && <span className="text-red-700">*</span>}
+        </label>
+      )}
+      <div
+        className={
+          'flex border rounded-lg w-44' +
+          (required && (!value || value == '0')
+            ? ' border-red-700'
+            : ' border-gray-700')
+        }
+      >
+        <Input
+          // label={label}
+          className="gap-x-0"
+          inputStyle="border-0 rounded-r-none"
+          labelStyle={labelStyle}
+          type="number"
+          name={name + '₽'}
+          value={rubles}
+          onChange={(value) => onChangeUpd(value, true)}
+          // required={required}
+          inLine={inLine}
+          postfix="₽"
+          readOnly={readOnly}
+        />
+        <Input
+          // label={label}
+          className={className}
+          inputStyle="w-17 border-0 border-l rounded-l-none"
+          labelStyle={labelStyle}
+          type="number"
+          name={name + 'коп'}
+          value={cops}
+          onChange={(value) => onChangeUpd(value, false)}
+          // required={required}
+          inLine={inLine}
+          postfix="коп"
+          readOnly={readOnly}
+          maxLength={2}
+        />
+      </div>
+    </div>
   )
 }
 

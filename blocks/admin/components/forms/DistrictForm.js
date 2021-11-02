@@ -22,17 +22,9 @@ const DistrictForm = ({
     deliveryPrice: district.deliveryPrice,
   })
 
-  const forNew = district._id === undefined
+  const updateForm = (data) => setForm({ ...form, ...data })
 
-  const handleChange = (e) => {
-    const target = e.target
-    const name = target.name
-    const value = name === 'deliveryPrice' ? target.value * 100 : target.value
-    setForm({
-      ...form,
-      [name]: value,
-    })
-  }
+  const forNew = district._id === undefined
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -84,15 +76,14 @@ const DistrictForm = ({
         label="Название"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
       />
       <PriceInput
         label="Стоимость доставки"
-        value={form.deliveryPrice / 100}
-        onChange={handleChange}
+        value={form.deliveryPrice}
+        onChange={(deliveryPrice) => updateForm({ deliveryPrice })}
         className="flex-1"
         name="deliveryPrice"
       />

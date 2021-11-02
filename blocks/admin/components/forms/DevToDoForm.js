@@ -36,24 +36,14 @@ const DevToDoForm = ({
     finishedAt: devToDo.finishedAt,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = devToDo._id === undefined
-
-  const handleChange = (e) => {
-    const target = e.target
-    const value = target.name === 'images' ? [target.value] : target.value
-    const name = target.name
-
-    setForm({
-      ...form,
-      [name]: value,
-    })
-  }
 
   useEffect(() => {
     if (!form.userId)
       getSession().then((session) =>
-        setForm({
-          ...form,
+        updateForm({
           userId: session.user._id,
         })
       )
@@ -121,9 +111,8 @@ const DevToDoForm = ({
         label="Проблема/Предложение"
         type="text"
         maxLength="100"
-        name="title"
         value={form.title}
-        onChange={handleChange}
+        onChange={(title) => updateForm({ title })}
         required
         readOnly={readOnly}
       />
@@ -132,9 +121,8 @@ const DevToDoForm = ({
         label="Описание"
         type="text"
         maxLength="600"
-        name="description"
         value={form.description}
-        onChange={handleChange}
+        onChange={(description) => updateForm({ description })}
         required
         readOnly={readOnly}
         textarea
@@ -142,34 +130,19 @@ const DevToDoForm = ({
       <InputImages
         images={form.images}
         label="Скриншоты"
-        onChange={(images) =>
-          setForm({
-            ...form,
-            images,
-          })
-        }
+        onChange={(images) => updateForm({ images })}
         directory="devtodo"
       />
       <PriorityPicker
         priority={form.priority}
-        onChange={(priority) =>
-          setForm({
-            ...form,
-            priority,
-          })
-        }
+        onChange={(priority) => updateForm({ priority })}
         inLine
         readOnly={readOnly}
       />
       {(loggedUser.role === 'dev' || readOnly) && (
         <DevToDoStatusPicker
           status={form.status}
-          onChange={(status) =>
-            setForm({
-              ...form,
-              status,
-            })
-          }
+          onChange={(status) => updateForm({ status })}
           inLine
           readOnly={readOnly}
         />

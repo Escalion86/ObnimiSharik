@@ -19,7 +19,7 @@ import findDataWithId from '@helpers/findDataWithId'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faEquals } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faEquals, faDivide } from '@fortawesome/free-solid-svg-icons'
 
 const ProductCirculationForm = ({
   loggedUser,
@@ -40,27 +40,13 @@ const ProductCirculationForm = ({
     defective: productCirculation.defective,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = productCirculation._id === undefined
 
   const { products } = useSelector((state) => state)
 
   const product = findDataWithId(products, form.productId)
-
-  const handleChange = (e) => {
-    const target = e.target
-    const value =
-      target.name === 'price'
-        ? target.value * 100
-        : // : target.name === 'defective'
-          // ? target.value === 'on'
-          target.value
-    const name = target.name
-
-    setForm({
-      ...form,
-      [name]: value,
-    })
-  }
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -111,8 +97,8 @@ const ProductCirculationForm = ({
   const formValidate = () => {
     let err = {}
     if (!form.productId) err.productId = 'Введите товар'
-    if (!form.count) err.count = 'Введите количество'
-    if (!form.price) err.count = 'Введите стоимость'
+    if (!form.count || form.count == '0') err.count = 'Введите количество'
+    if (!form.price || form.price == '0') err.count = 'Введите стоимость'
     if (!form.purchasedAt) err.purchasedAt = 'Введите дату закупа/продажи'
 
     // if (!form.images) err.image = 'Image URL is required'
@@ -152,58 +138,52 @@ const ProductCirculationForm = ({
       /> */}
 
       <SelectProduct
-        onChange={(item) =>
-          setForm({
-            ...form,
-            productId: item._id,
-          })
-        }
+        onChange={(product) => updateForm({ productId: product._id })}
         selectedId={form.productId}
         required
         // exceptedIds={selectedItemsIds}
       />
       <div className="flex justify-between gap-x-1">
         <PriceInput
-          label="Стоимость за шт"
-          value={form.price / 100}
-          onChange={handleChange}
+          label="Стоимость всего"
+          value={form.price}
+          onChange={(price) => updateForm({ price })}
           required
-          className="w-32"
+          // className="w-40"
         />
-        <div className="flex flex-col justify-end mb-2">
+        {/* <div className="flex flex-col justify-end mb-2">
           <FontAwesomeIcon
             className="w-4 h-4 text-black"
-            icon={faTimes}
+            icon={faDivide}
             size="lg"
           />
-        </div>
+        </div> */}
         <Input
           key="count"
           label="Количество"
           type="number"
           name="count"
           value={form.count}
-          onChange={handleChange}
+          onChange={(count) => updateForm({ count })}
           required
           className="w-24"
         />
-        <div className="flex flex-col justify-end w-4 mb-2">
+        {/* <div className="flex flex-col justify-end w-4 mb-2">
           <FontAwesomeIcon
             className="w-4 h-4 text-black"
             icon={faEquals}
             size="lg"
           />
-        </div>
+        </div> */}
         <div className="flex flex-col justify-end flex-1 mb-1">
-          {(form.count ? form.count : 0) * (form.price ? form.price / 100 : 0)}{' '}
-          ₽
+          {form.count != '0' &&
+            `за шт: ${Math.round(form.price / form.count) / 100} ₽`}
         </div>
       </div>
 
       <ComboBox
-        name="purchase"
         title="Закуп/Продажа"
-        handleChange={handleChange}
+        handleChange={(purchase) => updateForm({ purchase })}
         defaultValue={form.purchase}
         items={[
           { name: 'Закуп на склад', value: false },
@@ -213,30 +193,18 @@ const ProductCirculationForm = ({
       <DatePicker
         key="purchasedAt"
         label="Дата закупа/продажи"
-        name="purchasedAt"
         value={form.purchasedAt}
-        // value={productCirculation.createdAt}
-        onChange={handleChange}
+        onChange={(purchasedAt) => updateForm({ purchasedAt })}
         required
       />
       <CheckBox
         label="Брак"
         checked={form.defective}
         // name="defective"
-        onChange={() =>
-          setForm({
-            ...form,
-            defective: !form.defective,
-          })
-        }
+        onChange={() => updateForm({ defective: !form.defective })}
       />
       <SelectOrder
-        onChange={(item) =>
-          setForm({
-            ...form,
-            orderId: item ? item._id : '',
-          })
-        }
+        onChange={(item) => updateForm({ orderId: item ? item._id : '' })}
         selectedId={form.orderId}
         clearButton
         // required

@@ -65,7 +65,6 @@ const DateTimePicker = ({
         value={formatDateTime(value, true)}
         onChange={(e) => {
           const value = e.target.value
-          console.log(`value`, value)
           var year = value.substring(0, 4)
           var month = value.substring(5, 7)
           var day = value.substring(8, 10)
@@ -73,20 +72,13 @@ const DateTimePicker = ({
           var hours = value.substring(11, 13)
           var minutes = value.substring(14, 16)
 
-          onChange({
-            ...e,
-            target: {
-              ...e.target,
-              name: e.target.name,
-              value: new Date(
+          onChange(new Date(
                 year,
                 month - 1,
                 day,
                 hours,
                 minutes
-              ).toISOString(),
-            },
-          })
+              ).toISOString())
         }}
         // pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
         min="2021-01-01T00:00"

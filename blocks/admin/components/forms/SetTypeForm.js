@@ -8,6 +8,7 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
+import InputImage from './forForms/InputImage'
 
 const SetTypeForm = ({
   loggedUser,
@@ -20,17 +21,12 @@ const SetTypeForm = ({
 
   const [form, setForm] = useState({
     name: setType.name,
+    image: setType.image,
   })
 
-  const forNew = setType._id === undefined
+  const updateForm = (data) => setForm({ ...form, ...data })
 
-  const handleChange = (e) => {
-    const { value, name } = e.target
-    setForm({
-      ...form,
-      [name]: value,
-    })
-  }
+  const forNew = setType._id === undefined
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -80,14 +76,23 @@ const SetTypeForm = ({
         compareObjects(form, setType)
       }
     >
+      <InputImage
+        image={form.image}
+        label="Картинка"
+        onChange={(imageUrl) => updateForm({ image: imageUrl })}
+        noImage={`/img/noImage.jpg`}
+        inLine
+        directory="set_types"
+        imageName={setType._id}
+        noEditButton
+      />
       <Input
         key="name"
         label="Название"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
       />
     </Form>

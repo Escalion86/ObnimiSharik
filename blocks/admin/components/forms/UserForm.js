@@ -43,15 +43,9 @@ const UserForm = ({
     birthday: user.birthday,
   })
 
-  const forNew = user._id === undefined
+  const updateForm = (data) => setForm({ ...form, ...data })
 
-  const handleChange = (e) => {
-    const { value, name } = e.target
-    setForm({
-      ...form,
-      [name]: value,
-    })
-  }
+  const forNew = user._id === undefined
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -104,21 +98,15 @@ const UserForm = ({
     >
       <InputAvatar
         user={form}
-        onChange={(imageUrl) =>
-          setForm({
-            ...form,
-            image: imageUrl,
-          })
-        }
+        onChange={(imageUrl) => updateForm({ image: imageUrl })}
       />
       <Input
         key="email"
         label="EMail"
         type="text"
         maxLength="80"
-        name="email"
         value={form.email}
-        onChange={handleChange}
+        onChange={(email) => updateForm({ email })}
         required
         disabled
       />
@@ -127,15 +115,13 @@ const UserForm = ({
         label="Имя"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
       />
       <ComboBox
-        name="role"
         title="Должность"
-        handleChange={handleChange}
+        handleChange={(role) => updateForm({ role })}
         defaultValue={form.role}
         placeholder="Выберите должность"
         items={ROLES.filter((role) => !role.hidden)}
@@ -146,17 +132,15 @@ const UserForm = ({
         <PhoneInput
           key="phone"
           label="Телефон"
-          name="phone"
           value={form.phone}
-          onChange={handleChange}
+          onChange={(phone) => updateForm({ phone })}
           // required
         />
         <PhoneInput
           key="whatsapp"
           label="WhatsApp"
-          name="whatsapp"
           value={form.whatsapp}
-          onChange={handleChange}
+          onChange={(whatsapp) => updateForm({ whatsapp })}
           // required
         />
       </RowContainer>
@@ -164,9 +148,8 @@ const UserForm = ({
         <PhoneInput
           key="viber"
           label="Viber"
-          name="viber"
           value={form.viber}
-          onChange={handleChange}
+          onChange={(viber) => updateForm({ viber })}
           // required
         />
         <Input
@@ -175,9 +158,8 @@ const UserForm = ({
           inputStyle="max-w-40"
           type="text"
           maxLength="80"
-          name="telegram"
           value={form.telegram}
-          onChange={handleChange}
+          onChange={(telegram) => updateForm({ telegram })}
           prefix="@"
         />
       </RowContainer>
@@ -188,9 +170,8 @@ const UserForm = ({
           inputStyle="max-w-40"
           type="text"
           maxLength="80"
-          name="instagram"
           value={form.instagram}
-          onChange={handleChange}
+          onChange={(instagram) => updateForm({ instagram })}
           prefix="@"
         />
         <Input
@@ -199,9 +180,8 @@ const UserForm = ({
           inputStyle="max-w-40"
           type="text"
           maxLength="80"
-          name="vk"
           value={form.vk}
-          onChange={handleChange}
+          onChange={(vk) => updateForm({ vk })}
           prefix="@"
         />
       </RowContainer>
@@ -209,10 +189,9 @@ const UserForm = ({
         <DatePicker
           key="birthday"
           label="День рождения"
-          name="birthday"
           value={form.birthday}
           // value={productCirculation.createdAt}
-          onChange={handleChange}
+          onChange={(birthday) => updateForm({ birthday })}
         />
         {form.birthday && (
           <div className="ml-2 mt-7">{birthDateToAge(form.birthday)}</div>
@@ -220,12 +199,7 @@ const UserForm = ({
       </div>
       <GenderPicker
         gender={form.gender}
-        onChange={(gender) =>
-          setForm({
-            ...form,
-            gender,
-          })
-        }
+        onChange={(gender) => updateForm({ gender })}
         inLine
       />
     </Form>

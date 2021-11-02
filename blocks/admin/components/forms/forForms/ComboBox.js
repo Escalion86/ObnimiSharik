@@ -22,7 +22,10 @@ const ComboBox = ({
           'px-2 py-1 bg-gray-200 border rounded-lg ' +
           (required && !defaultValue ? 'border-red-700' : 'border-gray-700')
         }
-        onChange={handleChange}
+        onChange={(e) => {
+          const value = e.target.value
+          onChange(value)
+        }}
         defaultValue={defaultValueExists ? defaultValue : ''}
       >
         {placeholder && (

@@ -35,6 +35,8 @@ const ProductForm = ({
     archive: product.archive,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const { productTypes } = useSelector((state) => state)
 
   const afterConfirmUpd = (data) => {
@@ -44,21 +46,6 @@ const ProductForm = ({
   }
 
   const forNew = product._id === undefined
-
-  const handleChange = (e) => {
-    const target = e.target
-    const name = target.name
-    // deleteImage('obnimisharik/cmurzvh8hj7e7pcwefvx')
-    // if (name === 'image') {
-    //   setImages([...images, target.files[0]])
-    // } else {
-    const value = name === 'price' ? target.value * 100 : target.value
-    setForm({
-      ...form,
-      [name]: value,
-    })
-    // }
-  }
 
   const sendForm = async () => {
     forNew
@@ -120,9 +107,8 @@ const ProductForm = ({
         label="Название"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
         hidden={readOnly}
       />
@@ -131,9 +117,8 @@ const ProductForm = ({
         label="Описание"
         type="text"
         maxLength="600"
-        name="description"
         value={form.description}
-        onChange={handleChange}
+        onChange={(description) => updateForm({ description })}
         textarea
         readOnly={readOnly}
       />
@@ -143,16 +128,15 @@ const ProductForm = ({
           label="Артикул"
           type="text"
           maxLength="100"
-          name="article"
           value={form.article}
-          onChange={handleChange}
+          onChange={(article) => updateForm({ article })}
           className="flex-1"
           readOnly={readOnly}
           inLine={readOnly}
         />
         <PriceInput
-          value={form.price / 100}
-          onChange={handleChange}
+          value={form.price}
+          onChange={(price) => updateForm({ price })}
           required
           className="flex-1"
           readOnly={readOnly}
@@ -169,22 +153,14 @@ const ProductForm = ({
           }
         })}
         onChange={(data) => {
-          setForm({
-            ...form,
-            typesId: data.map((type) => type.value),
-          })
+          updateForm({ typesId: data.map((type) => type.value) })
         }}
         readOnly={readOnly}
       />
       <InputImages
         images={form.images}
         label="Картинки"
-        onChange={(images) =>
-          setForm({
-            ...form,
-            images,
-          })
-        }
+        onChange={(images) => updateForm({ images })}
         readOnly={readOnly}
         directory="products"
       />

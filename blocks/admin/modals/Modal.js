@@ -8,6 +8,7 @@ const Modal = ({
   onDelete = null,
   twoCols = false,
   readOnly = false,
+  noPropsToChildren = false,
 }) => {
   const [rendered, setRendered] = useState(false)
   const onCloseWithDelay = () => {
@@ -33,7 +34,7 @@ const Modal = ({
     >
       <div
         className={
-          'relative min-w-84 max-w-132 w-9/12 tablet:min-w-116 px-4 py-4 duration-300 my-auto bg-white border-l rounded-xl border-primary ' +
+          'relative min-w-84 max-w-132 w-9/12 max-h-full tablet:min-w-116 px-4 py-4 duration-300 my-auto bg-white border-l rounded-xl border-primary ' +
           (twoCols ? ' laptop:w-9/12 laptop:min-w-228 laptop:max-w-248' : ' ') +
           (rendered ? '' : ' scale-50')
         }
@@ -56,7 +57,9 @@ const Modal = ({
             }}
           />
         )}
-        {cloneElement(children, { onClose: onCloseWithDelay })}
+        {noPropsToChildren
+          ? children
+          : cloneElement(children, { onClose: onCloseWithDelay })}
       </div>
     </div>
   )

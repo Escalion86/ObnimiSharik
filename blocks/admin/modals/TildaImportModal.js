@@ -28,7 +28,7 @@ const concatArrays = (setArray, addArray) => {
 //   document.getElementById('log-div').innerHTML += '<br>' + msg
 // }
 
-const Input = ({
+const InputFile = ({
   label = '',
   type,
   maxLength,
@@ -42,7 +42,7 @@ const Input = ({
     <label htmlFor={name}>{label}</label>
     <input
       className="px-2 py-1 bg-gray-200 border border-gray-700 rounded-lg"
-      type={type}
+      type="file"
       maxLength={maxLength}
       name={name}
       value={value}
@@ -440,10 +440,9 @@ const TildaImportModal = ({ onClose = () => {}, afterConfirm = () => {} }) => {
           <div className="text-lg font-semibold text-center">
             Импортирование csv
           </div>
-          <Input
+          <InputFile
             key="tildaCsv"
             label="Файл экспорта из Tilda в формате csv"
-            type="file"
             accept=".csv"
             name="tilda"
             onChange={(e) => changeHandler(e, onClose, afterConfirm)}

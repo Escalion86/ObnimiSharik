@@ -14,6 +14,7 @@ import {
   SelectClient,
   SelectDeliver,
   SelectAerodesigner,
+  SelectOperator,
   SelectPaymentList,
   SelectProductsList,
   SelectSetsList,
@@ -205,7 +206,7 @@ const FormMenu = ({ twoCols = false, config = null }) => {
   )
 }
 
-const ClientContent = ({ form, setForm, modals, state, role }) => {
+const ClientContent = ({ form, updateForm, modals, state, role }) => {
   const { clients } = state
   const operator = ['operator', 'dev', 'admin'].includes(role)
   // const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
@@ -218,8 +219,7 @@ const ClientContent = ({ form, setForm, modals, state, role }) => {
 
   const addClient = () =>
     modals.openClientModal(undefined, (client) =>
-      setForm({
-        ...form,
+      updateForm({
         clientId: client._id,
       })
     )
@@ -227,10 +227,9 @@ const ClientContent = ({ form, setForm, modals, state, role }) => {
     operator && (
       <div className="flex items-center gap-x-1">
         <SelectClient
-          onChange={(item) =>
-            setForm({
-              ...form,
-              clientId: item._id,
+          onChange={(client) =>
+            updateForm({
+              clientId: client._id,
             })
           }
           selectedId={form.clientId}
@@ -259,15 +258,12 @@ const ClientContent = ({ form, setForm, modals, state, role }) => {
   )
 }
 
-const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
+const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
   const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   const deliver = ['deliver', 'dev', 'admin'].includes(role)
-  const handleAddressChange = (e) => {
-    const { value, name } = e.target
-
-    setForm({
-      ...form,
+  const handleAddressChange = (name, value) => {
+    updateForm({
       deliveryAddress: { ...form.deliveryAddress, [name]: value },
     })
   }
@@ -288,8 +284,7 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
             <RadioBox
               checked={form.deliveryPickup}
               onClick={(e) =>
-                setForm({
-                  ...form,
+                updateForm({
                   deliveryPickup: e.target.value === 'on',
                 })
               }
@@ -302,8 +297,7 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
             <RadioBox
               checked={!form.deliveryPickup}
               onClick={(e) =>
-                setForm({
-                  ...form,
+                updateForm({
                   deliveryPickup: e.target.value !== 'on',
                 })
               }
@@ -324,7 +318,7 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
               label={form.deliveryPickup ? 'Самовывоз в' : 'Доставка от'}
               name="deliveryDateFrom"
               value={form.deliveryDateFrom}
-              onChange={handleChange}
+              onChange={(deliveryDateFrom) => updateForm({ deliveryDateFrom })}
               required
               readOnly={role === 'deliver'}
             />
@@ -339,7 +333,7 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                 label="до"
                 name="deliveryDateTo"
                 value={form.deliveryDateTo}
-                onChange={handleChange}
+                onChange={(deliveryDateTo) => updateForm({ deliveryDateTo })}
                 required
                 readOnly={role === 'deliver'}
               />
@@ -353,7 +347,7 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                 : ' ease-in duration-1000 max-h-1000')
             }
           >
-            {operator && (
+            {/* {operator && (
               <SelectDeliver
                 onChange={(item) =>
                   setForm({
@@ -365,7 +359,7 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                 required
                 // exceptedIds={selectedItemsIds}
               />
-            )}
+            )} */}
             <div>
               {role === 'deliver' ? (
                 'Адрес: ' + formatDeliveryAddress(form.deliveryAddress)
@@ -380,9 +374,8 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                       label="Город"
                       type="text"
                       maxLength="100"
-                      name="town"
                       value={form.deliveryAddress.town}
-                      onChange={handleAddressChange}
+                      onChange={(value) => handleAddressChange('town', value)}
                       className="flex-1"
                       labelStyle="w-18"
                       inLine
@@ -391,8 +384,7 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                     />
                     <SelectDistrict
                       onChange={(item) =>
-                        setForm({
-                          ...form,
+                        updateForm({
                           deliveryPrice: item?.deliveryPrice ?? 0,
                           deliveryAddress: {
                             ...form.deliveryAddress,
@@ -410,9 +402,10 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                         label="Улица"
                         type="text"
                         maxLength="100"
-                        name="street"
                         value={form.deliveryAddress.street}
-                        onChange={handleAddressChange}
+                        onChange={(value) =>
+                          handleAddressChange('street', value)
+                        }
                         className="flex-1"
                         labelStyle="w-18"
                         inLine
@@ -424,9 +417,10 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                         label="Дом"
                         type="text"
                         maxLength="100"
-                        name="house"
                         value={form.deliveryAddress.house}
-                        onChange={handleAddressChange}
+                        onChange={(value) =>
+                          handleAddressChange('house', value)
+                        }
                         // className="w-80"
                         labelStyle="w-18 pr-1 tablet:w-min"
                         inputStyle="w-16"
@@ -441,9 +435,10 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                         type="text"
                         label="Подъезд"
                         maxLength="10"
-                        name="entrance"
                         value={form.deliveryAddress.entrance}
-                        onChange={handleAddressChange}
+                        onChange={(value) =>
+                          handleAddressChange('entrance', value)
+                        }
                         inLine
                         labelStyle="w-18 pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
@@ -454,10 +449,10 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                         type="text"
                         label="Этаж"
                         maxLength="10"
-                        name="floor"
                         value={form.deliveryAddress.floor}
-                        onChange={handleAddressChange}
-                        // className="w-16"
+                        onChange={(value) =>
+                          handleAddressChange('floor', value)
+                        }
                         inLine
                         labelStyle="w-18 pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
@@ -468,10 +463,8 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                         type="text"
                         label="Квартира"
                         maxLength="10"
-                        name="flat"
                         value={form.deliveryAddress.flat}
-                        onChange={handleAddressChange}
-                        // className="w-16"
+                        onChange={(value) => handleAddressChange('flat', value)}
                         inLine
                         labelStyle="pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
@@ -484,9 +477,10 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
                       label="Комментарий по адресу"
                       type="text"
                       maxLength="300"
-                      name="comment"
                       value={form.deliveryAddress.comment}
-                      onChange={handleAddressChange}
+                      onChange={(value) =>
+                        handleAddressChange('comment', value)
+                      }
                       textarea
                       readOnly={role === 'deliver'}
                     />
@@ -501,7 +495,59 @@ const DeliveryContent = ({ readOnly, form, setForm, handleChange, role }) => {
   )
 }
 
-const ProductsContent = ({ form, setForm, role, readOnly, handleChange }) => {
+const ResponsibleContent = ({ form, updateForm, role }) => {
+  const admin = ['dev', 'admin'].includes(role)
+  const operator = ['operator', 'dev', 'admin'].includes(role)
+  // const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
+  // const deliver = ['deliver', 'dev', 'admin'].includes(role)
+  const handleAddressChange = (e) => {
+    const { value, name } = e.target
+    updateForm({ deliveryAddress: { ...form.deliveryAddress, [name]: value } })
+  }
+  return (
+    <>
+      {admin && (
+        <SelectOperator
+          onChange={(operator) =>
+            updateForm({
+              operatorId: operator._id,
+            })
+          }
+          selectedId={form.operatorId}
+          required
+          // exceptedIds={selectedItemsIds}
+        />
+      )}
+      {operator && (
+        <SelectAerodesigner
+          onChange={(aerodesigner) =>
+            updateForm({
+              aerodesignerId: aerodesigner._id,
+            })
+          }
+          selectedId={form.aerodesignerId}
+          required
+          className="mb-2"
+          // exceptedIds={selectedItemsIds}
+        />
+      )}
+      {operator && (
+        <SelectDeliver
+          onChange={(deliver) =>
+            updateForm({
+              deliverId: deliver._id,
+            })
+          }
+          selectedId={form.deliverId}
+          required
+          // exceptedIds={selectedItemsIds}
+        />
+      )}
+    </>
+  )
+}
+
+const ProductsContent = ({ form, updateForm, role, readOnly }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
   const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   // const deliver = ['deliver', 'dev', 'admin'].includes(role)
@@ -525,22 +571,7 @@ const ProductsContent = ({ form, setForm, role, readOnly, handleChange }) => {
       <div>
         <SelectProductsList
           productsIdCount={productsIdCount}
-          onChange={(productsCount) => {
-            // const tempProductsCount = []
-            // for (const [id, count] of Object.entries(newProductsIdCount)) {
-            //   tempProductsCount.push({
-            //     product:
-            //       id === '?'
-            //         ? null
-            //         : products.find((product) => product._id === id),
-            //     count,
-            //   })
-            // }
-            setForm({
-              ...form,
-              productsCount,
-            })
-          }}
+          onChange={(productsCount) => updateForm({ productsCount })}
           callbackArray
           required={
             (!setsIdCount['?'] && Object.keys(setsIdCount).length > 0) ||
@@ -552,19 +583,7 @@ const ProductsContent = ({ form, setForm, role, readOnly, handleChange }) => {
         />
         <SelectSetsList
           setsIdCount={setsIdCount}
-          onChange={(setsCount) => {
-            // const tempSetsCount = []
-            // for (const [id, count] of Object.entries(newSetsIdCount)) {
-            //   tempSetsCount.push({
-            //     set: id === '?' ? null : sets.find((set) => set._id === id),
-            //     count,
-            //   })
-            // }
-            setForm({
-              ...form,
-              setsCount,
-            })
-          }}
+          onChange={(setsCount) => updateForm({ setsCount })}
           callbackArray
           required={
             (!productsIdCount['?'] &&
@@ -585,7 +604,7 @@ const ProductsContent = ({ form, setForm, role, readOnly, handleChange }) => {
           maxLength="600"
           name="comment"
           value={form.comment}
-          onChange={handleChange}
+          onChange={(comment) => updateForm({ comment })}
           textarea
         />
       </div>
@@ -597,11 +616,10 @@ const PaymentContent = ({
   form,
   order,
   totalPaymentsSum,
-  setForm,
+  updateForm,
   role,
   readOnly,
   catalogPrice,
-  handleChange,
   totalPrice,
   paymentsId,
   setPaymentsId,
@@ -609,13 +627,9 @@ const PaymentContent = ({
 }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
 
-  const handleChangeDiscount = (e) => {
-    const value = e.target.value
+  const handleChangeDiscount = (value) => {
     const discountValue = Math.ceil(catalogPrice * value) / 100
-    handleChange({
-      ...e,
-      target: { ...e.target, name: e.target.name, value: discountValue },
-    })
+    updateForm({ discount: discountValue })
   }
 
   const onDeletePayment = (id) => {
@@ -629,8 +643,8 @@ const PaymentContent = ({
         <div>Cумма по каталогу: {catalogPrice} ₽</div>
         <div className="flex gap-x-2">
           <PriceInput
-            value={form.discount / 100}
-            onChange={handleChange}
+            value={form.discount}
+            onChange={(discount) => updateForm({ discount })}
             label="Скидка"
             // className="w-full"
             name="discount"
@@ -654,8 +668,8 @@ const PaymentContent = ({
         </div>
         <div className="flex items-center gap-x-2">
           <PriceInput
-            value={form.deliveryPrice / 100}
-            onChange={handleChange}
+            value={form.deliveryPrice}
+            onChange={(deliveryPrice) => updateForm({ deliveryPrice })}
             label="Доставка"
             // className="w-full"
             name="deliveryPrice"
@@ -748,14 +762,14 @@ const PaymentContent = ({
 
 const ProductCirculationContent = ({
   form,
-  setForm,
+  updateForm,
   role,
   productCirculationsIdCountDefective,
   setProductCirculationsIdCountDefective,
   productCirculationsIdCount,
   setProductCirculationsIdCount,
 }) => {
-  const operator = ['operator', 'dev', 'admin'].includes(role)
+  // const operator = ['operator', 'dev', 'admin'].includes(role)
   // const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   // const deliver = ['deliver', 'dev', 'admin'].includes(role)
 
@@ -780,20 +794,6 @@ const ProductCirculationContent = ({
 
   return (
     <div>
-      {operator && (
-        <SelectAerodesigner
-          onChange={(item) =>
-            setForm({
-              ...form,
-              aerodesignerId: item._id,
-            })
-          }
-          selectedId={form.aerodesignerId}
-          required
-          className="mb-2"
-          // exceptedIds={selectedItemsIds}
-        />
-      )}
       <IconButton
         name="Генерировать из состава заказа"
         onClick={productCirculationIdCountGenerator}
@@ -806,15 +806,8 @@ const ProductCirculationContent = ({
         productsIdCount={productCirculationsIdCount}
         onChange={(newProductsIdCount) => {
           setProductCirculationsIdCount(newProductsIdCount)
-          setForm({ ...form })
+          updateForm({})
         }}
-        // required={
-        //   (!setsIdCount['?'] && Object.keys(setsIdCount).length > 0) ||
-        //   (setsIdCount['?'] && Object.keys(setsIdCount).length > 1)
-        //     ? 'star'
-        //     : true
-        // }
-        // readOnly={readOnly}
       />
       <SelectProductsList
         title="Список отбракованных товаров"
@@ -822,15 +815,8 @@ const ProductCirculationContent = ({
         onChange={(newProductsIdCount) => {
           setProductCirculationsIdCountDefective(newProductsIdCount)
           // TODO Очень странная фигняююю без строчки ниже компонент не обновляется если добавить новый товар
-          setForm({ ...form })
+          updateForm({})
         }}
-        // required={
-        //   (!setsIdCount['?'] && Object.keys(setsIdCount).length > 0) ||
-        //   (setsIdCount['?'] && Object.keys(setsIdCount).length > 1)
-        //     ? 'star'
-        //     : true
-        // }
-        // readOnly={readOnly}
       />
     </div>
   )
@@ -843,8 +829,7 @@ const PhotosContent = ({ form, setForm }) => {
         images={form.photos}
         label="Фотографии"
         onChange={(photos) =>
-          setForm({
-            ...form,
+          updateForm({
             photos,
           })
         }
@@ -883,7 +868,10 @@ const OrderForm = ({
     deliveryDateTo: order.deliveryDateTo,
     deliverId: order.deliverId,
     aerodesignerId: order.aerodesignerId,
+    operatorId: order.operatorId,
   })
+
+  const updateForm = (data) => setForm({ ...form, ...data })
 
   const [paymentsId, setPaymentsId] = useState([])
 
@@ -938,35 +926,30 @@ const OrderForm = ({
   // console.log(`session`, session)
 
   const delivers = users.filter((user) => user.role === 'deliver')
+  const operators = users.filter((user) => user.role === 'operator')
+  const aerodesigners = users.filter((user) => user.role === 'aerodesigner')
 
   useEffect(() => {
-    if (delivers.length === 1) {
-      setForm({
-        ...form,
-        deliverId: delivers[0]._id,
-      })
+    if (
+      (operators.length === 1 && !form.operatorId) ||
+      (delivers.length === 1 && !form.deliverId) ||
+      (aerodesigners.length === 1 && !form.aerodesignerId)
+    ) {
+      const toForm = {}
+      if (delivers.length === 1 && !form.deliverId)
+        toForm.deliverId = delivers[0]._id
+
+      if (operators.length === 1 && !form.operatorId)
+        toForm.operatorId = operators[0]._id
+
+      if (aerodesigners.length === 1 && !form.aerodesignerId)
+        toForm.aerodesignerId = aerodesigners[0]._id
+
+      updateForm(toForm)
     }
   }, [])
 
   const forNew = order._id === undefined
-
-  const handleChange = (e) => {
-    const target = e.target
-    const value =
-      target.name === 'totalPrice' ||
-      target.name === 'discount' ||
-      target.name === 'deliveryPrice'
-        ? target.value * 100
-        : target.name === 'images'
-        ? [target.value]
-        : target.value
-    const name = target.name
-
-    setForm({
-      ...form,
-      [name]: value,
-    })
-  }
 
   const catalogProductsPrice = form.productsCount.reduce(
     (totalProductsCount, productCount) => {
@@ -1104,8 +1087,7 @@ const OrderForm = ({
     readOnly,
     form,
     order,
-    setForm,
-    handleChange,
+    updateForm,
     role: loggedUser.role,
     catalogPrice,
     totalPrice,
@@ -1194,12 +1176,7 @@ const OrderForm = ({
                     <RadioBox
                       key={status.value}
                       checked={form.status === status.value}
-                      onClick={() =>
-                        setForm({
-                          ...form,
-                          status: status.value,
-                        })
-                      }
+                      onClick={() => updateForm({ status: status.value })}
                       small
                       label={status.name}
                       // className="flex-1"
@@ -1216,6 +1193,14 @@ const OrderForm = ({
       <FormMenu
         twoCols={twoCols}
         config={[
+          {
+            title: 'Ответственные',
+            // text: form.clientId
+            //   ? clients.find((client) => client._id === form.clientId)?.name
+            //   : 'не выбран',
+            content: <ResponsibleContent {...contentParams} />,
+            visible: operator,
+          },
           {
             title: 'Клиент',
             text: form.clientId

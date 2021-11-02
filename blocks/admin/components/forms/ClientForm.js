@@ -41,23 +41,9 @@ const ClientForm = ({
     image: client.image,
   })
 
+  const updateForm = (data) => setForm({ ...form, ...data })
+
   const forNew = client._id === undefined
-
-  const handleChange = (e) => {
-    const target = e.target
-    const value =
-      target.name === 'price'
-        ? target.value * 100
-        : target.name === 'images'
-        ? [target.value]
-        : target.value
-    const name = target.name
-
-    setForm({
-      ...form,
-      [name]: value,
-    })
-  }
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -113,9 +99,8 @@ const ClientForm = ({
         label="Имя клиента"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
       />
       <Input
@@ -123,34 +108,30 @@ const ClientForm = ({
         label="EMail клиента"
         type="text"
         maxLength="80"
-        name="email"
         value={form.email}
-        onChange={handleChange}
+        onChange={(email) => updateForm({ email })}
       />
       <RowContainer>
         <PhoneInput
           key="phone"
           label="Телефон"
-          name="phone"
           value={form.phone}
-          onChange={handleChange}
+          onChange={(phone) => updateForm({ phone })}
           required
         />
         <PhoneInput
           key="whatsapp"
           label="WhatsApp"
-          name="whatsapp"
           value={form.whatsapp}
-          onChange={handleChange}
+          onChange={(whatsapp) => updateForm({ whatsapp })}
         />
       </RowContainer>
       <RowContainer>
         <PhoneInput
           key="viber"
           label="Viber"
-          name="viber"
           value={form.viber}
-          onChange={handleChange}
+          onChange={(viber) => updateForm({ viber })}
           // required
         />
         <Input
@@ -159,9 +140,8 @@ const ClientForm = ({
           inputStyle="max-w-40"
           type="text"
           maxLength="80"
-          name="telegram"
           value={form.telegram}
-          onChange={handleChange}
+          onChange={(telegram) => updateForm({ telegram })}
         />
       </RowContainer>
       <RowContainer>
@@ -171,9 +151,8 @@ const ClientForm = ({
           inputStyle="max-w-40"
           type="text"
           maxLength="80"
-          name="instagram"
           value={form.instagram}
-          onChange={handleChange}
+          onChange={(instagram) => updateForm({ instagram })}
           prefix="@"
         />
         <Input
@@ -182,9 +161,8 @@ const ClientForm = ({
           inputStyle="max-w-40"
           type="text"
           maxLength="80"
-          name="vk"
           value={form.vk}
-          onChange={handleChange}
+          onChange={(vk) => updateForm({ v })}
           prefix="@"
         />
       </RowContainer>
@@ -192,10 +170,8 @@ const ClientForm = ({
         <DatePicker
           key="birthday"
           label="День рождения"
-          name="birthday"
           value={form.birthday}
-          // value={productCirculation.createdAt}
-          onChange={handleChange}
+          onChange={(value) => updateForm({ birthday: value })}
         />
         {form.birthday && (
           <div className="ml-2 mt-7">{birthDateToAge(form.birthday)}</div>
@@ -203,12 +179,7 @@ const ClientForm = ({
       </div>
       <GenderPicker
         gender={form.gender}
-        onChange={(gender) =>
-          setForm({
-            ...form,
-            gender,
-          })
-        }
+        onChange={(gender) => updateForm({ gender })}
         inLine
       />
     </Form>
