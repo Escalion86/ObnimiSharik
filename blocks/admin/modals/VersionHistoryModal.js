@@ -12,7 +12,7 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
         <div className="flex flex-col flex-1 overflow-y-auto gap-y-2">
           {versionHistory.map(
             ({ ver, date, add = null, update = null, fix = null }) => (
-              <div key={ver}>
+              <div key={ver} className="py-0.5">
                 <div className="flex italic font-bold">{`v${ver} (${formatDate(
                   date
                 )})`}</div>
