@@ -30,24 +30,26 @@ export const ProductCirculationCard = ({
             <div className="font-bold text-red-700">Брак</div>
           )}
           <div className="hidden font-bold whitespace-nowrap laptop:block">
-            {(productCirculation.price * productCirculation.count) / 100} ₽
+            {productCirculation.price / 100} ₽
           </div>
         </div>
       </CardContainer>
       <div className="flex flex-col-reverse items-end justify-between gap-y-1 laptop:flex-row laptop:items-center">
         <div
           className={
-            'flex justify-center rounded-tl-lg laptop:rounded-none laptop:h-full py-0.5 items-center w-20 ' +
+            'flex justify-center rounded-tl-lg laptop:rounded-none laptop:h-full px-1 py-0.5 items-center min-w-24 ' +
             (purchase ? 'bg-red-200' : 'bg-green-200')
           }
         >
-          <span className="text-gray-800">
-            <span>{count}</span>
-            <span className="text-sm"> шт.</span>
+          <span className="text-sm text-gray-800">
+            {`${count}  шт. по ${
+              Math.round(productCirculation.price / productCirculation.count) /
+              100
+            } ₽`}
           </span>
         </div>
         <div className="font-bold whitespace-nowrap laptop:hidden">
-          {(productCirculation.price * productCirculation.count) / 100} ₽
+          {productCirculation.price / 100} ₽
         </div>
         <CardButtons onEdit={onEdit} onDelete={onDelete} onClone={onClone} />
       </div>
