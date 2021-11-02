@@ -45,6 +45,7 @@ import {
   TildaImportModal,
   UserModal,
   MessageModal,
+  VersionHistoryModal,
   ConfirmModal,
   ProductCirculationModal,
   ClientModal,
@@ -358,6 +359,12 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             message={message}
             onClose={() => modals.closeModal(modalId)}
           />
+        ))
+      ),
+    openVersionHistoryModal: () =>
+      dispatch(
+        addModal((modalId) => (
+          <VersionHistoryModal onClose={() => modals.closeModal(modalId)} />
         ))
       ),
     openDeleteProduct: (product, onConfirm = null) =>

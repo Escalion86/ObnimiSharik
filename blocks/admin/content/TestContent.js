@@ -8,11 +8,12 @@ const TestContent = ({ data, modals, loggedUser }) => {
     <div className="px-3">
       <Button
         onClick={() => {
-          emailSend({
-            To: '2562020@list.ru',
-            Subject: 'Test',
-            Body: 'BODY',
-          })
+          // emailSend({
+          //   To: '2562020@list.ru',
+          //   Subject: 'Test',
+          //   Body: 'BODY',
+          // })
+          modals.openVersionHistoryModal()
         }}
         inverse
         name="Отправка письма"

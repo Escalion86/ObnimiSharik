@@ -50,7 +50,7 @@ const defaultUserProps = {
   gender: null,
   updatedAt: Date.now(),
   lastActivityAt: Date.now(),
-  lastAutorizationAt: Date.now(),
+  prevActivityAt: Date.now(),
 }
 
 export default async function auth(req, res) {
@@ -136,6 +136,8 @@ export default async function auth(req, res) {
           user.vk = result[0].vk
           user.gender = result[0].gender
           user.birthday = result[0].birthday
+          user.lastActivityAt = result[0].lastActivityAt
+          user.prevActivityAt = result[0].prevActivityAt
 
           if (result[0].role === 'client') {
             const invitation = await Invitations.find({
@@ -168,7 +170,10 @@ export default async function auth(req, res) {
             // Если пользователь авторизован, то обновляем только время активности
             await Users.findOneAndUpdate(
               { email: userEmail },
-              { lastActivityAt: Date.now(), lastAutorizationAt: Date.now() }
+              {
+                lastActivityAt: Date.now(),
+                prevActivityAt: user.lastActivityAt,
+              }
             )
           }
         }
