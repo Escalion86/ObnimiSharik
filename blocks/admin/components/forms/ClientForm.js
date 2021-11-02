@@ -197,11 +197,7 @@ const ClientForm = ({
       </div>
       <GenderPicker
         gender={form.gender}
-        onChange={(gender) =>
-          updateForm({
-            gender,
-          })
-        }
+        onChange={(gender) => updateForm({ gender })}
         inLine
       />
     </Form>

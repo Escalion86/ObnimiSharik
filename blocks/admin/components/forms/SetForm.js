@@ -184,7 +184,6 @@ const SetForm = ({
           })}
           onChange={(data) => {
             updateForm({ typesId: data.map((type) => type.value) })
-            // console.log('checked', data)
           }}
           readOnly={readOnly}
         />

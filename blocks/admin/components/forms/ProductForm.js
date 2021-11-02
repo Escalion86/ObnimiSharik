@@ -164,10 +164,7 @@ const ProductForm = ({
           }
         })}
         onChange={(data) => {
-          setForm({
-            ...form,
-            typesId: data.map((type) => type.value),
-          })
+          updateForm({ typesId: data.map((type) => type.value) })
         }}
         readOnly={readOnly}
       />
