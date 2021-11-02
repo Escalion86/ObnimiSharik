@@ -258,19 +258,11 @@ const ClientContent = ({ form, updateForm, modals, state, role }) => {
   )
 }
 
-const DeliveryContent = ({
-  readOnly,
-  form,
-  updateForm,
-  handleChange,
-  role,
-}) => {
+const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
   const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   const deliver = ['deliver', 'dev', 'admin'].includes(role)
-  const handleAddressChange = (e) => {
-    const { value, name } = e.target
-
+  const handleAddressChange = (name, value) => {
     updateForm({
       deliveryAddress: { ...form.deliveryAddress, [name]: value },
     })
@@ -326,7 +318,7 @@ const DeliveryContent = ({
               label={form.deliveryPickup ? 'Самовывоз в' : 'Доставка от'}
               name="deliveryDateFrom"
               value={form.deliveryDateFrom}
-              onChange={handleChange}
+              onChange={(deliveryDateFrom) => updateForm({ deliveryDateFrom })}
               required
               readOnly={role === 'deliver'}
             />
@@ -341,7 +333,7 @@ const DeliveryContent = ({
                 label="до"
                 name="deliveryDateTo"
                 value={form.deliveryDateTo}
-                onChange={handleChange}
+                onChange={(deliveryDateTo) => updateForm({ deliveryDateTo })}
                 required
                 readOnly={role === 'deliver'}
               />
@@ -382,9 +374,8 @@ const DeliveryContent = ({
                       label="Город"
                       type="text"
                       maxLength="100"
-                      name="town"
                       value={form.deliveryAddress.town}
-                      onChange={handleAddressChange}
+                      onChange={(value) => handleAddressChange('town', value)}
                       className="flex-1"
                       labelStyle="w-18"
                       inLine
@@ -411,9 +402,10 @@ const DeliveryContent = ({
                         label="Улица"
                         type="text"
                         maxLength="100"
-                        name="street"
                         value={form.deliveryAddress.street}
-                        onChange={handleAddressChange}
+                        onChange={(value) =>
+                          handleAddressChange('street', value)
+                        }
                         className="flex-1"
                         labelStyle="w-18"
                         inLine
@@ -425,9 +417,10 @@ const DeliveryContent = ({
                         label="Дом"
                         type="text"
                         maxLength="100"
-                        name="house"
                         value={form.deliveryAddress.house}
-                        onChange={handleAddressChange}
+                        onChange={(value) =>
+                          handleAddressChange('house', value)
+                        }
                         // className="w-80"
                         labelStyle="w-18 pr-1 tablet:w-min"
                         inputStyle="w-16"
@@ -442,9 +435,10 @@ const DeliveryContent = ({
                         type="text"
                         label="Подъезд"
                         maxLength="10"
-                        name="entrance"
                         value={form.deliveryAddress.entrance}
-                        onChange={handleAddressChange}
+                        onChange={(value) =>
+                          handleAddressChange('entrance', value)
+                        }
                         inLine
                         labelStyle="w-18 pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
@@ -455,10 +449,10 @@ const DeliveryContent = ({
                         type="text"
                         label="Этаж"
                         maxLength="10"
-                        name="floor"
                         value={form.deliveryAddress.floor}
-                        onChange={handleAddressChange}
-                        // className="w-16"
+                        onChange={(value) =>
+                          handleAddressChange('floor', value)
+                        }
                         inLine
                         labelStyle="w-18 pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
@@ -469,10 +463,8 @@ const DeliveryContent = ({
                         type="text"
                         label="Квартира"
                         maxLength="10"
-                        name="flat"
                         value={form.deliveryAddress.flat}
-                        onChange={handleAddressChange}
-                        // className="w-16"
+                        onChange={(value) => handleAddressChange('flat', value)}
                         inLine
                         labelStyle="pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
@@ -485,9 +477,10 @@ const DeliveryContent = ({
                       label="Комментарий по адресу"
                       type="text"
                       maxLength="300"
-                      name="comment"
                       value={form.deliveryAddress.comment}
-                      onChange={handleAddressChange}
+                      onChange={(value) =>
+                        handleAddressChange('comment', value)
+                      }
                       textarea
                       readOnly={role === 'deliver'}
                     />
@@ -554,13 +547,7 @@ const ResponsibleContent = ({ form, updateForm, role }) => {
   )
 }
 
-const ProductsContent = ({
-  form,
-  updateForm,
-  role,
-  readOnly,
-  handleChange,
-}) => {
+const ProductsContent = ({ form, updateForm, role, readOnly }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
   const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   // const deliver = ['deliver', 'dev', 'admin'].includes(role)
@@ -584,11 +571,7 @@ const ProductsContent = ({
       <div>
         <SelectProductsList
           productsIdCount={productsIdCount}
-          onChange={(productsCount) => {
-            updateForm({
-              productsCount,
-            })
-          }}
+          onChange={(productsCount) => updateForm({ productsCount })}
           callbackArray
           required={
             (!setsIdCount['?'] && Object.keys(setsIdCount).length > 0) ||
@@ -600,12 +583,7 @@ const ProductsContent = ({
         />
         <SelectSetsList
           setsIdCount={setsIdCount}
-          onChange={(setsCount) => {
-            // }
-            updateForm({
-              setsCount,
-            })
-          }}
+          onChange={(setsCount) => updateForm({ setsCount })}
           callbackArray
           required={
             (!productsIdCount['?'] &&
@@ -626,7 +604,7 @@ const ProductsContent = ({
           maxLength="600"
           name="comment"
           value={form.comment}
-          onChange={handleChange}
+          onChange={(comment) => updateForm({ comment })}
           textarea
         />
       </div>
@@ -642,7 +620,6 @@ const PaymentContent = ({
   role,
   readOnly,
   catalogPrice,
-  handleChange,
   totalPrice,
   paymentsId,
   setPaymentsId,
@@ -650,13 +627,9 @@ const PaymentContent = ({
 }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
 
-  const handleChangeDiscount = (e) => {
-    const value = e.target.value
+  const handleChangeDiscount = (value) => {
     const discountValue = Math.ceil(catalogPrice * value) / 100
-    handleChange({
-      ...e,
-      target: { ...e.target, name: e.target.name, value: discountValue },
-    })
+    updateForm({ discount: discountValue })
   }
 
   const onDeletePayment = (id) => {
@@ -978,14 +951,6 @@ const OrderForm = ({
 
   const forNew = order._id === undefined
 
-  const handleChange = (e) => {
-    const target = e.target
-    const value = target.name === 'images' ? [target.value] : target.value
-    const name = target.name
-
-    updateForm({ [name]: value })
-  }
-
   const catalogProductsPrice = form.productsCount.reduce(
     (totalProductsCount, productCount) => {
       if (productCount.product) {
@@ -1123,7 +1088,6 @@ const OrderForm = ({
     form,
     order,
     updateForm,
-    handleChange,
     role: loggedUser.role,
     catalogPrice,
     totalPrice,

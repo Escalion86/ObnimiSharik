@@ -58,6 +58,16 @@ const Input = ({
       </div>
     )
 
+  const onChangeUpd = (e) => {
+    // type === 'number'
+    //           ? (e) => {
+    //               e.target.value = Number(e.target.value)
+    //               onChange(e)
+    //             }
+    //           : onChange
+    onChange(e.target.value)
+  }
+
   return (
     <div
       className={
@@ -103,14 +113,7 @@ const Input = ({
             maxLength={maxLength}
             name={name}
             value={type === 'number' ? parseInt(value) : value ? value : ''}
-            onChange={
-              type === 'number'
-                ? (e) => {
-                    e.target.value = Number(e.target.value)
-                    onChange(e)
-                  }
-                : onChange
-            }
+            onChange={onChangeUpd}
             required={required}
             textarea={textarea}
             accept={accept}

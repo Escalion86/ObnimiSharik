@@ -47,14 +47,6 @@ const ProductForm = ({
 
   const forNew = product._id === undefined
 
-  const handleChange = (e) => {
-    const target = e.target
-    const name = target.name
-    const value = target.value
-    updateForm({ [name]: value })
-    // }
-  }
-
   const sendForm = async () => {
     forNew
       ? postData(
@@ -115,9 +107,8 @@ const ProductForm = ({
         label="Название"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
         hidden={readOnly}
       />
@@ -126,9 +117,8 @@ const ProductForm = ({
         label="Описание"
         type="text"
         maxLength="600"
-        name="description"
         value={form.description}
-        onChange={handleChange}
+        onChange={(description) => updateForm({ description })}
         textarea
         readOnly={readOnly}
       />
@@ -138,9 +128,8 @@ const ProductForm = ({
           label="Артикул"
           type="text"
           maxLength="100"
-          name="article"
           value={form.article}
-          onChange={handleChange}
+          onChange={(article) => updateForm({ article })}
           className="flex-1"
           readOnly={readOnly}
           inLine={readOnly}

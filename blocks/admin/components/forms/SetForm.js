@@ -55,14 +55,6 @@ const SetForm = ({
 
   const forNew = set._id === undefined
 
-  const handleChange = (e) => {
-    const target = e.target
-    const value = target.name === 'images' ? [target.value] : target.value
-    const name = target.name
-
-    updateForm({ [name]: value })
-  }
-
   const handleSubmit = (e) => {
     e?.preventDefault()
     const errs = formValidate()
@@ -71,12 +63,7 @@ const SetForm = ({
     for (const [id, count] of Object.entries(form.productsIdCount)) {
       if (id !== '?' && count > 0) productsIdCount[id] = count
     }
-    // form.productsIdCount.filter(
-    //   (productIdCount) =>
-    //     productIdCount.id &&
-    //     productIdCount.id !== '0' &&
-    //     productIdCount.count > 0
-    // )
+
     const fixedForm = { ...form, productsIdCount }
 
     if (Object.keys(errs).length === 0) {
@@ -133,9 +120,8 @@ const SetForm = ({
           label="Название"
           type="text"
           maxLength="80"
-          name="name"
           value={form.name}
-          onChange={handleChange}
+          onChange={(name) => updateForm({ name })}
           required
           // readOnly={readOnly}
           hidden={readOnly}
@@ -145,9 +131,8 @@ const SetForm = ({
           label="Описание"
           type="text"
           maxLength="600"
-          name="description"
           value={form.description}
-          onChange={handleChange}
+          onChange={(description) => updateForm({ description })}
           textarea
           readOnly={readOnly}
         />
@@ -157,9 +142,8 @@ const SetForm = ({
             label="Артикул"
             type="text"
             maxLength="100"
-            name="article"
             value={form.article}
-            onChange={handleChange}
+            onChange={(article) => updateForm({ article })}
             className="flex-1"
             readOnly={readOnly}
             inLine={readOnly}

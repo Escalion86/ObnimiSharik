@@ -58,21 +58,14 @@ const DatePicker = ({
         }
         type="date"
         name={name}
-        value={formatDate(value, true)}
+        defaultValue={formatDate(value, true)}
         onChange={(e) => {
           const value = e.target.value
           var year = value.substring(0, 4)
           var month = value.substring(5, 7)
           var day = value.substring(8, 10)
 
-          onChange({
-            ...e,
-            target: {
-              ...e.target,
-              name: e.target.name,
-              value: new Date(year, month - 1, day).toISOString(),
-            },
-          })
+          onChange(new Date(year, month - 1, day).toISOString())
         }}
         pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
         // min="2018-01-01"

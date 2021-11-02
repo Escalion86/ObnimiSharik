@@ -48,14 +48,6 @@ const ProductCirculationForm = ({
 
   const product = findDataWithId(products, form.productId)
 
-  const handleChange = (e) => {
-    const target = e.target
-    const value = target.value
-    const name = target.name
-
-    updateForm({ [name]: value })
-  }
-
   const handleSubmit = (e) => {
     e?.preventDefault()
     const errs = formValidate()
@@ -172,7 +164,7 @@ const ProductCirculationForm = ({
           type="number"
           name="count"
           value={form.count}
-          onChange={handleChange}
+          onChange={(count) => updateForm({ count })}
           required
           className="w-24"
         />
@@ -190,9 +182,8 @@ const ProductCirculationForm = ({
       </div>
 
       <ComboBox
-        name="purchase"
         title="Закуп/Продажа"
-        handleChange={handleChange}
+        handleChange={(purchase) => updateForm({ purchase })}
         defaultValue={form.purchase}
         items={[
           { name: 'Закуп на склад', value: false },
@@ -202,10 +193,8 @@ const ProductCirculationForm = ({
       <DatePicker
         key="purchasedAt"
         label="Дата закупа/продажи"
-        name="purchasedAt"
         value={form.purchasedAt}
-        // value={productCirculation.createdAt}
-        onChange={handleChange}
+        onChange={(purchasedAt) => updateForm({ purchasedAt })}
         required
       />
       <CheckBox

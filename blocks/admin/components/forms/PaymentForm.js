@@ -39,14 +39,6 @@ const PaymentForm = ({
 
   const forNew = payment._id === undefined
 
-  const handleChange = (e) => {
-    const target = e.target
-    const value = target.name === 'images' ? [target.value] : target.value
-    const name = target.name
-
-    updateForm({ [name]: value })
-  }
-
   const handleSubmit = (e) => {
     e?.preventDefault()
     const errs = formValidate()

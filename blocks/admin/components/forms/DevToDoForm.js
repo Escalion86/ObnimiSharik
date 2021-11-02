@@ -40,14 +40,6 @@ const DevToDoForm = ({
 
   const forNew = devToDo._id === undefined
 
-  const handleChange = (e) => {
-    const target = e.target
-    const value = target.name === 'images' ? [target.value] : target.value
-    const name = target.name
-
-    updateForm({ [name]: value })
-  }
-
   useEffect(() => {
     if (!form.userId)
       getSession().then((session) =>
@@ -119,9 +111,8 @@ const DevToDoForm = ({
         label="Проблема/Предложение"
         type="text"
         maxLength="100"
-        name="title"
         value={form.title}
-        onChange={handleChange}
+        onChange={(title) => updateForm({ title })}
         required
         readOnly={readOnly}
       />
@@ -130,9 +121,8 @@ const DevToDoForm = ({
         label="Описание"
         type="text"
         maxLength="600"
-        name="description"
         value={form.description}
-        onChange={handleChange}
+        onChange={(description) => updateForm({ description })}
         required
         readOnly={readOnly}
         textarea

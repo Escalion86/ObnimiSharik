@@ -90,15 +90,14 @@ const InvitationForm = ({
         label="EMail сотрудника"
         type="text"
         maxLength="80"
-        name="email"
         value={form.email}
-        onChange={handleChange}
+        onChange={(email) => updateForm({ email })}
         required
       />
       <ComboBox
         name="role"
         title="Должность"
-        handleChange={handleChange}
+        handleChange={(role) => updateForm({ role })}
         defaultValue={form.role}
         placeholder="Выберите должность"
         items={ROLES.filter((role) => !role.hidden)}

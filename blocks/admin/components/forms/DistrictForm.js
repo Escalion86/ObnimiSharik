@@ -26,13 +26,6 @@ const DistrictForm = ({
 
   const forNew = district._id === undefined
 
-  const handleChange = (e) => {
-    const target = e.target
-    const name = target.name
-    const value = target.value
-    updateForm({ [name]: value })
-  }
-
   const handleSubmit = (e) => {
     e?.preventDefault()
     const errs = formValidate()
@@ -83,9 +76,8 @@ const DistrictForm = ({
         label="Название"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
       />
       <PriceInput

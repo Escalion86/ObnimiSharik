@@ -28,11 +28,6 @@ const ProductTypeForm = ({
 
   const forNew = productType._id === undefined
 
-  const handleChange = (e) => {
-    const { value, name } = e.target
-    updateForm({ [name]: value })
-  }
-
   const handleSubmit = (e) => {
     e?.preventDefault()
     const errs = formValidate()
@@ -96,9 +91,8 @@ const ProductTypeForm = ({
         label="Название"
         type="text"
         maxLength="80"
-        name="name"
         value={form.name}
-        onChange={handleChange}
+        onChange={(name) => updateForm({ name })}
         required
       />
     </Form>
