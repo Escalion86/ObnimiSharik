@@ -143,7 +143,7 @@ const ProductCirculationForm = ({
         required
         // exceptedIds={selectedItemsIds}
       />
-      <div className="flex justify-between gap-x-1">
+      <div className="flex flex-wrap justify-between gap-x-2">
         <PriceInput
           label="Стоимость всего"
           value={form.price}
@@ -160,13 +160,13 @@ const ProductCirculationForm = ({
         </div> */}
         <Input
           key="count"
-          label="Количество"
+          label="Кол-во в наборе"
           type="number"
           name="count"
           value={form.count}
           onChange={(count) => updateForm({ count })}
           required
-          className="w-24"
+          className="w-34"
         />
         {/* <div className="flex flex-col justify-end w-4 mb-2">
           <FontAwesomeIcon
@@ -175,7 +175,7 @@ const ProductCirculationForm = ({
             size="lg"
           />
         </div> */}
-        <div className="flex flex-col justify-end flex-1 mb-1">
+        <div className="flex flex-col justify-end flex-1 mb-1 whitespace-nowrap">
           {form.count != '0' &&
             `за шт: ${Math.round(form.price / form.count) / 100} ₽`}
         </div>

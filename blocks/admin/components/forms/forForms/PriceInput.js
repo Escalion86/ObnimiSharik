@@ -46,7 +46,7 @@ const PriceInput = ({
       )}
       <div
         className={
-          'flex border rounded-lg w-44' +
+          'flex border rounded-lg' +
           (required && (!value || value == '0')
             ? ' border-red-700'
             : ' border-gray-700')
@@ -55,7 +55,7 @@ const PriceInput = ({
         <Input
           // label={label}
           className="gap-x-0"
-          inputStyle="border-0 rounded-r-none"
+          inputStyle="border-0 rounded-r-none w-22"
           labelStyle={labelStyle}
           type="number"
           name={name + '₽'}
@@ -69,7 +69,7 @@ const PriceInput = ({
         <Input
           // label={label}
           className={className}
-          inputStyle="w-17 border-0 border-l rounded-l-none"
+          inputStyle="w-16 border-0 border-l rounded-l-none"
           labelStyle={labelStyle}
           type="number"
           name={name + 'коп'}
