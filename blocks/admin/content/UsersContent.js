@@ -21,7 +21,7 @@ const UsersContent = ({ data, modals, loggedUser }) => {
       <Virtuoso
         data={showedUsers}
         itemContent={(index, showedUser) => {
-          if (index > 2) return <div>-</div>
+          if (index > 1) return <div>-</div>
           return (
             <UserCard
               loggedUser={loggedUser}
