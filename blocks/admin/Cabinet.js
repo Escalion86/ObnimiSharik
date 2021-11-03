@@ -50,16 +50,18 @@ const Cabinet = ({
 
   let pageButtons = page.pageButtons ? page.pageButtons : []
 
-  const filterExists =
+  const filterExists = !!(
     page.variable &&
     state[page.variable]?.length &&
     state.filter[page.variable] &&
     Object.keys(state.filter[page.variable]).length > 0
-  const sortingExists =
+  )
+  const sortingExists = !!(
     page.variable &&
     state[page.variable]?.length &&
     state.sorting[page.variable] &&
     Object.keys(state.sorting[page.variable]).length > 0
+  )
 
   // // // const pageButtons = []
   // let Filter
