@@ -15,17 +15,21 @@ export const UserCard = ({
   // const gender = GENDERS.find((genderItem) => genderItem.value === user.gender)
   return (
     <Card className="items-center" inLine onClick={() => onClick(user)}>
-      <ZoomImage
-        image={user?.image}
-        noImage={`/img/users/${user?.gender ?? 'noGender'}.jpg`}
-        alt="user"
-        imageClassName="h-full w-24 max-h-24 laptop:max-h-10 laptop:w-10"
-        containerClassName="h-full rounded-l-lg"
-      />
+      <div className="h-full min-w-24 laptop:min-w-0">
+        <ZoomImage
+          image={user?.image}
+          noImage={`/img/users/${user?.gender ?? 'noGender'}.jpg`}
+          alt="user"
+          imageClassName="h-full w-24 max-h-24 laptop:w-10"
+          containerClassName="h-full rounded-l-lg"
+        />
+      </div>
       <CardContainer className="items-center">
-        <div className="flex flex-col justify-between gap-x-4 laptop:flex-row">
-          <div className="font-semibold">{user?.name ?? ''}</div>
-          <div className="italic">{user?.email ?? ''}</div>
+        <div className="flex flex-col justify-between laptop:items-center gap-x-4 laptop:flex-row">
+          <div className="font-semibold whitespace-nowrap">
+            {user?.name ?? ''}
+          </div>
+          <div className="text-sm italic">{user?.email ?? ''}</div>
           <div className="flex-1 font-bold">{roleRus(user?.role ?? '')}</div>
         </div>
       </CardContainer>
