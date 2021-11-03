@@ -99,9 +99,9 @@ const SidePanel = ({
             />
             <div
               onClick={() => modals.openVersionHistoryModal()}
-              className="flex flex-col items-center justify-end flex-1"
+              className="flex flex-col items-center justify-end flex-1 mt-2"
             >
-              <div className="duration-300 cursor-pointer opacity-60 hover:text-primary">{`ver. ${versionHistory[0].ver}`}</div>
+              <div className="text-sm duration-300 cursor-pointer opacity-60 hover:text-primary">{`ver. ${versionHistory[0].ver}`}</div>
             </div>
           </div>
           {/* <div className="z-0 flex-col justify-end flex-1 hidden w-full px-3 m-auto mt-6 opacity-100 lg:flex">
