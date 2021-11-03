@@ -27,44 +27,44 @@ const ContactIconBtn = ({ url, icon, size = 'lg', className = null }) => (
 
 const ContactsIconsButtons = ({ user }) => (
   <div className="flex items-center p-2 gap-x-2 tablet:gap-x-3 flex-nowrap">
-    {user.phone && (
+    {user?.phone && (
       <ContactIconBtn
         icon={faPhone}
         className="text-yellow-600"
         url={'tel:+' + user.phone}
       />
     )}
-    {user.whatsapp && (
+    {user?.whatsapp && (
       <ContactIconBtn
         icon={faWhatsapp}
         className="text-green-600"
         url={'https://wa.me/' + user.whatsapp}
       />
     )}
-    {user.viber && (
+    {user?.viber && (
       <ContactIconBtn
         icon={faViber}
         className="text-purple-600"
         url={'viber://chat?number=' + user.viber}
       />
     )}
-    {user.telegram && (
+    {user?.telegram && (
       <ContactIconBtn
         icon={faTelegramPlane}
         url={'https://t.me/' + user.telegram}
       />
     )}
-    {user.instagram && (
+    {user?.instagram && (
       <ContactIconBtn
         icon={faInstagram}
         className="text-yellow-700"
         url={'https://instagram.com/' + user.instagram}
       />
     )}
-    {user.vk && (
+    {user?.vk && (
       <ContactIconBtn icon={faVk} url={'https://vk.com/' + user.vk} />
     )}
-    {user.email && (
+    {user?.email && (
       <ContactIconBtn
         icon={faEnvelope}
         className="text-red-400"
