@@ -3,7 +3,7 @@ import { UserCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
 const UsersContent = ({ data, modals, loggedUser }) => {
-  console.log(`data`, data)
+  console.log(`data[1]`, data[1])
   console.log(`modals`, modals)
   console.log(`loggedUser`, loggedUser)
   try {
@@ -21,7 +21,7 @@ const UsersContent = ({ data, modals, loggedUser }) => {
       <Virtuoso
         data={showedUsers}
         itemContent={(index, showedUser) => {
-          if (index > 1) return <div>-</div>
+          if (index === 2) return <div>-</div>
           return (
             <UserCard
               loggedUser={loggedUser}
