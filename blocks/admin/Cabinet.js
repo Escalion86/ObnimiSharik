@@ -173,8 +173,6 @@ const Cabinet = ({
     })
   }
 
-  console.log(`page`, page)
-
   return (
     <div className="flex h-screen max-h-screen overflow-y-hidden">
       <SidePanel
@@ -201,14 +199,14 @@ const Cabinet = ({
         <main className="flex flex-col flex-1 overflow-y-auto">
           <Title
             title={
-              // page.name +
-              filterExists &&
+              (page?.name ?? '') +
+              (filterExists &&
               (loggedUser.role === 'admin' || loggedUser.role === 'dev')
                 ? ' ' +
                   filteredData.length +
                   ' / ' +
                   state[page.variable].length
-                : ''
+                : '')
             }
             buttons={buttons}
           />
