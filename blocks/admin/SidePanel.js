@@ -76,7 +76,7 @@ const SidePanel = ({
         <div className="flex flex-col w-64 h-full px-8 py-4 overflow-y-auto bg-gray-100 border-r border-primary laptop:fixed z-1">
           <div className="z-10 flex flex-col justify-start h-full">
             {/* <img className="px-4" src={Logo} alt="logo" /> */}
-            <div className="flex items-center justify-center shadow-primary bg-primary rounded-3xl">
+            <div className="flex items-center justify-center shadow-primary bg-primary rounded-3xl gap-x-2 flex-nowrap">
               <img
                 src="/img/balloon.webp"
                 alt="balloon"
