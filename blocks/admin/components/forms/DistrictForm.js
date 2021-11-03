@@ -84,7 +84,6 @@ const DistrictForm = ({
         label="Стоимость доставки"
         value={form.deliveryPrice}
         onChange={(deliveryPrice) => updateForm({ deliveryPrice })}
-        className="flex-1"
         name="deliveryPrice"
       />
     </Form>
