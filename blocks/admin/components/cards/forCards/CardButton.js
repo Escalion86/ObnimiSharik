@@ -18,12 +18,15 @@ const CardButton = ({
     <button
       onClick={onClick}
       className={
-        'h-full w-8 whitespace-nowrap shadow font-futuraDemi flex items-center justify-center hover:bg-toxic' +
+        'h-full w-8 whitespace-nowrap shadow font-futuraDemi flex items-center justify-center hover:bg-toxic duration-300 group' +
         (className ? ' ' + className : '')
       }
       disabled={disabled}
     >
-      <FontAwesomeIcon className="w-3 h-3 text-white" icon={icon} />
+      <FontAwesomeIcon
+        className="w-3 h-3 text-white duration-300 group-hover:scale-110"
+        icon={icon}
+      />
       {name}
     </button>
   </Tooltip>
