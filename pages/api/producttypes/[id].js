@@ -1,4 +1,3 @@
-// import dbConnect from '@utils/dbConnect'
 import ProductTypes from '@models/ProductTypes'
 import CRUD from '@server/CRUD'
 

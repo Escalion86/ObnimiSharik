@@ -1,4 +1,3 @@
-// import dbConnect from '@utils/dbConnect'
 import Invitations from '@models/Invitations'
 import CRUD from '@server/CRUD'
 
