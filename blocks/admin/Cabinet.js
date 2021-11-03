@@ -52,14 +52,12 @@ const Cabinet = ({
 
   const filterExists =
     page.variable &&
-    state[page.variable] &&
-    state[page.variable].length > 0 &&
+    state[page.variable]?.length &&
     state.filter[page.variable] &&
     Object.keys(state.filter[page.variable]).length > 0
   const sortingExists =
     page.variable &&
-    state[page.variable] &&
-    state[page.variable].length > 0 &&
+    state[page.variable]?.length &&
     state.sorting[page.variable] &&
     Object.keys(state.sorting[page.variable]).length > 0
 
@@ -175,6 +173,8 @@ const Cabinet = ({
     })
   }
 
+  console.log(`page`, page)
+
   return (
     <div className="flex h-screen max-h-screen overflow-y-hidden">
       <SidePanel
@@ -201,14 +201,14 @@ const Cabinet = ({
         <main className="flex flex-col flex-1 overflow-y-auto">
           <Title
             title={
-              page.name +
-              (filterExists &&
+              // page.name +
+              filterExists &&
               (loggedUser.role === 'admin' || loggedUser.role === 'dev')
                 ? ' ' +
                   filteredData.length +
                   ' / ' +
                   state[page.variable].length
-                : '')
+                : ''
             }
             buttons={buttons}
           />
