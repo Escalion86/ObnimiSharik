@@ -20,16 +20,19 @@ const UsersContent = ({ data, modals, loggedUser }) => {
     return (
       <Virtuoso
         data={showedUsers}
-        itemContent={(index, showedUser) => (
-          <UserCard
-            loggedUser={loggedUser}
-            key={showedUser._id}
-            user={showedUser}
-            onClick={() => modals.openUserModal(showedUser)}
-            onEdit={() => modals.openUserModal(showedUser, null, null, true)}
-            onDelete={() => modals.openDeleteUser(showedUser)}
-          />
-        )}
+        itemContent={(index, showedUser) => {
+          if (index > 0) return <div></div>
+          return (
+            <UserCard
+              loggedUser={loggedUser}
+              key={showedUser._id}
+              user={showedUser}
+              onClick={() => modals.openUserModal(showedUser)}
+              onEdit={() => modals.openUserModal(showedUser, null, null, true)}
+              onDelete={() => modals.openDeleteUser(showedUser)}
+            />
+          )
+        }}
       />
     )
   } catch (e) {
