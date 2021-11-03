@@ -3,9 +3,7 @@ import Card from './Card'
 import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import ContactsIconsButtons from './forCards/ContactsIconsButtons'
-import { GENDERS } from '@helpers/constants'
-import { faQuestion } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { GENDERS } from '@helpers/constants'
 import ZoomImage from '@admincomponents/ZoomImage'
 
 export const UserCard = ({
@@ -14,7 +12,8 @@ export const UserCard = ({
   onEdit = null,
   onDelete = null,
 }) => {
-  const gender = GENDERS.find((genderItem) => genderItem.value === user.gender)
+  console.log(`user`, user)
+  // const gender = GENDERS.find((genderItem) => genderItem.value === user.gender)
   return (
     <Card className="items-center" inLine onClick={() => onClick(user)}>
       <ZoomImage
