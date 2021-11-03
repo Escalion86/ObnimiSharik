@@ -26,7 +26,7 @@ const ContactIconBtn = ({ url, icon, size = 'lg', className = null }) => (
 )
 
 const ContactsIconsButtons = ({ user }) => (
-  <div className="flex items-center p-2 gap-x-2 tablet:gap-x-3 flex-nowrap">
+  <div className="flex flex-wrap items-center justify-end p-2 gap-x-2 gap-y-1">
     {user?.phone && (
       <ContactIconBtn
         icon={faPhone}
