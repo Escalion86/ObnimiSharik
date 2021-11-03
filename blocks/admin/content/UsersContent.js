@@ -4,8 +4,7 @@ import { Virtuoso } from 'react-virtuoso'
 
 const UsersContent = ({ data, modals, loggedUser }) => {
   console.log(`data[1]`, data[1])
-  console.log(`modals`, modals)
-  console.log(`loggedUser`, loggedUser)
+  console.log(`data[2]`, data[2])
   try {
     const users = data
     let showedUsers = []

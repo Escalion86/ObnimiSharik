@@ -24,7 +24,7 @@ export const UserCard = ({
       />
       <CardContainer className="items-center">
         <div className="flex flex-col justify-between gap-x-4 laptop:flex-row">
-          {/* <div className="font-semibold">{user?.name ?? ''}</div> */}
+          <div className="font-semibold">{user?.name ?? ''}</div>
           <div className="italic">{user?.email ?? ''}</div>
           <div className="flex-1 font-bold">{roleRus(user?.role ?? '')}</div>
         </div>
