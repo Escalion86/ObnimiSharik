@@ -208,7 +208,7 @@ export const pages = [
     pageContent: DistrictsContent,
     pageButtons: [BtnAddDistrict],
     backToPageId: 0,
-    accessRoles: ['admin'],
+    accessRoles: ['admin', 'dev'],
     variable: 'districts',
   },
 ]
