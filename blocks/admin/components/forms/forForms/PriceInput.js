@@ -24,7 +24,7 @@ const PriceInput = ({
   return (
     <div
       className={
-        'flex' +
+        'flex w-min' +
         (inLine ? ' flex-row items-center' : ' flex-col') +
         (className ? ' ' + className : '')
       }
