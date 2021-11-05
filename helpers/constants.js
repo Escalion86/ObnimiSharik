@@ -6,6 +6,7 @@ import {
   faCreditCard,
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons'
+import isDevMode from './isDevMode'
 
 export const DEFAULT_USER = {
   name: 'Гость',
@@ -271,3 +272,5 @@ export const ACCESS_TO_COLLECTION = (collection, collectionItem, user) => {
     },
   }
 }
+
+export const CLOUDINARY_FOLDER = isDevMode ? 'obnimisharik_dev' : 'obnimisharik'

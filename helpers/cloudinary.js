@@ -1,8 +1,4 @@
-const CLOUDINARY_FOLDER = (window) =>
-  window.location.href.includes('dev.') ||
-  window.location.href.includes('localhost')
-    ? 'obnimisharik_dev'
-    : 'obnimisharik'
+import { CLOUDINARY_FOLDER } from './constants'
 
 export const deleteImage = async (imagePublicId) => {
   // const { id } = router.query
@@ -35,15 +31,15 @@ export const deleteImages = async (arrayOfImagesUrls, callback = null) => {
   if (arrayOfImagesUrls.length > 0)
     await Promise.all(
       arrayOfImagesUrls.map(async (imageUrl) => {
-        if (imageUrl.lastIndexOf(CLOUDINARY_FOLDER(window) + '/') > 0) {
+        if (imageUrl.lastIndexOf(CLOUDINARY_FOLDER + '/') > 0) {
           await deleteImage(
             imageUrl.substring(
-              imageUrl.lastIndexOf(CLOUDINARY_FOLDER(window) + '/'),
+              imageUrl.lastIndexOf(CLOUDINARY_FOLDER + '/'),
               imageUrl.lastIndexOf('.')
             )
           )
         } else if (!imageUrl.includes('https://res.cloudinary.com')) {
-          await deleteImage(CLOUDINARY_FOLDER(window) + '/' + imageUrl)
+          await deleteImage(CLOUDINARY_FOLDER + '/' + imageUrl)
         }
       })
     )
@@ -61,9 +57,7 @@ export const sendImage = async (
     formData.append('file', image)
     formData.append(
       'upload_preset',
-      folder
-        ? CLOUDINARY_FOLDER(window) + '_' + folder
-        : CLOUDINARY_FOLDER(window)
+      folder ? CLOUDINARY_FOLDER + '_' + folder : CLOUDINARY_FOLDER
     )
     if (imageName) {
       // console.log(`imageName`, imageName)
