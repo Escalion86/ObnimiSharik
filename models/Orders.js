@@ -122,6 +122,8 @@ const OrdersSchema = new mongoose.Schema({
   },
 })
 
+autoIncrement.initialize(mongoose.connection)
+
 OrdersSchema.plugin(autoIncrement.plugin, {
   model: 'Orders',
   field: 'number',
