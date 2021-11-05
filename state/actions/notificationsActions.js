@@ -1,6 +1,6 @@
-import { SET_NOTIFICATIONS, SET_NOTIFICATIONS } from 'state/constants'
+import { SET_NOTIFICATIONS } from 'state/constants'
 
-export const setDistricts = (notifications) => {
+export const setNotifications = (notifications) => {
   return {
     type: SET_NOTIFICATIONS,
     notifications,

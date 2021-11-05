@@ -61,6 +61,8 @@ export default async function handler(Schema, req, res, params = null) {
 
   const id = query?.id
 
+  console.log(`session.user`, session.user)
+
   await dbConnect()
 
   let data

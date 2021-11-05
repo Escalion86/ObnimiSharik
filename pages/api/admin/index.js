@@ -11,6 +11,7 @@ import Payments from '@models/Payments'
 import Orders from '@models/Orders'
 import DevToDo from '@models/DevToDo'
 import Districts from '@models/Districts'
+import Notifications from '@models/Notifications'
 
 export default async function handler(req, res) {
   const { method } = req
@@ -32,6 +33,7 @@ export default async function handler(req, res) {
         const orders = await Orders.find({})
         const devToDo = await DevToDo.find({})
         const districts = await Districts.find({})
+        const notifications = await Notifications.find({})
 
         res.status(200).json({
           success: true,
@@ -48,6 +50,7 @@ export default async function handler(req, res) {
             payments,
             devToDo,
             districts,
+            notifications,
           },
         })
       } catch (error) {

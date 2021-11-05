@@ -16,6 +16,7 @@ import paymentsReducer from './paymentsReducer'
 import appReducer from './appReducer '
 import devToDoReducer from './devToDoReducer'
 import districtsReducer from './districtsReducer'
+import notificationsReducer from './notificationsReducer'
 
 const allReducers = combineReducers({
   products: productsReducer,
@@ -35,6 +36,7 @@ const allReducers = combineReducers({
   loaded: appReducer,
   devToDo: devToDoReducer,
   districts: districtsReducer,
+  notifications: notificationsReducer,
 })
 
 export default allReducers
