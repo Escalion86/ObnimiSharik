@@ -75,7 +75,6 @@ export default async function handler(Schema, req, res, params = null) {
             return res?.status(400).json({ success: false })
           }
           return res?.status(200).json({ success: true, data })
-          return data
         } else {
           data = await Schema.find(params)
           if (!data) {
