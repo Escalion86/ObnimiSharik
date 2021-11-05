@@ -5,6 +5,8 @@ import {
   faVenus,
   faCreditCard,
   faSignInAlt,
+  faPlus,
+  faMinus,
 } from '@fortawesome/free-solid-svg-icons'
 import isDevMode from './isDevMode'
 
@@ -237,6 +239,11 @@ export const PRIORITIES = [
 export const GENDERS = [
   { value: 'male', name: 'Мужчина', color: 'blue', icon: faMars },
   { value: 'famale', name: 'Женщина', color: 'red', icon: faVenus },
+]
+
+export const ORDER_PURCHASE = [
+  { value: true, name: 'Пополнение склада', color: 'green', icon: faPlus },
+  { value: false, name: 'Расход со склада', color: 'red', icon: faMinus },
 ]
 
 export const DEVTODO_STATUSES = [
