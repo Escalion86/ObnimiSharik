@@ -1,98 +1,207 @@
 import dbConnect from '@utils/dbConnect'
+import { getSession } from 'next-auth/react'
+import Notifications from '@models/Notifications'
+import Products from '@models/Products'
+import ProductCirculations from '@models/ProductCirculations'
+import Payments from '@models/Payments'
+import Orders from '@models/Orders'
+import Users from '@models/Users'
+import Districts from '@models/Districts'
+import DevToDo from '@models/DevToDo'
+import Clients from '@models/Clients'
+import SetTypes from '@models/SetTypes'
+import ProductTypes from '@models/ProductTypes'
+import Sets from '@models/Sets'
 
-export default async function handler(Schema, req, res, param = null) {
-  const { query, method } = req
+const dbNameFromSchema = (Schema) => {
+  switch (Schema) {
+    case Products:
+      return 'products'
+    case Sets:
+      return 'sets'
+    case ProductTypes:
+      return 'productTypes'
+    case SetTypes:
+      return 'setTypes'
+    case Clients:
+      return 'clients'
+    case DevToDo:
+      return 'devToDo'
+    case Districts:
+      return 'districts'
+    case Users:
+      return 'users'
+    case Orders:
+      return 'orders'
+    case Payments:
+      return 'payments'
+    case ProductCirculations:
+      return 'productCirculations'
+    case Invitations:
+      return 'invitations'
+    default:
+      return null
+  }
+}
+
+const prepareData = (data) => {
+  if (!data) return data
+  const preparedData = { ...data }
+  if (preparedData._doc._id) delete preparedData._doc._id
+  if (preparedData._doc.createdAt) delete preparedData._doc.createdAt
+  return preparedData
+}
+
+export default async function handler(Schema, req, res, params = null) {
+  const session = await getSession({ req })
+  if (!session || !session.user._id)
+    return res?.status(400).json({ success: false })
+
+  const { query, method, body } = req
 
   const id = query?.id
 
   await dbConnect()
 
+  let data
+  let oldData
+
   switch (method) {
     case 'GET':
       try {
-        if (id && !param) {
-          const data = await Schema.findById(id)
+        if (id) {
+          data = await Schema.findById(id)
           if (!data) {
             return res?.status(400).json({ success: false })
           }
-          res?.status(200).json({ success: true, data })
+          return res?.status(200).json({ success: true, data })
+          return data
         } else {
-          let data
-          if (id && param) {
-            data = await Schema.find({ [param]: id })
-          } else {
-            data = await Schema.find({})
+          data = await Schema.find(params)
+          if (!data) {
+            return res?.status(400).json({ success: false })
           }
-          res?.status(200).json({ success: true, data })
+          return res?.status(200).json({ success: true, data })
+          // return { newData: data, oldData }
+          // return res?.status(400).json({ success: false, error: 'No Id' })
         }
       } catch (error) {
         console.log(error)
-        res?.status(400).json({ success: false, error })
+        return res?.status(400).json({ success: false, error })
       }
       break
     case 'POST':
       try {
-        if (id && !param) {
+        if (id) {
           return res
             ?.status(400)
             .json({ success: false, error: 'No need to set Id' })
         } else {
-          const data = await Schema.create(req.body)
-          res?.status(201).json({ success: true, data })
+          data = await Schema.create(body)
+          if (!data) {
+            return res?.status(400).json({ success: false })
+          }
+          // Добавляем уведомление о создании
+          await Notifications.create({
+            responsibleUserId: session.user._id,
+            dbName: dbNameFromSchema(Schema),
+            itemId: data._id,
+            oldItem: null,
+            newItem: prepareData(data),
+            status: 'add',
+          })
+
+          return res?.status(201).json({ success: true, data })
+          // return { newData: data, oldData }
         }
       } catch (error) {
         console.log(error)
-        res?.status(400).json({ success: false, error })
+        return res?.status(400).json({ success: false, error })
       }
       break
     case 'PUT' /* Edit a model by its ID */:
       try {
-        if (id && !param) {
-          // const body = { ...req.body, updatedAt: Date.now() }
-          const data = await Schema.findByIdAndUpdate(id, req.body, {
+        if (id) {
+          data = await Schema.findById(id)
+          if (!data) {
+            return res?.status(400).json({ success: false })
+          } else {
+            oldData = data
+          }
+          data = await Schema.findByIdAndUpdate(id, body, {
             new: true,
             runValidators: true,
           })
           if (!data) {
             return res?.status(400).json({ success: false })
           }
-          res?.status(200).json({ success: true, data })
+          // Добавляем уведомление об изменении
+          await Notifications.create({
+            responsibleUserId: session.user._id,
+            dbName: dbNameFromSchema(Schema),
+            itemId: id,
+            oldItem: prepareData(oldData),
+            newItem: prepareData(data),
+            status: 'update',
+          })
+
+          return res?.status(200).json({ success: true, data })
+          // return { newData: data, oldData }
         } else {
           return res?.status(400).json({ success: false, error: 'No Id' })
         }
       } catch (error) {
         console.log(error)
-        res?.status(400).json({ success: false })
+        return res?.status(400).json({ success: false })
       }
       break
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        if (id && !param) {
-          const deletedData = await Schema.deleteOne({
+        if (id) {
+          data = await Schema.findById(id)
+          if (!data) {
+            return res?.status(400).json({ success: false })
+          } else {
+            oldData = data
+          }
+          data = await Schema.deleteOne({
             _id: id,
           })
-          if (!deletedData) {
+          if (!data) {
             return res?.status(400).json({ success: false })
           }
+          // Добавляем уведомление об удалении
+          await Notifications.create({
+            responsibleUserId: session.user._id,
+            dbName: dbNameFromSchema(Schema),
+            itemId: id,
+            oldItem: prepareData(oldData),
+            newItem: null,
+            status: 'delete',
+          })
+          return res?.status(200).json({ success: true, data })
+
+          // return { newData: data, oldData }
         } else {
-          let deletedData
-          if (id && param) {
-            console.log(`[param]: id`, { [param]: id })
-            deletedData = await Schema.deleteMany({ [param]: id })
+          if (params) {
+            data = await Schema.deleteMany(params)
+            if (!data) {
+              return res?.status(400).json({ success: false })
+            }
+            return res?.status(200).json({ success: true, data })
+            // return data
           } else {
-            deletedData = await Schema.deleteMany({})
-          }
-          if (!deletedData) {
             return res?.status(400).json({ success: false })
           }
         }
-        res?.status(200).json({ success: true, data: {} })
+        // res?.status(200).json({ success: true, data: {} })
       } catch (error) {
-        res?.status(400).json({ success: false, error })
+        console.log(error)
+        return res?.status(400).json({ success: false, error })
       }
       break
     default:
-      res?.status(400).json({ success: false })
+      return res?.status(400).json({ success: false })
       break
   }
 }
