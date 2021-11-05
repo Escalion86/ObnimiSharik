@@ -11,7 +11,6 @@ export const putData = async (
   toastOnError = null
 ) => {
   // const { id } = router.query
-
   try {
     const res = await fetch(url, {
       method: 'PUT',
@@ -78,6 +77,7 @@ export const deleteData = async (
   callback = null,
   toastOnSuccess = null,
   toastOnError = null
+  // params = {}
 ) => {
   try {
     const res = await fetch(url, {
@@ -86,7 +86,7 @@ export const deleteData = async (
         Accept: contentType,
         'Content-Type': contentType,
       },
-      // body: JSON.stringify({ test: 'test' }),
+      // body: JSON.stringify({ params }),
     })
 
     // Throw error with status code in case Fetch API req failed
