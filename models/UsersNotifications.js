@@ -11,5 +11,5 @@ const UsersNotificationsSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export default mongoose.modelsUsersNotifications ||
+export default mongoose.models.UsersNotifications ||
   mongoose.model('UsersNotifications', UsersNotificationsSchema)
