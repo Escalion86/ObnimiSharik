@@ -19,7 +19,7 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
                 <div className="flex flex-col text-sm gap-y-1">
                   {add && (
                     <div className="flex flex-col ml-2">
-                      <div className="italic">Добавлено:</div>
+                      <div className="italic font-semibold">Добавлено:</div>
                       {add.map((item, index) => (
                         <div
                           className="ml-2 leading-4"
@@ -30,7 +30,7 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
                   )}
                   {update && (
                     <div className="flex flex-col ml-2">
-                      <div className="italic">Обновлено:</div>
+                      <div className="italic font-semibold">Обновлено:</div>
                       {update.map((item, index) => (
                         <div
                           className="ml-2 leading-4"
@@ -41,7 +41,7 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
                   )}
                   {fix && (
                     <div className="flex flex-col ml-2">
-                      <div className="italic">Исправлено:</div>
+                      <div className="italic font-semibold">Исправлено:</div>
                       {fix.map((item, index) => (
                         <div
                           className="ml-2 leading-4"

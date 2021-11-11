@@ -121,7 +121,7 @@ const UserForm = ({
       />
       <ComboBox
         title="Должность"
-        handleChange={(role) => updateForm({ role })}
+        onChange={(role) => updateForm({ role })}
         defaultValue={form.role}
         placeholder="Выберите должность"
         items={ROLES.filter((role) => !role.hidden)}

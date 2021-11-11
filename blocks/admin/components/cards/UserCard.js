@@ -29,8 +29,8 @@ export const UserCard = ({
           <div className="font-semibold whitespace-nowrap">
             {user?.name ?? ''}
           </div>
-          <div className="text-sm italic">{user?.email ?? ''}</div>
-          <div className="flex-1 font-bold">{roleRus(user?.role ?? '')}</div>
+          {/* <div className="text-sm italic">{user?.email ?? ''}</div> */}
+          <div className="flex-1 italic">{roleRus(user?.role)}</div>
         </div>
       </CardContainer>
       <div className="flex flex-col-reverse items-end justify-between laptop:flex-row laptop:items-center">

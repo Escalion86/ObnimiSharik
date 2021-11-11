@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
+import { DEFAULT_PRODUCT_CIRCULATION, ORDER_PURCHASE } from '@helpers/constants'
 
 import {
   CheckBox,
@@ -18,8 +18,7 @@ import Form from './Form'
 import findDataWithId from '@helpers/findDataWithId'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faEquals, faDivide } from '@fortawesome/free-solid-svg-icons'
+import PropValuePicker from './forForms/PropValuePicker/PropValuePicker'
 
 const ProductCirculationForm = ({
   loggedUser,
@@ -181,14 +180,29 @@ const ProductCirculationForm = ({
         </div>
       </div>
 
-      <ComboBox
-        title="Закуп/Продажа"
-        handleChange={(purchase) => updateForm({ purchase })}
+      {/* <ComboBox
+        title="Пополнение/Расход"
+        onChange={(purchase) => updateForm({ purchase })}
         defaultValue={form.purchase}
         items={[
-          { name: 'Закуп на склад', value: false },
-          { name: 'Продажа клиенту', value: true },
+          { name: 'Пополнение склада', value: false },
+          { name: 'Расход со склада', value: true },
         ]}
+      /> */}
+      <PropValuePicker
+        value={form.purchase}
+        valuesArray={ORDER_PURCHASE}
+        label="Пополнение/Расход"
+        onChange={(purchase) => {
+          if (purchase) updateForm({ purchase })
+          else updateForm({ purchase, defective: false })
+        }}
+        // inLine
+        // className={className}
+        // labelStyle={labelStyle}
+        // name="gender"
+        required
+        // readOnly={readOnly}
       />
       <DatePicker
         key="purchasedAt"
@@ -197,12 +211,14 @@ const ProductCirculationForm = ({
         onChange={(purchasedAt) => updateForm({ purchasedAt })}
         required
       />
-      <CheckBox
-        label="Брак"
-        checked={form.defective}
-        // name="defective"
-        onChange={() => updateForm({ defective: !form.defective })}
-      />
+      {!form.purchase && (
+        <CheckBox
+          label="Брак"
+          checked={form.defective}
+          // name="defective"
+          onChange={() => updateForm({ defective: !form.defective })}
+        />
+      )}
       <SelectOrder
         onChange={(item) => updateForm({ orderId: item ? item._id : '' })}
         selectedId={form.orderId}

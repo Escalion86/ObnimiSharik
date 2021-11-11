@@ -1,5 +1,3 @@
-import { cloneElement } from 'react'
-
 const months = [
   'янв',
   'фев',

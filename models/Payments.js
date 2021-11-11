@@ -37,6 +37,8 @@ const PaymentsSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+autoIncrement.initialize(mongoose.connection)
+
 PaymentsSchema.plugin(autoIncrement.plugin, {
   model: 'Payments',
   field: 'number',

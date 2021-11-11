@@ -1,4 +1,3 @@
-// import dbConnect from '@utils/dbConnect'
 import Payments from '@models/Payments'
 import CRUD from '@server/CRUD'
 

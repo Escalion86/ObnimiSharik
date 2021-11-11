@@ -11,10 +11,17 @@ import Payments from '@models/Payments'
 import Orders from '@models/Orders'
 import DevToDo from '@models/DevToDo'
 import Districts from '@models/Districts'
+import Notifications from '@models/Notifications'
+import UsersNotifications from '@models/UsersNotifications'
+import { getSession } from 'next-auth/react'
 
 export default async function handler(req, res) {
   const { method } = req
-
+  const session = await getSession({ req })
+  if (!session || !session.user._id)
+    return res?.status(400).json({ success: false })
+  const { user } = session
+  // console.log(`user`, user)
   await dbConnect()
 
   switch (method) {
@@ -33,6 +40,18 @@ export default async function handler(req, res) {
         const devToDo = await DevToDo.find({})
         const districts = await Districts.find({})
 
+        const seenUserNotifications = await UsersNotifications.find({
+          userId: user._id,
+        })
+        const arrayOfIdsSeenUserNotifications = seenUserNotifications.map(
+          (note) => note.notificationId
+        )
+        // const filteredNotifications = notifications.filter((note) => !arrayOfIdsSeenUserNotifications.includes(note._id))
+
+        const notifications = await Notifications.find({
+          _id: { $nin: arrayOfIdsSeenUserNotifications },
+          // responsibleUserId: { $ne: user._id },
+        })
         res.status(200).json({
           success: true,
           data: {
@@ -48,6 +67,7 @@ export default async function handler(req, res) {
             payments,
             devToDo,
             districts,
+            notifications,
           },
         })
       } catch (error) {

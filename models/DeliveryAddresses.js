@@ -14,5 +14,5 @@ const DeliveryAddressesSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export default mongoose.models.DeliveryAdresses ||
+export default mongoose.models.DeliveryAddresses ||
   mongoose.model('DeliveryAddresses', DeliveryAddressesSchema)

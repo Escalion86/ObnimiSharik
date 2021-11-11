@@ -5,7 +5,10 @@ import {
   faVenus,
   faCreditCard,
   faSignInAlt,
+  faPlus,
+  faMinus,
 } from '@fortawesome/free-solid-svg-icons'
+import isDevMode from './isDevMode'
 
 export const DEFAULT_USER = {
   name: 'Гость',
@@ -119,6 +122,7 @@ export const ORDER_STATUSES = [
     roles: ['operator', 'aerodesigner', 'admin'],
     requirements: { deliveryPickup: true },
     color: 'bg-blue-200',
+    notInFilter: true,
   },
   {
     name: 'Товар отложен',
@@ -126,6 +130,7 @@ export const ORDER_STATUSES = [
     roles: ['operator', 'aerodesigner', 'admin'],
     requirements: { deliveryPickup: true, productCirculationsIdCount: true },
     color: 'bg-blue-300',
+    notInFilter: true,
   },
   {
     name: 'Готов к выдаче',
@@ -238,6 +243,11 @@ export const GENDERS = [
   { value: 'famale', name: 'Женщина', color: 'red', icon: faVenus },
 ]
 
+export const ORDER_PURCHASE = [
+  { value: true, name: 'Пополнение склада', color: 'green', icon: faPlus },
+  { value: false, name: 'Расход со склада', color: 'red', icon: faMinus },
+]
+
 export const DEVTODO_STATUSES = [
   { value: 'created', name: 'Создана', color: 'gray' },
   { value: 'inProgress', name: 'В работе', color: 'yellow' },
@@ -271,3 +281,5 @@ export const ACCESS_TO_COLLECTION = (collection, collectionItem, user) => {
     },
   }
 }
+
+export const CLOUDINARY_FOLDER = isDevMode ? 'obnimisharik_dev' : 'obnimisharik'

@@ -32,6 +32,9 @@ module.exports = {
         toxic: '#6ad424',
         hover: '#C8E3F4',
       },
+      fontSize: {
+        xxs: '.625rem',
+      },
       fontFamily: {
         futuraDemi: ['Futura PT Demi', 'sans-serif'],
         futura: ['Futura PT Book', 'sans-serif'],

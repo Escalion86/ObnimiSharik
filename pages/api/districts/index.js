@@ -1,4 +1,3 @@
-// import dbConnect from '@utils/dbConnect'
 import Districts from '@models/Districts'
 import CRUD from '@server/CRUD'
 
