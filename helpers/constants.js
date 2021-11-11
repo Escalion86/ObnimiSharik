@@ -122,6 +122,7 @@ export const ORDER_STATUSES = [
     roles: ['operator', 'aerodesigner', 'admin'],
     requirements: { deliveryPickup: true },
     color: 'bg-blue-200',
+    notInFilter: true,
   },
   {
     name: 'Товар отложен',
@@ -129,6 +130,7 @@ export const ORDER_STATUSES = [
     roles: ['operator', 'aerodesigner', 'admin'],
     requirements: { deliveryPickup: true, productCirculationsIdCount: true },
     color: 'bg-blue-300',
+    notInFilter: true,
   },
   {
     name: 'Готов к выдаче',

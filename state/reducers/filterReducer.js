@@ -46,9 +46,11 @@ export const initialState = {
   invitations: {},
   orders: {
     price: [null, null],
-    status: ORDER_STATUSES.map(({ value, name }) => {
-      return { value, name, checked: true }
-    }),
+    status: ORDER_STATUSES.filter((item) => !item.notInFilter).map(
+      ({ value, name }) => {
+        return { value, name, checked: true }
+      }
+    ),
   },
   devToDo: {
     status: DEVTODO_STATUSES.map(({ value, name }) => {
