@@ -12,6 +12,8 @@ import Clients from '@models/Clients'
 import SetTypes from '@models/SetTypes'
 import ProductTypes from '@models/ProductTypes'
 import Sets from '@models/Sets'
+import Invitations from '@models/Invitations'
+import UsersNotifications from '@models/UsersNotifications'
 
 const dbNameFromSchema = (Schema) => {
   switch (Schema) {
@@ -61,7 +63,7 @@ export default async function handler(Schema, req, res, params = null) {
 
   const id = query?.id
 
-  console.log(`session.user`, session.user)
+  // console.log(`session.user`, session.user)
 
   await dbConnect()
 
@@ -103,14 +105,15 @@ export default async function handler(Schema, req, res, params = null) {
             return res?.status(400).json({ success: false })
           }
           // Добавляем уведомление о создании
-          await Notifications.create({
-            responsibleUserId: session.user._id,
-            dbName: dbNameFromSchema(Schema),
-            itemId: data._id,
-            oldItem: null,
-            newItem: prepareData(data),
-            status: 'add',
-          })
+          if (Schema !== UsersNotifications)
+            await Notifications.create({
+              responsibleUserId: session.user._id,
+              dbName: dbNameFromSchema(Schema),
+              itemId: data._id,
+              oldItem: null,
+              newItem: prepareData(data),
+              status: 'add',
+            })
 
           return res?.status(201).json({ success: true, data })
           // return { newData: data, oldData }
