@@ -59,13 +59,9 @@ const Input = ({
     )
 
   const onChangeUpd = (e) => {
-    // type === 'number'
-    //           ? (e) => {
-    //               e.target.value = Number(e.target.value)
-    //               onChange(e)
-    //             }
-    //           : onChange
-    onChange(e.target.value)
+    const { value } = e.target
+    if (type === 'number' && !value) onChange(0)
+    else onChange(value)
   }
 
   return (
@@ -112,7 +108,7 @@ const Input = ({
             type={type === 'number' ? 'text' : type}
             maxLength={maxLength}
             name={name}
-            value={type === 'number' ? parseInt(value) : value ? value : ''}
+            value={type === 'number' ? parseInt(value) : value ?? ''}
             onChange={onChangeUpd}
             required={required}
             textarea={textarea}
