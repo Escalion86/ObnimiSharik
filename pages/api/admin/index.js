@@ -50,7 +50,7 @@ export default async function handler(req, res) {
 
         const notifications = await Notifications.find({
           _id: { $nin: arrayOfIdsSeenUserNotifications },
-          // responsibleUserId: { $ne: user._id },
+          responsibleUserId: { $ne: user._id },
         })
         res.status(200).json({
           success: true,
