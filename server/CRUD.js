@@ -105,7 +105,7 @@ export default async function handler(Schema, req, res, params = null) {
             return res?.status(400).json({ success: false })
           }
           // Добавляем уведомление о создании
-          if (Schema !== UsersNotifications)
+          if (Schema === Products || Schema === Sets)
             await Notifications.create({
               responsibleUserId: session.user._id,
               dbName: dbNameFromSchema(Schema),
@@ -140,14 +140,15 @@ export default async function handler(Schema, req, res, params = null) {
             return res?.status(400).json({ success: false })
           }
           // Добавляем уведомление об изменении
-          await Notifications.create({
-            responsibleUserId: session.user._id,
-            dbName: dbNameFromSchema(Schema),
-            itemId: id,
-            oldItem: prepareData(oldData),
-            newItem: prepareData(data),
-            status: 'update',
-          })
+          if (Schema === Products || Schema === Sets)
+            await Notifications.create({
+              responsibleUserId: session.user._id,
+              dbName: dbNameFromSchema(Schema),
+              itemId: id,
+              oldItem: prepareData(oldData),
+              newItem: prepareData(data),
+              status: 'update',
+            })
 
           return res?.status(200).json({ success: true, data })
           // return { newData: data, oldData }
@@ -175,14 +176,15 @@ export default async function handler(Schema, req, res, params = null) {
             return res?.status(400).json({ success: false })
           }
           // Добавляем уведомление об удалении
-          await Notifications.create({
-            responsibleUserId: session.user._id,
-            dbName: dbNameFromSchema(Schema),
-            itemId: id,
-            oldItem: prepareData(oldData),
-            newItem: null,
-            status: 'delete',
-          })
+          if (Schema === Products || Schema === Sets)
+            await Notifications.create({
+              responsibleUserId: session.user._id,
+              dbName: dbNameFromSchema(Schema),
+              itemId: id,
+              oldItem: prepareData(oldData),
+              newItem: null,
+              status: 'delete',
+            })
           return res?.status(200).json({ success: true, data })
 
           // return { newData: data, oldData }
