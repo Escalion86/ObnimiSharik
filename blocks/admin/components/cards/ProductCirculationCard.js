@@ -1,5 +1,3 @@
-import CardButton from '@admincomponents/cards/forCards/CardButton'
-import { faPencilAlt, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import findDataWithId from '@helpers/findDataWithId'
 import formatDate from '@helpers/formatDate'
 import { useSelector } from 'react-redux'
@@ -17,7 +15,7 @@ export const ProductCirculationCard = ({
   const { count, purchase, productId } = productCirculation
   const { products } = useSelector((state) => state)
   const product = findDataWithId(products, productId)
-  // if (!product) return <Card>?</Card>
+
   return (
     <Card inLine onClick={() => onClick(productCirculation)}>
       <CardContainer>
@@ -38,7 +36,7 @@ export const ProductCirculationCard = ({
         <div
           className={
             'flex justify-center rounded-tl-lg laptop:rounded-none laptop:h-full px-1 py-0.5 items-center min-w-24 ' +
-            (purchase ? 'bg-red-200' : 'bg-green-200')
+            (purchase ? 'bg-green-200' : 'bg-red-200')
           }
         >
           <span className="text-sm text-gray-800">
@@ -53,23 +51,6 @@ export const ProductCirculationCard = ({
         </div>
         <CardButtons onEdit={onEdit} onDelete={onDelete} onClone={onClone} />
       </div>
-      {/* <div
-      className={
-        'absolute bottom-0 right-0 flex items-center justify-center w-24 h-10 border-t border-l border-gray-300 rounded-tl-lg rounded-br-lg ' +
-        (count > 3
-          ? 'bg-green-400'
-          : count > 0
-          ? 'bg-green-200'
-          : count < 0
-          ? 'bg-red-400'
-          : 'bg-red-200')
-      }
-    >
-      <span>
-        <span>{count}</span>
-        <span className="text-sm"> шт.</span>
-      </span>
-    </div> */}
     </Card>
   )
 }
