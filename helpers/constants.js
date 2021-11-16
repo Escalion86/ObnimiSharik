@@ -266,20 +266,4 @@ export const DEFAULT_DISTRICT = {
   deliveryPrice: 0,
 }
 
-export const ACCESS_TO_COLLECTION = (collection, collectionItem, user) => {
-  if (!collectionItem) return false
-  if (user.role === 'dev') return true
-
-  return {
-    devToDo: {
-      edit:
-        user._id === collectionItem.userId &&
-        collectionItem.status === 'created',
-      delete:
-        user._id === collectionItem.userId &&
-        collectionItem.status === 'created',
-    },
-  }
-}
-
 export const CLOUDINARY_FOLDER = isDevMode ? 'obnimisharik_dev' : 'obnimisharik'

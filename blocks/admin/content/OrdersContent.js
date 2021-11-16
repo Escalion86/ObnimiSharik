@@ -22,6 +22,8 @@ const OrdersContent = ({ data, modals, loggedUser }) => {
   if (!(roleFilteredOrders && roleFilteredOrders.length > 0))
     return <div className="px-3">'Заказов нет'</div>
 
+  const accessToContent = loggedUser.access.orders
+
   return (
     <Virtuoso
       data={roleFilteredOrders}
@@ -31,15 +33,35 @@ const OrdersContent = ({ data, modals, loggedUser }) => {
           order={order}
           loggedUser={loggedUser}
           onClick={() => modals.openOrderModal(order)}
-          onEdit={() => modals.openOrderModal(order, null, null, true)}
-          onDelete={() => modals.openDeleteOrder(order)}
-          onClone={() => {
-            const orderClone = { ...order }
-            delete orderClone._id
-            modals.openOrderModal(orderClone)
-          }}
-          onProductClick={(product) => modals.openProductModal(product)}
-          onSetClick={(set) => modals.openSetModal(set)}
+          onEdit={
+            accessToContent.edit(order)
+              ? () => modals.openOrderModal(order, null, null, true)
+              : null
+          }
+          onDelete={
+            accessToContent.delete(order)
+              ? () => modals.openDeleteOrder(order)
+              : null
+          }
+          onClone={
+            accessToContent.add
+              ? () => {
+                  const orderClone = { ...order }
+                  delete orderClone._id
+                  modals.openOrderModal(orderClone)
+                }
+              : null
+          }
+          onProductClick={
+            loggedUser.access.products.read
+              ? (product) => modals.openProductModal(product)
+              : null
+          }
+          onSetClick={
+            loggedUser.access.sets.read
+              ? (set) => modals.openSetModal(set)
+              : null
+          }
         />
       )}
     />

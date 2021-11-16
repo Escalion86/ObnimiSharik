@@ -48,7 +48,10 @@ const Cabinet = ({
     [JSON.stringify(state), page.pageContent]
   )
 
-  let pageButtons = page.pageButtons ? page.pageButtons : []
+  const accessToAddItem = page.variable
+    ? loggedUser?.access[page.variable].add
+    : false
+  let pageButtons = accessToAddItem && page.addButton ? [page.addButton] : []
 
   const filterExists = !!(
     page.variable &&
@@ -105,61 +108,60 @@ const Cabinet = ({
   )
 
   let filteredData = null
-  if (page.variable) {
-    if (!filterExists) filteredData = state[page.variable]
-    else
-      filteredData = state[page.variable].filter(
-        (item) =>
-          (state.filter[page.variable].price === undefined ||
-            ((state.filter[page.variable].price[0] === null ||
-              item.price >= state.filter[page.variable].price[0] * 100) &&
-              (state.filter[page.variable].price[1] === null ||
-                item.price <= state.filter[page.variable].price[1] * 100))) &&
-          // (state.filter[page.variable].fullPrice === undefined ||
-          //   ((state.filter[page.variable].fullPrice[0] === null ||
-          //     item.fullPrice >=
-          //       state.filter[page.variable].fullPrice[0] * 100) &&
-          //     (state.filter[page.variable].fullPrice[1] === null ||
-          //       item.fullPrice <=
-          //         state.filter[page.variable].fullPrice[1] * 100))) &&
-          (state.filter[page.variable].count === undefined ||
-            ((state.filter[page.variable].count[0] === null ||
-              item.count >= state.filter[page.variable].count[0]) &&
-              (state.filter[page.variable].count[1] === null ||
-                item.count <= state.filter[page.variable].count[1]))) &&
-          (state.filter[page.variable].productTypes === undefined ||
-            state.filter[page.variable].productTypes === null ||
-            item.typesId.some((type) =>
-              state.filter[page.variable].productTypes.includes(type)
-            )) &&
-          (state.filter[page.variable].setTypes === undefined ||
-            state.filter[page.variable].setTypes === null ||
-            item.typesId.some((type) =>
-              state.filter[page.variable].setTypes.includes(type)
-            )) &&
-          (state.filter[page.variable].purchase === undefined ||
-            (item.purchase === true &&
-              state.filter[page.variable].purchase[1]) ||
-            (item.purchase === false &&
-              state.filter[page.variable].purchase[0])) &&
-          (state.filter[page.variable].status === undefined ||
-            state.filter[page.variable].status.find(
-              (stat) => stat.value === item.status
-            )?.checked) &&
-          (state.filter[page.variable].priority === undefined ||
-            state.filter[page.variable].priority.find(
-              (prior) => prior.value === item.priority
-            )?.checked) &&
-          (state.filter[page.variable].gender === undefined ||
-            !item.gender ||
-            state.filter[page.variable].gender.find(
-              (gen) => gen.value === item.gender
-            )?.checked) &&
-          (state.filter[page.variable].payType === undefined ||
-            state.filter[page.variable].payType.find(
-              (prior) => prior.value === item.payType
-            )?.checked)
+  if (page.variable && page.variable !== 'dev') {
+    const accessToContent = loggedUser.access[page.variable]
+    if (!filterExists)
+      filteredData = state[page.variable].filter((item) =>
+        accessToContent.read(item)
       )
+    else
+      filteredData = state[page.variable]
+        .filter((item) => accessToContent.read(item))
+        .filter(
+          (item) =>
+            (state.filter[page.variable].price === undefined ||
+              ((state.filter[page.variable].price[0] === null ||
+                item.price >= state.filter[page.variable].price[0] * 100) &&
+                (state.filter[page.variable].price[1] === null ||
+                  item.price <= state.filter[page.variable].price[1] * 100))) &&
+            (state.filter[page.variable].count === undefined ||
+              ((state.filter[page.variable].count[0] === null ||
+                item.count >= state.filter[page.variable].count[0]) &&
+                (state.filter[page.variable].count[1] === null ||
+                  item.count <= state.filter[page.variable].count[1]))) &&
+            (state.filter[page.variable].productTypes === undefined ||
+              state.filter[page.variable].productTypes === null ||
+              item.typesId.some((type) =>
+                state.filter[page.variable].productTypes.includes(type)
+              )) &&
+            (state.filter[page.variable].setTypes === undefined ||
+              state.filter[page.variable].setTypes === null ||
+              item.typesId.some((type) =>
+                state.filter[page.variable].setTypes.includes(type)
+              )) &&
+            (state.filter[page.variable].purchase === undefined ||
+              (item.purchase === true &&
+                state.filter[page.variable].purchase[1]) ||
+              (item.purchase === false &&
+                state.filter[page.variable].purchase[0])) &&
+            (state.filter[page.variable].status === undefined ||
+              state.filter[page.variable].status.find(
+                (stat) => stat.value === item.status
+              )?.checked) &&
+            (state.filter[page.variable].priority === undefined ||
+              state.filter[page.variable].priority.find(
+                (prior) => prior.value === item.priority
+              )?.checked) &&
+            (state.filter[page.variable].gender === undefined ||
+              !item.gender ||
+              state.filter[page.variable].gender.find(
+                (gen) => gen.value === item.gender
+              )?.checked) &&
+            (state.filter[page.variable].payType === undefined ||
+              state.filter[page.variable].payType.find(
+                (prior) => prior.value === item.payType
+              )?.checked)
+        )
   }
   if (state.sorting[page.variable]) {
     const sortKey = state.sorting[page.variable][0]

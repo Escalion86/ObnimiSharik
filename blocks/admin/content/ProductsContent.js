@@ -14,6 +14,8 @@ const ProductsContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Товаров нет'</div>
 
+  const accessToContent = loggedUser.access.products
+
   return (
     <Virtuoso
       data={data}
@@ -23,19 +25,34 @@ const ProductsContent = ({ data, modals, loggedUser }) => {
           product={product}
           loggedUser={loggedUser}
           onClick={() => modals.openProductModal(product)}
-          onEdit={() => modals.openProductModal(product, null, null, true)}
-          onBuying={() =>
-            modals.openProductCirculationModal({
-              ...DEFAULT_PRODUCT_CIRCULATION,
-              productId: product._id,
-            })
+          onEdit={
+            accessToContent.edit(product)
+              ? () => modals.openProductModal(product, null, null, true)
+              : null
           }
-          onClone={() => {
-            const productClone = { ...product }
-            delete productClone._id
-            modals.openProductModal(productClone)
-          }}
-          onDelete={() => modals.openDeleteProduct(product)}
+          onBuying={
+            loggedUser.access.productCirculations.add
+              ? () =>
+                  modals.openProductCirculationModal({
+                    ...DEFAULT_PRODUCT_CIRCULATION,
+                    productId: product._id,
+                  })
+              : null
+          }
+          onClone={
+            accessToContent.add
+              ? () => {
+                  const productClone = { ...product }
+                  delete productClone._id
+                  modals.openProductModal(productClone)
+                }
+              : null
+          }
+          onDelete={
+            accessToContent.delete(product)
+              ? () => modals.openDeleteProduct(product)
+              : null
+          }
           onTypeClick={
             (productType) => {
               dispatch(

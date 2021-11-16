@@ -14,6 +14,8 @@ const SetsContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Наборов нет'</div>
 
+  const accessToContent = loggedUser.access.sets
+
   return (
     <Virtuoso
       data={data}
@@ -23,13 +25,23 @@ const SetsContent = ({ data, modals, loggedUser }) => {
           set={set}
           loggedUser={loggedUser}
           onClick={() => modals.openSetModal(set)}
-          onEdit={() => modals.openSetModal(set, null, null, true)}
-          onClone={() => {
-            const setClone = { ...set }
-            delete setClone._id
-            modals.openSetModal(setClone)
-          }}
-          onDelete={() => modals.openDeleteSet(set)}
+          onEdit={
+            accessToContent.edit(set)
+              ? () => modals.openSetModal(set, null, null, true)
+              : null
+          }
+          onClone={
+            accessToContent.add
+              ? () => {
+                  const setClone = { ...set }
+                  delete setClone._id
+                  modals.openSetModal(setClone)
+                }
+              : null
+          }
+          onDelete={
+            accessToContent.delete(set) ? () => modals.openDeleteSet(set) : null
+          }
           onTypeClick={
             (setType) => {
               dispatch(
@@ -51,7 +63,9 @@ const SetsContent = ({ data, modals, loggedUser }) => {
           }
           // onProductClick={(product) => modals.openProductModal(product)}
           onProductEditClick={(product) =>
-            modals.openProductModal(product, null, null, true)
+            loggedUser.access.products.edit(product)
+              ? modals.openProductModal(product, null, null, true)
+              : null
           }
           onProductFilterClick={(product) => {
             dispatch(
@@ -69,11 +83,14 @@ const SetsContent = ({ data, modals, loggedUser }) => {
               </div>
             )
           }}
-          onProductBuyClick={(product) =>
-            modals.openProductCirculationModal({
-              ...DEFAULT_PRODUCT_CIRCULATION,
-              productId: product._id,
-            })
+          onProductBuyClick={
+            loggedUser.access.productCirculations.add
+              ? (product) =>
+                  modals.openProductCirculationModal({
+                    ...DEFAULT_PRODUCT_CIRCULATION,
+                    productId: product._id,
+                  })
+              : null
           }
         />
       )}

@@ -3,27 +3,30 @@ import { UserCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
 
 const UsersContent = ({ data, modals, loggedUser }) => {
-  const users = data
-  let showedUsers = []
-  if (users)
-    if (loggedUser.role !== 'dev')
-      showedUsers = users.filter((showedUser) => showedUser.role !== 'dev')
-    else showedUsers = users
-
-  if (!(showedUsers && showedUsers.length > 0))
+  if (!(data && data.length > 0))
     return <div className="px-3">'Пользователей нет'</div>
+
+  const accessToContent = loggedUser.access.users
 
   return (
     <Virtuoso
-      data={showedUsers}
-      itemContent={(index, showedUser) => (
+      data={data}
+      itemContent={(index, user) => (
         <UserCard
           loggedUser={loggedUser}
-          key={showedUser._id}
-          user={showedUser}
-          onClick={() => modals.openUserModal(showedUser)}
-          onEdit={() => modals.openUserModal(showedUser, null, null, true)}
-          onDelete={() => modals.openDeleteUser(showedUser)}
+          key={user._id}
+          user={user}
+          onClick={() => modals.openUserModal(user)}
+          onEdit={
+            accessToContent.edit(user)
+              ? () => modals.openUserModal(user, null, null, true)
+              : null
+          }
+          onDelete={
+            accessToContent.delete(user)
+              ? () => modals.openDeleteUser(user)
+              : null
+          }
         />
       )}
     />

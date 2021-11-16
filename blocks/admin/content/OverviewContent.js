@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { Doughnut } from 'react-chartjs-2'
-import SubTitle from '@admincomponents/SubTitle'
 
 const DougnutContent = ({ title, data, loggedUser }) => {
   const dataTotal = data.length

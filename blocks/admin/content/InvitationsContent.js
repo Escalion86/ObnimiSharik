@@ -6,6 +6,8 @@ const InvitationsContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Приглашений нет'</div>
 
+  const accessToContent = loggedUser.access.invitations
+
   return (
     <Virtuoso
       data={data}
@@ -15,10 +17,16 @@ const InvitationsContent = ({ data, modals, loggedUser }) => {
           invitation={invitation}
           loggedUser={loggedUser}
           onClick={() => modals.openInvitationModal(invitation)}
-          onEdit={() =>
-            modals.openInvitationModal(invitation, null, null, true)
+          onEdit={
+            accessToContent.edit(invitation)
+              ? () => modals.openInvitationModal(invitation, null, null, true)
+              : null
           }
-          onDelete={() => modals.openDeleteInvitation(invitation)}
+          onDelete={
+            accessToContent.delete(invitation)
+              ? () => modals.openDeleteInvitation(invitation)
+              : null
+          }
         />
       )}
     />

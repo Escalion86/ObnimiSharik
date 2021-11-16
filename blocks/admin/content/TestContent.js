@@ -4,6 +4,7 @@ import React from 'react'
 
 const TestContent = ({ data, modals, loggedUser }) => {
   console.log(`window.location.href`, window.location.href)
+  const accessToContent = loggedUser.access.clients.item
   return (
     <div className="px-3">
       <Button

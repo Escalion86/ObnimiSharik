@@ -6,6 +6,8 @@ const PaymentsContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Транзакций нет'</div>
 
+  const accessToContent = loggedUser.access.payments
+
   return (
     <Virtuoso
       data={data}
@@ -15,8 +17,16 @@ const PaymentsContent = ({ data, modals, loggedUser }) => {
           payment={payment}
           loggedUser={loggedUser}
           onClick={() => modals.openPaymentModal(payment)}
-          onEdit={() => modals.openPaymentModal(payment, null, null, true)}
-          onDelete={() => modals.openDeletePayment(payment)}
+          onEdit={
+            accessToContent.edit(payment)
+              ? () => modals.openPaymentModal(payment, null, null, true)
+              : null
+          }
+          onDelete={
+            accessToContent.delete(payment)
+              ? () => modals.openDeletePayment(payment)
+              : null
+          }
         />
       )}
     />
