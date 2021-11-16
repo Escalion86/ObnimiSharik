@@ -1,10 +1,16 @@
 import { useState } from 'react'
 
-import { DEFAULT_USER } from '@helpers/constants'
+// import { DEFAULT_USER, ROLES } from '@helpers/constants'
 
-import { DatePicker, GenderPicker, Input, PhoneInput } from './forForms'
+import {
+  DatePicker,
+  GenderPicker,
+  Input,
+  PhoneInput,
+  // ComboBox,
+} from './forForms'
 
-import { postData, putData } from '@helpers/CRUD'
+import { putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import roleRus from '@helpers/roleRus'
@@ -30,6 +36,7 @@ const UserContentForm = ({
     telegram: loggedUser.telegram,
     gender: loggedUser.gender,
     birthday: loggedUser.birthday,
+    role: loggedUser.role,
   })
 
   const updateForm = (data) => setForm({ ...form, ...data })
@@ -73,9 +80,19 @@ const UserContentForm = ({
       }
     >
       <div className="flex">
-        <div className="w-24">Должность</div>
+        <div className="w-1/4 min-w-24 max-w-40">Должность</div>
         <div className="italic">{roleRus(loggedUser.role)}</div>
       </div>
+      {/* <ComboBox
+        title="Должность"
+        onChange={(role) => updateForm({ role })}
+        defaultValue={form.role}
+        placeholder="Выберите должность"
+        items={ROLES.filter(
+          (role) => !role.hidden || loggedUser.role === 'dev'
+        )}
+        required
+      /> */}
       <InputAvatar
         user={form}
         onChange={(imageUrl) => updateForm({ image: imageUrl })}
