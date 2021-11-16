@@ -147,7 +147,7 @@ const Filter = ({
       )}
       {purchaseFilterExists && (
         <MultiselectCheckbox
-          className="h-12"
+          className="h-20"
           title="Закуп/продажа"
           options={[
             {
