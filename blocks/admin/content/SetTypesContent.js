@@ -8,6 +8,8 @@ const SetTypesContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Типов наборов нет'</div>
 
+  const accessToContent = loggedUser.access.setTypes
+
   return (
     <Virtuoso
       data={data}
@@ -17,14 +19,25 @@ const SetTypesContent = ({ data, modals, loggedUser }) => {
           type={setType}
           loggedUser={loggedUser}
           onClick={() => modals.openSetTypeModal(setType)}
-          onAdd={() =>
-            modals.openSetModal({
-              ...DEFAULT_SET,
-              typesId: [setType._id],
-            })
+          onAdd={
+            loggedUser.access.sets.add
+              ? () =>
+                  modals.openSetModal({
+                    ...DEFAULT_SET,
+                    typesId: [setType._id],
+                  })
+              : null
           }
-          onEdit={() => modals.openSetTypeModal(setType, null, null, true)}
-          onDelete={() => modals.openDeleteSetType(setType)}
+          onEdit={
+            accessToContent.edit(setType)
+              ? () => modals.openSetTypeModal(setType, null, null, true)
+              : null
+          }
+          onDelete={
+            accessToContent.delete(setType)
+              ? () => modals.openDeleteSetType(setType)
+              : null
+          }
         />
       )}
     />

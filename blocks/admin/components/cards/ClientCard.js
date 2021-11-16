@@ -13,9 +13,9 @@ export const ClientCard = ({
   onEdit = null,
   onDelete = null,
 }) => {
-  const gender = GENDERS.find(
-    (genderItem) => genderItem.value === client.gender
-  )
+  // const gender = GENDERS.find(
+  //   (genderItem) => genderItem.value === client.gender
+  // )
   return (
     <Card inLine onClick={() => onClick(client)}>
       <ZoomImage

@@ -23,22 +23,27 @@ import modalsFunctions from '@adminblocks/modals/modalsFunctions'
 import { setPage } from '@state/actions/pageActions'
 import { pages, pagesGroups } from '@adminblocks/pages'
 import versionHistory from '@helpers/versionHistory'
+import accessTable from '@helpers/accessTable'
 
-const menuCfg = (pages, pagesGroups, userRole) =>
-  pagesGroups.reduce((totalGroups, group) => {
+const menuCfg = (pages, pagesGroups, user) => {
+  return pagesGroups.reduce((totalGroups, group) => {
     const pagesItems = pages.reduce((totalPages, page) => {
-      if (
-        page.group === group.id &&
-        (page.accessRoles.includes('all') ||
-          page.accessRoles.includes(userRole))
-      )
-        totalPages.push(page)
+      if (page.group === group.id) {
+        if (page.variable && user.access[page.variable]) {
+          if (user.access[page.variable].page) totalPages.push(page)
+          return totalPages
+        } else {
+          if (user.access['other'].page) totalPages.push(page)
+          return totalPages
+        }
+      }
       return totalPages
     }, [])
     if (pagesItems.length > 0)
       totalGroups.push({ name: group.name, items: pagesItems })
     return totalGroups
   }, [])
+}
 
 export default function Admin() {
   const { data: session, status } = useSession()
@@ -106,6 +111,7 @@ export default function Admin() {
   const haveAccess =
     loggedUser?.role &&
     ROLES.filter((role) => role.value === loggedUser?.role).length > 0
+  if (haveAccess) loggedUser.access = accessTable(loggedUser)
 
   return (
     <>
@@ -136,7 +142,7 @@ export default function Admin() {
               <Cabinet
                 page={page}
                 setPageId={setPageId}
-                menuCfg={menuCfg(pages, pagesGroups, loggedUser.role)}
+                menuCfg={menuCfg(pages, pagesGroups, loggedUser)}
                 loggedUser={loggedUser}
                 onSignOut={signOut}
                 modals={modals}

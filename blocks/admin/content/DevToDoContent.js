@@ -6,6 +6,8 @@ const DevToDoContent = ({ data, modals, loggedUser }) => {
   if (!(data && data.length > 0))
     return <div className="px-3">'Заявок разработчику нет'</div>
 
+  const accessToContent = loggedUser.access.devToDo
+
   return (
     <Virtuoso
       data={data}
@@ -15,8 +17,16 @@ const DevToDoContent = ({ data, modals, loggedUser }) => {
           devToDo={devToDo}
           loggedUser={loggedUser}
           onClick={() => modals.openDevToDoModal(devToDo)}
-          onEdit={() => modals.openDevToDoModal(devToDo, null, null, true)}
-          onDelete={() => modals.openDeleteDevToDo(devToDo)}
+          onEdit={
+            accessToContent.edit(devToDo)
+              ? () => modals.openDevToDoModal(devToDo, null, null, true)
+              : null
+          }
+          onDelete={
+            accessToContent.delete(devToDo)
+              ? () => modals.openDeleteDevToDo(devToDo)
+              : null
+          }
         />
       )}
     />
