@@ -37,6 +37,8 @@ const DevToDoSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+// autoIncrement.initialize(mongoose.connection)
+
 DevToDoSchema.plugin(autoIncrement.plugin, {
   model: 'DevToDo',
   field: 'number',
