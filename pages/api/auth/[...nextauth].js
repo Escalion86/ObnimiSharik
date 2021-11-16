@@ -86,7 +86,7 @@ export default async function auth(req, res) {
       async session({ session, token }) {
         const { user } = session
         const userEmail = user.email.toLowerCase()
-        await dbConnect()
+        const cached = await dbConnect()
         const result = await Users.find({
           email: userEmail,
         })

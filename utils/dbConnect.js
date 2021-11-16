@@ -41,7 +41,8 @@ async function dbConnect() {
   }
   cached.conn = await cached.promise
   autoIncrement.initialize(cached.conn)
-  return cached.conn
+  cached.autoIncrement = autoIncrement
+  return cached
 }
 
 export default dbConnect
