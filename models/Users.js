@@ -59,6 +59,10 @@ const UsersSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    archive: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 )

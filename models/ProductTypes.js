@@ -21,6 +21,10 @@ const ProductTypesSchema = new mongoose.Schema(
       type: String,
       default: 'normal', // big, small
     },
+    archive: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 )
