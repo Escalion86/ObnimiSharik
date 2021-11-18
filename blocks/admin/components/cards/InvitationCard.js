@@ -33,11 +33,13 @@ export const InvitationCard = ({
             <div className="flex-1 italic">{roleRus(invitation.role)}</div>
           </div>
         </div>
-        <div className="text-right">
+      </CardContainer>
+      <div className="flex flex-col-reverse items-end justify-between gap-y-1 tablet:flex-row tablet:items-center">
+        <div className="flex items-end justify-end flex-1 p-1">
           <div className="font-bold">{status}</div>
         </div>
-      </CardContainer>
-      <CardButtons onEdit={onEdit} onDelete={onDelete} />
+        <CardButtons onEdit={onEdit} onDelete={onDelete} />
+      </div>
     </Card>
   )
 }
