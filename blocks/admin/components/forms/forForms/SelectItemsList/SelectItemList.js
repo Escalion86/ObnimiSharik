@@ -135,7 +135,7 @@ export const SelectItemList = ({
 
       return itemRows.map((item, index) => (
         <div className="border-gray-700 border-b-1 last:border-0">
-          <ItemComponent key={index} item={item} readOnly />
+          <ItemComponent key={'ItemComponent' + index} item={item} readOnly />
         </div>
       ))
     }
