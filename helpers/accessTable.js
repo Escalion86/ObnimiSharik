@@ -19,8 +19,12 @@ const accessTable = (user) => {
     devToDo: {
       page: true,
       read: (item) => true,
-      edit: (item) => user._id === item.userId && item.status === 'created',
-      delete: (item) => user._id === item.userId && item.status === 'created',
+      edit: (item) =>
+        (user._id === item.userId && item.status === 'created') ||
+        user.role === 'dev',
+      delete: (item) =>
+        (user._id === item.userId && item.status === 'created') ||
+        user.role === 'dev',
       add: true,
     },
     products: {
@@ -92,7 +96,8 @@ const accessTable = (user) => {
     invitations: {
       page: ['admin', 'dev'].includes(user.role),
       read: (item) => ['admin', 'dev'].includes(user.role),
-      edit: (item) => ['admin', 'dev'].includes(user.role),
+      edit: (item) =>
+        ['admin', 'dev'].includes(user.role) && item.status !== 'confirmed',
       delete: (item) => ['admin', 'dev'].includes(user.role),
       add: ['admin', 'dev'].includes(user.role),
     },
