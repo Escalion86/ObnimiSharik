@@ -27,7 +27,7 @@ const SetForm = ({
   set = DEFAULT_SET,
   afterConfirm = () => {},
   onClose = () => {},
-  readOnly = true,
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -54,6 +54,12 @@ const SetForm = ({
   }
 
   const forNew = set._id === undefined
+
+  const accessToContent = loggedUser.access.sets
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(set) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -99,11 +105,11 @@ const SetForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={
-        readOnly
-          ? 'Набор: ' + form.name
-          : forNew
+        forNew
           ? 'Создние набора'
-          : 'Редактирование набора'
+          : editMode
+          ? 'Редактирование набора'
+          : 'Набор: ' + form.name
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}

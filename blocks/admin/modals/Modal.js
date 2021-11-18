@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
+import {
+  faPencilAlt,
+  faTimes,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import { cloneElement, useEffect, useState } from 'react'
 
 const Modal = ({
@@ -7,8 +11,9 @@ const Modal = ({
   onClose = () => {},
   onDelete = null,
   twoCols = false,
-  readOnly = false,
   noPropsToChildren = false,
+  editMode = null,
+  setEditMode = null,
 }) => {
   const [rendered, setRendered] = useState(false)
   const onCloseWithDelay = () => {
@@ -34,7 +39,7 @@ const Modal = ({
     >
       <div
         className={
-          'relative min-w-84 max-w-132 w-9/12 max-h-full tablet:min-w-116 px-4 py-4 duration-300 my-auto bg-white border-l rounded-xl border-primary ' +
+          'relative min-w-84 max-w-132 w-9/12 tablet:min-w-116 px-4 py-4 duration-300 my-auto bg-white border-l rounded-xl border-primary ' +
           (twoCols ? ' laptop:w-9/12 laptop:min-w-228 laptop:max-w-248' : ' ') +
           (rendered ? '' : ' scale-50')
         }
@@ -47,7 +52,7 @@ const Modal = ({
           size="1x"
           onClick={onCloseWithDelay}
         />
-        {!readOnly && onDelete && (
+        {editMode && onDelete && (
           <FontAwesomeIcon
             className="absolute w-5 h-5 text-red-700 duration-200 transform cursor-pointer top-4 left-4 hover:scale-110"
             icon={faTrash}
@@ -55,6 +60,20 @@ const Modal = ({
             onClick={() => {
               onDelete(onCloseWithDelay)
             }}
+          />
+        )}
+        {!editMode && editMode !== null && (
+          <FontAwesomeIcon
+            className="absolute w-5 h-5 duration-200 transform cursor-pointer text-primary top-4 left-4 hover:scale-110"
+            icon={faPencilAlt}
+            size="1x"
+            onClick={
+              setEditMode
+                ? () => {
+                    setEditMode(true)
+                  }
+                : null
+            }
           />
         )}
         {noPropsToChildren

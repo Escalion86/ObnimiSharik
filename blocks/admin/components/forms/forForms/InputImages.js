@@ -37,7 +37,9 @@ const InputImages = ({
   }
 
   return (
-    <div className="flex flex-col">
+    <div
+      className={'flex' + (!readOnly || images.length > 0 ? ' flex-col' : '')}
+    >
       {label && (
         <label
           className={
@@ -52,7 +54,8 @@ const InputImages = ({
       )}
       <div
         className={
-          'flex flex-wrap w-full gap-2 px-1.5 py-1 rounded-lg ' +
+          'flex flex-wrap w-full gap-1 p-0.5 rounded-lg ' +
+          (images.length > 0 ? ' py-1' : '') +
           (readOnly
             ? ''
             : ' bg-gray-200 border' +
@@ -61,33 +64,37 @@ const InputImages = ({
                 : ' border-gray-700'))
         }
       >
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={
-              'relative h-20 overflow-hidden group' +
-              (readOnly ? ' border border-gray-400 hover:border-primary' : '')
-            }
-          >
-            <Zoom zoomMargin={20}>
-              <img
-                className="object-cover w-20 h-20"
-                src={image}
-                alt="item_image"
-              />
-            </Zoom>
-            {!readOnly && (
-              <FontAwesomeIcon
-                className="absolute text-red-700 duration-200 transform cursor-pointer -top-4 group-hover:top-1 -right-4 group-hover:right-1 hover:scale-125"
-                icon={faTrash}
-                size="1x"
-                onClick={() => {
-                  onChange(images.filter((image, i) => i !== index))
-                }}
-              />
-            )}
-          </div>
-        ))}
+        {!readOnly || images.length > 0 ? (
+          images.map((image, index) => (
+            <div
+              key={index}
+              className={
+                'relative h-20 overflow-hidden group' +
+                (readOnly ? ' border border-gray-400 hover:border-primary' : '')
+              }
+            >
+              <Zoom zoomMargin={20}>
+                <img
+                  className="object-cover w-20 h-20"
+                  src={image}
+                  alt="item_image"
+                />
+              </Zoom>
+              {!readOnly && (
+                <FontAwesomeIcon
+                  className="absolute text-red-700 duration-200 transform cursor-pointer -top-4 group-hover:top-1 -right-4 group-hover:right-1 hover:scale-125"
+                  icon={faTrash}
+                  size="1x"
+                  onClick={() => {
+                    onChange(images.filter((image, i) => i !== index))
+                  }}
+                />
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="ml-2">-</div>
+        )}
         {images.length < maxImages && !readOnly && (
           <div
             onClick={addImageClick}

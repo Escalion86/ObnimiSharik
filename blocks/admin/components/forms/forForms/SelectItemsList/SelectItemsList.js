@@ -112,7 +112,6 @@ export const SelectItemsList = ({
   onChange = () => {},
   required = false,
   readOnly = false,
-  test = false,
 }) => {
   if (
     readOnly &&
@@ -127,7 +126,7 @@ export const SelectItemsList = ({
       const itemRows = []
       if (itemsId)
         itemsId.forEach((itemId) => {
-          if (id !== '?')
+          if (itemId !== '?')
             itemRows.push(items.find((item) => item._id === itemId))
         })
 

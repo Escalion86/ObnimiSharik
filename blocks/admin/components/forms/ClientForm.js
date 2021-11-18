@@ -15,14 +15,13 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import birthDateToAge from '@helpers/birthDateToAge'
-import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const ClientForm = ({
   loggedUser,
   client = DEFAULT_CLIENT,
   afterConfirm = () => {},
   onClose = () => {},
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -44,6 +43,12 @@ const ClientForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = client._id === undefined
+
+  const accessToContent = loggedUser.access.clients
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(client) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -86,13 +91,17 @@ const ClientForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние клиента' : 'Редактирование клиента'}
+      title={
+        (forNew ? 'Создние' : editMode ? 'Редактирование' : 'Просмотр') +
+        ' клиента'
+      }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
       buttonDisabled={
         Object.keys(formValidate()).length !== 0 || compareObjects(form, client)
       }
+      readOnly={readOnly}
     >
       <Input
         key="name"
@@ -102,6 +111,7 @@ const ClientForm = ({
         value={form.name}
         onChange={(name) => updateForm({ name })}
         required
+        readOnly={readOnly}
       />
       <Input
         key="email"
@@ -110,6 +120,8 @@ const ClientForm = ({
         maxLength="80"
         value={form.email}
         onChange={(email) => updateForm({ email })}
+        readOnly={readOnly}
+        link={form.email ? 'mailto:' + form.email : null}
       />
       <RowContainer>
         <PhoneInput
@@ -118,12 +130,16 @@ const ClientForm = ({
           value={form.phone}
           onChange={(phone) => updateForm({ phone })}
           required
+          readOnly={readOnly}
+          link={form.phone ? 'tel:+' + form.phone : null}
         />
         <PhoneInput
           key="whatsapp"
           label="WhatsApp"
           value={form.whatsapp}
           onChange={(whatsapp) => updateForm({ whatsapp })}
+          readOnly={readOnly}
+          link={form.whatsapp ? 'https://wa.me/' + form.whatsapp : null}
         />
       </RowContainer>
       <RowContainer>
@@ -132,6 +148,8 @@ const ClientForm = ({
           label="Viber"
           value={form.viber}
           onChange={(viber) => updateForm({ viber })}
+          readOnly={readOnly}
+          link={form.viber ? 'viber://chat?number=' + form.viber : null}
           // required
         />
         <Input
@@ -142,6 +160,8 @@ const ClientForm = ({
           maxLength="80"
           value={form.telegram}
           onChange={(telegram) => updateForm({ telegram })}
+          readOnly={readOnly}
+          link={form.telegram ? 'https://t.me/' + form.telegram : null}
         />
       </RowContainer>
       <RowContainer>
@@ -154,6 +174,10 @@ const ClientForm = ({
           value={form.instagram}
           onChange={(instagram) => updateForm({ instagram })}
           prefix="@"
+          readOnly={readOnly}
+          link={
+            form.instagram ? 'https://instagram.com/' + form.instagram : null
+          }
         />
         <Input
           key="vk"
@@ -164,6 +188,8 @@ const ClientForm = ({
           value={form.vk}
           onChange={(vk) => updateForm({ v })}
           prefix="@"
+          readOnly={readOnly}
+          link={form.vk ? 'https://vk.com/' + form.vk : null}
         />
       </RowContainer>
       <div className="flex">
@@ -172,6 +198,7 @@ const ClientForm = ({
           label="День рождения"
           value={form.birthday}
           onChange={(value) => updateForm({ birthday: value })}
+          readOnly={readOnly}
         />
         {form.birthday && (
           <div className="ml-2 mt-7">{birthDateToAge(form.birthday)}</div>
@@ -181,6 +208,7 @@ const ClientForm = ({
         gender={form.gender}
         onChange={(gender) => updateForm({ gender })}
         inLine
+        readOnly={readOnly}
       />
     </Form>
   )

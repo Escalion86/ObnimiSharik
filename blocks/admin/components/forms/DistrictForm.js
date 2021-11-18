@@ -13,6 +13,7 @@ const DistrictForm = ({
   district = DEFAULT_DISTRICT,
   afterConfirm = () => {},
   onClose = () => {},
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -25,6 +26,12 @@ const DistrictForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = district._id === undefined
+
+  const accessToContent = loggedUser.access.districts
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(district) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -65,26 +72,36 @@ const DistrictForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние района' : 'Редактирование района'}
+      title={
+        forNew
+          ? 'Создние района'
+          : editMode
+          ? 'Редактирование района'
+          : 'Район: ' + form.name
+      }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
       buttonDisabled={Object.keys(formValidate()).length !== 0}
+      readOnly={readOnly}
     >
-      <Input
-        key="name"
-        label="Название"
-        type="text"
-        maxLength="80"
-        value={form.name}
-        onChange={(name) => updateForm({ name })}
-        required
-      />
+      {!readOnly && (
+        <Input
+          key="name"
+          label="Название"
+          type="text"
+          maxLength="80"
+          value={form.name}
+          onChange={(name) => updateForm({ name })}
+          required
+        />
+      )}
       <PriceInput
         label="Стоимость доставки"
         value={form.deliveryPrice}
         onChange={(deliveryPrice) => updateForm({ deliveryPrice })}
         name="deliveryPrice"
+        readOnly={readOnly}
       />
     </Form>
   )

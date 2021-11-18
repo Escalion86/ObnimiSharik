@@ -41,72 +41,80 @@ const InputImage = ({
   return (
     <div className={inLine ? 'flex' : ''}>
       {label && (
-        <label
+        <div>
+          <label
+            className={
+              (readOnly
+                ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
+                : '') + (inLine ? 'min-w-24 max-w-40 w-1/4' : '')
+            }
+          >
+            {label}
+            {readOnly
+              ? ':'
+              : required && <span className="text-red-700">*</span>}
+          </label>
+        </div>
+      )}
+      {!image && readOnly ? (
+        <div className="ml-2">-</div>
+      ) : (
+        <div
           className={
+            'relative border rounded-lg ml-2 h-20 w-20 overflow-hidden group ' +
             (readOnly
-              ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
-              : '') + (inLine ? 'min-w-24 max-w-40 w-1/4' : '')
+              ? ' border-gray-400 hover:border-primary'
+              : required && !image
+              ? ' border-red-700'
+              : ' border-gray-400')
           }
         >
-          {label}
-          {readOnly ? ':' : required && <span className="text-red-700">*</span>}
-        </label>
-      )}
-      <div
-        className={
-          'relative rounded-lg h-20 w-20 overflow-hidden group ' +
-          (readOnly
-            ? ' border border-gray-400 hover:border-primary'
-            : required && !image
-            ? ' border-red-700'
-            : ' border-gray-700')
-        }
-      >
-        {image ? (
-          <Zoom zoomMargin={20}>
+          {image ? (
+            <Zoom zoomMargin={20}>
+              <img
+                className="object-cover w-20 h-20"
+                src={image}
+                alt="item_image"
+              />
+            </Zoom>
+          ) : (
             <img
               className="object-cover w-20 h-20"
-              src={image}
-              alt="item_image"
+              src={noImage}
+              alt="item_no_image"
             />
-          </Zoom>
-        ) : (
-          <img
-            className="object-cover w-20 h-20"
-            src={noImage}
-            alt="item_no_image"
-          />
-        )}
-        {!readOnly && image && (
-          <FontAwesomeIcon
-            className="absolute text-red-700 duration-200 transform cursor-pointer -top-4 group-hover:top-1 -right-4 group-hover:right-1 hover:scale-125"
-            icon={faTrash}
-            size="1x"
-            onClick={() => {
-              onChangeImage(null)
-            }}
-          />
-        )}
-        {!readOnly && !image && (
-          <FontAwesomeIcon
-            className="absolute duration-200 transform opacity-0 cursor-pointer text-primary top-6 right-6 group-hover:opacity-80 group-hover:scale-125"
-            icon={faPencilAlt}
-            size="2x"
-            onClick={() => selectImageClick()}
-          />
-        )}
-        {!readOnly && !noEditButton && image && (
-          <FontAwesomeIcon
-            className="absolute duration-200 transform cursor-pointer -top-4 -left-4 group-hover:top-1 group-hover:left-1 text-primary hover:scale-125"
-            icon={faPencilAlt}
-            size="1x"
-            onClick={() => {
-              // onChange(addImageClick)
-              selectImageClick()
-            }}
-          />
-        )}
-      </div>
+          )}
+          {!readOnly && image && (
+            <FontAwesomeIcon
+              className="absolute text-red-700 duration-200 transform cursor-pointer -top-4 group-hover:top-1 -right-4 group-hover:right-1 hover:scale-125"
+              icon={faTrash}
+              size="1x"
+              onClick={() => {
+                onChangeImage(null)
+              }}
+            />
+          )}
+          {!readOnly && !image && (
+            <FontAwesomeIcon
+              className="absolute duration-200 transform opacity-0 cursor-pointer text-primary top-6 right-6 group-hover:opacity-80 group-hover:scale-125"
+              icon={faPencilAlt}
+              size="2x"
+              onClick={() => selectImageClick()}
+            />
+          )}
+          {!readOnly && !noEditButton && image && (
+            <FontAwesomeIcon
+              className="absolute duration-200 transform cursor-pointer -top-4 -left-4 group-hover:top-1 group-hover:left-1 text-primary hover:scale-125"
+              icon={faPencilAlt}
+              size="1x"
+              onClick={() => {
+                // onChange(addImageClick)
+                selectImageClick()
+              }}
+            />
+          )}
+        </div>
+      )}
       <input
         type="file"
         ref={hiddenFileInput}

@@ -15,6 +15,7 @@ const ProductTypeForm = ({
   productType = DEFAULT_PRODUCT_TYPE,
   afterConfirm = () => {},
   onClose = () => {},
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -27,6 +28,12 @@ const ProductTypeForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = productType._id === undefined
+
+  const accessToContent = loggedUser.access.productTypes
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(productType) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -67,7 +74,13 @@ const ProductTypeForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние типа товара' : 'Редактирование типа товара'}
+      title={
+        forNew
+          ? 'Создние типа товара'
+          : editMode
+          ? 'Редактирование типа товара'
+          : 'Тип товара: ' + productType.name
+      }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
@@ -75,25 +88,29 @@ const ProductTypeForm = ({
         Object.keys(formValidate()).length !== 0 ||
         compareObjects(form, productType)
       }
+      readOnly={readOnly}
     >
+      {!readOnly && (
+        <Input
+          key="name"
+          label="Название"
+          type="text"
+          maxLength="80"
+          value={form.name}
+          onChange={(name) => updateForm({ name })}
+          required
+        />
+      )}
       <InputImage
         image={form.image}
         label="Картинка"
         onChange={(image) => updateForm({ image })}
-        noImage={`/img/noImage.jpg`}
+        noImage={`/img/no_image.png`}
         inLine
         directory="product_types"
         imageName={productType._id}
         noEditButton
-      />
-      <Input
-        key="name"
-        label="Название"
-        type="text"
-        maxLength="80"
-        value={form.name}
-        onChange={(name) => updateForm({ name })}
-        required
+        readOnly={readOnly}
       />
     </Form>
   )

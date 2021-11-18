@@ -1,5 +1,7 @@
 import { InvitationForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
+import { MessageModal } from '.'
+import { useState } from 'react'
 
 const InvitationModal = ({
   loggedUser,
@@ -7,13 +9,36 @@ const InvitationModal = ({
   onClose = () => {},
   afterConfirm = () => {},
   onDelete = null,
+  edit = false,
 }) => {
+  const [editMode, setEditMode] = useState(edit)
+  if (!loggedUser.access?.invitations.read(invitation))
+    return (
+      <MessageModal
+        message="У Вас нет прав на просмотр данного приглашения"
+        onClose={onClose}
+      />
+    )
+
+  const canEdit =
+    invitation?._id && loggedUser.access?.invitations.edit(invitation)
+
   return (
-    <Modal onClose={onClose} onDelete={invitation?._id && onDelete}>
+    <Modal
+      onClose={onClose}
+      onDelete={
+        invitation?._id &&
+        loggedUser.access?.invitations.delete(invitation) &&
+        onDelete
+      }
+      editMode={canEdit ? editMode : null}
+      setEditMode={canEdit ? setEditMode : null}
+    >
       <InvitationForm
         invitation={invitation}
         afterConfirm={afterConfirm}
         loggedUser={loggedUser}
+        editMode={canEdit ? editMode : null}
       />
     </Modal>
   )

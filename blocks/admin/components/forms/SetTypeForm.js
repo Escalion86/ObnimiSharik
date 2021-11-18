@@ -15,6 +15,7 @@ const SetTypeForm = ({
   setType = DEFAULT_SET_TYPE,
   afterConfirm = () => {},
   onClose = () => {},
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -27,6 +28,12 @@ const SetTypeForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = setType._id === undefined
+
+  const accessToContent = loggedUser.access.setTypes
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(setType) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -67,7 +74,13 @@ const SetTypeForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние типа набора' : 'Редактирование типа набора'}
+      title={
+        forNew
+          ? 'Создние типа набора'
+          : editMode
+          ? 'Редактирование типа набора'
+          : 'Тип набора: ' + setType.name
+      }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
@@ -75,7 +88,19 @@ const SetTypeForm = ({
         Object.keys(formValidate()).length !== 0 ||
         compareObjects(form, setType)
       }
+      readOnly={readOnly}
     >
+      {!readOnly && (
+        <Input
+          key="name"
+          label="Название"
+          type="text"
+          maxLength="80"
+          value={form.name}
+          onChange={(name) => updateForm({ name })}
+          required
+        />
+      )}
       <InputImage
         image={form.image}
         label="Картинка"
@@ -85,15 +110,7 @@ const SetTypeForm = ({
         directory="set_types"
         imageName={setType._id}
         noEditButton
-      />
-      <Input
-        key="name"
-        label="Название"
-        type="text"
-        maxLength="80"
-        value={form.name}
-        onChange={(name) => updateForm({ name })}
-        required
+        readOnly={readOnly}
       />
     </Form>
   )

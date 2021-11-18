@@ -1,5 +1,7 @@
 import { SetForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
+import { MessageModal } from '.'
+import { useState } from 'react'
 
 const SetModal = ({
   loggedUser,
@@ -7,20 +9,31 @@ const SetModal = ({
   onClose = () => {},
   afterConfirm = () => {},
   onDelete = null,
+  edit = false,
 }) => {
-  const readOnly = !['dev', 'admin'].includes(loggedUser.role)
+  const [editMode, setEditMode] = useState(edit)
+  if (!loggedUser.access?.sets.read(set))
+    return (
+      <MessageModal
+        message="У Вас нет прав на просмотр данного набора"
+        onClose={onClose}
+      />
+    )
+
+  const canEdit = set?._id && loggedUser.access?.sets.edit(set)
   return (
     <Modal
       onClose={onClose}
-      onDelete={set?._id && onDelete}
+      onDelete={set?._id && loggedUser.access?.sets.delete(set) && onDelete}
       twoCols
-      readOnly={readOnly}
+      editMode={canEdit ? editMode : null}
+      setEditMode={canEdit ? setEditMode : null}
     >
       <SetForm
         set={set}
         afterConfirm={afterConfirm}
         loggedUser={loggedUser}
-        readOnly={readOnly}
+        editMode={canEdit ? editMode : null}
       />
     </Modal>
   )

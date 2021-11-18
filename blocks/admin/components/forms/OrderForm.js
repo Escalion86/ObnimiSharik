@@ -206,16 +206,22 @@ const FormMenu = ({ twoCols = false, config = null }) => {
   )
 }
 
-const ClientContent = ({ form, updateForm, modals, state, role }) => {
+const ClientContent = ({
+  form,
+  updateForm,
+  modals,
+  state,
+  role,
+  readOnly,
+  access,
+}) => {
   const { clients } = state
   const operator = ['operator', 'dev', 'admin'].includes(role)
   // const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   // const deliver = ['deliver', 'dev', 'admin'].includes(role)
+  const client = clients.find((client) => client._id === form.clientId)
 
-  const editClient = () =>
-    modals.openClientModal(
-      clients.find((client) => client._id === form.clientId)
-    )
+  const editClient = () => modals.openClientModal(client)
 
   const addClient = () =>
     modals.openClientModal(undefined, (client) =>
@@ -236,8 +242,9 @@ const ClientContent = ({ form, updateForm, modals, state, role }) => {
           required
           className="flex-1"
           // exceptedIds={selectedItemsIds}
+          readOnly={readOnly}
         />
-        {form.clientId && (
+        {!readOnly && access.clients.edit(client) && form.clientId && (
           <CardButton
             icon={faPencilAlt}
             className="h-10 mt-6 rounded-lg bg-primary"
@@ -246,19 +253,21 @@ const ClientContent = ({ form, updateForm, modals, state, role }) => {
             tooltip="Редактировать клиента"
           />
         )}
-        <CardButton
-          icon={faPlus}
-          className="h-10 mt-6 rounded-lg bg-primary"
-          inverse
-          onClick={addClient}
-          tooltip="Создать нового клиента"
-        />
+        {!readOnly && access.clients.add && (
+          <CardButton
+            icon={faPlus}
+            className="h-10 mt-6 rounded-lg bg-primary"
+            inverse
+            onClick={addClient}
+            tooltip="Создать нового клиента"
+          />
+        )}
       </div>
     )
   )
 }
 
-const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
+const DeliveryContent = ({ readOnly, form, updateForm, role, access }) => {
   const operator = ['operator', 'dev', 'admin'].includes(role)
   const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
   const deliver = ['deliver', 'dev', 'admin'].includes(role)
@@ -320,7 +329,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
               value={form.deliveryDateFrom}
               onChange={(deliveryDateFrom) => updateForm({ deliveryDateFrom })}
               required
-              readOnly={role === 'deliver'}
+              readOnly={readOnly || role === 'deliver'}
             />
             <div
               className={
@@ -335,7 +344,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                 value={form.deliveryDateTo}
                 onChange={(deliveryDateTo) => updateForm({ deliveryDateTo })}
                 required
-                readOnly={role === 'deliver'}
+                readOnly={readOnly || role === 'deliver'}
               />
             </div>
           </RowContainer>
@@ -380,7 +389,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                       labelStyle="w-18"
                       inLine
                       required
-                      readOnly={role === 'deliver'}
+                      readOnly={readOnly || role === 'deliver'}
                     />
                     <SelectDistrict
                       onChange={(item) =>
@@ -394,6 +403,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                       }
                       selectedId={form.deliveryAddress.district?._id}
                       required
+                      readOnly={readOnly || role === 'deliver'}
                       // exceptedIds={selectedItemsIds}
                     />
                     <RowContainer className="flex-col tablet:flex-row gap-y-2">
@@ -410,7 +420,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                         labelStyle="w-18"
                         inLine
                         required
-                        readOnly={role === 'deliver'}
+                        readOnly={readOnly || role === 'deliver'}
                       />
                       <Input
                         key="house"
@@ -426,7 +436,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                         inputStyle="w-16"
                         inLine
                         required
-                        readOnly={role === 'deliver'}
+                        readOnly={readOnly || role === 'deliver'}
                       />
                     </RowContainer>
                     <RowContainer className="flex-col tablet:flex-row gap-y-2">
@@ -442,7 +452,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                         inLine
                         labelStyle="w-18 pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
-                        readOnly={role === 'deliver'}
+                        readOnly={readOnly || role === 'deliver'}
                       />
                       <Input
                         key="floor"
@@ -456,7 +466,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                         inLine
                         labelStyle="w-18 pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
-                        readOnly={role === 'deliver'}
+                        readOnly={readOnly || role === 'deliver'}
                       />
                       <Input
                         key="flat"
@@ -469,7 +479,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                         labelStyle="pr-1 tablet:w-min"
                         inputStyle="tablet:w-16"
                         required
-                        readOnly={role === 'deliver'}
+                        readOnly={readOnly || role === 'deliver'}
                       />
                     </RowContainer>
                     <Input
@@ -482,7 +492,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
                         handleAddressChange('comment', value)
                       }
                       textarea
-                      readOnly={role === 'deliver'}
+                      readOnly={readOnly || role === 'deliver'}
                     />
                   </div>
                 </>
@@ -495,7 +505,7 @@ const DeliveryContent = ({ readOnly, form, updateForm, role }) => {
   )
 }
 
-const ResponsibleContent = ({ form, updateForm, role }) => {
+const ResponsibleContent = ({ form, updateForm, role, readOnly }) => {
   const admin = ['dev', 'admin'].includes(role)
   const operator = ['operator', 'dev', 'admin'].includes(role)
   // const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
@@ -515,6 +525,7 @@ const ResponsibleContent = ({ form, updateForm, role }) => {
           }
           selectedId={form.operatorId}
           required
+          readOnly={readOnly}
           // exceptedIds={selectedItemsIds}
         />
       )}
@@ -528,6 +539,7 @@ const ResponsibleContent = ({ form, updateForm, role }) => {
           selectedId={form.aerodesignerId}
           required
           className="mb-2"
+          readOnly={readOnly}
           // exceptedIds={selectedItemsIds}
         />
       )}
@@ -540,6 +552,7 @@ const ResponsibleContent = ({ form, updateForm, role }) => {
           }
           selectedId={form.deliverId}
           required
+          readOnly={readOnly}
           // exceptedIds={selectedItemsIds}
         />
       )}
@@ -606,6 +619,7 @@ const ProductsContent = ({ form, updateForm, role, readOnly }) => {
           value={form.comment}
           onChange={(comment) => updateForm({ comment })}
           textarea
+          readOnly={readOnly}
         />
       </div>
     )
@@ -650,6 +664,7 @@ const PaymentContent = ({
             name="discount"
             labelStyle="w-min pr-1 whitespace-nowrap"
             inLine
+            readOnly={readOnly}
           />
           <Input
             value={
@@ -664,6 +679,7 @@ const PaymentContent = ({
             inputStyle="max-w-20"
             name="discount"
             inLine
+            readOnly={readOnly}
           />
         </div>
         <div className="flex items-center gap-x-2">
@@ -675,6 +691,7 @@ const PaymentContent = ({
             name="deliveryPrice"
             labelStyle="w-min pr-1 whitespace-nowrap"
             inLine
+            readOnly={readOnly}
           />
           <div>
             по умолчанию:{' '}
@@ -724,6 +741,7 @@ const PaymentContent = ({
               )
             }
             dropDownList={false}
+            readOnly={readOnly}
           />
         ) : (
           <div>
@@ -768,6 +786,7 @@ const ProductCirculationContent = ({
   setProductCirculationsIdCountDefective,
   productCirculationsIdCount,
   setProductCirculationsIdCount,
+  readOnly,
 }) => {
   // const operator = ['operator', 'dev', 'admin'].includes(role)
   // const aerodesigner = ['aerodesigner', 'dev', 'admin'].includes(role)
@@ -794,13 +813,16 @@ const ProductCirculationContent = ({
 
   return (
     <div>
-      <IconButton
-        name="Генерировать из состава заказа"
-        onClick={productCirculationIdCountGenerator}
-        inverse
-        icon={faCog}
-        small
-      />
+      {!readOnly && (
+        <IconButton
+          name="Генерировать из состава заказа"
+          onClick={productCirculationIdCountGenerator}
+          inverse
+          icon={faCog}
+          small
+          readOnly={readOnly}
+        />
+      )}
       <SelectProductsList
         title="Список израсходованных товаров"
         productsIdCount={productCirculationsIdCount}
@@ -808,6 +830,7 @@ const ProductCirculationContent = ({
           setProductCirculationsIdCount(newProductsIdCount)
           updateForm({})
         }}
+        readOnly={readOnly}
       />
       <SelectProductsList
         title="Список отбракованных товаров"
@@ -817,12 +840,13 @@ const ProductCirculationContent = ({
           // TODO Очень странная фигняююю без строчки ниже компонент не обновляется если добавить новый товар
           updateForm({})
         }}
+        readOnly={readOnly}
       />
     </div>
   )
 }
 
-const PhotosContent = ({ form, setForm }) => {
+const PhotosContent = ({ form, setForm, readOnly }) => {
   return (
     <div>
       <InputImages
@@ -836,6 +860,7 @@ const PhotosContent = ({ form, setForm }) => {
         // readOnly={readOnly}
         directory="order_photos"
         maxImages={10}
+        readOnly={readOnly}
       />
     </div>
   )
@@ -846,7 +871,7 @@ const OrderForm = ({
   order = DEFAULT_ORDER,
   afterConfirm = () => {},
   onClose = () => {},
-  readOnly = true,
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -950,6 +975,12 @@ const OrderForm = ({
   }, [])
 
   const forNew = order._id === undefined
+
+  const accessToContent = loggedUser.access.orders
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(order) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const catalogProductsPrice = form.productsCount.reduce(
     (totalProductsCount, productCount) => {
@@ -1089,6 +1120,7 @@ const OrderForm = ({
     order,
     updateForm,
     role: loggedUser.role,
+    access: loggedUser.access,
     catalogPrice,
     totalPrice,
     modals,
@@ -1123,11 +1155,11 @@ const OrderForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={
-        readOnly
-          ? 'Заказ'
-          : forNew
+        forNew
           ? 'Создние заказа'
-          : 'Редактирование заказа' + ' №' + form.number
+          : editMode
+          ? 'Редактирование заказа №' + form.number
+          : 'Заказ №' + form.number
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
@@ -1189,6 +1221,7 @@ const OrderForm = ({
           </div>
         </>
       }
+      readOnly={readOnly}
     >
       <FormMenu
         twoCols={twoCols}

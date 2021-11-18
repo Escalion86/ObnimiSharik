@@ -20,7 +20,7 @@ const DevToDoForm = ({
   devToDo = DEFAULT_DEVTODO,
   afterConfirm = () => {},
   onClose = () => {},
-  readOnly = true,
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -39,6 +39,12 @@ const DevToDoForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = devToDo._id === undefined
+
+  const accessToContent = loggedUser.access.devToDo
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(devToDo) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   useEffect(() => {
     if (!form.userId)
@@ -92,11 +98,11 @@ const DevToDoForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={
-        readOnly
-          ? 'Заявка разработчку №' + form.number
-          : forNew
+        forNew
           ? 'Создние заявки разработчку'
-          : 'Редактирование заявки разработчку №' + form.number
+          : editMode
+          ? 'Редактирование заявки разработчку №' + form.number
+          : 'Заявка разработчку №' + form.number
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
@@ -132,6 +138,7 @@ const DevToDoForm = ({
         label="Скриншоты"
         onChange={(images) => updateForm({ images })}
         directory="devtodo"
+        readOnly={readOnly}
       />
       <PriorityPicker
         priority={form.priority}

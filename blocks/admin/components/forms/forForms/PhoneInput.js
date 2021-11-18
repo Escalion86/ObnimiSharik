@@ -9,7 +9,44 @@ const PhoneInput = ({
   className,
   disabled,
   inLine = false,
+  readOnly = false,
+  link = null,
 }) => {
+  if (readOnly)
+    return (
+      <div
+        className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
+      >
+        {label && (
+          <div>
+            <label
+              className={
+                'border-b-1 border-primary max-w-min whitespace-nowrap'
+              }
+              htmlFor={name}
+            >
+              {label}:
+            </label>
+          </div>
+        )}
+        <div
+          className={
+            'flex flex-nowrap gap-x-1' +
+            (link ? ' cursor-pointer text-primary hover:text-toxic' : '')
+          }
+          onClick={
+            link
+              ? (event) => {
+                  event.stopPropagation()
+                  window.open(link)
+                }
+              : null
+          }
+        >
+          <div className="ml-2 italic">{value ? '+' + value : '-'}</div>
+        </div>
+      </div>
+    )
   return (
     <div
       className={

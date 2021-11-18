@@ -25,6 +25,7 @@ const ProductCirculationForm = ({
   productCirculation = DEFAULT_PRODUCT_CIRCULATION,
   afterConfirm = () => {},
   onClose = () => {},
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -42,6 +43,12 @@ const ProductCirculationForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = productCirculation._id === undefined
+
+  const accessToContent = loggedUser.access.productCirculations
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(productCirculation) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const { products } = useSelector((state) => state)
 
@@ -108,7 +115,8 @@ const ProductCirculationForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={
-        forNew ? 'Создние движения товара' : 'Редактирование движения товара'
+        (forNew ? 'Создние' : editMode ? 'Редактирование' : 'Просмотр') +
+        ' движения товара'
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
@@ -117,6 +125,7 @@ const ProductCirculationForm = ({
         Object.keys(formValidate()).length !== 0 ||
         compareObjects(form, productCirculation)
       }
+      readOnly={readOnly}
     >
       {/* <ComboBox
         name="productId"
@@ -141,6 +150,7 @@ const ProductCirculationForm = ({
         selectedId={form.productId}
         required
         // exceptedIds={selectedItemsIds}
+        readOnly={readOnly}
       />
       <div className="flex flex-wrap justify-between gap-x-2">
         <PriceInput
@@ -148,6 +158,7 @@ const ProductCirculationForm = ({
           value={form.price}
           onChange={(price) => updateForm({ price })}
           required
+          readOnly={readOnly}
           // className="w-40"
         />
         {/* <div className="flex flex-col justify-end mb-2">
@@ -165,7 +176,8 @@ const ProductCirculationForm = ({
           value={form.count}
           onChange={(count) => updateForm({ count })}
           required
-          className="w-34"
+          className={!readOnly ? 'w-34' : ''}
+          readOnly={readOnly}
         />
         {/* <div className="flex flex-col justify-end w-4 mb-2">
           <FontAwesomeIcon
@@ -202,7 +214,7 @@ const ProductCirculationForm = ({
         // labelStyle={labelStyle}
         // name="gender"
         required
-        // readOnly={readOnly}
+        readOnly={readOnly}
       />
       <DatePicker
         key="purchasedAt"
@@ -210,6 +222,7 @@ const ProductCirculationForm = ({
         value={form.purchasedAt}
         onChange={(purchasedAt) => updateForm({ purchasedAt })}
         required
+        readOnly={readOnly}
       />
       {!form.purchase && (
         <CheckBox
@@ -217,12 +230,14 @@ const ProductCirculationForm = ({
           checked={form.defective}
           // name="defective"
           onChange={() => updateForm({ defective: !form.defective })}
+          readOnly={readOnly}
         />
       )}
       <SelectOrder
         onChange={(item) => updateForm({ orderId: item ? item._id : '' })}
         selectedId={form.orderId}
         clearButton
+        readOnly={readOnly}
         // required
         // exceptedIds={selectedItemsIds}
       />

@@ -129,11 +129,14 @@ export const SelectItemList = ({
     const ItemRows = ({ itemsId, items }) => {
       const itemRows = []
       itemsId.forEach((itemId) => {
-        if (id !== '?') itemRows.push(items.find((item) => item._id === itemId))
+        if (itemId !== '?')
+          itemRows.push(items.find((item) => item._id === itemId))
       })
 
       return itemRows.map((item, index) => (
-        <ItemComponent item={item} readOnly />
+        <div className="border-gray-700 border-b-1 last:border-0">
+          <ItemComponent key={index} item={item} readOnly />
+        </div>
       ))
     }
 
@@ -147,14 +150,9 @@ export const SelectItemList = ({
             {title}:
           </label>
         )}
-        <ItemRows items={items} itemsId={itemsId} />
-        {/* {itemRows.map((item, index) => (
-          <div className="flex ml-2 italic gap-x-1">
-            <div>({item.article ? item.article : 'без артикула'})</div>
-            <div>{item.name}</div>
-            <div> - {itemsIdCount[item._id]} шт.</div>
-          </div>
-        ))} */}
+        <div className="mt-1 overflow-hidden bg-gray-200 border-gray-700 rounded-lg border-1">
+          <ItemRows items={items} itemsId={itemsId} />
+        </div>
       </div>
     )
   }
