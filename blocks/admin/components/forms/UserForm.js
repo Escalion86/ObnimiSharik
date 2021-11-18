@@ -23,6 +23,7 @@ const UserForm = ({
   user = DEFAULT_USER,
   afterConfirm = () => {},
   onClose = () => {},
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -46,6 +47,12 @@ const UserForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = user._id === undefined
+
+  const accessToContent = loggedUser.access.users
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(user) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -88,17 +95,23 @@ const UserForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние сотрудника' : 'Редактирование сотрудника'}
+      title={
+        (forNew ? 'Создние' : editMode ? 'Редактирование' : 'Просмотр') +
+        ' сотрудника'
+      }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
       buttonDisabled={
         Object.keys(formValidate()).length !== 0 || compareObjects(form, user)
       }
+      readOnly={readOnly}
     >
       <InputAvatar
         user={form}
         onChange={(imageUrl) => updateForm({ image: imageUrl })}
+        readOnly={readOnly}
+        inLine
       />
       <Input
         key="email"
@@ -109,6 +122,8 @@ const UserForm = ({
         onChange={(email) => updateForm({ email })}
         required
         disabled
+        readOnly={readOnly}
+        link={form.email ? 'mailto:' + form.email : null}
       />
       <Input
         key="name"
@@ -118,14 +133,18 @@ const UserForm = ({
         value={form.name}
         onChange={(name) => updateForm({ name })}
         required
+        readOnly={readOnly}
       />
       <ComboBox
         title="Должность"
         onChange={(role) => updateForm({ role })}
         defaultValue={form.role}
         placeholder="Выберите должность"
-        items={ROLES.filter((role) => !role.hidden)}
+        items={ROLES.filter(
+          (role) => loggedUser.role === 'dev' || !role.hidden
+        )}
         required
+        readOnly={readOnly}
       />
 
       <RowContainer>
@@ -135,6 +154,8 @@ const UserForm = ({
           value={form.phone}
           onChange={(phone) => updateForm({ phone })}
           // required
+          readOnly={readOnly}
+          link={form.phone ? 'tel:+' + form.phone : null}
         />
         <PhoneInput
           key="whatsapp"
@@ -142,6 +163,8 @@ const UserForm = ({
           value={form.whatsapp}
           onChange={(whatsapp) => updateForm({ whatsapp })}
           // required
+          readOnly={readOnly}
+          link={form.whatsapp ? 'https://wa.me/' + form.whatsapp : null}
         />
       </RowContainer>
       <RowContainer>
@@ -151,6 +174,8 @@ const UserForm = ({
           value={form.viber}
           onChange={(viber) => updateForm({ viber })}
           // required
+          readOnly={readOnly}
+          link={form.viber ? 'viber://chat?number=' + form.viber : null}
         />
         <Input
           key="telegram"
@@ -161,6 +186,8 @@ const UserForm = ({
           value={form.telegram}
           onChange={(telegram) => updateForm({ telegram })}
           prefix="@"
+          readOnly={readOnly}
+          link={form.telegram ? 'https://t.me/' + form.telegram : null}
         />
       </RowContainer>
       <RowContainer>
@@ -173,6 +200,10 @@ const UserForm = ({
           value={form.instagram}
           onChange={(instagram) => updateForm({ instagram })}
           prefix="@"
+          readOnly={readOnly}
+          link={
+            form.instagram ? 'https://instagram.com/' + form.instagram : null
+          }
         />
         <Input
           key="vk"
@@ -183,6 +214,8 @@ const UserForm = ({
           value={form.vk}
           onChange={(vk) => updateForm({ vk })}
           prefix="@"
+          readOnly={readOnly}
+          link={form.vk ? 'https://vk.com/' + form.vk : null}
         />
       </RowContainer>
       <div className="flex">
@@ -192,15 +225,19 @@ const UserForm = ({
           value={form.birthday}
           // value={productCirculation.createdAt}
           onChange={(birthday) => updateForm({ birthday })}
+          readOnly={readOnly}
         />
         {form.birthday && (
-          <div className="ml-2 mt-7">{birthDateToAge(form.birthday)}</div>
+          <div className={'italic' + (readOnly ? ' ml-3' : ' ml-2 mt-7')}>
+            {birthDateToAge(form.birthday)}
+          </div>
         )}
       </div>
       <GenderPicker
         gender={form.gender}
         onChange={(gender) => updateForm({ gender })}
         inLine
+        readOnly={readOnly}
       />
     </Form>
   )

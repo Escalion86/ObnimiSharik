@@ -53,17 +53,22 @@ export default function Admin() {
 
   const dispatch = useDispatch()
 
-  const modals = !loading
-    ? modalsFunctions(
-        dispatch,
-        state,
-        session?.user ? session.user : DEFAULT_USER
-      )
-    : null
-
-  // const router = useRouter()
-  // const [page, setPage] = useState(pages[0])
   const { page } = state
+
+  const loggedUser =
+    !loading && session?.user
+      ? state.users.find((user) => session.user._id === user._id) ??
+        session.user
+      : null
+
+  const haveAccess =
+    loggedUser?.role &&
+    ROLES.filter((role) => role.value === loggedUser?.role).length > 0
+  if (haveAccess) loggedUser.access = accessTable(loggedUser)
+
+  const modals = !loading
+    ? modalsFunctions(dispatch, state, loggedUser ?? DEFAULT_USER)
+    : null
 
   const setPageId = (id, props = {}) => {
     pages.some((page) => {
@@ -103,15 +108,6 @@ export default function Admin() {
       // const ordersListener = Orders.watch()
     }
   }, [!!session, status])
-
-  const loggedUser = session?.user
-    ? state.users.find((user) => session.user._id === user._id) ?? session.user
-    : null
-
-  const haveAccess =
-    loggedUser?.role &&
-    ROLES.filter((role) => role.value === loggedUser?.role).length > 0
-  if (haveAccess) loggedUser.access = accessTable(loggedUser)
 
   return (
     <>

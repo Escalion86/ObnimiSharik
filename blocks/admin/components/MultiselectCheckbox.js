@@ -36,25 +36,24 @@ const MultiselectCheckbox = ({
     const newData = data.map((item) => {
       return { ...item, checked: !checkedAll }
     })
-    // setData(newData)
     onChange(getAll ? newData : newData.filter((x) => x.checked))
   }
 
-  if (readOnly)
+  if (readOnly) {
+    const types = data.filter((item) => item.checked)
     return (
-      <div className="">
+      <div className={types.length > 0 ? '' : 'flex'}>
         <div className="border-b-1 border-primary max-w-min whitespace-nowrap">
           {title}:
         </div>
         <div className="flex flex-col ml-2 italic">
-          {data
-            .filter((item) => item.checked)
-            .map((item) => (
-              <span key={item.name}>- {item.name}</span>
-            ))}
+          {types.length > 0
+            ? types.map((item) => <span key={item.name}>- {item.name}</span>)
+            : '-'}
         </div>
       </div>
     )
+  }
 
   return (
     <div

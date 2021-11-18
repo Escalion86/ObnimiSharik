@@ -21,6 +21,7 @@ const PaymentForm = ({
   payment = DEFAULT_PAYMENT,
   afterConfirm = () => {},
   onClose = () => {},
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -38,6 +39,12 @@ const PaymentForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = payment._id === undefined
+
+  const accessToContent = loggedUser.access.payments
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(payment) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -81,7 +88,10 @@ const PaymentForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние транзакции' : 'Редактирование транзакции'}
+      title={
+        (forNew ? 'Создние' : editMode ? 'Редактирование' : 'Просмотр') +
+        ' транзакции'
+      }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
@@ -89,6 +99,7 @@ const PaymentForm = ({
         Object.keys(formValidate()).length !== 0 ||
         compareObjects(form, payment)
       }
+      readOnly={readOnly}
     >
       <SelectClient
         onChange={(client) => updateForm({ clientId: client._id })}
@@ -96,6 +107,7 @@ const PaymentForm = ({
         required
         className="flex-1"
         // exceptedIds={selectedItemsIds}
+        readOnly={readOnly}
       />
       <SelectOrder
         onChange={(order) => updateForm({ orderId: order._id })}
@@ -103,12 +115,14 @@ const PaymentForm = ({
         // clearButton
         required
         // exceptedIds={selectedItemsIds}
+        readOnly={readOnly}
       />
       <PayTypePicker
         payType={form.payType}
         onChange={(payType) => updateForm({ payType })}
         inLine
         required
+        readOnly={readOnly}
       />
       <PriceInput
         value={form.sum}
@@ -120,6 +134,7 @@ const PaymentForm = ({
         inLine
         // readOnly={readOnly}
         // inLine={readOnly}
+        readOnly={readOnly}
       />
     </Form>
   )

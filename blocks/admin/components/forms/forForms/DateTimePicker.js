@@ -16,7 +16,7 @@ const DateTimePicker = ({
       <div
         className={
           'flex' +
-          (inLine ? ' flex-row items-center' : ' flex-col') +
+          (inLine || readOnly ? ' flex-row items-center' : ' flex-col') +
           (className ? ' ' + className : '')
         }
       >
@@ -28,7 +28,8 @@ const DateTimePicker = ({
           htmlFor={name}
         >
           {label}
-          {required && <span className="text-red-700">*</span>}
+          {readOnly ? ':' : ''}
+          {!readOnly && required && <span className="text-red-700">*</span>}
         </label>
         {/* <div
           className={
@@ -36,7 +37,7 @@ const DateTimePicker = ({
             (required && !value ? ' border-red-700' : ' border-gray-700')
           }
         > */}
-        {formatDateTime(value)}
+        <div className={readOnly ? ' ml-2' : ''}>{formatDateTime(value)}</div>
         {/* </div> */}
       </div>
     )
@@ -72,13 +73,7 @@ const DateTimePicker = ({
           var hours = value.substring(11, 13)
           var minutes = value.substring(14, 16)
 
-          onChange(new Date(
-                year,
-                month - 1,
-                day,
-                hours,
-                minutes
-              ).toISOString())
+          onChange(new Date(year, month - 1, day, hours, minutes).toISOString())
         }}
         // pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
         min="2021-01-01T00:00"

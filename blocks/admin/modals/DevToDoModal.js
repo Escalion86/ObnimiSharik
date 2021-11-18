@@ -1,5 +1,7 @@
 import { DevToDoForm } from '@admincomponents/forms'
 import Modal from '@adminblocks/modals/Modal'
+import { MessageModal } from '.'
+import { useState } from 'react'
 
 const DevToDoModal = ({
   loggedUser,
@@ -7,24 +9,33 @@ const DevToDoModal = ({
   onClose = () => {},
   afterConfirm = () => {},
   onDelete = null,
+  edit = false,
 }) => {
-  const readOnly = !(
-    !devToDo ||
-    loggedUser.role === 'dev' ||
-    (loggedUser._id === devToDo.userId && devToDo.status === 'created')
-  )
+  const [editMode, setEditMode] = useState(edit)
+  if (!loggedUser.access?.devToDo.read(devToDo))
+    return (
+      <MessageModal
+        message="У Вас нет прав на просмотр данного обращения"
+        onClose={onClose}
+      />
+    )
+
+  const canEdit = devToDo?._id && loggedUser.access?.devToDo.edit(devToDo)
 
   return (
     <Modal
       onClose={onClose}
-      onDelete={devToDo?._id && onDelete}
-      readOnly={readOnly}
+      onDelete={
+        devToDo?._id && loggedUser.access?.devToDo.delete(devToDo) && onDelete
+      }
+      editMode={canEdit ? editMode : null}
+      setEditMode={canEdit ? setEditMode : null}
     >
       <DevToDoForm
         devToDo={devToDo}
         afterConfirm={afterConfirm}
         loggedUser={loggedUser}
-        readOnly={readOnly}
+        editMode={canEdit ? editMode : null}
       />
     </Modal>
   )

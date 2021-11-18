@@ -28,6 +28,7 @@ const Input = ({
   readOnly = false,
   hidden = false,
   defaultValue,
+  link = null,
 }) => {
   if (hidden) return null
   if (readOnly)
@@ -48,12 +49,25 @@ const Input = ({
             </label>
           </div>
         )}
-        <div className="flex flex-nowrap gap-x-1">
-          {prefix && <div>{prefix}</div>}
-          <div className="ml-2 italic">
-            {type === 'number' ? parseInt(value) : value ? value : ''}
+        <div
+          className={
+            'flex flex-nowrap gap-x-1 ml-2' +
+            (link ? ' cursor-pointer text-primary hover:text-toxic' : '')
+          }
+          onClick={
+            link
+              ? (event) => {
+                  event.stopPropagation()
+                  window.open(link)
+                }
+              : null
+          }
+        >
+          {prefix && !!value && <div>{prefix}</div>}
+          <div className="italic">
+            {type === 'number' ? parseInt(value) : value ? value : '-'}
           </div>
-          {postfix && <div>{postfix}</div>}
+          {postfix && !!value && <div>{postfix}</div>}
         </div>
       </div>
     )

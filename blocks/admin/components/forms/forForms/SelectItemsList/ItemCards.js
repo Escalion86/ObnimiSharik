@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 const ItemContainer = ({ onClick, active, children }) => (
   <div
     className={
-      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 cursor-pointer last:border-0' +
+      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 last:border-0' +
       (onClick ? ' hover:bg-blue-200' : '') +
       (active ? ' bg-green-200' : '')
     }

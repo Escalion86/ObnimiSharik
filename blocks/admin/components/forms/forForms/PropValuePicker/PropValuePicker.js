@@ -73,7 +73,9 @@ const PropValuePicker = ({
             </label>
           </div>
         )}
-        <div className="ml-2 italic">{itemInArray ? itemInArray.name : ''}</div>
+        <div className="ml-2 italic">
+          {itemInArray ? itemInArray.name : '-'}
+        </div>
       </div>
     )
   }

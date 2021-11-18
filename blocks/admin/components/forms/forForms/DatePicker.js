@@ -14,13 +14,7 @@ const DatePicker = ({
 }) => {
   if (readOnly)
     return (
-      <div
-        className={
-          'flex' +
-          (inLine ? ' flex-row items-center' : ' flex-col') +
-          (className ? ' ' + className : '')
-        }
-      >
+      <div className={'flex items-center' + (className ? ' ' + className : '')}>
         <label
           className={
             'border-b-1 border-primary max-w-min whitespace-nowrap' +
@@ -32,9 +26,9 @@ const DatePicker = ({
           }
           htmlFor={name}
         >
-          {label}
+          {label}:
         </label>
-        {formatDate(value)}
+        <div className="ml-2 italic">{value ? formatDate(value) : '-'}</div>
       </div>
     )
 

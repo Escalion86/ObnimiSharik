@@ -14,6 +14,30 @@ const PriceInput = ({
   const rubles = value ? Math.floor(value / 100) : 0
   const cops = value ? Math.floor(value % 100) : 0
 
+  if (readOnly)
+    return (
+      <div
+        className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
+      >
+        {label && (
+          <div>
+            <label
+              className={
+                'border-b-1 border-primary max-w-min whitespace-nowrap' +
+                (labelStyle ? ' ' + labelStyle : '')
+              }
+              htmlFor={name}
+            >
+              {label}:
+            </label>
+          </div>
+        )}
+        <div className={'flex flex-nowrap gap-x-1'}>
+          <div className="ml-2 italic">{value ? value / 100 + ' ₽' : '-'}</div>
+        </div>
+      </div>
+    )
+
   const onChangeUpd = (value, rub = true) => {
     let newValue
     if (rub) newValue = Number(value * 100) + cops

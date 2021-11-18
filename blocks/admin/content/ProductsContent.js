@@ -36,6 +36,7 @@ const ProductsContent = ({ data, modals, loggedUser }) => {
                   modals.openProductCirculationModal({
                     ...DEFAULT_PRODUCT_CIRCULATION,
                     productId: product._id,
+                    purchase: true,
                   })
               : null
           }

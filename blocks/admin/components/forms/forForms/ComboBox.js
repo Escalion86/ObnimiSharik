@@ -7,8 +7,23 @@ const ComboBox = ({
   items,
   required = false,
   inLine = false,
+  readOnly = false,
 }) => {
-  const defaultValueExists = !!items.find((item) => item.value === defaultValue)
+  const defaultItem = items.find((item) => item.value === defaultValue)
+  const defaultValueExists = !!defaultItem
+
+  if (readOnly)
+    return (
+      <div className="flex">
+        <div className="border-b-1 border-primary max-w-min whitespace-nowrap">
+          {title}:
+        </div>
+        <div className="ml-2 italic">
+          {defaultValueExists ? defaultItem.name : ''}
+        </div>
+      </div>
+    )
+
   return (
     <div
       className={'flex ' + (inLine ? 'flex-row items-center ' : 'flex-col ')}

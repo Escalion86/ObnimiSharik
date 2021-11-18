@@ -20,7 +20,7 @@ const ProductForm = ({
   product = DEFAULT_PRODUCT,
   afterConfirm = () => {},
   onClose = () => {},
-  readOnly = true,
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -46,6 +46,12 @@ const ProductForm = ({
   }
 
   const forNew = product._id === undefined
+
+  const accessToContent = loggedUser.access.products
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(product) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const sendForm = async () => {
     forNew
@@ -87,11 +93,11 @@ const ProductForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={
-        readOnly
-          ? 'Товар: ' + form.name
-          : forNew
+        forNew
           ? 'Создние товара'
-          : 'Редактирование товара'
+          : editMode
+          ? 'Редактирование товара'
+          : 'Товар: ' + form.name
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}

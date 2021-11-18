@@ -14,6 +14,7 @@ const InvitationForm = ({
   invitation = DEFAULT_INVITATION,
   afterConfirm = () => {},
   onClose = () => {},
+  editMode = false,
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -27,13 +28,12 @@ const InvitationForm = ({
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = invitation._id === undefined
-  const handleChange = (e) => {
-    const target = e.target
-    const value = target.name === 'images' ? [target.value] : target.value
-    const name = target.name
 
-    updateForm({ [name]: value })
-  }
+  const accessToContent = loggedUser.access.invitations
+  const canAdd = accessToContent.add
+  const canEdit = accessToContent.edit(invitation) && editMode
+
+  const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const handleSubmit = (e) => {
     e?.preventDefault()
@@ -76,7 +76,10 @@ const InvitationForm = ({
   return (
     <Form
       handleSubmit={handleSubmit}
-      title={forNew ? 'Создние приглашения' : 'Редактирование приглашения'}
+      title={
+        (forNew ? 'Создние' : editMode ? 'Редактирование' : 'Просмотр') +
+        ' приглашения'
+      }
       buttonName={forNew ? 'Создать и отправить' : 'Применить'}
       message={message}
       errors={errors}
@@ -84,6 +87,7 @@ const InvitationForm = ({
         Object.keys(formValidate()).length !== 0 ||
         compareObjects(form, invitation)
       }
+      readOnly={readOnly}
     >
       <Input
         key="email"
@@ -93,6 +97,7 @@ const InvitationForm = ({
         value={form.email}
         onChange={(email) => updateForm({ email })}
         required
+        readOnly={readOnly}
       />
       <ComboBox
         name="role"
@@ -102,6 +107,7 @@ const InvitationForm = ({
         placeholder="Выберите должность"
         items={ROLES.filter((role) => !role.hidden)}
         required
+        readOnly={readOnly}
       />
       {/* <div className="flex flex-col">
         <label htmlFor="role">Должность</label>

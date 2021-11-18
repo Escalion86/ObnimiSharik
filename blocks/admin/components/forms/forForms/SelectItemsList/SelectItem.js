@@ -96,6 +96,7 @@ export const SelectItem = ({
   noSearch = false,
   itemWidth = 0,
   moreOneFilterTurnOn = false,
+  readOnly = false,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchText, setSearchText] = useState('')
@@ -158,12 +159,13 @@ export const SelectItem = ({
     <div
       className={
         (className ? className + ' ' : '') +
-        'relative bg-gray-200 cursor-pointer flex justify-center items-center'
+        'relative bg-gray-200 flex justify-center items-center' +
+        (readOnly ? ' cursor-default' : ' cursor-pointer')
       }
       style={{ height: itemHeight, width: itemWidth }}
       onClick={() => {
-        if (dropDownList) toggleIsMenuOpen()
-        if (onClick) onClick(selectedItem)
+        if (dropDownList && !readOnly) toggleIsMenuOpen()
+        if (onClick && !readOnly) onClick(selectedItem)
       }}
       ref={ref}
     >
@@ -258,6 +260,99 @@ export const SelectItem = ({
   )
 }
 
+const SelectItemContainer = ({
+  required,
+  label,
+  className,
+  onClickClearButton = null,
+  onCreateNew,
+  onEdit,
+  children,
+  inLine = false,
+  readOnly = false,
+}) => {
+  const Container = ({ children }) => {
+    if (label)
+      return (
+        <div
+          className={
+            'flex' +
+            (className ? ' ' + className : '') +
+            (inLine ? ' items-center w-full' : ' flex-col')
+          }
+        >
+          <label
+            className={
+              (inLine ? 'w-18' : '') +
+              (readOnly
+                ? 'mb-1 border-b-1 border-primary max-w-min whitespace-nowrap'
+                : '')
+            }
+            htmlFor="client"
+          >
+            {label}
+            {readOnly ? ':' : ''}
+            {!readOnly && required && <span className="text-red-700">*</span>}
+          </label>
+          <div className="flex flex-1 border border-gray-700 rounded-lg">
+            {children}
+          </div>
+        </div>
+      )
+
+    return (
+      <div className={'flex flex-col' + (className ? ' ' + className : '')}>
+        <div className="flex">{children}</div>
+      </div>
+    )
+  }
+
+  return (
+    <Container>
+      {children}
+      {!readOnly && onEdit && (
+        <div className="flex items-center justify-center border-l border-gray-700">
+          <button
+            onClick={onEdit}
+            className="flex items-center justify-center w-8 h-full rounded-r-lg shadow group whitespace-nowrap font-futuraDemi"
+          >
+            <FontAwesomeIcon
+              className="w-3 h-3 duration-300 text-primary group-hover:scale-125"
+              icon={faPencilAlt}
+            />
+          </button>
+        </div>
+      )}
+      {!readOnly && onCreateNew && (
+        <div className="flex items-center justify-center border-l border-gray-700">
+          <button
+            onClick={onCreateNew}
+            className="flex items-center justify-center w-8 h-full rounded-r-lg shadow group whitespace-nowrap font-futuraDemi"
+          >
+            <FontAwesomeIcon
+              className="w-3 h-3 duration-300 text-primary group-hover:scale-125"
+              icon={faPlus}
+            />
+          </button>
+        </div>
+      )}
+      {!readOnly && onClickClearButton && (
+        <div className="flex items-center justify-center border-l border-gray-700">
+          <button
+            onClick={onClickClearButton}
+            className="flex items-center justify-center w-8 h-full rounded-r-lg shadow group whitespace-nowrap font-futuraDemi"
+          >
+            <FontAwesomeIcon
+              className="w-3 h-3 text-red-700 duration-300 group-hover:scale-125"
+              icon={faTrash}
+            />
+          </button>
+        </div>
+      )}
+    </Container>
+  )
+}
+
 export const SelectProduct = ({
   onChange,
   onDelete,
@@ -266,6 +361,7 @@ export const SelectProduct = ({
   required = false,
   className = null,
   clearButton = null,
+  readOnly = false,
 }) => {
   const { products } = useSelector((state) => state)
   return (
@@ -280,6 +376,7 @@ export const SelectProduct = ({
             : () => onChange(null)
           : null
       }
+      readOnly={readOnly}
     >
       <SelectItem
         items={products}
@@ -288,9 +385,12 @@ export const SelectProduct = ({
         selectedId={selectedId}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
+        readOnly={readOnly}
       />
     </SelectItemContainer>
   )
@@ -304,6 +404,7 @@ export const SelectSet = ({
   required = false,
   className = null,
   clearButton = null,
+  readOnly = false,
 }) => {
   const { sets } = useSelector((state) => state)
   return (
@@ -318,6 +419,7 @@ export const SelectSet = ({
             : () => onChange(null)
           : null
       }
+      readOnly={readOnly}
     >
       <SelectItem
         items={sets}
@@ -327,9 +429,12 @@ export const SelectSet = ({
         className={className}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
+        readOnly={readOnly}
       />
     </SelectItemContainer>
   )
@@ -343,6 +448,7 @@ export const SelectClient = ({
   required = false,
   className = null,
   clearButton = null,
+  readOnly = false,
 }) => {
   const { clients } = useSelector((state) => state)
   return (
@@ -357,6 +463,7 @@ export const SelectClient = ({
             : () => onChange(null)
           : null
       }
+      readOnly={readOnly}
     >
       <SelectItem
         items={clients}
@@ -365,9 +472,12 @@ export const SelectClient = ({
         selectedId={selectedId}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
+        readOnly={readOnly}
       />
     </SelectItemContainer>
   )
@@ -381,6 +491,7 @@ export const SelectOrder = ({
   required = false,
   className = null,
   clearButton = null,
+  readOnly = false,
 }) => {
   const { orders } = useSelector((state) => state)
   return (
@@ -395,6 +506,7 @@ export const SelectOrder = ({
             : () => onChange(null)
           : null
       }
+      readOnly={readOnly}
     >
       <SelectItem
         items={orders}
@@ -403,9 +515,12 @@ export const SelectOrder = ({
         selectedId={selectedId}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
+        readOnly={readOnly}
       />
     </SelectItemContainer>
   )
@@ -424,6 +539,7 @@ export const SelectPayment = ({
   label = null,
   onClick = null,
   dropDownList,
+  readOnly = false,
 }) => {
   const { payments } = useSelector((state) => state)
   const payment = payments.find((payment) => payment._id === selectedId)
@@ -444,6 +560,7 @@ export const SelectPayment = ({
       onEdit={
         onEdit && selectedId !== '?' && payment ? () => onEdit(payment) : null
       }
+      readOnly={readOnly}
     >
       <SelectItem
         items={payments}
@@ -452,96 +569,16 @@ export const SelectPayment = ({
         selectedId={selectedId}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
         onClick={selectedId !== '?' && payment ? () => onClick(payment) : null}
         dropDownList={dropDownList}
+        readOnly={readOnly}
       />
     </SelectItemContainer>
-  )
-}
-
-const SelectItemContainer = ({
-  required,
-  label,
-  className,
-  onClickClearButton = null,
-  onCreateNew,
-  onEdit,
-  children,
-  inLine = false,
-}) => {
-  const Container = ({ children }) => {
-    if (label)
-      return (
-        <div
-          className={
-            'flex' +
-            (className ? ' ' + className : '') +
-            (inLine ? ' items-center w-full' : ' flex-col')
-          }
-        >
-          <label className={inLine ? 'w-18' : ''} htmlFor="client">
-            {label}
-            {required && <span className="text-red-700">*</span>}
-          </label>
-          <div className="flex flex-1 border border-gray-700 rounded-lg">
-            {children}
-          </div>
-        </div>
-      )
-
-    return (
-      <div className={'flex flex-col' + (className ? ' ' + className : '')}>
-        <div className="flex">{children}</div>
-      </div>
-    )
-  }
-
-  return (
-    <Container>
-      {children}
-      {onEdit && (
-        <div className="flex items-center justify-center border-l border-gray-700">
-          <button
-            onClick={onEdit}
-            className="flex items-center justify-center w-8 h-full rounded-r-lg shadow group whitespace-nowrap font-futuraDemi"
-          >
-            <FontAwesomeIcon
-              className="w-3 h-3 duration-300 text-primary group-hover:scale-125"
-              icon={faPencilAlt}
-            />
-          </button>
-        </div>
-      )}
-      {onCreateNew && (
-        <div className="flex items-center justify-center border-l border-gray-700">
-          <button
-            onClick={onCreateNew}
-            className="flex items-center justify-center w-8 h-full rounded-r-lg shadow group whitespace-nowrap font-futuraDemi"
-          >
-            <FontAwesomeIcon
-              className="w-3 h-3 duration-300 text-primary group-hover:scale-125"
-              icon={faPlus}
-            />
-          </button>
-        </div>
-      )}
-      {onClickClearButton && (
-        <div className="flex items-center justify-center border-l border-gray-700">
-          <button
-            onClick={onClickClearButton}
-            className="flex items-center justify-center w-8 h-full rounded-r-lg shadow group whitespace-nowrap font-futuraDemi"
-          >
-            <FontAwesomeIcon
-              className="w-3 h-3 text-red-700 duration-300 group-hover:scale-125"
-              icon={faTrash}
-            />
-          </button>
-        </div>
-      )}
-    </Container>
   )
 }
 
@@ -552,6 +589,7 @@ export const SelectDeliver = ({
   required = false,
   className = null,
   clearButton = null,
+  readOnly = false,
 }) => {
   const { users } = useSelector((state) => state)
   const delivers = users.filter((user) => user.role === 'deliver')
@@ -563,6 +601,7 @@ export const SelectDeliver = ({
       onClickClearButton={
         selectedId && clearButton ? () => onChange(null) : null
       }
+      readOnly={readOnly}
     >
       <SelectItem
         items={delivers}
@@ -571,9 +610,12 @@ export const SelectDeliver = ({
         selectedId={selectedId}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
+        readOnly={readOnly}
       />
     </SelectItemContainer>
   )
@@ -586,6 +628,7 @@ export const SelectAerodesigner = ({
   required = false,
   className = null,
   clearButton = null,
+  readOnly = false,
 }) => {
   const { users } = useSelector((state) => state)
   const aerodesigners = users.filter((user) => user.role === 'aerodesigner')
@@ -597,6 +640,7 @@ export const SelectAerodesigner = ({
       onClickClearButton={
         selectedId && clearButton ? () => onChange(null) : null
       }
+      readOnly={readOnly}
     >
       <SelectItem
         items={aerodesigners}
@@ -605,9 +649,12 @@ export const SelectAerodesigner = ({
         selectedId={selectedId}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
+        readOnly={readOnly}
       />
     </SelectItemContainer>
   )
@@ -620,6 +667,7 @@ export const SelectOperator = ({
   required = false,
   className = null,
   clearButton = null,
+  readOnly = false,
 }) => {
   const { users } = useSelector((state) => state)
   const operators = users.filter((user) => user.role === 'operator')
@@ -631,6 +679,7 @@ export const SelectOperator = ({
       onClickClearButton={
         selectedId && clearButton ? () => onChange(null) : null
       }
+      readOnly={readOnly}
     >
       <SelectItem
         items={operators}
@@ -639,9 +688,12 @@ export const SelectOperator = ({
         selectedId={selectedId}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
+        readOnly={readOnly}
       />
     </SelectItemContainer>
   )
@@ -654,6 +706,7 @@ export const SelectDistrict = ({
   required = false,
   className = null,
   clearButton = true,
+  readOnly = false,
 }) => {
   const { districts } = useSelector((state) => state)
   return (
@@ -665,6 +718,7 @@ export const SelectDistrict = ({
         selectedId && clearButton ? () => onChange(null) : null
       }
       inLine
+      readOnly={readOnly}
     >
       <SelectItem
         items={districts}
@@ -673,13 +727,16 @@ export const SelectDistrict = ({
         selectedId={selectedId}
         className={
           'flex-1' +
-          (selectedId && clearButton ? ' rounded-l-lg' : ' rounded-lg')
+          (!readOnly && selectedId && clearButton
+            ? ' rounded-l-lg'
+            : ' rounded-lg')
         }
         exceptedIds={exceptedIds}
         itemHeight={24}
         itemWidth="100%"
         noSearch
         sort="name"
+        readOnly={readOnly}
       />
     </SelectItemContainer>
   )
