@@ -4,6 +4,21 @@ import Slider from '@admincomponents/Slider'
 import FilterButtons from './forFilter/FilterButtons'
 import compareObjects from '@helpers/compareObjects'
 
+const minMaxSet = (stateVariable, filterVariable, func = (num) => num) => {
+  let max = 0
+  let min = 0
+
+  if (stateVariable && stateVariable.length > 0) {
+    max = stateVariable.reduce(function (prev, current) {
+      return prev[filterVariable] > current[filterVariable] ? prev : current
+    })[filterVariable]
+    min = stateVariable.reduce(function (prev, current) {
+      return prev[filterVariable] < current[filterVariable] ? prev : current
+    })[filterVariable]
+  }
+  return [func(min), func(max)]
+}
+
 const Filter = ({
   state,
   variable,
@@ -29,52 +44,74 @@ const Filter = ({
   const priorityFilterExists = filterExists('priority')
   const genderFilterExists = filterExists('gender')
   const payTypeFilterExists = filterExists('payType')
+  const sumFilterExists = filterExists('sum')
 
-  let maxPrice = 0
-  let minPrice = 0
-  let sliderPriceValue = [0, 0]
-  const priceVariable = priceFilterExists
-    ? 'price'
-    : // : fullPriceFilterExists
-      // ? 'fullPrice'
-      null
+  // let sliderPriceValue = [0, 0]
+  const [minPrice, maxPrice] = priceFilterExists
+    ? minMaxSet(state[variable], 'price', (num) => num / 100)
+    : [0, 0]
+  const sliderPriceValue = priceFilterExists
+    ? [
+        filter.price[0] === null ? minPrice : filter.price[0],
+        filter.price[1] === null ? maxPrice : filter.price[1],
+      ]
+    : [0, 0]
 
-  if (
-    state[variable] &&
-    state[variable].length > 0 &&
-    priceFilterExists
-    // || fullPriceFilterExists
-  ) {
-    maxPrice =
-      state[variable].reduce(function (prev, current) {
-        return prev[priceVariable] > current[priceVariable] ? prev : current
-      })[priceVariable] / 100
-    minPrice =
-      state[variable].reduce(function (prev, current) {
-        return prev[priceVariable] < current[priceVariable] ? prev : current
-      })[priceVariable] / 100
-    sliderPriceValue = [
-      filter[priceVariable][0] === null ? minPrice : filter[priceVariable][0],
-      filter[priceVariable][1] === null ? maxPrice : filter[priceVariable][1],
-    ]
-  }
+  const [minCount, maxCount] = countFilterExists
+    ? minMaxSet(state[variable], 'count')
+    : [0, 0]
+  const sliderCountValue = countFilterExists
+    ? [
+        filter.count[0] === null ? minCount : filter.count[0],
+        filter.count[1] === null ? maxCount : filter.count[1],
+      ]
+    : [0, 0]
 
-  let maxCount = 0
-  let minCount = 0
-  let sliderCountValue = [0, 0]
+  const [minSum, maxSum] = sumFilterExists
+    ? minMaxSet(state[variable], 'sum', (num) => num / 100)
+    : [0, 0]
+  const sliderSumValue = sumFilterExists
+    ? [
+        filter.sum[0] === null ? minSum : filter.sum[0],
+        filter.sum[1] === null ? maxSum : filter.sum[1],
+      ]
+    : [0, 0]
 
-  if (state[variable] && state[variable].length > 0 && countFilterExists) {
-    maxCount = state[variable].reduce(function (prev, current) {
-      return prev.count > current.count ? prev : current
-    }).count
-    minCount = state[variable].reduce(function (prev, current) {
-      return prev.count < current.count ? prev : current
-    }).count
-    sliderCountValue = [
-      filter.count[0] === null ? minCount : filter.count[0],
-      filter.count[1] === null ? maxCount : filter.count[1],
-    ]
-  }
+  // if (
+  //   state[variable] &&
+  //   state[variable].length > 0 &&
+  //   priceFilterExists
+  // ) {
+  //   maxPrice =
+  //     state[variable].reduce(function (prev, current) {
+  //       return prev.price > current.price ? prev : current
+  //     }).price / 100
+  //   minPrice =
+  //     state[variable].reduce(function (prev, current) {
+  //       return prev.price < current.price ? prev : current
+  //     }).price / 100
+  //   sliderPriceValue = [
+  //     filter.price[0] === null ? minPrice : filter.price[0],
+  //     filter.price[1] === null ? maxPrice : filter.price[1],
+  //   ]
+  // }
+
+  // let maxCount = 0
+  // let minCount = 0
+  // let sliderCountValue = [0, 0]
+
+  // if (state[variable] && state[variable].length > 0 && countFilterExists) {
+  //   maxCount = state[variable].reduce(function (prev, current) {
+  //     return prev.count > current.count ? prev : current
+  //   }).count
+  //   minCount = state[variable].reduce(function (prev, current) {
+  //     return prev.count < current.count ? prev : current
+  //   }).count
+  //   sliderCountValue = [
+  //     filter.count[0] === null ? minCount : filter.count[0],
+  //     filter.count[1] === null ? maxCount : filter.count[1],
+  //   ]
+  // }
 
   const onChangeSlider = (event, value, filterParam, minValue, maxValue) => {
     setFilter({
@@ -243,18 +280,29 @@ const Filter = ({
               <Slider
                 value={sliderPriceValue}
                 onChange={(event, value) =>
-                  onChangeSlider(
-                    event,
-                    value,
-                    priceVariable,
-                    minPrice,
-                    maxPrice
-                  )
+                  onChangeSlider(event, value, 'price', minPrice, maxPrice)
                 }
                 valueLabelDisplay="on"
                 aria-labelledby="range-slider"
                 max={maxPrice || 0}
                 min={minPrice || 0}
+                // getAriaValueText={valuetext}
+              />
+            </div>
+          )}
+          {sumFilterExists && (
+            // || fullPriceFilterExists
+            <div>
+              <div>Сумма</div>
+              <Slider
+                value={sliderSumValue}
+                onChange={(event, value) =>
+                  onChangeSlider(event, value, 'sum', minSum, maxSum)
+                }
+                valueLabelDisplay="on"
+                aria-labelledby="range-slider"
+                max={maxSum || 0}
+                min={minSum || 0}
                 // getAriaValueText={valuetext}
               />
             </div>
