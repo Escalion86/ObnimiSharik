@@ -13,6 +13,7 @@ const InputImages = ({
   label = null,
   directory = null,
   maxImages = 4,
+  className = null,
 }) => {
   const hiddenFileInput = useRef(null)
   const addImageClick = (event) => {
@@ -38,7 +39,11 @@ const InputImages = ({
 
   return (
     <div
-      className={'flex' + (!readOnly || images.length > 0 ? ' flex-col' : '')}
+      className={
+        'flex' +
+        (!readOnly || images.length > 0 ? ' flex-col' : '') +
+        (className ? ' ' + className : '')
+      }
     >
       {label && (
         <label

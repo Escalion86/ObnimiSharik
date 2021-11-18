@@ -37,6 +37,7 @@ const InputImage = ({
       onChange(null)
     }
   }
+  if (readOnly && !image) return null
 
   return (
     <div className={inLine ? 'flex' : ''}>

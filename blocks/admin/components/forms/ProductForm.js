@@ -31,6 +31,7 @@ const ProductForm = ({
     description: product.description,
     price: product.price,
     images: product.images,
+    manufacturer: product.manufacturer,
     typesId: product.typesId,
     archive: product.archive,
   })
@@ -108,27 +109,41 @@ const ProductForm = ({
       }
       readOnly={readOnly}
     >
-      <Input
-        key="name"
-        label="Название"
-        type="text"
-        maxLength="80"
-        value={form.name}
-        onChange={(name) => updateForm({ name })}
-        required
-        hidden={readOnly}
-      />
-      <Input
-        key="description"
-        label="Описание"
-        type="text"
-        maxLength="600"
-        value={form.description}
-        onChange={(description) => updateForm({ description })}
-        textarea
-        readOnly={readOnly}
-      />
       <RowContainer>
+        <Input
+          key="name"
+          label="Название"
+          type="text"
+          maxLength="80"
+          value={form.name}
+          onChange={(name) => updateForm({ name })}
+          required
+          hidden={readOnly}
+          className="col-span-2"
+        />
+        <Input
+          key="description"
+          label="Описание"
+          type="text"
+          maxLength="600"
+          value={form.description}
+          onChange={(description) => updateForm({ description })}
+          textarea
+          readOnly={readOnly}
+          className="col-span-2"
+        />
+        <Input
+          key="manufacturer"
+          label="Производитель"
+          type="text"
+          maxLength="100"
+          value={form.manufacturer}
+          onChange={(manufacturer) => updateForm({ manufacturer })}
+          className="flex-1"
+          readOnly={readOnly}
+          inLine={readOnly}
+          className="col-span-2"
+        />
         <Input
           key="article"
           label="Артикул"
@@ -148,28 +163,31 @@ const ProductForm = ({
           readOnly={readOnly}
           inLine={readOnly}
         />
+
+        <MultiselectCheckbox
+          title="Типы"
+          options={productTypes.map((type) => {
+            return {
+              name: type.name,
+              value: type._id,
+              checked: form.typesId.includes(type._id),
+            }
+          })}
+          onChange={(data) => {
+            updateForm({ typesId: data.map((type) => type.value) })
+          }}
+          readOnly={readOnly}
+          className="col-span-2"
+        />
+        <InputImages
+          images={form.images}
+          label="Картинки"
+          onChange={(images) => updateForm({ images })}
+          readOnly={readOnly}
+          directory="products"
+          className="col-span-2"
+        />
       </RowContainer>
-      <MultiselectCheckbox
-        title="Типы"
-        options={productTypes.map((type) => {
-          return {
-            name: type.name,
-            value: type._id,
-            checked: form.typesId.includes(type._id),
-          }
-        })}
-        onChange={(data) => {
-          updateForm({ typesId: data.map((type) => type.value) })
-        }}
-        readOnly={readOnly}
-      />
-      <InputImages
-        images={form.images}
-        label="Картинки"
-        onChange={(images) => updateForm({ images })}
-        readOnly={readOnly}
-        directory="products"
-      />
     </Form>
   )
 }

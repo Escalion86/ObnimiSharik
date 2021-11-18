@@ -31,7 +31,8 @@ const Input = ({
   link = null,
 }) => {
   if (hidden) return null
-  if (readOnly)
+  if (readOnly) {
+    if (!value && value !== 0) return null
     return (
       <div
         className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
@@ -71,6 +72,7 @@ const Input = ({
         </div>
       </div>
     )
+  }
 
   const onChangeUpd = (e) => {
     const { value } = e.target

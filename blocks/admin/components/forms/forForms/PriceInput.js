@@ -33,7 +33,7 @@ const PriceInput = ({
           </div>
         )}
         <div className={'flex flex-nowrap gap-x-1'}>
-          <div className="ml-2 italic">{value ? value / 100 + ' ₽' : '-'}</div>
+          <div className="ml-2 italic">{(value ? value / 100 : 0) + ' ₽'}</div>
         </div>
       </div>
     )
