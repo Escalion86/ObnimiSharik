@@ -32,6 +32,11 @@ const DistrictModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        district?._id && loggedUser.role === 'dev'
+          ? 'ID: ' + district?._id
+          : null
+      }
     >
       <DistrictForm
         district={district}

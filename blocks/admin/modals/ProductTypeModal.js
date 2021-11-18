@@ -33,6 +33,11 @@ const ProductTypeModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        productType?._id && loggedUser.role === 'dev'
+          ? 'ID: ' + productType?._id
+          : null
+      }
     >
       <ProductTypeForm
         productType={productType}

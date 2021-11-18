@@ -14,6 +14,7 @@ const Modal = ({
   noPropsToChildren = false,
   editMode = null,
   setEditMode = null,
+  subModalText = null,
 }) => {
   const [rendered, setRendered] = useState(false)
   const onCloseWithDelay = () => {
@@ -32,7 +33,8 @@ const Modal = ({
   return (
     <div
       className={
-        'absolute transform duration-200 top-0 left-0 z-50 flex bg-opacity-80 items-center justify-center w-screen h-screen p-5 overflow-y-auto bg-gray-800' +
+        'absolute transform duration-200 top-0 left-0 z-50 flex bg-opacity-80 items-center justify-center w-screen h-screen overflow-y-auto bg-gray-800' +
+        (subModalText ? ' pt-10 pb-5' : ' p-5') +
         (rendered ? ' opacity-100' : ' opacity-0')
       }
       onMouseDown={onCloseWithDelay}
@@ -46,6 +48,13 @@ const Modal = ({
         onClick={(e) => e?.stopPropagation()}
         onMouseDown={(e) => e?.stopPropagation()}
       >
+        {subModalText && (
+          <div className="absolute left-0 flex justify-center w-full -top-9">
+            <div className="px-2 py-0.5 bg-white rounded-md">
+              {subModalText}
+            </div>
+          </div>
+        )}
         <FontAwesomeIcon
           className="absolute w-6 h-6 text-black duration-200 transform cursor-pointer right-4 top-4 hover:scale-110"
           icon={faTimes}

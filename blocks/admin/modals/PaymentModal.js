@@ -30,6 +30,9 @@ const PaymentModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        payment?._id && loggedUser.role === 'dev' ? 'ID: ' + payment?._id : null
+      }
     >
       <PaymentForm
         payment={payment}

@@ -28,6 +28,9 @@ const SetModal = ({
       twoCols
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        set?._id && loggedUser.role === 'dev' ? 'ID: ' + set?._id : null
+      }
     >
       <SetForm
         set={set}
