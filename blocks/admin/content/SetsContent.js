@@ -64,7 +64,7 @@ const SetsContent = ({ data, modals, loggedUser }) => {
           // onProductClick={(product) => modals.openProductModal(product)}
           onProductEditClick={(product) =>
             loggedUser.access.products.edit(product)
-              ? modals.openProductModal(product, null, null, true)
+              ? () => modals.openProductModal(product, null, null, true)
               : null
           }
           onProductFilterClick={(product) => {
