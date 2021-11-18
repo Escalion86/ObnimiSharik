@@ -42,11 +42,7 @@ const MultiselectCheckbox = ({
   if (readOnly) {
     const types = data.filter((item) => item.checked)
     return (
-      <div
-        className={
-          (types.length > 0 ? '' : 'flex') + (className ? ' ' + className : '')
-        }
-      >
+      <div className={types.length > 0 ? '' : 'flex'}>
         <div className="border-b-1 border-primary max-w-min whitespace-nowrap">
           {title}:
         </div>
@@ -101,28 +97,26 @@ const MultiselectCheckbox = ({
         )}
       </div>
       <div
-        className={
-          'flex-1 bg-gray-200 border border-gray-700 rounded-lg overflow-hidden'
-        }
-        style={{ maxHeight: (data.length >= 8 ? 216 : data.length * 27) + 8 }}
+        className="flex-1 overflow-hidden bg-gray-200 border border-gray-700 rounded-lg"
+        // style={{ maxHeight: data.length >= 8 ? 216 : data.length * 27 }}
       >
         <div
-          className={!noScroll ? ' overflow-y-scroll' : ''}
-          style={{ maxHeight: (data.length >= 8 ? 216 : data.length * 27) + 8 }}
+          className={
+            'px-2 py-1 rounded-lg max-h-48' +
+            (!noScroll ? ' overflow-y-scroll' : '')
+          }
         >
-          <div className={'px-2 py-1 rounded-lg'}>
-            {data.map((item, index) => (
-              <div key={item.name} className="flex items-center">
-                <CheckBox
-                  checked={item.checked || false}
-                  onClick={() => toggle(index)}
-                  small
-                  label={item.name}
-                />
-                {/* <div className="ml-2">{item.label}</div> */}
-              </div>
-            ))}
-          </div>
+          {data.map((item, index) => (
+            <div key={item.name} className="flex items-center">
+              <CheckBox
+                checked={item.checked || false}
+                onClick={() => toggle(index)}
+                small
+                label={item.name}
+              />
+              {/* <div className="ml-2">{item.label}</div> */}
+            </div>
+          ))}
         </div>
       </div>
     </div>
