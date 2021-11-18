@@ -5,7 +5,7 @@ const ItemContainer = ({ onClick, active, children }) => (
   <div
     className={
       'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 last:border-0' +
-      (onClick ? ' hover:bg-blue-200' : '') +
+      (onClick ? ' hover:bg-blue-200 cursor-pointer' : '') +
       (active ? ' bg-green-200' : '')
     }
     onClick={
