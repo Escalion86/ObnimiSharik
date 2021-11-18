@@ -127,24 +127,6 @@ const ProductCirculationForm = ({
       }
       readOnly={readOnly}
     >
-      {/* <ComboBox
-        name="productId"
-        title="Товар"
-        handleChange={handleChange}
-        defaultValue={form.productId}
-        placeholder="Выберите товар"
-        items={products.map((product) => {
-          return {
-            name:
-              (product.article
-                ? '(' + product.article + ') '
-                : '(без артикула) ') + product.name,
-            value: product._id,
-          }
-        })}
-        required
-      /> */}
-
       <SelectProduct
         onChange={(product) => updateForm({ productId: product._id })}
         selectedId={form.productId}
