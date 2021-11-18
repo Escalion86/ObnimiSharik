@@ -44,6 +44,7 @@ export const DEFAULT_PRODUCT = {
   name: '',
   description: '',
   price: 0,
+  manufacturer: '',
   images: [],
   typesId: [],
   archive: false,
