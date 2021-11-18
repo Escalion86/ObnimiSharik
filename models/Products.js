@@ -32,6 +32,14 @@ const ProductsSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    manufacturer: {
+      type: String,
+      maxlength: [
+        100,
+        'Название производителя не может превышать 100 символов',
+      ],
+      default: '',
+    },
     archive: {
       type: Boolean,
       default: false,
