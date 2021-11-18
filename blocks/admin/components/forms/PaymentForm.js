@@ -89,8 +89,11 @@ const PaymentForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={
-        (forNew ? 'Создние' : editMode ? 'Редактирование' : 'Просмотр') +
-        ' транзакции'
+        forNew
+          ? 'Создние транзакции'
+          : editMode
+          ? 'Редактирование транзакции №' + form.number
+          : 'Транзакция №' + form.number
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
