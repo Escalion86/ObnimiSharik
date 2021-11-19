@@ -192,7 +192,7 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
   price: 0,
   count: 1,
   orderId: '',
-  purchase: false,
+  purchase: true,
   purchasedAt: new Date().toISOString(),
   defective: false,
 }
