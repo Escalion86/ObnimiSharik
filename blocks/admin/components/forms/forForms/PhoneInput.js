@@ -75,9 +75,10 @@ const PhoneInput = ({
         maskChar="_"
         alwaysShowMask
         value={value || ''}
-        onChange={(e) =>
-          onChange(Number(e.target.value.replace(/[^0-9]/g, '')))
-        }
+        onChange={(e) => {
+          const value = e.target.value.replace(/[^0-9]/g, '')
+          onChange(value === '7' ? null : Number(value))
+        }}
       />
     </div>
   )
