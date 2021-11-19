@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import districtsSchema from '@schemas/districtsSchema'
 
 const DistrictsSchema = new mongoose.Schema(districtsSchema, {
   timestamps: true,
