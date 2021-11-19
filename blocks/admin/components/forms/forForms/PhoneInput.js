@@ -12,7 +12,8 @@ const PhoneInput = ({
   readOnly = false,
   link = null,
 }) => {
-  if (readOnly)
+  if (readOnly) {
+    if (!value && value !== 0) return null
     return (
       <div
         className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
@@ -47,6 +48,7 @@ const PhoneInput = ({
         </div>
       </div>
     )
+  }
   return (
     <div
       className={
@@ -73,9 +75,10 @@ const PhoneInput = ({
         maskChar="_"
         alwaysShowMask
         value={value || ''}
-        onChange={(e) =>
-          onChange(Number(e.target.value.replace(/[^0-9]/g, '')))
-        }
+        onChange={(e) => {
+          const value = e.target.value.replace(/[^0-9]/g, '')
+          onChange(value === '7' ? null : Number(value))
+        }}
       />
     </div>
   )

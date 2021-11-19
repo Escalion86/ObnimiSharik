@@ -44,6 +44,7 @@ export const DEFAULT_PRODUCT = {
   name: '',
   description: '',
   price: 0,
+  manufacturer: '',
   images: [],
   typesId: [],
   archive: false,
@@ -87,7 +88,7 @@ export const DEFAULT_DEVTODO = {
   images: [],
   userId: null,
   status: 'created',
-  priority: 0,
+  priority: null,
   finishedAt: null,
 }
 
@@ -191,7 +192,7 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
   price: 0,
   count: 1,
   orderId: '',
-  purchase: false,
+  purchase: true,
   purchasedAt: new Date().toISOString(),
   defective: false,
 }

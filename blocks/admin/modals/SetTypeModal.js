@@ -30,6 +30,9 @@ const SetTypeModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        setType?._id && loggedUser.role === 'dev' ? 'ID: ' + setType?._id : null
+      }
     >
       <SetTypeForm
         setType={setType}

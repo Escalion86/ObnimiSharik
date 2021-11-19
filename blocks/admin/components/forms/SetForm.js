@@ -21,6 +21,8 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import { useSelector } from 'react-redux'
+import setsSchema from 'schemas/setsSchema'
+import formValidator from '@helpers/formValidator'
 
 const SetForm = ({
   loggedUser,
@@ -63,7 +65,7 @@ const SetForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, setsSchema)
     // Убираем невыбранные товары и с количеством 0
     const productsIdCount = {}
     for (const [id, count] of Object.entries(form.productsIdCount)) {
@@ -93,14 +95,6 @@ const SetForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.name) err.name = 'Введите название'
-    if (!form.price) err.price = 'Введите сумму'
-    // if (!form.images) err.image = 'Image URL is required'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -114,9 +108,7 @@ const SetForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 || compareObjects(form, set)
-      }
+      buttonDisabled={compareObjects(form, set)}
       twoCols={true}
       readOnly={readOnly}
     >

@@ -1,7 +1,8 @@
 const RowContainer = ({ children, className = null }) => (
   <div
     className={
-      'grid grid-cols-2 gap-x-2.5' + (className ? ' ' + className : '')
+      'grid grid-cols-2 gap-x-2.5 gap-y-0.5' +
+      (className ? ' ' + className : '')
     }
   >
     {children}

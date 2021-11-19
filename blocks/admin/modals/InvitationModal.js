@@ -33,6 +33,11 @@ const InvitationModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        invitation?._id && loggedUser.role === 'dev'
+          ? 'ID: ' + invitation?._id
+          : null
+      }
     >
       <InvitationForm
         invitation={invitation}

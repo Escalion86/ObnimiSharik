@@ -15,6 +15,8 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import PayTypePicker from './forForms/PropValuePicker/PayTypePicker'
+import paymentsSchema from 'schemas/paymentsSchema'
+import formValidator from '@helpers/formValidator'
 
 const PaymentForm = ({
   loggedUser,
@@ -48,7 +50,7 @@ const PaymentForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, paymentsSchema)
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
@@ -76,29 +78,20 @@ const PaymentForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.clientId) err.clientId = 'clientId is required'
-    if (!form.orderId) err.orderId = 'orderId is required'
-    if (!form.sum) err.sum = 'sum is required'
-    if (!form.payType) err.payType = 'payType is required'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
       title={
-        (forNew ? 'Создние' : editMode ? 'Редактирование' : 'Просмотр') +
-        ' транзакции'
+        forNew
+          ? 'Создние транзакции'
+          : editMode
+          ? 'Редактирование транзакции №' + form.number
+          : 'Транзакция №' + form.number
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 ||
-        compareObjects(form, payment)
-      }
+      buttonDisabled={compareObjects(form, payment)}
       readOnly={readOnly}
     >
       <SelectClient

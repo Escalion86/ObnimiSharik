@@ -1,11 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCartPlus,
   faClone,
   faPencilAlt,
-  faPlus,
-  faQuestion,
-  faShoppingCart,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import CardButton from './CardButton'
@@ -13,7 +9,6 @@ import CardButton from './CardButton'
 const CardButtons = ({
   className = null,
   onBuying = null,
-  // onAdd = null,
   onEdit = null,
   onClone = null,
   onDelete = null,
@@ -44,18 +39,6 @@ const CardButtons = ({
           tooltip="Покупка"
         />
       )}
-      {/* {onAdd && (
-      <CardButton
-        onClick={(event) => {
-          event.stopPropagation()
-          onAdd()
-        }}
-        className="bg-green-400"
-        inverse
-        icon={faPlus}
-        tooltip="Создать"
-      />
-    )} */}
       {onEdit && (
         <CardButton
           onClick={(event) => {

@@ -7,6 +7,8 @@ import { Input, PriceInput } from './forForms'
 import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
+import formValidator from '@helpers/formValidator'
+import districtsSchema from 'schemas/districtsSchema'
 
 const DistrictForm = ({
   loggedUser,
@@ -35,7 +37,7 @@ const DistrictForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, districtsSchema)
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
@@ -63,12 +65,6 @@ const DistrictForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.name) err.name = 'Введите название района'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -82,7 +78,7 @@ const DistrictForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={Object.keys(formValidate()).length !== 0}
+      buttonDisabled={compareObjects(form, district)}
       readOnly={readOnly}
     >
       {!readOnly && (

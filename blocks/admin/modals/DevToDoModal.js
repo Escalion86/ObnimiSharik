@@ -30,6 +30,9 @@ const DevToDoModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        devToDo?._id && loggedUser.role === 'dev' ? 'ID: ' + devToDo?._id : null
+      }
     >
       <DevToDoForm
         devToDo={devToDo}

@@ -14,7 +14,8 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
-import birthDateToAge from '@helpers/birthDateToAge'
+import formValidator from '@helpers/formValidator'
+import clientsSchema from '@schemas/clientsSchema'
 
 const ClientForm = ({
   loggedUser,
@@ -52,7 +53,7 @@ const ClientForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, clientsSchema)
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
@@ -80,14 +81,6 @@ const ClientForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.name) err.name = 'Name is required'
-    if (!form.phone) err.phone = 'Phone is required'
-    else if (form.phone.length <= 11) err.phone = 'Wrong phone'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -98,32 +91,32 @@ const ClientForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 || compareObjects(form, client)
-      }
+      buttonDisabled={compareObjects(form, client)}
       readOnly={readOnly}
     >
-      <Input
-        key="name"
-        label="Имя клиента"
-        type="text"
-        maxLength="80"
-        value={form.name}
-        onChange={(name) => updateForm({ name })}
-        required
-        readOnly={readOnly}
-      />
-      <Input
-        key="email"
-        label="EMail клиента"
-        type="text"
-        maxLength="80"
-        value={form.email}
-        onChange={(email) => updateForm({ email })}
-        readOnly={readOnly}
-        link={form.email ? 'mailto:' + form.email : null}
-      />
       <RowContainer>
+        <Input
+          key="name"
+          label="Имя"
+          type="text"
+          maxLength="80"
+          value={form.name}
+          onChange={(name) => updateForm({ name })}
+          required
+          readOnly={readOnly}
+          className="col-span-2"
+        />
+        <Input
+          key="email"
+          label="EMail"
+          type="text"
+          maxLength="80"
+          value={form.email}
+          onChange={(email) => updateForm({ email })}
+          readOnly={readOnly}
+          link={form.email ? 'mailto:' + form.email : null}
+          className="col-span-2"
+        />
         <PhoneInput
           key="phone"
           label="Телефон"
@@ -141,8 +134,6 @@ const ClientForm = ({
           readOnly={readOnly}
           link={form.whatsapp ? 'https://wa.me/' + form.whatsapp : null}
         />
-      </RowContainer>
-      <RowContainer>
         <PhoneInput
           key="viber"
           label="Viber"
@@ -160,11 +151,11 @@ const ClientForm = ({
           maxLength="80"
           value={form.telegram}
           onChange={(telegram) => updateForm({ telegram })}
+          prefix="@"
           readOnly={readOnly}
           link={form.telegram ? 'https://t.me/' + form.telegram : null}
         />
-      </RowContainer>
-      <RowContainer>
+
         <Input
           key="instagram"
           label="Instagram"
@@ -191,25 +182,23 @@ const ClientForm = ({
           readOnly={readOnly}
           link={form.vk ? 'https://vk.com/' + form.vk : null}
         />
-      </RowContainer>
-      <div className="flex">
         <DatePicker
           key="birthday"
           label="День рождения"
           value={form.birthday}
           onChange={(value) => updateForm({ birthday: value })}
           readOnly={readOnly}
+          showYears
+          className="col-span-2"
         />
-        {form.birthday && (
-          <div className="ml-2 mt-7">{birthDateToAge(form.birthday)}</div>
-        )}
-      </div>
-      <GenderPicker
-        gender={form.gender}
-        onChange={(gender) => updateForm({ gender })}
-        inLine
-        readOnly={readOnly}
-      />
+        <GenderPicker
+          gender={form.gender}
+          onChange={(gender) => updateForm({ gender })}
+          inLine
+          readOnly={readOnly}
+          className="col-span-2"
+        />
+      </RowContainer>
     </Form>
   )
 }

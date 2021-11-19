@@ -30,6 +30,9 @@ const ClientModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        client?._id && loggedUser.role === 'dev' ? 'ID: ' + client?._id : null
+      }
     >
       <ClientForm
         client={client}

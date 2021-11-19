@@ -9,8 +9,6 @@ import ZoomImage from '@admincomponents/ZoomImage'
 
 export const SetCard = ({
   set,
-  // productsWithCount,
-  // count = null,
   onClick = () => {},
   onTypeClick = () => {},
   onProductEditClick = null,
@@ -42,8 +40,6 @@ export const SetCard = ({
           </div>
           <ProductsInCard
             productsIdCount={set.productsIdCount}
-            // productsWithCount={productsWithCount}
-            // onClick={onProductClick}
             onEdit={onProductEditClick}
             onFilter={onProductFilterClick}
             onBuy={onProductBuyClick}

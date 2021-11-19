@@ -28,6 +28,9 @@ const UserModal = ({
       onDelete={user?._id && loggedUser.access?.users.delete(user) && onDelete}
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        user?._id && loggedUser.role === 'dev' ? 'ID: ' + user?._id : null
+      }
     >
       <UserForm
         user={user}

@@ -52,6 +52,7 @@ import { useWindowDimensionsTailwind } from '@helpers/useWindowDimensions'
 import formatDateTime from '@helpers/formatDateTime'
 import formatDeliveryAddress from '@helpers/formatDeliveryAddress'
 import getNoun from '@helpers/getNoun'
+import formValidator from '@helpers/formValidator'
 
 {
   /* <FontAwesomeIcon
@@ -1066,7 +1067,7 @@ const OrderForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, ordersSchema)
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
@@ -1094,13 +1095,6 @@ const OrderForm = ({
     } else {
       setErrors(errs)
     }
-  }
-
-  const formValidate = () => {
-    let err = {}
-    // if (!form.email) err.email = 'Email is required'
-    // if (!form.role) err.role = 'Role is required'
-    return err
   }
 
   const operator = ['operator', 'dev', 'admin'].includes(loggedUser.role)
@@ -1164,9 +1158,7 @@ const OrderForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 || compareObjects(form, order)
-      }
+      buttonDisabled={compareObjects(form, order)}
       twoCols={twoCols}
       componentBeforeButton={
         <>

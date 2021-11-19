@@ -22,7 +22,6 @@ const ProductsInCard = ({
   const { products } = useSelector((state) => state)
 
   const productItems = []
-  // let i = 0
   for (const [id, count] of Object.entries(productsIdCount)) {
     productItems.push(({ index }) => {
       const product = products.find((product) => id === product._id)
@@ -85,18 +84,9 @@ const ProductsInCard = ({
               arrow={false}
               nested
             >
-              {/* <div className="flex flex-col px-2 text-sm">
-                <span>{product?.name}</span>
-                <span className="text-xs">
-                  Артикул: {product?.article ? product.article : 'отсутствует'}
-                </span>
-                <span className="text-xs">
-                  В наличии: {product?.count ? product.count : '0'} шт.
-                </span>
-              </div> */}
-              {onEdit && (
+              {onEdit && typeof onEdit(product) === 'function' && (
                 <MenuItem
-                  onClick={() => onEdit(product)}
+                  onClick={() => onEdit(product)()}
                   icon={faPencilAlt}
                   name="Редактировать товар"
                 />

@@ -64,6 +64,7 @@ export const initialState = {
     payType: PAY_TYPES.map(({ value, name }) => {
       return { value, name, checked: true }
     }),
+    sum: [null, null],
   },
 }
 

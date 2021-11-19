@@ -4,7 +4,6 @@ import { faSearch, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import {
   ProductItem,
-  ClientItem,
   PersonaItem,
 } from './forms/forForms/SelectItemsList/ItemCards'
 

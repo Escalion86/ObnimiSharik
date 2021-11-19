@@ -33,6 +33,9 @@ const OrderModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        order?._id && loggedUser.role === 'dev' ? 'ID: ' + order?._id : null
+      }
     >
       <OrderForm
         order={order}

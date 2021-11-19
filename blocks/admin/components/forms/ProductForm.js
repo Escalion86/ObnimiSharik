@@ -14,6 +14,8 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
+import productsSchema from 'schemas/productsSchema'
+import formValidator from '@helpers/formValidator'
 
 const ProductForm = ({
   loggedUser,
@@ -31,6 +33,7 @@ const ProductForm = ({
     description: product.description,
     price: product.price,
     images: product.images,
+    manufacturer: product.manufacturer,
     typesId: product.typesId,
     archive: product.archive,
   })
@@ -73,20 +76,12 @@ const ProductForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, productsSchema)
     if (Object.keys(errs).length === 0) {
       sendForm()
     } else {
       setErrors(errs)
     }
-  }
-
-  const formValidate = () => {
-    let err = {}
-    if (!form.name) err.name = 'Введите название'
-    if (!form.price) err.price = 'Введите сумму'
-    // if (!form.images) err.image = 'Image URL is required'
-    return err
   }
 
   return (
@@ -102,33 +97,44 @@ const ProductForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 ||
-        compareObjects(form, product)
-      }
+      buttonDisabled={compareObjects(form, product)}
       readOnly={readOnly}
     >
-      <Input
-        key="name"
-        label="Название"
-        type="text"
-        maxLength="80"
-        value={form.name}
-        onChange={(name) => updateForm({ name })}
-        required
-        hidden={readOnly}
-      />
-      <Input
-        key="description"
-        label="Описание"
-        type="text"
-        maxLength="600"
-        value={form.description}
-        onChange={(description) => updateForm({ description })}
-        textarea
-        readOnly={readOnly}
-      />
       <RowContainer>
+        <Input
+          key="name"
+          label="Название"
+          type="text"
+          maxLength="80"
+          value={form.name}
+          onChange={(name) => updateForm({ name })}
+          required
+          hidden={readOnly}
+          className="col-span-2"
+        />
+        <Input
+          key="description"
+          label="Описание"
+          type="text"
+          maxLength="600"
+          value={form.description}
+          onChange={(description) => updateForm({ description })}
+          textarea
+          readOnly={readOnly}
+          className="col-span-2"
+        />
+        <Input
+          key="manufacturer"
+          label="Производитель"
+          type="text"
+          maxLength="100"
+          value={form.manufacturer}
+          onChange={(manufacturer) => updateForm({ manufacturer })}
+          className="flex-1"
+          readOnly={readOnly}
+          inLine={readOnly}
+          className="col-span-2"
+        />
         <Input
           key="article"
           label="Артикул"
@@ -148,28 +154,31 @@ const ProductForm = ({
           readOnly={readOnly}
           inLine={readOnly}
         />
+
+        <MultiselectCheckbox
+          title="Типы"
+          options={productTypes.map((type) => {
+            return {
+              name: type.name,
+              value: type._id,
+              checked: form.typesId.includes(type._id),
+            }
+          })}
+          onChange={(data) => {
+            updateForm({ typesId: data.map((type) => type.value) })
+          }}
+          readOnly={readOnly}
+          className="col-span-2"
+        />
+        <InputImages
+          images={form.images}
+          label="Картинки"
+          onChange={(images) => updateForm({ images })}
+          readOnly={readOnly}
+          directory="products"
+          className="col-span-2"
+        />
       </RowContainer>
-      <MultiselectCheckbox
-        title="Типы"
-        options={productTypes.map((type) => {
-          return {
-            name: type.name,
-            value: type._id,
-            checked: form.typesId.includes(type._id),
-          }
-        })}
-        onChange={(data) => {
-          updateForm({ typesId: data.map((type) => type.value) })
-        }}
-        readOnly={readOnly}
-      />
-      <InputImages
-        images={form.images}
-        label="Картинки"
-        onChange={(images) => updateForm({ images })}
-        readOnly={readOnly}
-        directory="products"
-      />
     </Form>
   )
 }

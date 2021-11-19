@@ -14,6 +14,8 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import { getSession } from 'next-auth/react'
+import formValidator from '@helpers/formValidator'
+import devToDoSchema from 'schemas/devToDoSchema'
 
 const DevToDoForm = ({
   loggedUser,
@@ -57,7 +59,7 @@ const DevToDoForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, devToDoSchema)
     if (Object.keys(errs).length === 0) {
       const finishedAt =
         form.status === 'finished' ? new Date().toISOString() : null
@@ -87,13 +89,6 @@ const DevToDoForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.title) err.title = 'title is required'
-    if (!form.description) err.description = 'description is required'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -107,10 +102,7 @@ const DevToDoForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 ||
-        compareObjects(form, devToDo)
-      }
+      buttonDisabled={compareObjects(form, devToDo)}
     >
       <Input
         key="title"

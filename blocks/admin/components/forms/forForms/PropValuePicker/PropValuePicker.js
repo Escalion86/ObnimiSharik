@@ -55,6 +55,7 @@ const PropValuePicker = ({
   readOnly = false,
 }) => {
   if (readOnly) {
+    if (!value && value !== 0) return null
     const itemInArray = valuesArray.find((item) => item.value === value)
     return (
       <div
@@ -103,7 +104,7 @@ const PropValuePicker = ({
           {required && <span className="text-red-700">*</span>}
         </label>
       )}
-      <div className="flex flex-wrap gap-x-2 gap-y-1">
+      <div className="flex flex-wrap py-1 gap-x-2 gap-y-1">
         {valuesArray.map((item) => (
           <PropValueItem
             key={name + item.value}

@@ -34,6 +34,11 @@ const ProductCirculationModal = ({
       }
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
+      subModalText={
+        productCirculation?._id && loggedUser.role === 'dev'
+          ? 'ID: ' + productCirculation?._id
+          : null
+      }
     >
       <ProductCirculationForm
         productCirculation={productCirculation}

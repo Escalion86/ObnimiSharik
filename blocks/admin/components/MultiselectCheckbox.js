@@ -104,11 +104,11 @@ const MultiselectCheckbox = ({
         className={
           'flex-1 bg-gray-200 border border-gray-700 rounded-lg overflow-hidden'
         }
-        style={{ maxHeight: (data.length >= 8 ? 216 : data.length * 27) + 8 }}
+        style={{ maxHeight: (data.length >= 8 ? 216 : data.length * 25) + 7 }}
       >
         <div
           className={!noScroll ? ' overflow-y-scroll' : ''}
-          style={{ maxHeight: (data.length >= 8 ? 216 : data.length * 27) + 8 }}
+          style={{ maxHeight: (data.length >= 8 ? 208 : data.length * 25) + 7 }}
         >
           <div className={'px-2 py-1 rounded-lg'}>
             {data.map((item, index) => (

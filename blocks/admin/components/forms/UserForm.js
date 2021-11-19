@@ -17,6 +17,8 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import birthDateToAge from '@helpers/birthDateToAge'
 import InputAvatar from './forForms/InputAvatar'
+import usersSchema from 'schemas/usersSchema'
+import formValidator from '@helpers/formValidator'
 
 const UserForm = ({
   loggedUser,
@@ -56,7 +58,7 @@ const UserForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, usersSchema)
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
@@ -84,14 +86,6 @@ const UserForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.email) err.email = 'Введите Email'
-    if (!form.name) err.name = 'Введите Имя'
-    if (!form.role) err.role = 'Укажите должность'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -102,9 +96,7 @@ const UserForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 || compareObjects(form, user)
-      }
+      buttonDisabled={compareObjects(form, user)}
       readOnly={readOnly}
     >
       <InputAvatar

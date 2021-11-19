@@ -5,14 +5,14 @@ const formProductCountObj = (productCirculations) => {
     productCirculations.forEach((productCirculation) => {
       if (productCirculation.productId in countArray)
         if (productCirculation.purchase) {
-          countArray[productCirculation.productId] -= productCirculation.count
-        } else {
           countArray[productCirculation.productId] += productCirculation.count
+        } else {
+          countArray[productCirculation.productId] -= productCirculation.count
         }
       else if (productCirculation.purchase) {
-        countArray[productCirculation.productId] = -productCirculation.count
-      } else {
         countArray[productCirculation.productId] = productCirculation.count
+      } else {
+        countArray[productCirculation.productId] = -productCirculation.count
       }
     })
 
