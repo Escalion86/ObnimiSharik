@@ -1,6 +1,7 @@
 import emailValidator from './emailValidator'
 
 const formValidator = (form, schema) => {
+  if (!form || !schema) return null
   let err = {}
   for (const [key, value] of Object.entries(schema)) {
     if (schema[key].required && schema[key].required[0]) {
@@ -8,7 +9,8 @@ const formValidator = (form, schema) => {
         (schema[key].type === String && !form[key]) ||
         (schema[key].type === Number &&
           !form[key] &&
-          (form[key] !== schema[key].default || schema[key].default === null))
+          // form[key] !== schema[key].default &&
+          (schema[key].default === null || form[key] !== 0))
       ) {
         err[key] = schema[key].required[1]
       }
