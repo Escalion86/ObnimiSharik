@@ -15,7 +15,7 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import formValidator from '@helpers/formValidator'
-import clientsSchema from 'schemas/clientsSchema'
+import clientsSchema from '@schemas/clientsSchema'
 
 const ClientForm = ({
   loggedUser,

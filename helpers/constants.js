@@ -88,7 +88,7 @@ export const DEFAULT_DEVTODO = {
   images: [],
   userId: null,
   status: 'created',
-  priority: 0,
+  priority: null,
   finishedAt: null,
 }
 

@@ -19,6 +19,8 @@ import findDataWithId from '@helpers/findDataWithId'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
 import PropValuePicker from './forForms/PropValuePicker/PropValuePicker'
+import productCirculationsSchema from 'schemas/productCirculationsSchema'
+import formValidator from '@helpers/formValidator'
 
 const ProductCirculationForm = ({
   loggedUser,
@@ -56,7 +58,7 @@ const ProductCirculationForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, productCirculationsSchema)
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
@@ -100,17 +102,6 @@ const ProductCirculationForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.productId) err.productId = 'Введите товар'
-    if (!form.count || form.count == '0') err.count = 'Введите количество'
-    if (!form.price || form.price == '0') err.count = 'Введите стоимость'
-    if (!form.purchasedAt) err.purchasedAt = 'Введите дату закупа/продажи'
-
-    // if (!form.images) err.image = 'Image URL is required'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -121,10 +112,7 @@ const ProductCirculationForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 ||
-        compareObjects(form, productCirculation)
-      }
+      buttonDisabled={compareObjects(form, productCirculation)}
       readOnly={readOnly}
     >
       <SelectProduct
@@ -139,7 +127,7 @@ const ProductCirculationForm = ({
           label="Стоимость всего"
           value={form.price}
           onChange={(price) => updateForm({ price })}
-          required
+          // required
           readOnly={readOnly}
           // className="w-40"
         />

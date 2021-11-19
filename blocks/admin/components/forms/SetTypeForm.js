@@ -9,6 +9,8 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import InputImage from './forForms/InputImage'
+import setTypesSchema from 'schemas/setTypesSchema'
+import formValidator from '@helpers/formValidator'
 
 const SetTypeForm = ({
   loggedUser,
@@ -37,7 +39,7 @@ const SetTypeForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, setTypesSchema)
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
@@ -65,12 +67,6 @@ const SetTypeForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.name) err.name = 'Введите название'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -84,10 +80,7 @@ const SetTypeForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 ||
-        compareObjects(form, setType)
-      }
+      buttonDisabled={compareObjects(form, setType)}
       readOnly={readOnly}
     >
       {!readOnly && (

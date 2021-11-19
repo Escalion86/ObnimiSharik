@@ -55,10 +55,7 @@ const Form = ({
         {!readOnly && (
           <div className="flex justify-center gap-2">
             <Button
-              onClick={() => {
-                handleSubmit()
-                onClose()
-              }}
+              onClick={handleSubmit}
               name={buttonName}
               small
               inverse

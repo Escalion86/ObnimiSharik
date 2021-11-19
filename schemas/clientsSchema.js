@@ -20,7 +20,10 @@ const clientsSchema = {
   },
   phone: {
     type: Number,
-    required: [true, 'Введите номер телефона'],
+    required: [
+      true,
+      'Введите номер телефона. Да это обязательно и не спрашивай почему!',
+    ],
     default: null,
     min: [
       10000000000,

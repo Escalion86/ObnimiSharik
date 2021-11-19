@@ -8,6 +8,8 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
+import ordersSchema from 'schemas/ordersSchema'
+import formValidator from '@helpers/formValidator'
 
 const InvitationForm = ({
   loggedUser,
@@ -37,7 +39,7 @@ const InvitationForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, ordersSchema)
     const formEmail = form.email.toLowerCase()
     if (Object.keys(errs).length === 0) {
       forNew
@@ -66,13 +68,6 @@ const InvitationForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.email) err.email = 'Email is required'
-    if (!form.role) err.role = 'Role is required'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -83,10 +78,7 @@ const InvitationForm = ({
       buttonName={forNew ? 'Создать и отправить' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 ||
-        compareObjects(form, invitation)
-      }
+      buttonDisabled={compareObjects(form, invitation)}
       readOnly={readOnly}
     >
       <Input

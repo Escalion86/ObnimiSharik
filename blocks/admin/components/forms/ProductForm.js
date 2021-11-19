@@ -14,6 +14,8 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
+import productsSchema from 'schemas/productsSchema'
+import formValidator from '@helpers/formValidator'
 
 const ProductForm = ({
   loggedUser,
@@ -74,20 +76,12 @@ const ProductForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, productsSchema)
     if (Object.keys(errs).length === 0) {
       sendForm()
     } else {
       setErrors(errs)
     }
-  }
-
-  const formValidate = () => {
-    let err = {}
-    if (!form.name) err.name = 'Введите название'
-    if (!form.price) err.price = 'Введите сумму'
-    // if (!form.images) err.image = 'Image URL is required'
-    return err
   }
 
   return (
@@ -103,10 +97,7 @@ const ProductForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 ||
-        compareObjects(form, product)
-      }
+      buttonDisabled={compareObjects(form, product)}
       readOnly={readOnly}
     >
       <RowContainer>
