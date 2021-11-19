@@ -14,6 +14,8 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
+import formValidator from '@helpers/formValidator'
+import clientsSchema from 'schemas/clientsSchema'
 
 const ClientForm = ({
   loggedUser,
@@ -51,7 +53,7 @@ const ClientForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, clientsSchema)
     if (Object.keys(errs).length === 0) {
       forNew
         ? postData(
@@ -79,14 +81,6 @@ const ClientForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.name) err.name = 'Name is required'
-    if (!form.phone) err.phone = 'Phone is required'
-    else if (form.phone.length <= 11) err.phone = 'Wrong phone'
-    return err
-  }
-
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -97,9 +91,7 @@ const ClientForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 || compareObjects(form, client)
-      }
+      buttonDisabled={compareObjects(form, client)}
       readOnly={readOnly}
     >
       <RowContainer>
@@ -159,6 +151,7 @@ const ClientForm = ({
           maxLength="80"
           value={form.telegram}
           onChange={(telegram) => updateForm({ telegram })}
+          prefix="@"
           readOnly={readOnly}
           link={form.telegram ? 'https://t.me/' + form.telegram : null}
         />
