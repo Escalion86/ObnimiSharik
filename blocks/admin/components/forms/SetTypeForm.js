@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DEFAULT_SET_TYPE } from '@helpers/constants'
 
@@ -18,6 +18,7 @@ const SetTypeForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -66,6 +67,11 @@ const SetTypeForm = ({
       setErrors(errs)
     }
   }
+  const isFormChanged = !compareObjects(form, setType, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
 
   return (
     <Form
@@ -80,7 +86,7 @@ const SetTypeForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, setType)}
+      buttonDisabled={!isFormChanged}
       readOnly={readOnly}
     >
       {!readOnly && (

@@ -10,6 +10,7 @@ const ProductModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.products.read(product))
@@ -30,6 +31,7 @@ const ProductModal = ({
       editMode={canEdit ? editMode : null}
       setEditMode={canEdit ? setEditMode : null}
       subModalText={loggedUser.role === 'dev' ? 'ID: ' + product?._id : null}
+      modals={modals}
     >
       <ProductForm
         product={product}

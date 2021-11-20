@@ -10,6 +10,7 @@ const DevToDoModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.devToDo.read(devToDo))
@@ -33,6 +34,7 @@ const DevToDoModal = ({
       subModalText={
         devToDo?._id && loggedUser.role === 'dev' ? 'ID: ' + devToDo?._id : null
       }
+      modals={modals}
     >
       <DevToDoForm
         devToDo={devToDo}

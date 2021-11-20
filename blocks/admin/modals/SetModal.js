@@ -10,6 +10,7 @@ const SetModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.sets.read(set))
@@ -31,6 +32,7 @@ const SetModal = ({
       subModalText={
         set?._id && loggedUser.role === 'dev' ? 'ID: ' + set?._id : null
       }
+      modals={modals}
     >
       <SetForm
         set={set}

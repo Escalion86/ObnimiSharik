@@ -10,6 +10,7 @@ const OrderModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.orders.read(order))
@@ -36,6 +37,7 @@ const OrderModal = ({
       subModalText={
         order?._id && loggedUser.role === 'dev' ? 'ID: ' + order?._id : null
       }
+      modals={modals}
     >
       <OrderForm
         order={order}

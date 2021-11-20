@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DEFAULT_PAYMENT, ROLES } from '@helpers/constants'
 
@@ -24,6 +24,7 @@ const PaymentForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -78,6 +79,12 @@ const PaymentForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, payment, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -91,7 +98,7 @@ const PaymentForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, payment)}
+      buttonDisabled={!isFormChanged}
       readOnly={readOnly}
     >
       <SelectClient

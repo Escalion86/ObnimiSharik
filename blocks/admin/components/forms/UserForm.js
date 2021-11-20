@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ROLES, DEFAULT_USER } from '@helpers/constants'
 
@@ -26,6 +26,7 @@ const UserForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -86,6 +87,12 @@ const UserForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, user, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -96,7 +103,7 @@ const UserForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, user)}
+      buttonDisabled={!isFormChanged}
       readOnly={readOnly}
     >
       <InputAvatar

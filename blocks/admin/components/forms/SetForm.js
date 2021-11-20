@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DEFAULT_SET } from '@helpers/constants'
 
@@ -30,6 +30,7 @@ const SetForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -95,6 +96,12 @@ const SetForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, set, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -108,7 +115,7 @@ const SetForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, set)}
+      buttonDisabled={!isFormChanged}
       twoCols={true}
       readOnly={readOnly}
     >

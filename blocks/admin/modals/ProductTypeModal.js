@@ -10,6 +10,7 @@ const ProductTypeModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.productTypes.read(productType))
@@ -38,6 +39,7 @@ const ProductTypeModal = ({
           ? 'ID: ' + productType?._id
           : null
       }
+      modals={modals}
     >
       <ProductTypeForm
         productType={productType}

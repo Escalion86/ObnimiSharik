@@ -873,6 +873,7 @@ const OrderForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -1145,6 +1146,12 @@ const OrderForm = ({
       (Object.keys(form.setsCount).length > 1 || form.setsCount[0].set))
   )
 
+  const isFormChanged = !compareObjects(form, order, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -1158,7 +1165,7 @@ const OrderForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, order)}
+      buttonDisabled={!isFormChanged}
       twoCols={twoCols}
       componentBeforeButton={
         <>

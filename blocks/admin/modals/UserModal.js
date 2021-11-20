@@ -10,6 +10,7 @@ const UserModal = ({
   afterConfirm = () => {},
   onDelete,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.users.read(user))
@@ -31,6 +32,7 @@ const UserModal = ({
       subModalText={
         user?._id && loggedUser.role === 'dev' ? 'ID: ' + user?._id : null
       }
+      modals={modals}
     >
       <UserForm
         user={user}

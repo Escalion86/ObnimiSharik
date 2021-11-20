@@ -10,6 +10,7 @@ const PaymentModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.payments.read(payment))
@@ -33,6 +34,7 @@ const PaymentModal = ({
       subModalText={
         payment?._id && loggedUser.role === 'dev' ? 'ID: ' + payment?._id : null
       }
+      modals={modals}
     >
       <PaymentForm
         payment={payment}

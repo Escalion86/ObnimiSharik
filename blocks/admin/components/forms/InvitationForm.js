@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DEFAULT_INVITATION, ROLES } from '@helpers/constants'
 
@@ -17,6 +17,7 @@ const InvitationForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -68,6 +69,12 @@ const InvitationForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, invitation, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -78,7 +85,7 @@ const InvitationForm = ({
       buttonName={forNew ? 'Создать и отправить' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, invitation)}
+      buttonDisabled={!isFormChanged}
       readOnly={readOnly}
     >
       <Input

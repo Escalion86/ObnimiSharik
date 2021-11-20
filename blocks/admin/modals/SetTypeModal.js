@@ -10,6 +10,7 @@ const SetTypeModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.setTypes.read(setType))
@@ -33,6 +34,7 @@ const SetTypeModal = ({
       subModalText={
         setType?._id && loggedUser.role === 'dev' ? 'ID: ' + setType?._id : null
       }
+      modals={modals}
     >
       <SetTypeForm
         setType={setType}

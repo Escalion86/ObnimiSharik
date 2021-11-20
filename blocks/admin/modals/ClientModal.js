@@ -10,6 +10,7 @@ const ClientModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.clients.read(client))
@@ -33,6 +34,7 @@ const ClientModal = ({
       subModalText={
         client?._id && loggedUser.role === 'dev' ? 'ID: ' + client?._id : null
       }
+      modals={modals}
     >
       <ClientForm
         client={client}

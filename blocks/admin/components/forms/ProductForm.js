@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DEFAULT_PRODUCT } from '@helpers/constants'
 
@@ -23,6 +23,7 @@ const ProductForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -84,6 +85,12 @@ const ProductForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, product, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -97,7 +104,7 @@ const ProductForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, product)}
+      buttonDisabled={!isFormChanged}
       readOnly={readOnly}
     >
       <RowContainer>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DEFAULT_PRODUCT_CIRCULATION, ORDER_PURCHASE } from '@helpers/constants'
 
@@ -28,6 +28,7 @@ const ProductCirculationForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -102,6 +103,12 @@ const ProductCirculationForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, productCirculation, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -112,7 +119,7 @@ const ProductCirculationForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, productCirculation)}
+      buttonDisabled={!isFormChanged}
       readOnly={readOnly}
     >
       <SelectProduct
