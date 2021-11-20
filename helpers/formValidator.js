@@ -10,7 +10,8 @@ const formValidator = (form, schema) => {
         (schema[key].type === Number &&
           !form[key] &&
           // form[key] !== schema[key].default &&
-          (schema[key].default === null || form[key] !== 0))
+          schema[key].default === null &&
+          form[key] !== 0)
       ) {
         err[key] = schema[key].required[1]
       }
