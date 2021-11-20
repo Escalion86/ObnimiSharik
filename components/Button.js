@@ -46,7 +46,8 @@ const Button = ({
     <button
       onClick={onClick}
       className={
-        (small ? 'text-lg h-10 py-1 px-7 ' : 'text-xl h-12 py-2 px-8 ') +
+        'duration-300' +
+        (small ? ' text-lg h-10 py-1 px-7 ' : ' text-xl h-12 py-2 px-8 ') +
         colorBtn +
         (animation ? ' animate-pulse-light' : '') +
         (className ? ' ' + className : '') +
