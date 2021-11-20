@@ -33,7 +33,7 @@ const SetForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     article: set.article,
@@ -67,21 +67,23 @@ const SetForm = ({
   const handleSubmit = (e) => {
     e?.preventDefault()
     const errs = formValidator(form, setsSchema)
-    // Убираем невыбранные товары и с количеством 0
-    const productsIdCount = {}
-    for (const [id, count] of Object.entries(form.productsIdCount)) {
-      if (id !== '?' && count > 0) productsIdCount[id] = count
-    }
-
-    const fixedForm = { ...form, productsIdCount }
 
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
+      // Убираем невыбранные товары и с количеством 0
+      const productsIdCount = {}
+      for (const [id, count] of Object.entries(form.productsIdCount)) {
+        if (id !== '?' && count > 0) productsIdCount[id] = count
+      }
+      const fixedForm = { ...form, productsIdCount }
+
       forNew
         ? postData(
             '/api/sets',
             fixedForm,
             afterConfirmUpd,
             'Набор "' + form.name + '" создан',
+            () => setSubmiting(false),
             'Ошибка при создании набора "' + form.name + '"'
           )
         : putData(
@@ -89,6 +91,7 @@ const SetForm = ({
             fixedForm,
             afterConfirmUpd,
             'Набор "' + form.name + '" изменен',
+            () => setSubmiting(false),
             'Ошибка при редактировании набора "' + form.name + '"'
           )
     } else {
@@ -113,11 +116,11 @@ const SetForm = ({
           : 'Набор: ' + form.name
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       twoCols={true}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <FormColumn>
         <Input

@@ -27,7 +27,7 @@ const PaymentForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     number: payment.number,
@@ -53,6 +53,7 @@ const PaymentForm = ({
     e?.preventDefault()
     const errs = formValidator(form, paymentsSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       forNew
         ? postData(
             '/api/payments',
@@ -62,6 +63,7 @@ const PaymentForm = ({
               onClose()
             },
             'Новая транзакция создана',
+            () => setSubmiting(false),
             'Ошибка при создании транзакции'
           )
         : putData(
@@ -72,6 +74,7 @@ const PaymentForm = ({
               onClose()
             },
             'Транзакция №' + form.number + ' изменена',
+            () => setSubmiting(false),
             'Ошибка при редактировании транзакции №' + form.number
           )
     } else {
@@ -96,10 +99,10 @@ const PaymentForm = ({
           : 'Транзакция №' + form.number
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <SelectClient
         onChange={(client) => updateForm({ clientId: client._id })}

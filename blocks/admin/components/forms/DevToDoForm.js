@@ -26,7 +26,7 @@ const DevToDoForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     number: devToDo.number,
@@ -62,6 +62,7 @@ const DevToDoForm = ({
     e?.preventDefault()
     const errs = formValidator(form, devToDoSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       const finishedAt =
         form.status === 'finished' ? new Date().toISOString() : null
       forNew
@@ -73,6 +74,7 @@ const DevToDoForm = ({
               onClose()
             },
             'Новая заявка разработчику создана',
+            () => setSubmiting(false),
             'Ошибка при создании заявки разработчику'
           )
         : putData(
@@ -83,6 +85,7 @@ const DevToDoForm = ({
               onClose()
             },
             'Заявка разработчику №' + form.number + ' изменена',
+            () => setSubmiting(false),
             'Ошибка при редактировании заявки разработчику №' + form.number
           )
     } else {
@@ -107,10 +110,10 @@ const DevToDoForm = ({
           : 'Заявка разработчку №' + form.number
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <Input
         key="title"

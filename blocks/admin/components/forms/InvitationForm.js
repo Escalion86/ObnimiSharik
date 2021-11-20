@@ -20,7 +20,7 @@ const InvitationForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     email: invitation.email,
@@ -43,6 +43,7 @@ const InvitationForm = ({
     const errs = formValidator(form, ordersSchema)
     const formEmail = form.email.toLowerCase()
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       forNew
         ? postData(
             '/api/invitations',
@@ -52,6 +53,7 @@ const InvitationForm = ({
               onClose()
             },
             'Приглашение для "' + formEmail + '" создано и отправлно',
+            () => setSubmiting(false),
             'Ошибка при создании пришлашения для "' + formEmail + '"'
           )
         : putData(
@@ -62,6 +64,7 @@ const InvitationForm = ({
               onClose()
             },
             'Приглашение для "' + formEmail + '" изменено',
+            () => setSubmiting(false),
             'Ошибка при редактировании приглашения для "' + formEmail + '"'
           )
     } else {
@@ -83,10 +86,10 @@ const InvitationForm = ({
         ' приглашения'
       }
       buttonName={forNew ? 'Создать и отправить' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <Input
         key="email"

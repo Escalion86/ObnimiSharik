@@ -26,7 +26,7 @@ const ProductForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     article: product.article,
@@ -64,6 +64,7 @@ const ProductForm = ({
           form,
           afterConfirmUpd,
           'Товар "' + form.name + '" создан',
+          () => setSubmiting(false),
           'Ошибка при создании товара "' + form.name + '"'
         )
       : putData(
@@ -71,6 +72,7 @@ const ProductForm = ({
           form,
           afterConfirmUpd,
           'Товар "' + form.name + '" изменен',
+          () => setSubmiting(false),
           'Ошибка при редактировании товара "' + form.name + '"'
         )
   }
@@ -79,6 +81,7 @@ const ProductForm = ({
     e?.preventDefault()
     const errs = formValidator(form, productsSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       sendForm()
     } else {
       setErrors(errs)
@@ -102,10 +105,10 @@ const ProductForm = ({
           : 'Товар: ' + form.name
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <RowContainer>
         <Input

@@ -395,6 +395,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
                 )
               ),
             'Товар "' + product.name + '" удален',
+            null,
             'Ошибка при удалении товара "' + product.name + '"'
           )
           if (onConfirm) onConfirm()
@@ -416,6 +417,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
                 )
               ),
             'Набор "' + set.name + '" удален',
+            null,
             'Ошибка при удалении набора "' + set.name + '"'
           )
           if (onConfirm) onConfirm()
@@ -435,6 +437,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
                 )
               ),
             'Тип товара "' + productType.name + '" удален',
+            null,
             'Ошибка при удалении типа товара "' + productType.name + '"'
           )
           if (onConfirm) onConfirm()
@@ -452,6 +455,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
                 dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
               ),
             'Тип набора "' + setType.name + '" удален',
+            null,
             'Ошибка при удалении типа набора "' + setType.name + '"'
           )
           if (onConfirm) onConfirm()
@@ -466,6 +470,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             '/api/users/' + user._id,
             () => fetchingUsers((result) => dispatch(setUsers(result))),
             'Пользователь "' + user.name + '" удален',
+            null,
             'Ошибка при удалении пользователя "' + user.name + '"'
           )
           if (onConfirm) onConfirm()
@@ -483,6 +488,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             () =>
               fetchingInvitations((result) => dispatch(setInvitations(result))),
             'Приглашение для "' + invitation.email + '" удалено',
+            null,
             'Ошибка при удалении приглаения для "' + invitation.email + '"'
           )
           if (onConfirm) onConfirm()
@@ -514,6 +520,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
               ') "' +
               product.name +
               '" удалено',
+            null,
             'Ошибка при удалении движения товара (' +
               product.article +
               ') "' +
@@ -533,6 +540,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             '/api/clients/' + client._id,
             () => fetchingClients((result) => dispatch(setClients(result))),
             'Клиент "' + client.name + '" удален',
+            null,
             'Ошибка при удалении клиента "' + client.name + '"'
           )
           if (onConfirm) onConfirm()
@@ -547,6 +555,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             '/api/devtodo/' + devToDo._id,
             () => fetchingDevToDo((result) => dispatch(setDevToDo(result))),
             'Заявка № ' + devToDo.number + '" удалена',
+            null,
             'Ошибка при удалении заявки № ' + devToDo.number + '"'
           )
           if (onConfirm) onConfirm()
@@ -561,6 +570,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             '/api/districts/' + district._id,
             () => fetchingDistricts((result) => dispatch(setDistricts(result))),
             'Район "' + district.name + '" удален',
+            null,
             'Ошибка при удалении района "' + district.name + '"'
           )
           if (onConfirm) onConfirm()
@@ -575,6 +585,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             '/api/orders/' + order._id,
             () => fetchingOrders((result) => dispatch(setOrders(result))),
             'Заказ №' + order.number + '" удален',
+            null,
             'Ошибка при удалении заказа №' + order.number
           )
           if (onConfirm) onConfirm()
@@ -589,6 +600,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             '/api/payments/' + payment._id,
             () => fetchingPayments((result) => dispatch(setPayments(result))),
             'Транзакция №' + payment.number + '" удалена',
+            null,
             'Ошибка при удалении транзакции №' + payment.number
           )
           if (onConfirm) onConfirm()

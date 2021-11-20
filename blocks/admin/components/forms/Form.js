@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@components/Button'
+import IconButton from '@components/IconButton'
+import { faCheck, faCog } from '@fortawesome/free-solid-svg-icons'
 
 const Form = ({
   handleSubmit = () => {},
   title = null,
-  message = '',
   errors = {},
   children,
   buttonName = 'Создать',
@@ -14,7 +15,9 @@ const Form = ({
   onClose = () => {},
   componentBeforeButton = null,
   readOnly = false,
+  submiting = false,
 }) => {
+  // const [submiting, setSubmiting] = useState(false)
   let childrenWithProps = children
   if (twoCols && children.length) {
     const updatedChildren = []
@@ -53,32 +56,47 @@ const Form = ({
         </div>
         {componentBeforeButton}
         {!readOnly && (
-          <div className="flex justify-center gap-2">
-            <Button
-              onClick={() => {
-                handleSubmit()
-                onClose()
-              }}
-              name={buttonName}
-              small
-              inverse
-              disabled={buttonDisabled}
-              className="flex-1 max-w-md"
-            />
-            {cancelButton && (
-              <Button
-                onClick={onClose}
-                name="Отмена"
+          <>
+            <div className="flex justify-center gap-2">
+              {/* <Button
+                onClick={handleSubmit}
+                name={buttonName}
                 small
                 inverse
-                type="cancel"
+                disabled={buttonDisabled}
                 className="flex-1 max-w-md"
+              /> */}
+              <IconButton
+                name={buttonName}
+                onClick={
+                  !submiting
+                    ? (e) => {
+                        // setSubmiting(true)
+                        handleSubmit(e)
+                      }
+                    : null
+                }
+                icon={faCheck}
+                className="flex-1 max-w-md"
+                disabled={buttonDisabled}
+                loading={submiting}
+                inverse
+                // readOnly={readOnly}
               />
-            )}
-          </div>
+              {cancelButton && (
+                <Button
+                  onClick={onClose}
+                  name="Отмена"
+                  small
+                  inverse
+                  type="cancel"
+                  className="flex-1 max-w-md"
+                />
+              )}
+            </div>
+          </>
         )}
       </div>
-      <p>{message}</p>
       <div>
         {Object.keys(errors).map((err, index) => (
           <li className="text-red-700" key={index}>

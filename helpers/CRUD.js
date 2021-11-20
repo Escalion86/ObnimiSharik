@@ -6,8 +6,9 @@ const contentType = 'application/json'
 export const putData = async (
   url,
   form,
-  callback = null,
+  callbackOnSuccess = null,
   toastOnSuccess = null,
+  callbackOnError = null,
   toastOnError = null
 ) => {
   // const { id } = router.query
@@ -29,11 +30,12 @@ export const putData = async (
     const { data } = await res.json()
 
     mutate(url, data, false) // Update the local data without a revalidation
-    if (callback) callback(data)
+    if (callbackOnSuccess) callbackOnSuccess(data)
     if (toastOnSuccess) toasts.success(toastOnSuccess)
   } catch (error) {
     console.log('Failed to update (PUT) on ' + url)
     console.log(error)
+    if (callbackOnError) callbackOnError(error)
     if (toastOnError) toasts.error(toastOnError)
   }
 }
@@ -42,8 +44,9 @@ export const putData = async (
 export const postData = async (
   url,
   form,
-  callback = null,
+  callbackOnSuccess = null,
   toastOnSuccess = null,
+  callbackOnError = null,
   toastOnError = null
 ) => {
   try {
@@ -63,19 +66,21 @@ export const postData = async (
     const { data } = await res.json()
     // mutate(url, data, false)
     // console.log(`data`, data)
-    if (callback) callback(data)
+    if (callbackOnSuccess) callbackOnSuccess(data)
     if (toastOnSuccess) toasts.success(toastOnSuccess)
   } catch (error) {
     console.log('Failed to add (POST) on ' + url)
     console.log(error)
+    if (callbackOnError) callbackOnError(error)
     if (toastOnError) toasts.error(toastOnError)
   }
 }
 
 export const deleteData = async (
   url,
-  callback = null,
+  callbackOnSuccess = null,
   toastOnSuccess = null,
+  callbackOnError = null,
   toastOnError = null
   // params = {}
 ) => {
@@ -95,11 +100,12 @@ export const deleteData = async (
     }
     const { data } = await res.json()
     // mutate(url, data, false)
-    if (callback) callback(data)
+    if (callbackOnSuccess) callbackOnSuccess(data)
     if (toastOnSuccess) toasts.success(toastOnSuccess)
   } catch (error) {
     console.log('Failed to delete on ' + url)
     console.log(error)
+    if (callbackOnError) callbackOnError(error)
     if (toastOnError) toasts.error(toastOnError)
   }
 }

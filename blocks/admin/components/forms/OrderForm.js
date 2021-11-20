@@ -877,7 +877,7 @@ const OrderForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     number: order.number,
@@ -1071,6 +1071,7 @@ const OrderForm = ({
     e?.preventDefault()
     const errs = formValidator(form, ordersSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       forNew
         ? postData(
             '/api/orders',
@@ -1081,6 +1082,7 @@ const OrderForm = ({
               onClose()
             },
             'Новый Заказ создан',
+            () => setSubmiting(false),
             'Ошибка при создании заказа для'
           )
         : putData(
@@ -1092,6 +1094,7 @@ const OrderForm = ({
               onClose()
             },
             'Заказ №' + form.number + ' изменен',
+            () => setSubmiting(false),
             'Ошибка при редактировании заказа №' + form.number
           )
     } else {
@@ -1164,7 +1167,6 @@ const OrderForm = ({
           : 'Заказ №' + form.number
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       twoCols={twoCols}
@@ -1222,6 +1224,7 @@ const OrderForm = ({
         </>
       }
       readOnly={readOnly}
+      submiting={submiting}
     >
       <FormMenu
         twoCols={twoCols}

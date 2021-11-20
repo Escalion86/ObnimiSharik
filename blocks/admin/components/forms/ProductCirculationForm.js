@@ -94,7 +94,7 @@ const ProductCirculationForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     productId: productCirculation.productId,
@@ -124,6 +124,7 @@ const ProductCirculationForm = ({
     e?.preventDefault()
     const errs = formValidator(form, productCirculationsSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       forNew
         ? postData(
             '/api/productcirculations',
@@ -137,6 +138,7 @@ const ProductCirculationForm = ({
               ') "' +
               product.name +
               '" создано',
+            () => setSubmiting(false),
             'Ошибка при создании движения товара (' +
               product.article +
               ') "' +
@@ -155,6 +157,7 @@ const ProductCirculationForm = ({
               ') "' +
               product.name +
               '" изменено',
+            () => setSubmiting(false),
             'Ошибка при редактировании движения товара (' +
               product.article +
               ') "' +
@@ -183,10 +186,10 @@ const ProductCirculationForm = ({
           : 'Редактирование ' + (form.purchase ? 'пополнения' : 'расхода')
       } склада`}
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <SelectProduct
         onChange={(product) => updateForm({ productId: product._id })}

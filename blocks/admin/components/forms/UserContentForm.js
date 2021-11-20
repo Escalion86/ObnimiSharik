@@ -25,7 +25,7 @@ const UserContentForm = ({
   onClose = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     _id: loggedUser._id,
@@ -47,6 +47,7 @@ const UserContentForm = ({
     e?.preventDefault()
     const errs = formValidator(form, usersSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       putData(
         `/api/users/${loggedUser._id}`,
         form,
@@ -55,6 +56,7 @@ const UserContentForm = ({
           onClose()
         },
         'Данные учетной записи обновлены',
+        () => setSubmiting(false),
         'Ошибка при обновлении данных учетной записи'
       )
     } else {
@@ -72,9 +74,9 @@ const UserContentForm = ({
     <Form
       handleSubmit={handleSubmit}
       buttonName="Применить изменения"
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
+      submiting={submiting}
     >
       <div className="flex">
         <div className="w-1/4 min-w-24 max-w-40">Должность</div>

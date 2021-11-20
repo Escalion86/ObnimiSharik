@@ -21,7 +21,7 @@ const SetTypeForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
   const [form, setForm] = useState({
     name: setType.name,
@@ -42,6 +42,7 @@ const SetTypeForm = ({
     e?.preventDefault()
     const errs = formValidator(form, setTypesSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       forNew
         ? postData(
             '/api/settypes',
@@ -51,6 +52,7 @@ const SetTypeForm = ({
               onClose()
             },
             'Тип набора "' + form.name + '" создан',
+            () => setSubmiting(false),
             'Ошибка при создании типа набора "' + form.name + '"'
           )
         : putData(
@@ -61,6 +63,7 @@ const SetTypeForm = ({
               onClose()
             },
             'Тип набора "' + form.name + '" изменен',
+            () => setSubmiting(false),
             'Ошибка при редактировании типа набора "' + form.name + '"'
           )
     } else {
@@ -84,10 +87,10 @@ const SetTypeForm = ({
           : 'Тип набора: ' + setType.name
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       {!readOnly && (
         <Input
