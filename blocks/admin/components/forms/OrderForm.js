@@ -879,7 +879,7 @@ const OrderForm = ({
   const [errors, setErrors] = useState({})
   const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     number: order.number,
     clientId: order.clientId,
     productsCount: order.productsCount,
@@ -892,12 +892,14 @@ const OrderForm = ({
     deliveryPrice: order.deliveryPrice,
     deliveryPickup: order.deliveryPickup,
     deliveryAddress: order.deliveryAddress,
-    deliveryDateFrom: order.deliveryDateFrom,
-    deliveryDateTo: order.deliveryDateTo,
+    deliveryDateFrom: order.deliveryDateFrom ?? new Date().toISOString(),
+    deliveryDateTo: order.deliveryDateTo ?? new Date().toISOString(),
     deliverId: order.deliverId,
     aerodesignerId: order.aerodesignerId,
     operatorId: order.operatorId,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -1150,7 +1152,7 @@ const OrderForm = ({
       (Object.keys(form.setsCount).length > 1 || form.setsCount[0].set))
   )
 
-  const isFormChanged = !compareObjects(form, order, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)

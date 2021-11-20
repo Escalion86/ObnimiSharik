@@ -29,15 +29,17 @@ const PaymentForm = ({
   const [errors, setErrors] = useState({})
   const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     number: payment.number,
     clientId: payment.clientId,
     orderId: payment.orderId,
     payType: payment.payType,
     sum: payment.sum,
     status: payment.status,
-    payAt: payment.payAt,
-  })
+    payAt: payment.payAt ?? new Date().toISOString(),
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -82,7 +84,7 @@ const PaymentForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, payment, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)

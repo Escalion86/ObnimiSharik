@@ -23,10 +23,12 @@ const ProductTypeForm = ({
   const [errors, setErrors] = useState({})
   const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     name: productType.name,
     image: productType.image,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -71,7 +73,7 @@ const ProductTypeForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, productType, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)

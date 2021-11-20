@@ -96,15 +96,17 @@ const ProductCirculationForm = ({
   const [errors, setErrors] = useState({})
   const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     productId: productCirculation.productId,
     count: productCirculation.count,
     price: productCirculation.price,
     orderId: productCirculation.orderId,
     purchase: productCirculation.purchase,
-    purchasedAt: productCirculation.purchasedAt,
+    purchasedAt: productCirculation.purchasedAt ?? new Date().toISOString(),
     defective: productCirculation.defective,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -169,7 +171,7 @@ const ProductCirculationForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, productCirculation, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)
@@ -205,41 +207,6 @@ const ProductCirculationForm = ({
         onChangePrice={(price) => updateForm({ price })}
         onChangeCount={(count) => updateForm({ count })}
       />
-      {/* <div className="flex flex-wrap justify-between gap-x-2">
-        <PriceInput
-          label="Стоимость всего"
-          value={form.price}
-          onChange={(price) => updateForm({ price })}
-          // required
-          readOnly={readOnly}
-          // className="w-40"
-        />
-        <Input
-          key="count"
-          label="Кол-во в наборе"
-          type="number"
-          name="count"
-          value={form.count}
-          onChange={(count) => updateForm({ count })}
-          required
-          className={!readOnly ? 'w-34' : ''}
-          readOnly={readOnly}
-        />
-        <div className="flex flex-col justify-end flex-1 mb-1 whitespace-nowrap">
-          {form.count != '0' &&
-            `за шт: ${Math.round(form.price / form.count) / 100} ₽`}
-        </div>
-      </div> */}
-
-      {/* <ComboBox
-        title="Пополнение/Расход"
-        onChange={(purchase) => updateForm({ purchase })}
-        defaultValue={form.purchase}
-        items={[
-          { name: 'Пополнение склада', value: false },
-          { name: 'Расход со склада', value: true },
-        ]}
-      /> */}
       {loggedUser.role === 'dev' && (
         <PropValuePicker
           value={form.purchase}
@@ -249,10 +216,6 @@ const ProductCirculationForm = ({
             if (purchase) updateForm({ purchase })
             else updateForm({ purchase, defective: false })
           }}
-          // inLine
-          // className={className}
-          // labelStyle={labelStyle}
-          // name="gender"
           required
           readOnly={readOnly}
         />
@@ -270,17 +233,15 @@ const ProductCirculationForm = ({
           <CheckBox
             label="Брак"
             checked={form.defective}
-            // name="defective"
             onChange={() => updateForm({ defective: !form.defective })}
             readOnly={readOnly}
           />
-
           <SelectOrder
             onChange={(item) => updateForm({ orderId: item ? item._id : '' })}
             selectedId={form.orderId}
             clearButton
             readOnly={readOnly}
-            // required
+            required
             // exceptedIds={selectedItemsIds}
           />
         </>

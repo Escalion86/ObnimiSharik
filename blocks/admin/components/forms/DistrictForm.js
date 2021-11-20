@@ -21,10 +21,12 @@ const DistrictForm = ({
   const [errors, setErrors] = useState({})
   const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     name: district.name,
     deliveryPrice: district.deliveryPrice,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -69,7 +71,7 @@ const DistrictForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, district, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)

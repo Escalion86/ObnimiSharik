@@ -22,11 +22,13 @@ const InvitationForm = ({
   const [errors, setErrors] = useState({})
   const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     email: invitation.email,
     status: invitation.status,
     role: invitation.role,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -72,7 +74,7 @@ const InvitationForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, invitation, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)

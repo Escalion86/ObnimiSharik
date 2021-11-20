@@ -28,7 +28,7 @@ const DevToDoForm = ({
   const [errors, setErrors] = useState({})
   const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     number: devToDo.number,
     title: devToDo.title,
     description: devToDo.description,
@@ -37,7 +37,9 @@ const DevToDoForm = ({
     status: devToDo.status,
     priority: devToDo.priority,
     finishedAt: devToDo.finishedAt,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -93,7 +95,7 @@ const DevToDoForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, devToDo, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)

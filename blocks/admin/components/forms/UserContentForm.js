@@ -27,7 +27,7 @@ const UserContentForm = ({
   const [errors, setErrors] = useState({})
   const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     _id: loggedUser._id,
     image: loggedUser.image,
     email: loggedUser.email,
@@ -39,7 +39,9 @@ const UserContentForm = ({
     gender: loggedUser.gender,
     birthday: loggedUser.birthday,
     role: loggedUser.role,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -64,7 +66,7 @@ const UserContentForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, loggedUser, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   // useEffect(() => {
   //   setFormChanged(isFormChanged)
