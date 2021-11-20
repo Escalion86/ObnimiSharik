@@ -96,8 +96,6 @@ const DevToDoForm = ({
     setFormChanged(isFormChanged)
   }, [isFormChanged])
 
-  console.log(`form`, form)
-
   return (
     <Form
       handleSubmit={handleSubmit}
