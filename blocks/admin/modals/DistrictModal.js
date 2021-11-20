@@ -10,6 +10,7 @@ const DistrictModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.districts.read(district))
@@ -37,6 +38,7 @@ const DistrictModal = ({
           ? 'ID: ' + district?._id
           : null
       }
+      modals={modals}
     >
       <DistrictForm
         district={district}

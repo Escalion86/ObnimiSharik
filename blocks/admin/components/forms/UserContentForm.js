@@ -16,6 +16,8 @@ import Form from './Form'
 import roleRus from '@helpers/roleRus'
 import compareObjects from '@helpers/compareObjects'
 import InputAvatar from './forForms/InputAvatar'
+import formValidator from '@helpers/formValidator'
+import usersSchema from '@schemas/usersSchema'
 
 const UserContentForm = ({
   loggedUser,
@@ -43,7 +45,7 @@ const UserContentForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidate()
+    const errs = formValidator(form, usersSchema)
     if (Object.keys(errs).length === 0) {
       putData(
         `/api/users/${loggedUser._id}`,
@@ -60,13 +62,11 @@ const UserContentForm = ({
     }
   }
 
-  const formValidate = () => {
-    let err = {}
-    if (!form.email) err.email = 'Введите Email'
-    if (!form.name) err.name = 'Введите Имя'
-    // if (!form.role) err.role = 'Укажите должность'
-    return err
-  }
+  const isFormChanged = !compareObjects(form, loggedUser, true)
+
+  // useEffect(() => {
+  //   setFormChanged(isFormChanged)
+  // }, [isFormChanged])
 
   return (
     <Form
@@ -74,10 +74,7 @@ const UserContentForm = ({
       buttonName="Применить изменения"
       message={message}
       errors={errors}
-      buttonDisabled={
-        Object.keys(formValidate()).length !== 0 ||
-        compareObjects(form, loggedUser)
-      }
+      buttonDisabled={!isFormChanged}
     >
       <div className="flex">
         <div className="w-1/4 min-w-24 max-w-40">Должность</div>

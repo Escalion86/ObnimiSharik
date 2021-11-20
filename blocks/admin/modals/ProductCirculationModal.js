@@ -10,6 +10,7 @@ const ProductCirculationModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.productCirculations.read(productCirculation))
@@ -39,6 +40,7 @@ const ProductCirculationModal = ({
           ? 'ID: ' + productCirculation?._id
           : null
       }
+      modals={modals}
     >
       <ProductCirculationForm
         productCirculation={productCirculation}

@@ -23,6 +23,7 @@ const DevToDoForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -89,6 +90,12 @@ const DevToDoForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, devToDo, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -102,7 +109,8 @@ const DevToDoForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, devToDo)}
+      buttonDisabled={!isFormChanged}
+      readOnly={readOnly}
     >
       <Input
         key="title"

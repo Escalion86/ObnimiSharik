@@ -15,13 +15,25 @@ const Modal = ({
   editMode = null,
   setEditMode = null,
   subModalText = null,
+  modals = null,
 }) => {
   const [rendered, setRendered] = useState(false)
-  const onCloseWithDelay = () => {
+  const [formChanged, setFormChanged] = useState(false)
+
+  const closeFunc = () => {
     setRendered(false)
     setTimeout(() => {
       onClose()
     }, 200)
+  }
+  const onCloseWithDelay = () => {
+    if (formChanged && modals) {
+      modals.openConfirmModal(
+        'Отмена изменений',
+        'Вы уверены что хотите закрыть окно без сохранения изменений?',
+        closeFunc
+      )
+    } else closeFunc()
   }
 
   useEffect(() => {
@@ -87,7 +99,7 @@ const Modal = ({
         )}
         {noPropsToChildren
           ? children
-          : cloneElement(children, { onClose: onCloseWithDelay })}
+          : cloneElement(children, { onClose: closeFunc, setFormChanged })}
       </div>
     </div>
   )

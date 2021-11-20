@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DEFAULT_CLIENT } from '@helpers/constants'
 
@@ -23,6 +23,7 @@ const ClientForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -81,6 +82,12 @@ const ClientForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, client, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -91,7 +98,7 @@ const ClientForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, client)}
+      buttonDisabled={!isFormChanged}
       readOnly={readOnly}
     >
       <RowContainer>

@@ -68,6 +68,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <ProductModal
             loggedUser={loggedUser}
             product={product}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -95,6 +96,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <SetModal
             loggedUser={loggedUser}
             set={set}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -122,6 +124,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <ProductTypeModal
             loggedUser={loggedUser}
             productType={productType}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -147,6 +150,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <SetTypeModal
             loggedUser={loggedUser}
             setType={setType}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -183,6 +187,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <UserModal
             loggedUser={loggedUser}
             user={user}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -204,6 +209,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <InvitationModal
             loggedUser={loggedUser}
             invitation={invitation}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -230,6 +236,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <ProductCirculationModal
             loggedUser={loggedUser}
             productCirculation={productCirculation}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -253,6 +260,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <ClientModal
             loggedUser={loggedUser}
             client={client}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -274,6 +282,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <DevToDoModal
             loggedUser={loggedUser}
             devToDo={devToDo}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -295,6 +304,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <DistrictModal
             loggedUser={loggedUser}
             district={district}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -316,6 +326,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <OrderModal
             loggedUser={loggedUser}
             order={order}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
@@ -337,6 +348,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <PaymentModal
             loggedUser={loggedUser}
             payment={payment}
+            modals={modals}
             onClose={() => modals.closeModal(modalId)}
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)

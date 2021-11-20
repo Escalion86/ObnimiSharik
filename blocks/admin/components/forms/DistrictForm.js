@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DEFAULT_DISTRICT } from '@helpers/constants'
 
@@ -16,6 +16,7 @@ const DistrictForm = ({
   afterConfirm = () => {},
   onClose = () => {},
   editMode = false,
+  setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
@@ -65,6 +66,12 @@ const DistrictForm = ({
     }
   }
 
+  const isFormChanged = !compareObjects(form, district, true)
+
+  useEffect(() => {
+    setFormChanged(isFormChanged)
+  }, [isFormChanged])
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -78,7 +85,7 @@ const DistrictForm = ({
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
-      buttonDisabled={compareObjects(form, district)}
+      buttonDisabled={!isFormChanged}
       readOnly={readOnly}
     >
       {!readOnly && (

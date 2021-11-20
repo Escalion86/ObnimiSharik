@@ -10,6 +10,7 @@ const InvitationModal = ({
   afterConfirm = () => {},
   onDelete = null,
   edit = false,
+  modals,
 }) => {
   const [editMode, setEditMode] = useState(edit)
   if (!loggedUser.access?.invitations.read(invitation))
@@ -38,6 +39,7 @@ const InvitationModal = ({
           ? 'ID: ' + invitation?._id
           : null
       }
+      modals={modals}
     >
       <InvitationForm
         invitation={invitation}
