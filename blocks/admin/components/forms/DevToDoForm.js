@@ -96,6 +96,8 @@ const DevToDoForm = ({
     setFormChanged(isFormChanged)
   }, [isFormChanged])
 
+  console.log(`form`, form)
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -110,6 +112,7 @@ const DevToDoForm = ({
       message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
+      readOnly={readOnly}
     >
       <Input
         key="title"
