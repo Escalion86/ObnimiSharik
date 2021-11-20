@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from '@components/Button'
 import IconButton from '@components/IconButton'
-import { faCheck, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 const Form = ({
   handleSubmit = () => {},
@@ -16,8 +16,8 @@ const Form = ({
   componentBeforeButton = null,
   readOnly = false,
   submiting = false,
+  closeOnSubmit = false,
 }) => {
-  // const [submiting, setSubmiting] = useState(false)
   let childrenWithProps = children
   if (twoCols && children.length) {
     const updatedChildren = []
@@ -58,20 +58,12 @@ const Form = ({
         {!readOnly && (
           <>
             <div className="flex justify-center gap-2">
-              {/* <Button
-                onClick={handleSubmit}
-                name={buttonName}
-                small
-                inverse
-                disabled={buttonDisabled}
-                className="flex-1 max-w-md"
-              /> */}
               <IconButton
                 name={buttonName}
                 onClick={
                   !submiting
                     ? (e) => {
-                        // setSubmiting(true)
+                        if (closeOnSubmit) onClose()
                         handleSubmit(e)
                       }
                     : null
@@ -81,7 +73,6 @@ const Form = ({
                 disabled={buttonDisabled}
                 loading={submiting}
                 inverse
-                // readOnly={readOnly}
               />
               {cancelButton && (
                 <Button
