@@ -176,8 +176,12 @@ const ProductCirculationForm = ({
     <Form
       handleSubmit={handleSubmit}
       title={`${
-        forNew ? 'Создние' : editMode ? 'Редактирование' : 'Просмотр'
-      } ${form.purchase ? 'пополнения' : 'расхода'} склада`}
+        forNew || !editMode
+          ? form.purchase
+            ? 'Пополнение'
+            : 'Расход'
+          : 'Редактирование ' + (form.purchase ? 'пополнения' : 'расхода')
+      } склада`}
       buttonName={forNew ? 'Создать' : 'Применить'}
       message={message}
       errors={errors}
