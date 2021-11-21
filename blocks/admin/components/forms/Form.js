@@ -1,10 +1,11 @@
 import React from 'react'
 import Button from '@components/Button'
+import IconButton from '@components/IconButton'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 const Form = ({
   handleSubmit = () => {},
   title = null,
-  message = '',
   errors = {},
   children,
   buttonName = 'Создать',
@@ -14,6 +15,8 @@ const Form = ({
   onClose = () => {},
   componentBeforeButton = null,
   readOnly = false,
+  submiting = false,
+  closeOnSubmit = false,
 }) => {
   let childrenWithProps = children
   if (twoCols && children.length) {
@@ -53,32 +56,38 @@ const Form = ({
         </div>
         {componentBeforeButton}
         {!readOnly && (
-          <div className="flex justify-center gap-2">
-            <Button
-              onClick={() => {
-                handleSubmit()
-                onClose()
-              }}
-              name={buttonName}
-              small
-              inverse
-              disabled={buttonDisabled}
-              className="flex-1 max-w-md"
-            />
-            {cancelButton && (
-              <Button
-                onClick={onClose}
-                name="Отмена"
-                small
-                inverse
-                type="cancel"
+          <>
+            <div className="flex justify-center gap-2">
+              <IconButton
+                name={buttonName}
+                onClick={
+                  !submiting
+                    ? (e) => {
+                        if (closeOnSubmit) onClose()
+                        handleSubmit(e)
+                      }
+                    : null
+                }
+                icon={faCheck}
                 className="flex-1 max-w-md"
+                disabled={buttonDisabled}
+                loading={submiting}
+                inverse
               />
-            )}
-          </div>
+              {cancelButton && (
+                <Button
+                  onClick={onClose}
+                  name="Отмена"
+                  small
+                  inverse
+                  type="cancel"
+                  className="flex-1 max-w-md"
+                />
+              )}
+            </div>
+          </>
         )}
       </div>
-      <p>{message}</p>
       <div>
         {Object.keys(errors).map((err, index) => (
           <li className="text-red-700" key={index}>

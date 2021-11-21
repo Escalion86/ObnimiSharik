@@ -193,7 +193,7 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
   count: 1,
   orderId: '',
   purchase: true,
-  purchasedAt: new Date().toISOString(),
+  purchasedAt: null,
   defective: false,
 }
 
@@ -220,8 +220,8 @@ export const DEFAULT_ORDER = {
   deliveryPrice: 0,
   deliveryPickup: true,
   deliveryAddress: DEFAULT_DELIVERY_ADDRESS,
-  deliveryDateFrom: new Date().toISOString(),
-  deliveryDateTo: new Date().toISOString(),
+  deliveryDateFrom: null,
+  deliveryDateTo: null,
   deliverId: '',
   aerodesignerId: '',
   operatorId: '',
@@ -234,7 +234,7 @@ export const DEFAULT_PAYMENT = {
   payType: null,
   sum: 0,
   status: 'created',
-  payAt: new Date().toISOString(),
+  payAt: null,
 }
 
 export const PRIORITIES = [

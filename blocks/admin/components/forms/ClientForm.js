@@ -26,9 +26,9 @@ const ClientForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     name: client.name,
     email: client.email,
     phone: client.phone,
@@ -40,7 +40,9 @@ const ClientForm = ({
     gender: client.gender,
     birthday: client.birthday,
     image: client.image,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -56,6 +58,7 @@ const ClientForm = ({
     e?.preventDefault()
     const errs = formValidator(form, clientsSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       forNew
         ? postData(
             '/api/clients',
@@ -65,6 +68,7 @@ const ClientForm = ({
               onClose()
             },
             'Клиент "' + form.name + '" создан',
+            () => setSubmiting(false),
             'Ошибка при создании клиента "' + form.name + '"'
           )
         : putData(
@@ -75,6 +79,7 @@ const ClientForm = ({
               onClose()
             },
             'Клиент "' + form.name + '" изменен',
+            () => setSubmiting(false),
             'Ошибка при редактировании клиента "' + form.name + '"'
           )
     } else {
@@ -82,7 +87,7 @@ const ClientForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, client, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)
@@ -96,10 +101,10 @@ const ClientForm = ({
         ' клиента'
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <RowContainer>
         <Input

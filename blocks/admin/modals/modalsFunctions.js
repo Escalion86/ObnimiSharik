@@ -84,7 +84,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteProduct(product, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(product._id)
+                afterDelete && afterDelete(product?._id)
               })
             }}
           />
@@ -112,7 +112,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteSet(set, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(set._id)
+                afterDelete && afterDelete(set?._id)
               })
             }}
           />
@@ -138,7 +138,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteProductType(productType, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(productType._id)
+                afterDelete && afterDelete(productType?._id)
               })
             }}
           />
@@ -162,7 +162,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteSetType(setType, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(setType._id)
+                afterDelete && afterDelete(setType?._id)
               })
             }}
           />
@@ -197,7 +197,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteUser(user, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(user._id)
+                afterDelete && afterDelete(user?._id)
               })
             }}
           />
@@ -219,7 +219,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteInvitation(invitation, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(invitation._id)
+                afterDelete && afterDelete(invitation?._id)
               })
             }}
           />
@@ -248,7 +248,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteProductCirculation(productCirculation, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(productCirculation._id)
+                afterDelete && afterDelete(productCirculation?._id)
               })
             }}
           />
@@ -270,7 +270,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteClient(client, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(client._id)
+                afterDelete && afterDelete(client?._id)
               })
             }}
           />
@@ -292,7 +292,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteDevToDo(devToDo, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(devToDo._id)
+                afterDelete && afterDelete(devToDo?._id)
               })
             }}
           />
@@ -314,7 +314,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteDistrict(district, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(district._id)
+                afterDelete && afterDelete(district?._id)
               })
             }}
           />
@@ -336,7 +336,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeleteOrder(order, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(order._id)
+                afterDelete && afterDelete(order?._id)
               })
             }}
           />
@@ -358,7 +358,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             onDelete={(onConfirm) => {
               modals.openDeletePayment(payment, () => {
                 onConfirm && onConfirm()
-                afterDelete && afterDelete(payment._id)
+                afterDelete && afterDelete(payment?._id)
               })
             }}
           />
@@ -382,10 +382,10 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteProduct: (product, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление товара',
-        'Вы уверены что хотите удалить товар "' + product.name + '"?',
+        'Вы уверены что хотите удалить товар "' + product?.name + '"?',
         () => {
           deleteData(
-            '/api/products/' + product._id,
+            '/api/products/' + product?._id,
             () =>
               fetchingProducts((result) =>
                 dispatch(
@@ -394,8 +394,9 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
                   )
                 )
               ),
-            'Товар "' + product.name + '" удален',
-            'Ошибка при удалении товара "' + product.name + '"'
+            'Товар "' + product?.name + '" удален',
+            null,
+            'Ошибка при удалении товара "' + product?.name + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -403,10 +404,10 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteSet: (set, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление набора',
-        'Вы уверены что хотите удалить набора "' + set.name + '"?',
+        'Вы уверены что хотите удалить набора "' + set?.name + '"?',
         () => {
           deleteData(
-            '/api/sets/' + set._id,
+            '/api/sets/' + set?._id,
             () =>
               fetchingSets((result) =>
                 dispatch(
@@ -415,8 +416,9 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
                   )
                 )
               ),
-            'Набор "' + set.name + '" удален',
-            'Ошибка при удалении набора "' + set.name + '"'
+            'Набор "' + set?.name + '" удален',
+            null,
+            'Ошибка при удалении набора "' + set?.name + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -424,18 +426,19 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteProductType: (productType, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление типа товара',
-        'Вы уверены что хотите удалить тип товара "' + productType.name + '"?',
+        'Вы уверены что хотите удалить тип товара "' + productType?.name + '"?',
         () => {
           deleteData(
-            '/api/producttypes/' + productType._id,
+            '/api/producttypes/' + productType?._id,
             () =>
               fetchingProductTypes((result) =>
                 dispatch(
                   setProductTypes(addCountToProductTypes(result, data.products))
                 )
               ),
-            'Тип товара "' + productType.name + '" удален',
-            'Ошибка при удалении типа товара "' + productType.name + '"'
+            'Тип товара "' + productType?.name + '" удален',
+            null,
+            'Ошибка при удалении типа товара "' + productType?.name + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -443,16 +446,17 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteSetType: (setType, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление типа набора',
-        'Вы уверены что хотите удалить тип набора "' + setType.name + '"?',
+        'Вы уверены что хотите удалить тип набора "' + setType?.name + '"?',
         () => {
           deleteData(
-            '/api/settypes/' + setType._id,
+            '/api/settypes/' + setType?._id,
             () =>
               fetchingSetTypes((result) =>
                 dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
               ),
-            'Тип набора "' + setType.name + '" удален',
-            'Ошибка при удалении типа набора "' + setType.name + '"'
+            'Тип набора "' + setType?.name + '" удален',
+            null,
+            'Ошибка при удалении типа набора "' + setType?.name + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -460,13 +464,14 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteUser: (user, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление пользователя',
-        'Вы уверены что хотите удалить пользователя "' + user.email + '"?',
+        'Вы уверены что хотите удалить пользователя "' + user?.email + '"?',
         () => {
           deleteData(
-            '/api/users/' + user._id,
+            '/api/users/' + user?._id,
             () => fetchingUsers((result) => dispatch(setUsers(result))),
-            'Пользователь "' + user.name + '" удален',
-            'Ошибка при удалении пользователя "' + user.name + '"'
+            'Пользователь "' + user?.name + '" удален',
+            null,
+            'Ошибка при удалении пользователя "' + user?.name + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -475,15 +480,16 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
       modals.openConfirmModal(
         'Удаление приглашения',
         'Вы уверены что хотите удалить приглашение для "' +
-          invitation.email +
+          invitation?.email +
           '"?',
         () => {
           deleteData(
-            '/api/invitations/' + invitation._id,
+            '/api/invitations/' + invitation?._id,
             () =>
               fetchingInvitations((result) => dispatch(setInvitations(result))),
-            'Приглашение для "' + invitation.email + '" удалено',
-            'Ошибка при удалении приглаения для "' + invitation.email + '"'
+            'Приглашение для "' + invitation?.email + '" удалено',
+            null,
+            'Ошибка при удалении приглаения для "' + invitation?.email + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -496,28 +502,29 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
       modals.openConfirmModal(
         'Удаление движения товара',
         'Вы уверены что хотите удалить движение товара (' +
-          product.article +
+          product?.article +
           ') "' +
-          product.name +
+          product?.name +
           '" от ' +
-          formatDateTime(productCirculation.purchasedAt) +
+          formatDateTime(productCirculation?.purchasedAt) +
           '?',
         () => {
           deleteData(
-            '/api/productcirculations/' + productCirculation._id,
+            '/api/productcirculations/' + productCirculation?._id,
             () =>
               fetchingProductCirculations((result) =>
                 dispatch(setProductCirculations(result, true))
               ),
             'Движние товара (' +
-              product.article +
+              product?.article +
               ') "' +
-              product.name +
+              product?.name +
               '" удалено',
+            null,
             'Ошибка при удалении движения товара (' +
-              product.article +
+              product?.article +
               ') "' +
-              product.name +
+              product?.name +
               '"'
           )
           if (onConfirm) onConfirm()
@@ -527,13 +534,14 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteClient: (client, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление клиента',
-        'Вы уверены что хотите удалить клиента "' + client.name + '"?',
+        'Вы уверены что хотите удалить клиента "' + client?.name + '"?',
         () => {
           deleteData(
-            '/api/clients/' + client._id,
+            '/api/clients/' + client?._id,
             () => fetchingClients((result) => dispatch(setClients(result))),
-            'Клиент "' + client.name + '" удален',
-            'Ошибка при удалении клиента "' + client.name + '"'
+            'Клиент "' + client?.name + '" удален',
+            null,
+            'Ошибка при удалении клиента "' + client?.name + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -541,13 +549,14 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteDevToDo: (devToDo, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление заявки',
-        'Вы уверены что хотите удалить заявку № ' + devToDo.number + '?',
+        'Вы уверены что хотите удалить заявку № ' + devToDo?.number + '?',
         () => {
           deleteData(
-            '/api/devtodo/' + devToDo._id,
+            '/api/devtodo/' + devToDo?._id,
             () => fetchingDevToDo((result) => dispatch(setDevToDo(result))),
-            'Заявка № ' + devToDo.number + '" удалена',
-            'Ошибка при удалении заявки № ' + devToDo.number + '"'
+            'Заявка № ' + devToDo?.number + '" удалена',
+            null,
+            'Ошибка при удалении заявки № ' + devToDo?.number + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -555,13 +564,14 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteDistrict: (district, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление района',
-        'Вы уверены что хотите удалить район "' + district.name + '"?',
+        'Вы уверены что хотите удалить район "' + district?.name + '"?',
         () => {
           deleteData(
-            '/api/districts/' + district._id,
+            '/api/districts/' + district?._id,
             () => fetchingDistricts((result) => dispatch(setDistricts(result))),
-            'Район "' + district.name + '" удален',
-            'Ошибка при удалении района "' + district.name + '"'
+            'Район "' + district?.name + '" удален',
+            null,
+            'Ошибка при удалении района "' + district?.name + '"'
           )
           if (onConfirm) onConfirm()
         }
@@ -569,13 +579,14 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeleteOrder: (order, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление заказа',
-        'Вы уверены что хотите удалить заказ №' + order.number + '?',
+        'Вы уверены что хотите удалить заказ №' + order?.number + '?',
         () => {
           deleteData(
-            '/api/orders/' + order._id,
+            '/api/orders/' + order?._id,
             () => fetchingOrders((result) => dispatch(setOrders(result))),
-            'Заказ №' + order.number + '" удален',
-            'Ошибка при удалении заказа №' + order.number
+            'Заказ №' + order?.number + '" удален',
+            null,
+            'Ошибка при удалении заказа №' + order?.number
           )
           if (onConfirm) onConfirm()
         }
@@ -583,13 +594,14 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
     openDeletePayment: (payment, onConfirm = null) =>
       modals.openConfirmModal(
         'Удаление транзакции',
-        'Вы уверены что хотите удалить транзакцию №' + payment.number + '?',
+        'Вы уверены что хотите удалить транзакцию №' + payment?.number + '?',
         () => {
           deleteData(
-            '/api/payments/' + payment._id,
+            '/api/payments/' + payment?._id,
             () => fetchingPayments((result) => dispatch(setPayments(result))),
-            'Транзакция №' + payment.number + '" удалена',
-            'Ошибка при удалении транзакции №' + payment.number
+            'Транзакция №' + payment?.number + '" удалена',
+            null,
+            'Ошибка при удалении транзакции №' + payment?.number
           )
           if (onConfirm) onConfirm()
         }

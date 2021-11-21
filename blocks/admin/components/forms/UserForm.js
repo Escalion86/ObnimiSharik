@@ -29,9 +29,9 @@ const UserForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     _id: user._id,
     image: user.image,
     email: user.email,
@@ -45,7 +45,9 @@ const UserForm = ({
     gender: user.gender,
     role: user.role,
     birthday: user.birthday,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -61,6 +63,7 @@ const UserForm = ({
     e?.preventDefault()
     const errs = formValidator(form, usersSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       forNew
         ? postData(
             '/api/users',
@@ -70,6 +73,7 @@ const UserForm = ({
               onClose()
             },
             'Пользователь "' + form.name + '" создан',
+            () => setSubmiting(false),
             'Ошибка при создании пользователя "' + form.name + '"'
           )
         : putData(
@@ -80,6 +84,7 @@ const UserForm = ({
               onClose()
             },
             'Пользователь "' + form.name + '" изменен',
+            () => setSubmiting(false),
             'Ошибка при редактировании пользователя "' + form.name + '"'
           )
     } else {
@@ -87,7 +92,7 @@ const UserForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, user, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)
@@ -101,10 +106,10 @@ const UserForm = ({
         ' сотрудника'
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <InputAvatar
         user={form}

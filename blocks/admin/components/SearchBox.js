@@ -26,7 +26,7 @@ const SearchBox = ({ modals }) => {
   const filter = (item) =>
     item.name?.toString().toLowerCase().includes(searchTextLowerCase) ||
     item.number?.toString().includes(searchTextLowerCase) ||
-    item.article?.toString().includes(searchTextLowerCase) ||
+    item.article?.toString().toLowerCase().includes(searchTextLowerCase) ||
     item.phone?.toString().includes(searchTextLowerCase) ||
     item.whatsapp?.toString().includes(searchTextLowerCase) ||
     item.price?.toString().includes(searchTextLowerCase)
@@ -112,8 +112,8 @@ const SearchBox = ({ modals }) => {
         onChange={(e) => {
           setOpenList(e.target.value !== '')
           setInputText(e.target.value)
-          if (e.target.value !== '' && searchText !== inputText)
-            setSearchText(inputText)
+          if (e.target.value !== '' && searchText !== e.target.value)
+            setSearchText(e.target.value)
         }}
       />
       <FontAwesomeIcon

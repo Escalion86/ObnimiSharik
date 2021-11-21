@@ -33,9 +33,9 @@ const SetForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     article: set.article,
     name: set.name,
     description: set.description,
@@ -44,7 +44,9 @@ const SetForm = ({
     typesId: set.typesId,
     productsIdCount: set.productsIdCount,
     archive: set.archive,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -67,21 +69,23 @@ const SetForm = ({
   const handleSubmit = (e) => {
     e?.preventDefault()
     const errs = formValidator(form, setsSchema)
-    // Убираем невыбранные товары и с количеством 0
-    const productsIdCount = {}
-    for (const [id, count] of Object.entries(form.productsIdCount)) {
-      if (id !== '?' && count > 0) productsIdCount[id] = count
-    }
-
-    const fixedForm = { ...form, productsIdCount }
 
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
+      // Убираем невыбранные товары и с количеством 0
+      const productsIdCount = {}
+      for (const [id, count] of Object.entries(form.productsIdCount)) {
+        if (id !== '?' && count > 0) productsIdCount[id] = count
+      }
+      const fixedForm = { ...form, productsIdCount }
+
       forNew
         ? postData(
             '/api/sets',
             fixedForm,
             afterConfirmUpd,
             'Набор "' + form.name + '" создан',
+            () => setSubmiting(false),
             'Ошибка при создании набора "' + form.name + '"'
           )
         : putData(
@@ -89,6 +93,7 @@ const SetForm = ({
             fixedForm,
             afterConfirmUpd,
             'Набор "' + form.name + '" изменен',
+            () => setSubmiting(false),
             'Ошибка при редактировании набора "' + form.name + '"'
           )
     } else {
@@ -96,7 +101,7 @@ const SetForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, set, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)
@@ -113,11 +118,11 @@ const SetForm = ({
           : 'Набор: ' + form.name
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       twoCols={true}
       readOnly={readOnly}
+      submiting={submiting}
     >
       <FormColumn>
         <Input

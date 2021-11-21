@@ -17,7 +17,7 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
                   date
                 )})`}</div>
                 <div className="flex flex-col text-sm gap-y-1">
-                  {add && (
+                  {add?.length > 0 && (
                     <div className="flex flex-col ml-2">
                       <div className="italic font-semibold">Добавлено:</div>
                       {add.map((item, index) => (
@@ -28,7 +28,7 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
                       ))}
                     </div>
                   )}
-                  {update && (
+                  {update?.length > 0 && (
                     <div className="flex flex-col ml-2">
                       <div className="italic font-semibold">Обновлено:</div>
                       {update.map((item, index) => (
@@ -39,7 +39,7 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
                       ))}
                     </div>
                   )}
-                  {fix && (
+                  {fix?.length > 0 && (
                     <div className="flex flex-col ml-2">
                       <div className="italic font-semibold">Исправлено:</div>
                       {fix.map((item, index) => (

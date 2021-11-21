@@ -19,12 +19,14 @@ const DistrictForm = ({
   setFormChanged = () => {},
 }) => {
   const [errors, setErrors] = useState({})
-  const [message, setMessage] = useState('')
+  const [submiting, setSubmiting] = useState(false)
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     name: district.name,
     deliveryPrice: district.deliveryPrice,
-  })
+  }
+
+  const [form, setForm] = useState(initialFormState)
 
   const updateForm = (data) => setForm({ ...form, ...data })
 
@@ -40,6 +42,7 @@ const DistrictForm = ({
     e?.preventDefault()
     const errs = formValidator(form, districtsSchema)
     if (Object.keys(errs).length === 0) {
+      setSubmiting(true)
       forNew
         ? postData(
             '/api/districts',
@@ -49,6 +52,7 @@ const DistrictForm = ({
               onClose()
             },
             'Район "' + form.name + '" создан',
+            () => setSubmiting(false),
             'Ошибка при создании района "' + form.name + '"'
           )
         : putData(
@@ -59,6 +63,7 @@ const DistrictForm = ({
               onClose()
             },
             'Район "' + form.name + '" изменен',
+            () => setSubmiting(false),
             'Ошибка при редактировании района "' + form.name + '"'
           )
     } else {
@@ -66,7 +71,7 @@ const DistrictForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, district, true)
+  const isFormChanged = !compareObjects(form, initialFormState, true)
 
   useEffect(() => {
     setFormChanged(isFormChanged)
@@ -83,10 +88,10 @@ const DistrictForm = ({
           : 'Район: ' + form.name
       }
       buttonName={forNew ? 'Создать' : 'Применить'}
-      message={message}
       errors={errors}
       buttonDisabled={!isFormChanged}
       readOnly={readOnly}
+      submiting={submiting}
     >
       {!readOnly && (
         <Input
