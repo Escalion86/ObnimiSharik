@@ -8,8 +8,8 @@ import { postData, putData } from '@helpers/CRUD'
 
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
-import ordersSchema from 'schemas/ordersSchema'
 import formValidator from '@helpers/formValidator'
+import invitationsSchema from '@schemas/invitationsSchema'
 
 const InvitationForm = ({
   loggedUser,
@@ -42,7 +42,7 @@ const InvitationForm = ({
 
   const handleSubmit = (e) => {
     e?.preventDefault()
-    const errs = formValidator(form, ordersSchema)
+    const errs = formValidator(form, invitationsSchema)
     const formEmail = form.email.toLowerCase()
     if (Object.keys(errs).length === 0) {
       setSubmiting(true)
