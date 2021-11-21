@@ -11,11 +11,25 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
         <div className="text-lg font-semibold text-center">История версий</div>
         <div className="flex flex-col flex-1 overflow-y-auto gap-y-2">
           {versionHistory.map(
-            ({ ver, date, add = null, update = null, fix = null }) => (
+            ({
+              ver,
+              date,
+              add = null,
+              update = null,
+              fix = null,
+              problem = null,
+              emergency = null,
+            }) => (
               <div key={ver} className="py-0.5">
-                <div className="flex italic font-bold">{`v${ver} (${formatDate(
-                  date
-                )})`}</div>
+                <div className="flex italic gap-x-1">
+                  <span className="font-bold">{`v${ver}`}</span>
+                  <span className="font-semibold">{`(${formatDate(
+                    date
+                  )})`}</span>
+                  {emergency && (
+                    <span className="font-bold text-red-800">Срочное!</span>
+                  )}
+                </div>
                 <div className="flex flex-col text-sm gap-y-1">
                   {add?.length > 0 && (
                     <div className="flex flex-col ml-2">
@@ -43,6 +57,19 @@ const VersionHistoryModal = ({ onClose = () => {} }) => {
                     <div className="flex flex-col ml-2">
                       <div className="italic font-semibold">Исправлено:</div>
                       {fix.map((item, index) => (
+                        <div
+                          className="ml-2 leading-4"
+                          key={ver + 'fix' + index}
+                        >{`- ${item}`}</div>
+                      ))}
+                    </div>
+                  )}
+                  {problem?.length > 0 && (
+                    <div className="flex flex-col ml-2">
+                      <div className="italic font-semibold">
+                        Известные проблемы/ошибки:
+                      </div>
+                      {problem.map((item, index) => (
                         <div
                           className="ml-2 leading-4"
                           key={ver + 'fix' + index}
