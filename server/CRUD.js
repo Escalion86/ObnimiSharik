@@ -102,7 +102,6 @@ export default async function handler(Schema, req, res, params = null) {
             .json({ success: false, error: 'No need to set Id' })
         } else {
           data = await Schema.create(body)
-          console.log(`data`, data)
           if (!data) {
             return res?.status(400).json({ success: false })
           }
