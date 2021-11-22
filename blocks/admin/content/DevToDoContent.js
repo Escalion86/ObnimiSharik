@@ -1,15 +1,11 @@
-import React from 'react'
 import { DevToDoCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const DevToDoContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Заявок разработчику нет'</div>
-
   const accessToContent = loggedUser.access.devToDo
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, devToDo) => (
         <DevToDoCard
@@ -29,6 +25,8 @@ const DevToDoContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={accessToContent.add ? () => modals.openDevToDoModal() : null}
+      messageIfNoData="Заявок разработчику нет"
     />
   )
 }

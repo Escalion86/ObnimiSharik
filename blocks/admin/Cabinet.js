@@ -48,10 +48,12 @@ const Cabinet = ({
     [JSON.stringify(state), page.pageContent]
   )
 
-  const accessToAddItem = page.variable
-    ? loggedUser?.access[page.variable].add
-    : false
-  let pageButtons = accessToAddItem && page.addButton ? [page.addButton] : []
+  let pageButtons = []
+
+  // const accessToAddItem = page.variable
+  //   ? loggedUser?.access[page.variable].add
+  //   : false
+  // let pageButtons = accessToAddItem && page.addButton ? [page.addButton] : []
 
   const filterExists = !!(
     page.variable &&

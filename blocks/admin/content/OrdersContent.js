@@ -1,10 +1,8 @@
-import React from 'react'
 import { OrderCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
 import { DEFAULT_PRODUCT_CIRCULATION, ORDER_STATUSES } from '@helpers/constants'
+import Content from './Content'
 
 const OrdersContent = ({ data, modals, loggedUser }) => {
-  const role = loggedUser.role
   const orderStatusesAccessed =
     loggedUser.role === 'dev' || loggedUser.role === 'admin'
       ? ORDER_STATUSES
@@ -15,17 +13,14 @@ const OrdersContent = ({ data, modals, loggedUser }) => {
   const roleFilteredOrders = data.filter(
     (order) =>
       orderStatusesValues.includes(order.status) &&
-      (role !== 'deliver' ||
+      (loggedUser.role !== 'deliver' ||
         (order.deliveryPickup === false && order.deliverId === loggedUser._id))
   )
-
-  if (!(roleFilteredOrders && roleFilteredOrders.length > 0))
-    return <div className="px-3">'Заказов нет'</div>
 
   const accessToContent = loggedUser.access.orders
 
   return (
-    <Virtuoso
+    <Content
       data={roleFilteredOrders}
       itemContent={(index, order) => (
         <OrderCard
@@ -105,6 +100,8 @@ const OrdersContent = ({ data, modals, loggedUser }) => {
           }}
         />
       )}
+      onFabClick={accessToContent.add ? () => modals.openOrderModal() : null}
+      messageIfNoData="Заказов нет"
     />
   )
 }

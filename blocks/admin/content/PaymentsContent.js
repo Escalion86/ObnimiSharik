@@ -1,15 +1,11 @@
-import React from 'react'
 import { PaymentCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const PaymentsContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Транзакций нет'</div>
-
   const accessToContent = loggedUser.access.payments
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, payment) => (
         <PaymentCard
@@ -29,6 +25,8 @@ const PaymentsContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={accessToContent.add ? () => modals.openPaymentModal() : null}
+      messageIfNoData="Транзакций нет"
     />
   )
 }

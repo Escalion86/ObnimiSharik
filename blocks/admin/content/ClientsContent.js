@@ -1,15 +1,11 @@
-import React from 'react'
 import { ClientCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const ClientsContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Клиентов нет'</div>
-
   const accessToContent = loggedUser.access.clients
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, client) => (
         <ClientCard
@@ -29,6 +25,8 @@ const ClientsContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={accessToContent.add ? () => modals.openClientModal() : null}
+      messageIfNoData="Клиентов нет"
     />
   )
 }

@@ -1,15 +1,11 @@
-import React from 'react'
 import { DistrictCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const DistrictsContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Адресов доставки нет'</div>
-
   const accessToContent = loggedUser.access.districts
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, district) => (
         <DistrictCard
@@ -29,6 +25,8 @@ const DistrictsContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={accessToContent.add ? () => modals.openDistrictModal() : null}
+      messageIfNoData="Адресов доставки нет"
     />
   )
 }

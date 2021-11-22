@@ -1,15 +1,11 @@
-import React from 'react'
 import { UserCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const UsersContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Пользователей нет'</div>
-
   const accessToContent = loggedUser.access.users
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, user) => (
         <UserCard
@@ -29,6 +25,8 @@ const UsersContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={accessToContent.add ? () => modals.openUserModal() : null}
+      messageIfNoData="Пользователей нет"
     />
   )
 }
