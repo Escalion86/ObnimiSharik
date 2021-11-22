@@ -55,9 +55,10 @@ const prepareData = (data) => {
 }
 
 export default async function handler(Schema, req, res, params = null) {
-  const session = await getSession({ req })
-  if (!session || !session.user._id)
-    return res?.status(400).json({ success: false })
+  // FIX
+  // const session = await getSession({ req })
+  // if (!session || !session.user._id)
+  //   return res?.status(400).json({ success: false })
 
   const { query, method, body } = req
 
@@ -101,19 +102,21 @@ export default async function handler(Schema, req, res, params = null) {
             .json({ success: false, error: 'No need to set Id' })
         } else {
           data = await Schema.create(body)
+          console.log(`data`, data)
           if (!data) {
             return res?.status(400).json({ success: false })
           }
           // Добавляем уведомление о создании
-          if (Schema === Products || Schema === Sets)
-            await Notifications.create({
-              responsibleUserId: session.user._id,
-              dbName: dbNameFromSchema(Schema),
-              itemId: data._id,
-              oldItem: null,
-              newItem: prepareData(data),
-              status: 'add',
-            })
+          // FIX
+          // if (Schema === Products || Schema === Sets)
+          //   await Notifications.create({
+          //     responsibleUserId: session.user._id,
+          //     dbName: dbNameFromSchema(Schema),
+          //     itemId: data._id,
+          //     oldItem: null,
+          //     newItem: prepareData(data),
+          //     status: 'add',
+          //   })
 
           return res?.status(201).json({ success: true, data })
           // return { newData: data, oldData }
@@ -140,15 +143,16 @@ export default async function handler(Schema, req, res, params = null) {
             return res?.status(400).json({ success: false })
           }
           // Добавляем уведомление об изменении
-          if (Schema === Products || Schema === Sets)
-            await Notifications.create({
-              responsibleUserId: session.user._id,
-              dbName: dbNameFromSchema(Schema),
-              itemId: id,
-              oldItem: prepareData(oldData),
-              newItem: prepareData(data),
-              status: 'update',
-            })
+          // FIX
+          // if (Schema === Products || Schema === Sets)
+          //   await Notifications.create({
+          //     responsibleUserId: session.user._id,
+          //     dbName: dbNameFromSchema(Schema),
+          //     itemId: id,
+          //     oldItem: prepareData(oldData),
+          //     newItem: prepareData(data),
+          //     status: 'update',
+          //   })
 
           return res?.status(200).json({ success: true, data })
           // return { newData: data, oldData }
@@ -176,15 +180,16 @@ export default async function handler(Schema, req, res, params = null) {
             return res?.status(400).json({ success: false })
           }
           // Добавляем уведомление об удалении
-          if (Schema === Products || Schema === Sets)
-            await Notifications.create({
-              responsibleUserId: session.user._id,
-              dbName: dbNameFromSchema(Schema),
-              itemId: id,
-              oldItem: prepareData(oldData),
-              newItem: null,
-              status: 'delete',
-            })
+          // FIX
+          // if (Schema === Products || Schema === Sets)
+          //   await Notifications.create({
+          //     responsibleUserId: session.user._id,
+          //     dbName: dbNameFromSchema(Schema),
+          //     itemId: id,
+          //     oldItem: prepareData(oldData),
+          //     newItem: null,
+          //     status: 'delete',
+          //   })
           return res?.status(200).json({ success: true, data })
 
           // return { newData: data, oldData }
