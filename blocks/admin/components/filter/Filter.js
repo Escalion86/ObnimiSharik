@@ -185,20 +185,22 @@ const Filter = ({
       {purchaseFilterExists && (
         <MultiselectCheckbox
           className="h-20"
-          title="Закуп/продажа"
+          title="Пополнение/Расход"
           options={[
             {
-              name: 'Закуп',
+              name: 'Расход',
               value: 0,
               checked: filter.purchase[0],
             },
             {
-              name: 'Продажа',
+              name: 'Пополнение',
               value: 1,
               checked: filter.purchase[1],
             },
           ]}
           onChange={(items) => {
+            console.log(`item0`, items[0].checked)
+            console.log(`item1`, items[1].checked)
             if (!items[0].checked && !items[1].checked) {
               setFilter({
                 ...filter,
