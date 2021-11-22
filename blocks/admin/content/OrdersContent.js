@@ -1,7 +1,7 @@
 import React from 'react'
 import { OrderCard } from '@admincomponents/cards'
 import { Virtuoso } from 'react-virtuoso'
-import { ORDER_STATUSES } from '@helpers/constants'
+import { DEFAULT_PRODUCT_CIRCULATION, ORDER_STATUSES } from '@helpers/constants'
 
 const OrdersContent = ({ data, modals, loggedUser }) => {
   const role = loggedUser.role
@@ -52,16 +52,57 @@ const OrdersContent = ({ data, modals, loggedUser }) => {
                 }
               : null
           }
-          onProductClick={
-            loggedUser.access.products.read
-              ? (product) => modals.openProductModal(product)
+          onProductEditClick={(product) =>
+            loggedUser.access.products.edit(product)
+              ? () => modals.openProductModal(product, null, null, true)
               : null
           }
-          onSetClick={
-            loggedUser.access.sets.read
-              ? (set) => modals.openSetModal(set)
+          onProductFilterClick={(product) => {
+            dispatch(
+              setFilter({
+                sets: {
+                  ...filter.sets,
+                  products: [product._id],
+                },
+              })
+            )
+            toasts.info(
+              <div>
+                <div>Применен фильтр по товару в наборе</div>
+                <div className="italic">"{product.name}"</div>
+              </div>
+            )
+          }}
+          onProductBuyClick={
+            loggedUser.access.productCirculations.add
+              ? (product) =>
+                  modals.openProductCirculationModal({
+                    ...DEFAULT_PRODUCT_CIRCULATION,
+                    productId: product._id,
+                  })
               : null
           }
+          onSetEditClick={(set) =>
+            loggedUser.access.sets.edit(set)
+              ? () => modals.openSetModal(set, null, null, true)
+              : null
+          }
+          onSetFilterClick={(set) => {
+            dispatch(
+              setFilter({
+                orders: {
+                  ...filter.orders,
+                  sets: [set._id],
+                },
+              })
+            )
+            toasts.info(
+              <div>
+                <div>Применен фильтр по набору в заказах</div>
+                <div className="italic">"{set.name}"</div>
+              </div>
+            )
+          }}
         />
       )}
     />

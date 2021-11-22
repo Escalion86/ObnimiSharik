@@ -13,7 +13,11 @@ export const OrderCard = ({
   order,
   onClick = () => {},
   onClone = () => {},
-  onProductClick = () => {},
+  onProductEditClick = null,
+  onProductFilterClick = null,
+  onProductBuyClick = null,
+  onSetEditClick = null,
+  onSetFilterClick = null,
   onSetClick = () => {},
   onEdit = null,
   onDelete = null,
@@ -57,14 +61,15 @@ export const OrderCard = ({
           <ProductsInCard
             label="Товары"
             productsIdCount={productsIdCount}
-            // productsWithCount={productsWithCount}
-            onClick={onProductClick}
+            onEdit={onProductEditClick}
+            onFilter={onProductFilterClick}
+            onBuy={onProductBuyClick}
           />
           <SetsInCard
             label="Наборы"
             setsIdCount={setsIdCount}
-            // productsWithCount={productsWithCount}
-            onClick={onSetClick}
+            onEdit={onSetEditClick}
+            onFilter={onSetFilterClick}
           />
           <div className="text-sm tablet:whitespace-nowrap">
             Адрес: {formatDeliveryAddress(order.deliveryAddress)}
