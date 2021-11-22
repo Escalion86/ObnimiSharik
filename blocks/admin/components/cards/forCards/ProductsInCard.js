@@ -35,9 +35,13 @@ const ProductsInCard = ({
               <span className="text-xs">
                 Артикул: {product?.article ? product.article : 'отсутствует'}
               </span>
-              <span className="text-xs">
-                В наличии: {product?.count ? product.count : '0'} шт.
-              </span>
+              <div className={'flex gap-x-1 text-xs'}>
+                <span>В наличии:</span>
+                <span className={product?.count <= 0 ? 'text-red-400' : ''}>
+                  {product?.count ? product.count : '0'}
+                </span>
+                <span>шт.</span>
+              </div>
             </div>
           }
           arrow
