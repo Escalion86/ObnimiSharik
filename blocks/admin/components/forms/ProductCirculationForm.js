@@ -218,6 +218,7 @@ const ProductCirculationForm = ({
           }}
           required
           readOnly={readOnly}
+          disselectOnSameClick={false}
         />
       )}
       <DatePicker

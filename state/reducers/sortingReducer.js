@@ -15,7 +15,8 @@ export const sortingVariables = {
   },
   productCirculations: {
     purchasedAt: { text: 'по дате', type: Date },
-    count: { text: 'по количеству', type: Number },
+    price: { text: 'по цене', type: Number },
+    count: { text: 'по кол-ву товара', type: Number },
   },
   productTypes: {
     name: { text: 'по названию', type: String },

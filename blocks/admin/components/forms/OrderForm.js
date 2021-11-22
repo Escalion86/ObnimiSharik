@@ -951,10 +951,6 @@ const OrderForm = ({
     setPaymentsId(tempPayments)
   }, [])
 
-  // const session = getSession().then((data) => console.log(data))
-
-  // console.log(`session`, session)
-
   const delivers = users.filter((user) => user.role === 'deliver')
   const operators = users.filter((user) => user.role === 'operator')
   const aerodesigners = users.filter((user) => user.role === 'aerodesigner')
@@ -1095,7 +1091,7 @@ const OrderForm = ({
           )
         : putData(
             `/api/orders/${order._id}`,
-            { ...form, fullPrice: totalPrice * 100, productsCount, setsCount },
+            { ...form, price: totalPrice * 100, productsCount, setsCount },
             (data) => {
               createProductCirculationsForOrder(data._id)
               afterConfirm(data)

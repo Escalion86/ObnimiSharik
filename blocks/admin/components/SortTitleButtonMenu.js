@@ -166,7 +166,7 @@ const SortTitleButtonMenu = ({ state, variable }) => {
                 </div>
                 <div
                   className={'absolute -top-0.5'}
-                  style={{ right: '-0.1rem' }}
+                  style={{ right: '-0.08rem' }}
                 >
                   <IconButton
                     inverse

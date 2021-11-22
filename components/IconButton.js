@@ -18,7 +18,7 @@ const IconButton = ({
     onClick={onClick}
     className={
       'flex justify-center items-center duration-300 ' +
-      (textPos = 'right' ? 'flex-row-reverse ' : '') +
+      (textPos === 'right' ? 'flex-row-reverse ' : '') +
       (disabled || loading ? 'cursor-not-allowed ' : '') +
       (small ? 'text-base h-8' : 'text-lg h-10') +
       (inverse

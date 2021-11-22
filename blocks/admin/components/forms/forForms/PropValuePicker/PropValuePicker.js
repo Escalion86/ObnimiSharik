@@ -53,6 +53,7 @@ const PropValuePicker = ({
   name = 'prop',
   required = false,
   readOnly = false,
+  disselectOnSameClick = true,
 }) => {
   if (readOnly) {
     if (!value && value !== 0) return null
@@ -114,7 +115,9 @@ const PropValuePicker = ({
             icon={item.icon}
             color={item.color}
             onClick={() =>
-              item.value === value ? onChange(null) : onChange(item.value)
+              item.value === value
+                ? disselectOnSameClick && onChange(null)
+                : onChange(item.value)
             }
           />
         ))}

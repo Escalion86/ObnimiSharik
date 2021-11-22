@@ -17,7 +17,6 @@ const deleteData = async (url) => {
     }
     // const { data } = await res.json()
     // mutate(url, data, false)
-    // console.log(`data`, data)
     // afterConfirm()
   } catch (error) {
     // setMessage('Failed to add on ' + url)

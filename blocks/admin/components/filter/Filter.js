@@ -46,7 +46,6 @@ const Filter = ({
   const payTypeFilterExists = filterExists('payType')
   const sumFilterExists = filterExists('sum')
 
-  // let sliderPriceValue = [0, 0]
   const [minPrice, maxPrice] = priceFilterExists
     ? minMaxSet(state[variable], 'price', (num) => num / 100)
     : [0, 0]
@@ -76,42 +75,6 @@ const Filter = ({
         filter.sum[1] === null ? maxSum : filter.sum[1],
       ]
     : [0, 0]
-
-  // if (
-  //   state[variable] &&
-  //   state[variable].length > 0 &&
-  //   priceFilterExists
-  // ) {
-  //   maxPrice =
-  //     state[variable].reduce(function (prev, current) {
-  //       return prev.price > current.price ? prev : current
-  //     }).price / 100
-  //   minPrice =
-  //     state[variable].reduce(function (prev, current) {
-  //       return prev.price < current.price ? prev : current
-  //     }).price / 100
-  //   sliderPriceValue = [
-  //     filter.price[0] === null ? minPrice : filter.price[0],
-  //     filter.price[1] === null ? maxPrice : filter.price[1],
-  //   ]
-  // }
-
-  // let maxCount = 0
-  // let minCount = 0
-  // let sliderCountValue = [0, 0]
-
-  // if (state[variable] && state[variable].length > 0 && countFilterExists) {
-  //   maxCount = state[variable].reduce(function (prev, current) {
-  //     return prev.count > current.count ? prev : current
-  //   }).count
-  //   minCount = state[variable].reduce(function (prev, current) {
-  //     return prev.count < current.count ? prev : current
-  //   }).count
-  //   sliderCountValue = [
-  //     filter.count[0] === null ? minCount : filter.count[0],
-  //     filter.count[1] === null ? maxCount : filter.count[1],
-  //   ]
-  // }
 
   const onChangeSlider = (event, value, filterParam, minValue, maxValue) => {
     setFilter({
@@ -185,15 +148,15 @@ const Filter = ({
       {purchaseFilterExists && (
         <MultiselectCheckbox
           className="h-20"
-          title="Закуп/продажа"
+          title="Пополнение/Расход"
           options={[
             {
-              name: 'Закуп',
+              name: 'Расход',
               value: 0,
               checked: filter.purchase[0],
             },
             {
-              name: 'Продажа',
+              name: 'Пополнение',
               value: 1,
               checked: filter.purchase[1],
             },

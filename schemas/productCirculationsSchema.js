@@ -8,6 +8,10 @@ const productCirculationsSchema = {
   },
   purchase: {
     type: Boolean,
+    required: [
+      true,
+      'Пожалуйста выберите Пополнение или Расход. Или он в 4 измерении завис?',
+    ],
     default: false,
   },
   count: {

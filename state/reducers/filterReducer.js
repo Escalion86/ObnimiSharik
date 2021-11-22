@@ -29,6 +29,7 @@ export const initialState = {
   },
   productCirculations: {
     purchase: [true, true],
+    price: [null, null],
     count: [null, null],
   },
   productTypes: { count: [null, null] },
