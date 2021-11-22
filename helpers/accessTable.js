@@ -84,7 +84,7 @@ const accessTable = (user) => {
       delete: (item) =>
         ['admin', 'dev'].includes(user.role) &&
         (item.role !== 'dev' || user.role === 'dev'),
-      add: ['admin', 'dev'].includes(user.role),
+      add: false,
     },
     clients: {
       page: ['admin', 'dev', 'operator'].includes(user.role),
