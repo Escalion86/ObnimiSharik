@@ -48,10 +48,12 @@ const Cabinet = ({
     [JSON.stringify(state), page.pageContent]
   )
 
-  const accessToAddItem = page.variable
-    ? loggedUser?.access[page.variable].add
-    : false
-  let pageButtons = accessToAddItem && page.addButton ? [page.addButton] : []
+  let pageButtons = []
+
+  // const accessToAddItem = page.variable
+  //   ? loggedUser?.access[page.variable].add
+  //   : false
+  // let pageButtons = accessToAddItem && page.addButton ? [page.addButton] : []
 
   const filterExists = !!(
     page.variable &&
@@ -202,15 +204,15 @@ const Cabinet = ({
         />
         <main className="flex flex-col flex-1 overflow-y-auto">
           <Title
-            title={
-              (page?.name ?? '') +
-              (filterExists &&
+            title={page?.name ?? ''}
+            subTitle={
+              filterExists &&
               (loggedUser.role === 'admin' || loggedUser.role === 'dev')
                 ? ' ' +
                   filteredData.length +
                   ' / ' +
                   state[page.variable].length
-                : '')
+                : null
             }
             buttons={buttons}
           />

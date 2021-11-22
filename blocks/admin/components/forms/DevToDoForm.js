@@ -95,7 +95,11 @@ const DevToDoForm = ({
     }
   }
 
-  const isFormChanged = !compareObjects(form, initialFormState, true)
+  const isFormChanged = !compareObjects(
+    form,
+    { ...initialFormState, userId: form.userId },
+    true
+  )
 
   useEffect(() => {
     setFormChanged(isFormChanged)

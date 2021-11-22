@@ -1,17 +1,12 @@
-import React from 'react'
 import { TypeCard } from '@admincomponents/cards'
-import { useSelector } from 'react-redux'
 import { DEFAULT_SET } from '@helpers/constants'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const SetTypesContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Типов наборов нет'</div>
-
   const accessToContent = loggedUser.access.setTypes
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, setType) => (
         <TypeCard
@@ -40,6 +35,8 @@ const SetTypesContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={accessToContent.add ? () => modals.openSetTypeModal() : null}
+      messageIfNoData="Типов наборов нет"
     />
   )
 }

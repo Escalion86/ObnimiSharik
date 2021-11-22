@@ -1,15 +1,11 @@
-import React from 'react'
 import { ProductCirculationCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const ProductCirculationsContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Товарооборота нет'</div>
-
   const accessToContent = loggedUser.access.productCirculations
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, productCirculation) => (
         <ProductCirculationCard
@@ -48,6 +44,10 @@ const ProductCirculationsContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={
+        accessToContent.add ? () => modals.openProductCirculationModal() : null
+      }
+      messageIfNoData="Товарооборота нет"
     />
   )
 }

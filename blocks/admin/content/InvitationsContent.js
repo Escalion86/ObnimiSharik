@@ -1,15 +1,11 @@
-import React from 'react'
 import { InvitationCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const InvitationsContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Приглашений нет'</div>
-
   const accessToContent = loggedUser.access.invitations
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, invitation) => (
         <InvitationCard
@@ -29,6 +25,10 @@ const InvitationsContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={
+        accessToContent.add ? () => modals.openInvitationModal() : null
+      }
+      messageIfNoData="Приглашений нет"
     />
   )
 }

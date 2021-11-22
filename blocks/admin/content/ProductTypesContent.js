@@ -1,16 +1,12 @@
-import React from 'react'
 import { TypeCard } from '@admincomponents/cards'
 import { DEFAULT_PRODUCT } from '@helpers/constants'
-import { Virtuoso } from 'react-virtuoso'
+import Content from './Content'
 
 const ProductTypesContent = ({ data, modals, loggedUser }) => {
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Типов продуктов нет'</div>
-
   const accessToContent = loggedUser.access.productTypes
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, productType) => (
         <TypeCard
@@ -39,6 +35,10 @@ const ProductTypesContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={
+        accessToContent.add ? () => modals.openProductTypeModal() : null
+      }
+      messageIfNoData="Типов продуктов нет"
     />
   )
 }

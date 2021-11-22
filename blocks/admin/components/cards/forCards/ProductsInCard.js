@@ -6,9 +6,7 @@ import {
   faSignOutAlt,
   faUser,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Tooltip } from '@material-ui/core'
-import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import Popup from 'reactjs-popup'
 
@@ -35,9 +33,13 @@ const ProductsInCard = ({
               <span className="text-xs">
                 Артикул: {product?.article ? product.article : 'отсутствует'}
               </span>
-              <span className="text-xs">
-                В наличии: {product?.count ? product.count : '0'} шт.
-              </span>
+              <div className={'flex gap-x-1 text-xs'}>
+                <span>В наличии:</span>
+                <span className={product?.count <= 0 ? 'text-red-400' : ''}>
+                  {product?.count ? product.count : '0'}
+                </span>
+                <span>шт.</span>
+              </div>
             </div>
           }
           arrow

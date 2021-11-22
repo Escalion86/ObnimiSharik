@@ -1,23 +1,19 @@
-import React from 'react'
 import { SetCard } from '@admincomponents/cards'
-import { Virtuoso } from 'react-virtuoso'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilter } from '@state/actions'
 import toasts from '@helpers/toasts'
 import { DEFAULT_PRODUCT_CIRCULATION } from '@helpers/constants'
+import Content from './Content'
 
 const SetsContent = ({ data, modals, loggedUser }) => {
   const { filter } = useSelector((state) => state)
 
   const dispatch = useDispatch()
 
-  if (!(data && data.length > 0))
-    return <div className="px-3">'Наборов нет'</div>
-
   const accessToContent = loggedUser.access.sets
 
   return (
-    <Virtuoso
+    <Content
       data={data}
       itemContent={(index, set) => (
         <SetCard
@@ -94,6 +90,8 @@ const SetsContent = ({ data, modals, loggedUser }) => {
           }
         />
       )}
+      onFabClick={accessToContent.add ? () => modals.openSetModal() : null}
+      messageIfNoData="Наборов нет"
     />
   )
 }
