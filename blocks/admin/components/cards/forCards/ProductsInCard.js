@@ -6,9 +6,7 @@ import {
   faSignOutAlt,
   faUser,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Tooltip } from '@material-ui/core'
-import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import Popup from 'reactjs-popup'
 
