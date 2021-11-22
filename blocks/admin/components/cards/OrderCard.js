@@ -20,14 +20,14 @@ export const OrderCard = ({
 }) => {
   const { payments } = useSelector((state) => state)
   const productsIdCount = {}
-  order.productsCount.forEach(
-    (productCount) =>
-      (productsIdCount[productCount.product._id] = productCount.count)
-  )
+  order.productsCount.forEach((productCount) => {
+    if (productCount.product?._id)
+      productsIdCount[productCount.product._id] = productCount.count
+  })
   const setsIdCount = {}
-  order.setsCount.forEach(
-    (setCount) => (setsIdCount[setCount.set._id] = setCount.count)
-  )
+  order.setsCount.forEach((setCount) => {
+    if (productCount.set?._id) setsIdCount[setCount.set._id] = setCount.count
+  })
 
   const orderStatus = ORDER_STATUSES.find(
     (orderStatus) => orderStatus.value === order.status

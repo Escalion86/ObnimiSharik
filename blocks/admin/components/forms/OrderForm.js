@@ -1074,10 +1074,16 @@ const OrderForm = ({
     const errs = formValidator(form, ordersSchema)
     if (Object.keys(errs).length === 0) {
       setSubmiting(true)
+      // Убираем невыбранные товары и с количеством 0
+      const productsCount = form.productsCount.filter(
+        (productCount) => productCount.product
+      )
+      const setsCount = form.setsCount.filter((setCount) => setCount.set)
+
       forNew
         ? postData(
             '/api/orders',
-            { ...form, price: totalPrice * 100 },
+            { ...form, price: totalPrice * 100, productsCount, setsCount },
             (data) => {
               createProductCirculationsForOrder(data._id)
               afterConfirm(data)
@@ -1089,7 +1095,7 @@ const OrderForm = ({
           )
         : putData(
             `/api/orders/${order._id}`,
-            { ...form, fullPrice: totalPrice * 100 },
+            { ...form, fullPrice: totalPrice * 100, productsCount, setsCount },
             (data) => {
               createProductCirculationsForOrder(data._id)
               afterConfirm(data)
