@@ -26,7 +26,7 @@ export const OrderCard = ({
   })
   const setsIdCount = {}
   order.setsCount.forEach((setCount) => {
-    if (productCount.set?._id) setsIdCount[setCount.set._id] = setCount.count
+    if (setCount.set?._id) setsIdCount[setCount.set._id] = setCount.count
   })
 
   const orderStatus = ORDER_STATUSES.find(
