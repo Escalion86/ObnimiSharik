@@ -15,6 +15,13 @@ const formValidator = (form, schema) => {
       ) {
         err[key] = schema[key].required[1]
       }
+      if (
+        schema[key].type === Boolean &&
+        form[key] !== false &&
+        form[key] !== true
+      ) {
+        err[key] = schema[key].required[1]
+      }
     }
     if (schema[key].type === Number && form[key] !== schema[key].default) {
       if (schema[key].min && schema[key].min[0] > form[key]) {
