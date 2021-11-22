@@ -1,7 +1,21 @@
+import MenuItem from '@admincomponents/MenuItem'
+import {
+  faCartPlus,
+  faFilter,
+  faPencilAlt,
+  faSignOutAlt,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons'
 import { Tooltip } from '@material-ui/core'
 import { useSelector } from 'react-redux'
+import Popup from 'reactjs-popup'
 
-const SetsInCard = ({ label = 'Наборы', setsIdCount = {}, onClick = null }) => {
+const SetsInCard = ({
+  label = 'Наборы',
+  setsIdCount = {},
+  onEdit = null,
+  onFilter = null,
+}) => {
   const { sets } = useSelector((state) => state)
 
   const setItems = []
@@ -27,43 +41,62 @@ const SetsInCard = ({ label = 'Наборы', setsIdCount = {}, onClick = null }
             placement="top"
           >
             <div
-              className="flex cursor-pointer group"
-              onClick={
-                onClick
-                  ? (event) => {
-                      event.stopPropagation()
-                      onClick(set)
-                    }
-                  : null
-              }
+              className="flex"
+              key={'product' + id}
+              onClick={(event) => {
+                event.stopPropagation()
+                // onClick(product)
+              }}
             >
-              <div
-                className={
-                  'group-hover:text-toxic flex-1 ' +
-                  // (onClick
-                  //   ? !product?.count || product?.count < count
-                  //     ? 'text-red-400'
-                  //     : 'text-primary'
-                  //   : '')
-                  (onClick ? 'text-primary' : '')
+              <Popup
+                trigger={
+                  <div className="ml-1 flex flex-nowrap gap-x-0.5 group-hover:text-toxic">
+                    <span className="flex-1 group-hover:text-toxic text-primary">
+                      {set?.name}
+                    </span>
+                    <span>-</span>
+                    <span
+                      className={
+                        !set?.count || set?.count < count
+                          ? 'text-red-400 font-bold'
+                          : 'text-black'
+                      }
+                    >
+                      {count}
+                    </span>
+                    <span>шт</span>
+                  </div>
                 }
+                // position="right top"
+                // on="hover"
+                closeOnDocumentClick
+                // mouseLeaveDelay={300}
+                // mouseEnterDelay={0}
+                contentStyle={{
+                  padding: '0px',
+                  // border: '1px',
+                  borderColor: 'rgb(38, 163, 212)',
+                  width: 'auto',
+                }}
+                arrow={false}
+                nested
               >
-                {/* {product.article && '(' + product.article + ') '} */}
-                {set?.name}
-              </div>
-              <div className="ml-1 flex flex-nowrap gap-x-0.5 group-hover:text-toxic">
-                <span>-</span>
-                <span
-                  className={
-                    !set?.count || set?.count < count
-                      ? 'text-red-400 font-bold'
-                      : 'text-black'
-                  }
-                >
-                  {count}
-                </span>
-                <span>шт</span>
-              </div>
+                {onEdit && typeof onEdit(set) === 'function' && (
+                  <MenuItem
+                    onClick={() => onEdit(set)()}
+                    icon={faPencilAlt}
+                    name="Редактировать набор"
+                  />
+                )}
+                {onFilter && (
+                  <MenuItem
+                    onClick={() => onFilter(set)}
+                    icon={faFilter}
+                    name="Показать заказы с этим набором"
+                    disabled
+                  />
+                )}
+              </Popup>
             </div>
           </Tooltip>
         </div>
