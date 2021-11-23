@@ -21,6 +21,7 @@ const PayTypePicker = ({
     name="payType"
     required={required}
     readOnly={readOnly}
+    disselectOnSameClick={false}
   />
 )
 
