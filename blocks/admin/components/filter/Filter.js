@@ -4,6 +4,8 @@ import Slider from '@admincomponents/Slider'
 import FilterButtons from './forFilter/FilterButtons'
 import compareObjects from '@helpers/compareObjects'
 import { Input } from '@admincomponents/forms/forForms'
+import { setFilter as actionSetFilter } from '@state/actions/filterActions'
+import { useDispatch } from 'react-redux'
 
 const minMaxSet = (stateVariable, filterVariable, func = (num) => num) => {
   let max = 0
@@ -27,6 +29,8 @@ const Filter = ({
   setHideFilter = () => {},
 }) => {
   const [filter, setFilter] = useState(state.filter[variable])
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!compareObjects(state.filter[variable], filter))
@@ -109,7 +113,8 @@ const Filter = ({
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              setFilter(filter)
+              dispatch(actionSetFilter({ [variable]: filter }))
+              setHideFilter()
             }
           }}
         />
