@@ -41,6 +41,8 @@ const PaymentForm = ({
 
   const [form, setForm] = useState(initialFormState)
 
+  console.log(`form`, form)
+
   const updateForm = (data) => setForm({ ...form, ...data })
 
   const forNew = payment._id === undefined
@@ -106,19 +108,23 @@ const PaymentForm = ({
       readOnly={readOnly}
       submiting={submiting}
     >
+      <SelectOrder
+        onChange={(order) => {
+          if (!form.clientId)
+            updateForm({ orderId: order._id, clientId: order.clientId })
+          else updateForm({ orderId: order._id })
+        }}
+        selectedId={form.orderId}
+        // clearButton
+        required
+        // exceptedIds={selectedItemsIds}
+        readOnly={readOnly}
+      />
       <SelectClient
         onChange={(client) => updateForm({ clientId: client._id })}
         selectedId={form.clientId}
         required
         className="flex-1"
-        // exceptedIds={selectedItemsIds}
-        readOnly={readOnly}
-      />
-      <SelectOrder
-        onChange={(order) => updateForm({ orderId: order._id })}
-        selectedId={form.orderId}
-        // clearButton
-        required
         // exceptedIds={selectedItemsIds}
         readOnly={readOnly}
       />
