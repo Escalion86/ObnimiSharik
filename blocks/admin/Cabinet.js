@@ -121,6 +121,11 @@ const Cabinet = ({
         .filter((item) => accessToContent.read(item))
         .filter(
           (item) =>
+            (!state.filter[page.variable].name ||
+              item.name
+                ?.toString()
+                .toLowerCase()
+                .includes(state.filter[page.variable].name.toLowerCase())) &&
             (state.filter[page.variable].price === undefined ||
               ((state.filter[page.variable].price[0] === null ||
                 item.price >= state.filter[page.variable].price[0] * 100) &&
