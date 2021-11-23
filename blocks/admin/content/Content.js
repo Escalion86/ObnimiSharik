@@ -19,6 +19,9 @@ const Content = ({
     <div className="relative w-full h-full overflow-y-hidden">
       <Virtuoso
         data={data}
+        // itemsRendered={(items) => {
+        //   if (items.length === data.length) setFabShow(true)
+        // }}
         onWheel={(e) => setFabShow(e.deltaY < 0)}
         onScroll={(e) => {
           e.target.scrollTop > ref.current
@@ -26,6 +29,7 @@ const Content = ({
             : setFabShow(true)
           ref.current = e.target.scrollTop
         }}
+        // atBottomStateChange={(isBottom) => setFabShow(!isBottom)}
         itemContent={itemContent}
       />
       {onFabClick && <Fab show={fabShow} onClick={onFabClick} />}

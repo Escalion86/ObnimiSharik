@@ -18,11 +18,13 @@ import {
 
 export const initialState = {
   products: {
+    name: '',
     productTypes: null,
     price: [null, null],
     count: [null, null],
   },
   sets: {
+    name: '',
     setTypes: null,
     price: [null, null],
     count: [null, null],
@@ -32,14 +34,16 @@ export const initialState = {
     price: [null, null],
     count: [null, null],
   },
-  productTypes: { count: [null, null] },
-  setTypes: { count: [null, null] },
+  productTypes: { name: '', count: [null, null] },
+  setTypes: { name: '', count: [null, null] },
   users: {
+    name: '',
     gender: GENDERS.map(({ value, name }) => {
       return { value, name, checked: true }
     }),
   },
   clients: {
+    name: '',
     gender: GENDERS.map(({ value, name }) => {
       return { value, name, checked: true }
     }),

@@ -29,6 +29,7 @@ const Input = ({
   hidden = false,
   defaultValue,
   link = null,
+  onKeyDown
 }) => {
   if (hidden) return null
   if (readOnly) {
@@ -143,6 +144,7 @@ const Input = ({
                 : null
             }
             defaultValue={defaultValue}
+            onKeyDown={onKeyDown}
           />
         </div>
         {postfix && (

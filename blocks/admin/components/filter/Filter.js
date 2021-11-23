@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Slider from '@admincomponents/Slider'
 import FilterButtons from './forFilter/FilterButtons'
 import compareObjects from '@helpers/compareObjects'
+import { Input } from '@admincomponents/forms/forForms'
 
 const minMaxSet = (stateVariable, filterVariable, func = (num) => num) => {
   let max = 0
@@ -35,6 +36,7 @@ const Filter = ({
   const filterExists = (key) =>
     state.filter[variable][key] !== undefined && filter[key] !== undefined
 
+  const nameFilterExists = filterExists('name')
   const priceFilterExists = filterExists('price')
   const countFilterExists = filterExists('count')
   const productTypesFilterExists = filterExists('productTypes')
@@ -89,212 +91,232 @@ const Filter = ({
   return (
     <div
       className={
-        'absolute z-20 w-full duration-500 top-0 flex gap-4 p-2 transform bg-white border-b border-gray-200' +
+        'absolute z-20 w-full duration-500 top-0 flex flex-col p-2 transform bg-white border-b border-gray-200' +
         (show ? '' : ' scale-y-0 -translate-y-1/2')
       }
     >
-      {productTypesFilterExists && (
-        <MultiselectCheckbox
-          className="h-full"
-          title="Типы"
-          options={state.productTypes.map((type) => {
-            return {
-              name: type.name,
-              value: type._id,
-              checked:
-                filter.productTypes === null
-                  ? true
-                  : filter.productTypes.includes(type._id),
-            }
-          })}
-          checkAllBtn
-          onChange={(types) =>
+      {nameFilterExists && (
+        <Input
+          inLine
+          value={filter.name}
+          labelStyle="w-auto mr-2"
+          label="По имени"
+          onChange={(name) => {
             setFilter({
               ...filter,
-              productTypes:
-                types.length === state.productTypes.length
-                  ? null
-                  : types.map((item) => item.value),
+              name,
             })
-          }
-        />
-      )}
-      {setTypesFilterExists && (
-        <MultiselectCheckbox
-          className="h-full"
-          title="Типы"
-          options={state.setTypes.map((type) => {
-            return {
-              name: type.name,
-              value: type._id,
-              checked:
-                filter.setTypes === null
-                  ? true
-                  : filter.setTypes.includes(type._id),
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              setFilter(filter)
             }
-          })}
-          checkAllBtn
-          onChange={(types) =>
-            setFilter({
-              ...filter,
-              setTypes:
-                types.length === state.setTypes.length
-                  ? null
-                  : types.map((item) => item.value),
-            })
-          }
+          }}
         />
       )}
-      {purchaseFilterExists && (
-        <MultiselectCheckbox
-          className="h-20"
-          title="Пополнение/Расход"
-          options={[
-            {
-              name: 'Расход',
-              value: 0,
-              checked: filter.purchase[0],
-            },
-            {
-              name: 'Пополнение',
-              value: 1,
-              checked: filter.purchase[1],
-            },
-          ]}
-          onChange={(items) => {
-            if (!items[0].checked && !items[1].checked) {
+      <div className="flex gap-4 ">
+        {productTypesFilterExists && (
+          <MultiselectCheckbox
+            className="h-full"
+            title="Типы"
+            options={state.productTypes.map((type) => {
+              return {
+                name: type.name,
+                value: type._id,
+                checked:
+                  filter.productTypes === null
+                    ? true
+                    : filter.productTypes.includes(type._id),
+              }
+            })}
+            checkAllBtn
+            onChange={(types) =>
               setFilter({
                 ...filter,
-                purchase: [!filter.purchase[0], !filter.purchase[1]],
+                productTypes:
+                  types.length === state.productTypes.length
+                    ? null
+                    : types.map((item) => item.value),
               })
-            } else
+            }
+          />
+        )}
+        {setTypesFilterExists && (
+          <MultiselectCheckbox
+            className="h-full"
+            title="Типы"
+            options={state.setTypes.map((type) => {
+              return {
+                name: type.name,
+                value: type._id,
+                checked:
+                  filter.setTypes === null
+                    ? true
+                    : filter.setTypes.includes(type._id),
+              }
+            })}
+            checkAllBtn
+            onChange={(types) =>
               setFilter({
                 ...filter,
-                purchase: items.map((item) => item.checked),
+                setTypes:
+                  types.length === state.setTypes.length
+                    ? null
+                    : types.map((item) => item.value),
               })
-          }}
-          getAll
-          noScroll
-        />
-      )}
-      {statusFilterExists && (
-        <MultiselectCheckbox
-          title="Статус"
-          options={filter.status}
-          onChange={(status) => {
-            setFilter({
-              ...filter,
-              status,
-            })
-          }}
-          getAll
-          // noScroll
-        />
-      )}
-      {priorityFilterExists && (
-        <MultiselectCheckbox
-          title="Приоритет"
-          options={filter.priority}
-          onChange={(priority) => {
-            setFilter({
-              ...filter,
-              priority,
-            })
-          }}
-          getAll
-          noScroll
-        />
-      )}
-      {genderFilterExists && (
-        <MultiselectCheckbox
-          title="Пол"
-          options={filter.gender}
-          onChange={(gender) => {
-            setFilter({
-              ...filter,
-              gender,
-            })
-          }}
-          getAll
-          noScroll
-        />
-      )}
-      {payTypeFilterExists && (
-        <MultiselectCheckbox
-          title="Тип"
-          options={filter.payType}
-          onChange={(payType) => {
-            setFilter({
-              ...filter,
-              payType,
-            })
-          }}
-          getAll
-          noScroll
-        />
-      )}
+            }
+          />
+        )}
+        {purchaseFilterExists && (
+          <MultiselectCheckbox
+            className="h-20"
+            title="Пополнение/Расход"
+            options={[
+              {
+                name: 'Расход',
+                value: 0,
+                checked: filter.purchase[0],
+              },
+              {
+                name: 'Пополнение',
+                value: 1,
+                checked: filter.purchase[1],
+              },
+            ]}
+            onChange={(items) => {
+              if (!items[0].checked && !items[1].checked) {
+                setFilter({
+                  ...filter,
+                  purchase: [!filter.purchase[0], !filter.purchase[1]],
+                })
+              } else
+                setFilter({
+                  ...filter,
+                  purchase: items.map((item) => item.checked),
+                })
+            }}
+            getAll
+            noScroll
+          />
+        )}
+        {statusFilterExists && (
+          <MultiselectCheckbox
+            title="Статус"
+            options={filter.status}
+            onChange={(status) => {
+              setFilter({
+                ...filter,
+                status,
+              })
+            }}
+            getAll
+            // noScroll
+          />
+        )}
+        {priorityFilterExists && (
+          <MultiselectCheckbox
+            title="Приоритет"
+            options={filter.priority}
+            onChange={(priority) => {
+              setFilter({
+                ...filter,
+                priority,
+              })
+            }}
+            getAll
+            noScroll
+          />
+        )}
+        {genderFilterExists && (
+          <MultiselectCheckbox
+            title="Пол"
+            options={filter.gender}
+            onChange={(gender) => {
+              setFilter({
+                ...filter,
+                gender,
+              })
+            }}
+            getAll
+            noScroll
+          />
+        )}
+        {payTypeFilterExists && (
+          <MultiselectCheckbox
+            title="Тип"
+            options={filter.payType}
+            onChange={(payType) => {
+              setFilter({
+                ...filter,
+                payType,
+              })
+            }}
+            getAll
+            noScroll
+          />
+        )}
 
-      <div className="flex flex-col justify-between flex-1 gap-y-1">
-        <div>
-          {priceFilterExists && (
-            // || fullPriceFilterExists
-            <div>
-              <div>Стоимость</div>
-              <Slider
-                value={sliderPriceValue}
-                onChange={(event, value) =>
-                  onChangeSlider(event, value, 'price', minPrice, maxPrice)
-                }
-                valueLabelDisplay="on"
-                aria-labelledby="range-slider"
-                max={maxPrice || 0}
-                min={minPrice || 0}
-                // getAriaValueText={valuetext}
-              />
-            </div>
-          )}
-          {sumFilterExists && (
-            // || fullPriceFilterExists
-            <div>
-              <div>Сумма</div>
-              <Slider
-                value={sliderSumValue}
-                onChange={(event, value) =>
-                  onChangeSlider(event, value, 'sum', minSum, maxSum)
-                }
-                valueLabelDisplay="on"
-                aria-labelledby="range-slider"
-                max={maxSum || 0}
-                min={minSum || 0}
-                // getAriaValueText={valuetext}
-              />
-            </div>
-          )}
-          {countFilterExists && (
-            <div>
-              <div>Количество</div>
-              <Slider
-                value={sliderCountValue}
-                onChange={(event, value) =>
-                  onChangeSlider(event, value, 'count', minCount, maxCount)
-                }
-                valueLabelDisplay="on"
-                aria-labelledby="range-slider"
-                max={maxCount || 0}
-                min={minCount || 0}
-                // getAriaValueText={valuetext}
-              />
-            </div>
-          )}
-        </div>
-        <FilterButtons
-          state={state}
-          variable={variable}
-          filter={filter}
-          setFilter={setFilter}
-          setHideFilter={setHideFilter}
-        />
-        {/* <div className="flex justify-end gap-2">
+        <div className="flex flex-col justify-between flex-1 gap-y-1">
+          <div>
+            {priceFilterExists && (
+              // || fullPriceFilterExists
+              <div>
+                <div>Стоимость</div>
+                <Slider
+                  value={sliderPriceValue}
+                  onChange={(event, value) =>
+                    onChangeSlider(event, value, 'price', minPrice, maxPrice)
+                  }
+                  valueLabelDisplay="on"
+                  aria-labelledby="range-slider"
+                  max={maxPrice || 0}
+                  min={minPrice || 0}
+                  // getAriaValueText={valuetext}
+                />
+              </div>
+            )}
+            {sumFilterExists && (
+              // || fullPriceFilterExists
+              <div>
+                <div>Сумма</div>
+                <Slider
+                  value={sliderSumValue}
+                  onChange={(event, value) =>
+                    onChangeSlider(event, value, 'sum', minSum, maxSum)
+                  }
+                  valueLabelDisplay="on"
+                  aria-labelledby="range-slider"
+                  max={maxSum || 0}
+                  min={minSum || 0}
+                  // getAriaValueText={valuetext}
+                />
+              </div>
+            )}
+            {countFilterExists && (
+              <div>
+                <div>Количество</div>
+                <Slider
+                  value={sliderCountValue}
+                  onChange={(event, value) =>
+                    onChangeSlider(event, value, 'count', minCount, maxCount)
+                  }
+                  valueLabelDisplay="on"
+                  aria-labelledby="range-slider"
+                  max={maxCount || 0}
+                  min={minCount || 0}
+                  // getAriaValueText={valuetext}
+                />
+              </div>
+            )}
+          </div>
+          <FilterButtons
+            state={state}
+            variable={variable}
+            filter={filter}
+            setFilter={setFilter}
+            setHideFilter={setHideFilter}
+          />
+          {/* <div className="flex justify-end gap-2">
           {!compareObjects(
             data.filter.products,
             filterInitialState.products
@@ -328,6 +350,7 @@ const Filter = ({
             }
           />
         </div> */}
+        </div>
       </div>
     </div>
   )
