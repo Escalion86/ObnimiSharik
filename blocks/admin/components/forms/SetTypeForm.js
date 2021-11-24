@@ -9,7 +9,7 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import InputImage from './forForms/InputImage'
-import setTypesSchema from 'schemas/setTypesSchema'
+import setTypesSchema from '@schemas/setTypesSchema'
 import formValidator from '@helpers/formValidator'
 
 const SetTypeForm = ({
@@ -24,8 +24,11 @@ const SetTypeForm = ({
   const [submiting, setSubmiting] = useState(false)
 
   const initialFormState = {
-    name: setType.name,
-    image: setType.image,
+    name: productType.name,
+    description: productType.description,
+    image: productType.image,
+    cardSize: productType.cardSize,
+    archive: productType.archive,
   }
 
   const [form, setForm] = useState(initialFormState)
