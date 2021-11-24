@@ -1,5 +1,3 @@
-var mongoose = require('mongoose')
-
 const paymentsSchema = {
   clientId: {
     type: String,
