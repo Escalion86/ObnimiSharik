@@ -46,6 +46,10 @@ const devToDoSchema = {
     type: Date,
     default: null,
   },
+  archive: {
+    type: Boolean,
+    default: false,
+  },
 }
 
 export default devToDoSchema
