@@ -100,7 +100,7 @@ export const OrderCard = ({
         <div
           className={
             'flex items-center bg-white justify-center w-28 h-12 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg ' +
-            orderStatus.color
+            `bg-${orderStatus.color}`
           }
         >
           <span className="text-sm text-center">{orderStatus.name}</span>

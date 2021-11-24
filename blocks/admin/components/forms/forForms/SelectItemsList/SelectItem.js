@@ -95,10 +95,10 @@ export const SelectItem = ({
   itemHeight = 40,
   noSearch = false,
   itemWidth = 0,
-  moreOneFilterTurnOn = false,
+  moreOneFilterTurnOn = true,
   readOnly = false,
 }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(selectedId === '?')
   const [searchText, setSearchText] = useState('')
   const [moreOneFilter, setMoreOneFilter] = useState(moreOneFilterTurnOn)
 
@@ -123,7 +123,7 @@ export const SelectItem = ({
         items,
         searchText,
         exceptedIds,
-        moreOneFilter ? { count: '>0' } : {}
+        moreOneFilterTurnOnExists && moreOneFilter ? { count: '>0' } : {}
       )
     : []
 
