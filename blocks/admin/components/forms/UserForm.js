@@ -17,7 +17,7 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import birthDateToAge from '@helpers/birthDateToAge'
 import InputAvatar from './forForms/InputAvatar'
-import usersSchema from 'schemas/usersSchema'
+import usersSchema from '@schemas/usersSchema'
 import formValidator from '@helpers/formValidator'
 
 const UserForm = ({

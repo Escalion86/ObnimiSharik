@@ -15,7 +15,7 @@ import { postData, putData } from '@helpers/CRUD'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import PayTypePicker from './forForms/PropValuePicker/PayTypePicker'
-import paymentsSchema from 'schemas/paymentsSchema'
+import paymentsSchema from '@schemas/paymentsSchema'
 import formValidator from '@helpers/formValidator'
 
 const PaymentForm = ({
