@@ -1,3 +1,5 @@
+var mongoose = require('mongoose')
+
 const paymentsSchema = {
   clientId: {
     type: String,
@@ -40,7 +42,7 @@ const paymentsSchema = {
   },
   payAt: {
     type: Date,
-    default: Date.now,
+    default: () => Date.now(),
   },
 }
 

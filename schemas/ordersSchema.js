@@ -1,3 +1,5 @@
+var mongoose = require('mongoose')
+
 const ordersSchema = {
   clientId: {
     type: String,
@@ -60,11 +62,11 @@ const ordersSchema = {
   },
   deliveryDateFrom: {
     type: Date,
-    default: Date.now,
+    default: null,
   },
   deliveryDateTo: {
     type: Date,
-    default: Date.now,
+    default: null,
   },
   deliverId: {
     type: String,
