@@ -13,6 +13,7 @@ const clientsSchema = {
   },
   email: {
     type: String,
+    lowercase: true,
   },
   image: {
     type: String,

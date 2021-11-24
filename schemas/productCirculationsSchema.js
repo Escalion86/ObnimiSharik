@@ -38,7 +38,7 @@ const productCirculationsSchema = {
   },
   purchasedAt: {
     type: Date,
-    default: Date.now,
+    default: () => Date.now(),
   },
 }
 

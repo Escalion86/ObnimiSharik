@@ -5,6 +5,7 @@ const invitationsSchema = {
       true,
       'Введите EMail. Или ты как решил его пришласить в систему?',
     ],
+    lowercase: true,
   },
   role: {
     type: String,

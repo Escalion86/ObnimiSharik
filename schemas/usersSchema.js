@@ -9,6 +9,7 @@ const usersSchema = {
   },
   email: {
     type: String,
+    lowercase: true,
     required: [true, 'Введите EMail'],
   },
   image: {
@@ -53,11 +54,11 @@ const usersSchema = {
   },
   lastActivityAt: {
     type: Date,
-    default: Date.now,
+    default: () => Date.now(),
   },
   prevActivityAt: {
     type: Date,
-    default: Date.now,
+    default: () => Date.now(),
   },
   archive: {
     type: Boolean,

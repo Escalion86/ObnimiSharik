@@ -6,7 +6,9 @@ const OrdersContent = ({ data, modals, loggedUser }) => {
   const orderStatusesAccessed =
     loggedUser.role === 'dev' || loggedUser.role === 'admin'
       ? ORDER_STATUSES
-      : ORDER_STATUSES.filter((status) => status.roles.includes(role))
+      : ORDER_STATUSES.filter((status) =>
+          status.roles.includes(loggedUser.role)
+        )
   const orderStatusesValues = orderStatusesAccessed.map(
     (status) => status.value
   )
