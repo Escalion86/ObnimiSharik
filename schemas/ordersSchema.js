@@ -1,5 +1,3 @@
-var mongoose = require('mongoose')
-
 const ordersSchema = {
   clientId: {
     type: String,
@@ -41,7 +39,11 @@ const ordersSchema = {
     type: String,
     default: '',
   },
-  photos: {
+  examplePhotos: {
+    type: Array,
+    default: [],
+  },
+  resultPhotos: {
     type: Array,
     default: [],
   },
