@@ -21,7 +21,7 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import { useSelector } from 'react-redux'
-import setsSchema from 'schemas/setsSchema'
+import setsSchema from '@schemas/setsSchema'
 import formValidator from '@helpers/formValidator'
 
 const SetForm = ({

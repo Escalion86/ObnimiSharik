@@ -14,7 +14,7 @@ import compareArrays from '@helpers/compareArrays'
 import Form from './Form'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
-import productsSchema from 'schemas/productsSchema'
+import productsSchema from '@schemas/productsSchema'
 import formValidator from '@helpers/formValidator'
 
 const ProductForm = ({
@@ -60,6 +60,7 @@ const ProductForm = ({
   const readOnly = (forNew && !canAdd) || (!forNew && !canEdit)
 
   const sendForm = async () => {
+    setSubmiting(true)
     forNew
       ? postData(
           '/api/products',
@@ -83,7 +84,6 @@ const ProductForm = ({
     e?.preventDefault()
     const errs = formValidator(form, productsSchema)
     if (Object.keys(errs).length === 0) {
-      setSubmiting(true)
       sendForm()
     } else {
       setErrors(errs)

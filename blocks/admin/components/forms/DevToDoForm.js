@@ -15,7 +15,7 @@ import Form from './Form'
 import compareObjects from '@helpers/compareObjects'
 import { getSession } from 'next-auth/react'
 import formValidator from '@helpers/formValidator'
-import devToDoSchema from 'schemas/devToDoSchema'
+import devToDoSchema from '@schemas/devToDoSchema'
 
 const DevToDoForm = ({
   loggedUser,

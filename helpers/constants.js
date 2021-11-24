@@ -66,6 +66,7 @@ export const DEFAULT_PRODUCT_TYPE = {
   description: '',
   image: '',
   cardSize: 'normal', // big, small
+  archive: false,
 }
 
 export const DEFAULT_SET_TYPE = {
@@ -73,6 +74,7 @@ export const DEFAULT_SET_TYPE = {
   description: '',
   image: '',
   cardSize: 'normal', // big, small
+  archive: false,
 }
 
 export const DEFAULT_INVITATION = {
@@ -90,6 +92,7 @@ export const DEFAULT_DEVTODO = {
   status: 'created',
   priority: null,
   finishedAt: null,
+  archive: false,
 }
 
 export const ROLES = [
@@ -198,7 +201,7 @@ export const DEFAULT_PRODUCT_CIRCULATION = {
 }
 
 export const DEFAULT_DELIVERY_ADDRESS = {
-  town: '',
+  town: 'Красноярск',
   street: '',
   house: '',
   entrance: '',

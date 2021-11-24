@@ -19,7 +19,7 @@ import findDataWithId from '@helpers/findDataWithId'
 import { useSelector } from 'react-redux'
 import compareObjects from '@helpers/compareObjects'
 import PropValuePicker from './forForms/PropValuePicker/PropValuePicker'
-import productCirculationsSchema from 'schemas/productCirculationsSchema'
+import productCirculationsSchema from '@schemas/productCirculationsSchema'
 import formValidator from '@helpers/formValidator'
 
 const PriceCountInput = ({

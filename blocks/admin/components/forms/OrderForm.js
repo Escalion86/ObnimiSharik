@@ -545,7 +545,7 @@ const ResponsibleContent = ({ form, updateForm, role, readOnly }) => {
           // exceptedIds={selectedItemsIds}
         />
       )}
-      {operator && (
+      {operator && !form.deliveryPickup && (
         <SelectDeliver
           onChange={(deliver) =>
             updateForm({
@@ -644,7 +644,9 @@ const PaymentContent = ({
   const operator = ['operator', 'dev', 'admin'].includes(role)
 
   const handleChangeDiscount = (value) => {
-    const discountValue = Math.ceil(catalogPrice * value) / 100
+    const discountValue = !!parseFloat(value)
+      ? Math.ceil(parseFloat(value) * catalogPrice)
+      : 0
     updateForm({ discount: discountValue })
   }
 
@@ -671,17 +673,18 @@ const PaymentContent = ({
           <Input
             value={
               catalogPrice > 0
-                ? Math.ceil((form.discount / catalogPrice) * 100) / 100
+                ? Number((form.discount / catalogPrice).toFixed(2))
                 : 0
             }
-            type="number"
+            type="text"
             onChange={handleChangeDiscount}
             postfix="%"
             // label="Скидка"
-            inputStyle="max-w-20"
+            inputStyle="max-w-24"
             name="discount"
             inLine
             readOnly={readOnly}
+            step="0.01"
           />
         </div>
         <div className="flex items-center gap-x-2">
@@ -848,17 +851,22 @@ const ProductCirculationContent = ({
   )
 }
 
-const PhotosContent = ({ form, setForm, readOnly }) => {
+const PhotosContent = ({ form, updateForm, readOnly }) => {
   return (
     <div>
       <InputImages
-        images={form.photos}
-        label="Фотографии"
-        onChange={(photos) =>
-          updateForm({
-            photos,
-          })
-        }
+        images={form.examplePhotos}
+        label="Примеры работ"
+        onChange={(examplePhotos) => updateForm({ examplePhotos })}
+        // readOnly={readOnly}
+        directory="temp"
+        maxImages={10}
+        readOnly={readOnly}
+      />
+      <InputImages
+        images={form.resultPhotos}
+        label="Фотографии готовой работы"
+        onChange={(resultPhotos) => updateForm({ resultPhotos })}
         // readOnly={readOnly}
         directory="order_photos"
         maxImages={10}
@@ -888,7 +896,8 @@ const OrderForm = ({
     price: order.price,
     status: order.status,
     comment: order.comment,
-    photos: order.photos,
+    resultPhotos: order.resultPhotos,
+    examplePhotos: order.examplePhotos,
     deliveryPrice: order.deliveryPrice,
     deliveryPickup: order.deliveryPickup,
     deliveryAddress: order.deliveryAddress,
@@ -1234,14 +1243,6 @@ const OrderForm = ({
         twoCols={twoCols}
         config={[
           {
-            title: 'Ответственные',
-            // text: form.clientId
-            //   ? clients.find((client) => client._id === form.clientId)?.name
-            //   : 'не выбран',
-            content: <ResponsibleContent {...contentParams} />,
-            visible: operator,
-          },
-          {
             title: 'Клиент',
             text: form.clientId
               ? clients.find((client) => client._id === form.clientId)?.name
@@ -1303,6 +1304,14 @@ const OrderForm = ({
             visible: operator && !cartEmpty,
           },
           {
+            title: 'Ответственные',
+            // text: form.clientId
+            //   ? clients.find((client) => client._id === form.clientId)?.name
+            //   : 'не выбран',
+            content: <ResponsibleContent {...contentParams} />,
+            visible: operator,
+          },
+          {
             title: 'Расход товаров',
             content: <ProductCirculationContent {...contentParams} />,
             // text: form.deliveryPickup ? 'Самовывоз' : 'Курьером',
@@ -1323,12 +1332,20 @@ const OrderForm = ({
             title: 'Контент',
             content: <PhotosContent {...contentParams} />,
             // text: form.deliveryPickup ? 'Самовывоз' : 'Курьером',
-            text: getNoun(
-              form.photos ? form.photos.length : 0,
-              'фотография',
-              'фотографии',
-              'фотографий'
-            ),
+            text:
+              getNoun(
+                form.examplePhotos ? form.examplePhotos.length : 0,
+                'пример',
+                'примера',
+                'примеров'
+              ) +
+              ', ' +
+              getNoun(
+                form.resultPhotos ? form.resultPhotos.length : 0,
+                'фотография',
+                'фотографии',
+                'фотографий'
+              ),
             visible: true,
             // disabled: loggedUser.role === 'aerodesigner',
           },
