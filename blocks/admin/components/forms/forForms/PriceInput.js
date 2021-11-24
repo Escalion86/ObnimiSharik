@@ -89,6 +89,7 @@ const PriceInput = ({
           inLine={inLine}
           postfix="₽"
           readOnly={readOnly}
+          maxLength={6}
         />
         <Input
           // label={label}
