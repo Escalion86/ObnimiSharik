@@ -70,24 +70,28 @@ export default async function handler(Schema, req, res, params = null) {
 
   let data
   let oldData
+  console.log(`method`, method)
+  console.log(`params`, params)
+  console.log(`id`, id)
 
   switch (method) {
     case 'GET':
       try {
-        if (id) {
+        if (params) {
+          data = await Schema.find(params)
+          if (!data) {
+            return res?.status(400).json({ success: false })
+          }
+          return res?.status(200).json({ success: true, data })
+        } else if (id) {
           data = await Schema.findById(id)
           if (!data) {
             return res?.status(400).json({ success: false })
           }
           return res?.status(200).json({ success: true, data })
         } else {
-          data = await Schema.find(params)
-          if (!data) {
-            return res?.status(400).json({ success: false })
-          }
+          data = await Schema.find()
           return res?.status(200).json({ success: true, data })
-          // return { newData: data, oldData }
-          // return res?.status(400).json({ success: false, error: 'No Id' })
         }
       } catch (error) {
         console.log(error)
@@ -165,7 +169,14 @@ export default async function handler(Schema, req, res, params = null) {
       break
     case 'DELETE' /* Delete a model by its ID */:
       try {
-        if (id) {
+        if (params) {
+          data = await Schema.deleteMany(params)
+          if (!data) {
+            return res?.status(400).json({ success: false })
+          }
+          return res?.status(200).json({ success: true, data })
+          // return data
+        } else if (id) {
           data = await Schema.findById(id)
           if (!data) {
             return res?.status(400).json({ success: false })
@@ -193,16 +204,7 @@ export default async function handler(Schema, req, res, params = null) {
 
           // return { newData: data, oldData }
         } else {
-          if (params) {
-            data = await Schema.deleteMany(params)
-            if (!data) {
-              return res?.status(400).json({ success: false })
-            }
-            return res?.status(200).json({ success: true, data })
-            // return data
-          } else {
-            return res?.status(400).json({ success: false })
-          }
+          return res?.status(400).json({ success: false })
         }
         // res?.status(200).json({ success: true, data: {} })
       } catch (error) {
