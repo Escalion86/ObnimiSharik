@@ -54,6 +54,7 @@ import formatDeliveryAddress from '@helpers/formatDeliveryAddress'
 import getNoun from '@helpers/getNoun'
 import formValidator from '@helpers/formValidator'
 import ordersSchema from '@schemas/ordersSchema'
+import PropValuePicker from './forForms/PropValuePicker/PropValuePicker'
 
 {
   /* <FontAwesomeIcon
@@ -1025,8 +1026,8 @@ const OrderForm = ({
       return prev
     }, 0) / 100
 
-  const createProductCirculationsForOrder = (orderId) => {
-    deleteData(
+  const createProductCirculationsForOrder = async (orderId) => {
+    await deleteData(
       '/api/productcirculations/order/' + orderId
       // , () =>
       //   fetchingProductCirculations((result) => dispatch(setProductCirculations(result)))
@@ -1046,7 +1047,7 @@ const OrderForm = ({
           price: 0,
           count,
           orderId,
-          purchase: true,
+          purchase: false,
           purchasedAt: new Date().toISOString(),
           defective: false,
         })
@@ -1060,16 +1061,24 @@ const OrderForm = ({
           price: 0,
           count,
           orderId,
-          purchase: true,
+          purchase: false,
           purchasedAt: new Date().toISOString(),
           defective: true,
         })
       }
 
-      postData('/api/productcirculations', tempProductCirculationsIdCount, () =>
-        fetchingProductCirculations((result) =>
-          dispatch(setProductCirculations(result, true))
-        )
+      console.log(
+        `tempProductCirculationsIdCount`,
+        tempProductCirculationsIdCount
+      )
+
+      await postData(
+        '/api/productcirculations',
+        tempProductCirculationsIdCount,
+        () =>
+          fetchingProductCirculations((result) =>
+            dispatch(setProductCirculations(result, true))
+          )
       )
     }
   }
@@ -1089,8 +1098,8 @@ const OrderForm = ({
         ? postData(
             '/api/orders',
             { ...form, price: totalPrice * 100, productsCount, setsCount },
-            (data) => {
-              createProductCirculationsForOrder(data._id)
+            async (data) => {
+              await createProductCirculationsForOrder(data._id)
               afterConfirm(data)
               onClose()
             },
@@ -1101,8 +1110,8 @@ const OrderForm = ({
         : putData(
             `/api/orders/${order._id}`,
             { ...form, price: totalPrice * 100, productsCount, setsCount },
-            (data) => {
-              createProductCirculationsForOrder(data._id)
+            async (data) => {
+              await createProductCirculationsForOrder(data._id)
               afterConfirm(data)
               onClose()
             },
@@ -1169,6 +1178,8 @@ const OrderForm = ({
     setFormChanged(isFormChanged)
   }, [isFormChanged])
 
+  console.log(`productCirculationsIdCount`, productCirculationsIdCount)
+
   return (
     <Form
       handleSubmit={handleSubmit}
@@ -1184,57 +1195,39 @@ const OrderForm = ({
       buttonDisabled={!isFormChanged}
       twoCols={twoCols}
       componentBeforeButton={
-        <>
-          <div className="flex items-center justify-center gap-x-6">
-            <label
-              className={
-                'min-w-min whitespace-nowrap' +
-                (readOnly ? ' border-b-1 border-primary' : '')
-              }
-              htmlFor={'deliveryPickup'}
-            >
-              Статус
-            </label>
-            <div className="flex flex-col laptop:flex-row laptop:flex-wrap gap-x-4">
-              {ORDER_STATUSES.map((status) => {
-                if (
-                  status.hasOwnProperty('requirements') &&
-                  Object.keys(status.requirements).length > 0
-                ) {
-                  for (const [requirement, value] of Object.entries(
-                    status.requirements
-                  )) {
-                    if (requirement === 'productCirculationsIdCount') {
-                      if (
-                        Object.keys(productCirculationsIdCount).length === 0 ||
-                        (Object.keys(productCirculationsIdCount).length === 1 &&
-                          productCirculationsIdCount['?'])
-                      )
-                        return null
-                    } else if (form[requirement] !== value) return null
+        <PropValuePicker
+          value={form.status}
+          valuesArray={
+            readOnly
+              ? ORDER_STATUSES
+              : ORDER_STATUSES.filter((status) => {
+                  if (!status.roles.includes(loggedUser.role)) return false
+                  if (status.requirements) {
+                    for (const [key, value] of Object.entries(
+                      status.requirements
+                    )) {
+                      if (key === 'productCirculationsIdCount') {
+                        if (
+                          (Object.keys(productCirculationsIdCount).length ===
+                            0 &&
+                            value) ||
+                          (Object.keys(productCirculationsIdCount).length > 0 &&
+                            !value)
+                        )
+                          return false
+                      } else {
+                        if (form[key] !== value) return false
+                      }
+                    }
                   }
-                }
-
-                if (
-                  status.roles.includes(loggedUser.role) ||
-                  loggedUser.role === 'dev'
-                )
-                  return (
-                    <RadioBox
-                      key={status.value}
-                      checked={form.status === status.value}
-                      onClick={() => updateForm({ status: status.value })}
-                      small
-                      label={status.name}
-                      // className="flex-1"
-                      // labelPos="left"
-                    />
-                  )
-                return null
-              })}
-            </div>
-          </div>
-        </>
+                  return true
+                })
+          }
+          label="Статус"
+          onChange={(status) => updateForm({ status })}
+          name="status"
+          readOnly={readOnly}
+        />
       }
       readOnly={readOnly}
       submiting={submiting}

@@ -26,15 +26,15 @@ const PropValueItem = ({
   <div
     className={
       `flex min-w-22 duration-300 items-center justify-center border px-2 py-1 rounded-lg cursor-pointer gap-x-2 flex-nowrap border-${color}` +
-      (active ? ` text-white bg-${color}-400` : ` text-${color}-400 bg-white`)
+      (active ? ` text-white bg-${color}` : ` text-${color} bg-white`)
     }
     onClick={() => onClick(value)}
   >
     {icon && <FontAwesomeIcon icon={icon} size="lg" />}
     <div
       className={
-        'whitespace-nowrap duration-300 text-sm ' +
-        (active ? 'text-white' : 'text-gray-400')
+        'whitespace-nowrap duration-300 text-sm' +
+        (active ? ' text-white' : ` text-gray-500`)
       }
     >
       {name}

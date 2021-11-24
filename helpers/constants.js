@@ -10,6 +10,45 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import isDevMode from './isDevMode'
 
+export const COLORS_FOR_TAILWIND = [
+  'bg-red-500',
+  'bg-red-300',
+  'bg-red-400',
+  'text-red-500',
+  'text-red-300',
+  'text-red-400',
+  'border-red-500',
+  'border-red-300',
+  'border-red-400',
+  'bg-green-500',
+  'bg-green-300',
+  'bg-green-400',
+  'text-green-500',
+  'text-green-300',
+  'text-green-400',
+  'border-green-500',
+  'border-green-300',
+  'border-green-400',
+  'bg-blue-500',
+  'bg-blue-300',
+  'bg-blue-400',
+  'text-blue-500',
+  'text-blue-300',
+  'text-blue-400',
+  'border-blue-500',
+  'border-blue-300',
+  'border-blue-400',
+  'bg-yellow-500',
+  'bg-yellow-300',
+  'bg-yellow-400',
+  'text-yellow-500',
+  'text-yellow-300',
+  'text-yellow-400',
+  'border-yellow-500',
+  'border-yellow-300',
+  'border-yellow-400',
+]
+
 export const DEFAULT_USER = {
   name: 'Гость',
   email: '',
@@ -107,86 +146,69 @@ export const ORDER_STATUSES = [
   {
     name: 'Черновик',
     value: 'draft',
-    roles: ['operator', 'admin'],
-    color: 'bg-gray-200',
+    roles: ['operator', 'admin', 'dev'],
+    color: 'gray-400',
   },
   {
     name: 'Передан аэродизайнеру',
     value: 'aerodesigner',
-    roles: ['operator', 'aerodesigner', 'deliver', 'admin'],
-    requirements: { deliveryPickup: false },
-    color: 'bg-blue-200',
+    roles: ['operator', 'aerodesigner', 'deliver', 'admin', 'dev'],
+    color: 'blue-300',
   },
   {
     name: 'Товар отложен',
     value: 'deferred',
-    roles: ['operator', 'aerodesigner', 'deliver', 'admin'],
-    requirements: { deliveryPickup: false, productCirculationsIdCount: true },
-    color: 'bg-blue-300',
-  },
-  {
-    name: 'Передан аэродизайнеру',
-    value: 'aerodesigner',
-    roles: ['operator', 'aerodesigner', 'admin'],
-    requirements: { deliveryPickup: true },
-    color: 'bg-blue-200',
-    notInFilter: true,
-  },
-  {
-    name: 'Товар отложен',
-    value: 'deferred',
-    roles: ['operator', 'aerodesigner', 'admin'],
-    requirements: { deliveryPickup: true, productCirculationsIdCount: true },
-    color: 'bg-blue-300',
-    notInFilter: true,
+    roles: ['operator', 'aerodesigner', 'deliver', 'admin', 'dev'],
+    requirements: { productCirculationsIdCount: true },
+    color: 'blue-400',
   },
   {
     name: 'Готов к выдаче',
     value: 'readyForReceive',
-    roles: ['operator', 'aerodesigner', 'admin'],
+    roles: ['operator', 'aerodesigner', 'admin', 'dev'],
     requirements: { deliveryPickup: true, productCirculationsIdCount: true },
-    color: 'bg-green-200',
+    color: 'green-300',
   },
   {
     name: 'Готов к доставке',
     value: 'readyForDelivery',
-    roles: ['operator', 'aerodesigner', 'deliver', 'admin'],
+    roles: ['operator', 'aerodesigner', 'deliver', 'admin', 'dev'],
     requirements: { deliveryPickup: false, productCirculationsIdCount: true },
-    color: 'bg-yellow-200',
+    color: 'yellow-300',
   },
   {
     name: 'Доставляется',
     value: 'deliveryInProcess',
-    roles: ['operator', 'deliver', 'admin'],
+    roles: ['operator', 'deliver', 'admin', 'dev'],
     requirements: { deliveryPickup: false, productCirculationsIdCount: true },
-    color: 'bg-yellow-400',
+    color: 'yellow-500',
   },
   {
     name: 'Доставлен',
     value: 'delivered',
-    roles: ['operator', 'deliver', 'admin'],
+    roles: ['operator', 'deliver', 'admin', 'dev'],
     requirements: { deliveryPickup: false, productCirculationsIdCount: true },
-    color: 'bg-green-300',
+    color: 'green-400',
   },
   {
     name: 'Получен',
     value: 'recived',
-    roles: ['operator', 'admin'],
+    roles: ['operator', 'admin', 'dev'],
     requirements: { deliveryPickup: true, productCirculationsIdCount: true },
-    color: 'bg-green-300',
+    color: 'green-400',
   },
   {
     name: 'Выполнен',
     value: 'completed',
-    roles: ['operator', 'admin'],
+    roles: ['operator', 'admin', 'dev'],
     requirements: { productCirculationsIdCount: true },
-    color: 'bg-green-400',
+    color: 'green-500',
   },
   {
     name: 'Отменен',
     value: 'canceled',
-    roles: ['operator', 'admin'],
-    color: 'bg-red-400',
+    roles: ['operator', 'admin', 'dev'],
+    color: 'red-500',
   },
 ]
 
@@ -241,32 +263,37 @@ export const DEFAULT_PAYMENT = {
 }
 
 export const PRIORITIES = [
-  { value: 0, name: 'Низкий', color: 'green' },
-  { value: 1, name: 'Обычный', color: 'yellow' },
-  { value: 2, name: 'Высокий', color: 'red' },
+  { value: 0, name: 'Низкий', color: 'green-400' },
+  { value: 1, name: 'Обычный', color: 'yellow-400' },
+  { value: 2, name: 'Высокий', color: 'red-400' },
 ]
 
 export const GENDERS = [
-  { value: 'male', name: 'Мужчина', color: 'blue', icon: faMars },
-  { value: 'famale', name: 'Женщина', color: 'red', icon: faVenus },
+  { value: 'male', name: 'Мужчина', color: 'blue-400', icon: faMars },
+  { value: 'famale', name: 'Женщина', color: 'red-400', icon: faVenus },
 ]
 
 export const ORDER_PURCHASE = [
-  { value: true, name: 'Пополнение склада', color: 'green', icon: faPlus },
-  { value: false, name: 'Расход со склада', color: 'red', icon: faMinus },
+  { value: true, name: 'Пополнение склада', color: 'green-400', icon: faPlus },
+  { value: false, name: 'Расход со склада', color: 'red-400', icon: faMinus },
 ]
 
 export const DEVTODO_STATUSES = [
-  { value: 'created', name: 'Создана', color: 'gray' },
-  { value: 'inProgress', name: 'В работе', color: 'yellow' },
-  { value: 'finished', name: 'Исполнена', color: 'green' },
-  { value: 'declined', name: 'Отклонена', color: 'red' },
+  { value: 'created', name: 'Создана', color: 'gray-400' },
+  { value: 'inProgress', name: 'В работе', color: 'yellow-400' },
+  { value: 'finished', name: 'Исполнена', color: 'green-400' },
+  { value: 'declined', name: 'Отклонена', color: 'red-400' },
 ]
 
 export const PAY_TYPES = [
-  { value: 'card', name: 'Картой', color: 'blue', icon: faCreditCard },
-  { value: 'cash', name: 'Наличными', color: 'green', icon: faMoneyBill },
-  { value: 'remittance', name: 'Перевод', color: 'yellow', icon: faSignInAlt },
+  { value: 'card', name: 'Картой', color: 'blue-400', icon: faCreditCard },
+  { value: 'cash', name: 'Наличными', color: 'green-400', icon: faMoneyBill },
+  {
+    value: 'remittance',
+    name: 'Перевод',
+    color: 'yellow-400',
+    icon: faSignInAlt,
+  },
 ]
 
 export const DEFAULT_DISTRICT = {
