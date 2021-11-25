@@ -1227,6 +1227,7 @@ const OrderForm = ({
           onChange={(status) => updateForm({ status })}
           name="status"
           readOnly={readOnly}
+          disselectOnSameClick={false}
         />
       }
       readOnly={readOnly}
