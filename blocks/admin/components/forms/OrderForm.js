@@ -518,7 +518,7 @@ const ResponsibleContent = ({ form, updateForm, role, readOnly }) => {
     updateForm({ deliveryAddress: { ...form.deliveryAddress, [name]: value } })
   }
   return (
-    <>
+    <div className="flex flex-col gap-y-1">
       {admin && (
         <SelectOperator
           onChange={(operator) =>
@@ -541,7 +541,6 @@ const ResponsibleContent = ({ form, updateForm, role, readOnly }) => {
           }
           selectedId={form.aerodesignerId}
           required
-          className="mb-2"
           readOnly={readOnly}
           // exceptedIds={selectedItemsIds}
         />
@@ -559,7 +558,7 @@ const ResponsibleContent = ({ form, updateForm, role, readOnly }) => {
           // exceptedIds={selectedItemsIds}
         />
       )}
-    </>
+    </div>
   )
 }
 
@@ -1066,11 +1065,6 @@ const OrderForm = ({
           defective: true,
         })
       }
-
-      console.log(
-        `tempProductCirculationsIdCount`,
-        tempProductCirculationsIdCount
-      )
 
       await postData(
         '/api/productcirculations',
