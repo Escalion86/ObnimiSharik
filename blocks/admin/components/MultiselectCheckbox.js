@@ -8,9 +8,11 @@ const MultiselectCheckbox = ({
   required = false,
   checkAllBtn = false,
   className = null,
+  listClassName = null,
   getAll = false,
   noScroll = false,
   readOnly = false,
+  inLine = false,
 }) => {
   // const [data, setData] = useState(options)
   const data = options
@@ -61,9 +63,17 @@ const MultiselectCheckbox = ({
 
   return (
     <div
-      className={'flex flex-col max-w-xl' + (className ? ' ' + className : '')}
+      className={
+        'flex' +
+        (inLine ? ' flex-row' : ' flex-col') +
+        (className ? ' ' + className : '')
+      }
     >
-      <div className="flex justify-between">
+      <div
+        className={
+          (inLine ? 'min-w-24 max-w-40 w-1/4 ' : '') + 'flex justify-between'
+        }
+      >
         <div>
           {title}
           {required && <span className="text-red-700">*</span>}
@@ -102,7 +112,8 @@ const MultiselectCheckbox = ({
       </div>
       <div
         className={
-          'flex-1 bg-gray-200 border border-gray-700 rounded-lg overflow-hidden'
+          'flex-1 bg-gray-200 border border-gray-700 rounded-lg overflow-hidden' +
+          (listClassName ? ' ' + listClassName : '')
         }
         style={{ maxHeight: (data.length >= 8 ? 216 : data.length * 25) + 7 }}
       >
