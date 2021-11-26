@@ -23,10 +23,7 @@ export const DevToDoCard = ({
   return (
     <Card onClick={() => onClick(devToDo)}>
       <div
-        className={
-          'w-2 rounded-l-lg bg-' +
-          (priority ? priority.color + '-400' : 'gray-400')
-        }
+        className={'w-2 rounded-l-lg bg-' + (priority.color ?? 'gray-400')}
       />
       <CardContainer className="items-center">
         <div className="items-center flex-1">
@@ -48,8 +45,7 @@ export const DevToDoCard = ({
         <div
           className={
             'flex justify-center rounded-tl-lg py-0.5 items-center w-24 bg-' +
-            devStatus.color +
-            '-400'
+            devStatus.color
           }
         >
           <span>
