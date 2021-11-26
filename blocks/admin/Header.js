@@ -22,6 +22,7 @@ import Popup from 'reactjs-popup'
 import { Virtuoso } from 'react-virtuoso'
 import { postData } from '@helpers/CRUD'
 import { setNotificationViewed } from '@state/actions/notificationsActions'
+import isDevMode from '@helpers/isDevMode'
 
 const UserMenu = ({
   loggedUser = DEFAULT_USER,
@@ -300,7 +301,14 @@ const Header = ({
   modals = null,
 }) => {
   return (
-    <div className="top-0 z-40 border-b border-primary bg-primary">
+    <div
+      className={
+        'top-0 z-40 border-b' +
+        (isDevMode
+          ? ' border-red-400 bg-red-400'
+          : ' border-primary bg-primary')
+      }
+    >
       <header className="px-2 phoneH:px-3">
         <div className="flex items-center justify-between gap-1 py-3 border-gray-200 phoneH:gap-2">
           <div className="flex items-center flex-1 gap-1 phoneH:gap-2">
