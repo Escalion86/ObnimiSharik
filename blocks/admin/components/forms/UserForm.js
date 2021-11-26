@@ -147,7 +147,12 @@ const UserForm = ({
           // if (ROLES.find((findRole) => findRole.value === role)?.canBeSubRole)
           //   updateForm({ role, subRoles: [] })
           // else
-          updateForm({ role })
+          if (form.subRoles?.includes(role)) {
+            updateForm({
+              role,
+              subRoles: form.subRoles.filter((subRole) => subRole !== role),
+            })
+          } else updateForm({ role })
         }}
         defaultValue={form.role}
         placeholder="Выберите должность"
@@ -174,7 +179,7 @@ const UserForm = ({
           updateForm({ subRoles: data.map((role) => role.value) })
         }}
         readOnly={readOnly}
-        className="col-span-2"
+        listClassName="w-44"
       />
       {/* )} */}
       <RowContainer>
