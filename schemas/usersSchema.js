@@ -52,6 +52,10 @@ const usersSchema = {
     type: String,
     default: 'client',
   },
+  subRoles: {
+    type: Array,
+    default: [],
+  },
   lastActivityAt: {
     type: Date,
     default: () => Date.now(),
