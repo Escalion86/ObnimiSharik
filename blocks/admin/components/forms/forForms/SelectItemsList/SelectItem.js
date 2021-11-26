@@ -592,7 +592,9 @@ export const SelectDeliver = ({
   readOnly = false,
 }) => {
   const { users } = useSelector((state) => state)
-  const delivers = users.filter((user) => user.role === 'deliver')
+  const delivers = users.filter(
+    (user) => user.role === 'deliver' || user.subRoles?.includes('deliver')
+  )
   return (
     <SelectItemContainer
       required={required}
@@ -631,7 +633,10 @@ export const SelectAerodesigner = ({
   readOnly = false,
 }) => {
   const { users } = useSelector((state) => state)
-  const aerodesigners = users.filter((user) => user.role === 'aerodesigner')
+  const aerodesigners = users.filter(
+    (user) =>
+      user.role === 'aerodesigner' || user.subRoles?.includes('aerodesigner')
+  )
   return (
     <SelectItemContainer
       required={required}
@@ -670,7 +675,9 @@ export const SelectOperator = ({
   readOnly = false,
 }) => {
   const { users } = useSelector((state) => state)
-  const operators = users.filter((user) => user.role === 'operator')
+  const operators = users.filter(
+    (user) => user.role === 'operator' || user.subRoles?.includes('operator')
+  )
   return (
     <SelectItemContainer
       required={required}

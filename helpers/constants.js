@@ -62,6 +62,7 @@ export const DEFAULT_USER = {
   gender: null,
   image: null,
   role: 'client',
+  subRoles: [],
 }
 
 export const DEFAULT_CLIENT = {
@@ -135,11 +136,16 @@ export const DEFAULT_DEVTODO = {
 }
 
 export const ROLES = [
-  { name: 'Администратор', value: 'admin', hidden: false },
-  { name: 'Аэродизайнер', value: 'aerodesigner', hidden: false },
-  { name: 'Курьер', value: 'deliver', hidden: false },
-  { name: 'Оператор', value: 'operator', hidden: false },
-  { name: 'Разработчик', value: 'dev', hidden: true },
+  { name: 'Администратор', value: 'admin', hidden: false, canBeSubRole: false },
+  {
+    name: 'Аэродизайнер',
+    value: 'aerodesigner',
+    hidden: false,
+    canBeSubRole: true,
+  },
+  { name: 'Курьер', value: 'deliver', hidden: false, canBeSubRole: true },
+  { name: 'Оператор', value: 'operator', hidden: false, canBeSubRole: true },
+  { name: 'Разработчик', value: 'dev', hidden: true, canBeSubRole: false },
 ]
 
 export const ORDER_STATUSES = [

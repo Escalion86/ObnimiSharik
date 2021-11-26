@@ -1,4 +1,5 @@
 import formatDateTime from '@helpers/formatDateTime'
+import roleRus from '@helpers/roleRus'
 import { useSelector } from 'react-redux'
 
 const ItemContainer = ({ onClick, active, children }) => (
@@ -38,7 +39,9 @@ export const ProductItem = ({ item, onClick = null, active = false }) => (
   //   // leaveDelay={0}
   // >
   <ItemContainer onClick={onClick} active={active}>
-    <div className="h-5 text-sm text-gray-800 truncate">{item.name}</div>
+    <div className="h-5 text-sm font-semibold text-gray-800 truncate">
+      {item.name}
+    </div>
     <div className="flex items-center text-xs text-gray-600 gap-x-2">
       <div className="flex-2 whitespace-nowrap">
         Артикул: {item.article || '[нет]'}
@@ -58,7 +61,12 @@ export const SetItem = (props) => ProductItem(props)
 
 export const PersonaItem = ({ item, onClick = null, active = false }) => (
   <ItemContainer onClick={onClick} active={active}>
-    <div className="h-5 text-sm text-gray-800 truncate">{item.name}</div>
+    <div className="h-5 text-sm text-gray-800 truncate">
+      <span className="font-semibold">{item.name}</span>
+      {item.role && (
+        <span className="italic">{' (' + roleRus(item.role) + ')'}</span>
+      )}
+    </div>
     <div className="flex items-center overflow-x-hidden text-xs text-gray-600 gap-x-2">
       <div className="flex-1 whitespace-nowrap">
         Телефон: {item.phone ? '+' + item.phone : '[нет]'}

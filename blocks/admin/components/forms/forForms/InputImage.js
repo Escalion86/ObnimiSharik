@@ -42,27 +42,23 @@ const InputImage = ({
   return (
     <div className={inLine ? 'flex' : ''}>
       {label && (
-        <div>
-          <label
-            className={
-              (readOnly
-                ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
-                : '') + (inLine ? 'min-w-24 max-w-40 w-1/4' : '')
-            }
-          >
-            {label}
-            {readOnly
-              ? ':'
-              : required && <span className="text-red-700">*</span>}
-          </label>
-        </div>
+        <label
+          className={
+            (readOnly
+              ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
+              : '') + (inLine ? ' min-w-24 max-w-40 w-1/4' : '')
+          }
+        >
+          {label}
+          {readOnly ? ':' : required && <span className="text-red-700">*</span>}
+        </label>
       )}
       {!image && readOnly ? (
         <div className="ml-2">-</div>
       ) : (
         <div
           className={
-            'relative border rounded-lg ml-2 h-20 w-20 overflow-hidden group ' +
+            'relative border rounded-lg h-20 w-20 overflow-hidden group ' +
             (readOnly
               ? ' border-gray-400 hover:border-primary'
               : required && !image

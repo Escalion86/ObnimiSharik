@@ -19,6 +19,7 @@ import birthDateToAge from '@helpers/birthDateToAge'
 import InputAvatar from './forForms/InputAvatar'
 import usersSchema from '@schemas/usersSchema'
 import formValidator from '@helpers/formValidator'
+import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 
 const UserForm = ({
   loggedUser,
@@ -44,6 +45,7 @@ const UserForm = ({
     vk: user.vk,
     gender: user.gender,
     role: user.role,
+    subRoles: user.subRoles === undefined ? [] : user.subRoles,
     birthday: user.birthday,
   }
 
@@ -141,7 +143,17 @@ const UserForm = ({
       />
       <ComboBox
         title="Должность"
-        onChange={(role) => updateForm({ role })}
+        onChange={(role) => {
+          // if (ROLES.find((findRole) => findRole.value === role)?.canBeSubRole)
+          //   updateForm({ role, subRoles: [] })
+          // else
+          if (form.subRoles?.includes(role)) {
+            updateForm({
+              role,
+              subRoles: form.subRoles.filter((subRole) => subRole !== role),
+            })
+          } else updateForm({ role })
+        }}
         defaultValue={form.role}
         placeholder="Выберите должность"
         items={ROLES.filter(
@@ -150,7 +162,26 @@ const UserForm = ({
         required
         readOnly={readOnly}
       />
-
+      {/* {!ROLES.find((findRole) => findRole.value === form.role)
+        ?.canBeSubRole && ( */}
+      <MultiselectCheckbox
+        title="Субдолжности (можно выбрать ответственным)"
+        options={ROLES.filter(
+          (role) => role.canBeSubRole && role.value !== form.role
+        ).map((role) => {
+          return {
+            name: role.name,
+            value: role.value,
+            checked: form.subRoles.includes(role.value),
+          }
+        })}
+        onChange={(data) => {
+          updateForm({ subRoles: data.map((role) => role.value) })
+        }}
+        readOnly={readOnly}
+        listClassName="w-44"
+      />
+      {/* )} */}
       <RowContainer>
         <PhoneInput
           key="phone"

@@ -18,6 +18,8 @@ import compareObjects from '@helpers/compareObjects'
 import InputAvatar from './forForms/InputAvatar'
 import formValidator from '@helpers/formValidator'
 import usersSchema from '@schemas/usersSchema'
+import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
+import { ROLES } from '@helpers/constants'
 
 const UserContentForm = ({
   loggedUser,
@@ -39,6 +41,7 @@ const UserContentForm = ({
     gender: loggedUser.gender,
     birthday: loggedUser.birthday,
     role: loggedUser.role,
+    subRoles: loggedUser.subRoles,
   }
 
   const [form, setForm] = useState(initialFormState)
@@ -80,10 +83,34 @@ const UserContentForm = ({
       buttonDisabled={!isFormChanged}
       submiting={submiting}
     >
+      <InputAvatar
+        user={form}
+        onChange={(imageUrl) => updateForm({ image: imageUrl })}
+        inLine
+      />
       <div className="flex">
         <div className="w-1/4 min-w-24 max-w-40">Должность</div>
         <div className="italic">{roleRus(loggedUser.role)}</div>
       </div>
+      <MultiselectCheckbox
+        title="Субдолжности (можно выбрать ответственным)"
+        options={ROLES.filter(
+          (role) => role.canBeSubRole && role.value !== form.role
+        ).map((role) => {
+          return {
+            name: role.name,
+            value: role.value,
+            checked: form.subRoles.includes(role.value),
+          }
+        })}
+        onChange={(data) => {
+          updateForm({ subRoles: data.map((role) => role.value) })
+        }}
+        readOnly={!['dev', 'admin'].includes(loggedUser.role)}
+        // className="w-40"
+        listClassName="w-44"
+        inLine
+      />
       {/* <ComboBox
         title="Должность"
         onChange={(role) => updateForm({ role })}
@@ -94,11 +121,6 @@ const UserContentForm = ({
         )}
         required
       /> */}
-      <InputAvatar
-        user={form}
-        onChange={(imageUrl) => updateForm({ image: imageUrl })}
-        inLine
-      />
       <Input
         key="email"
         label="EMail"

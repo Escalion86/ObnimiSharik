@@ -17,6 +17,7 @@ const Form = ({
   readOnly = false,
   submiting = false,
   closeOnSubmit = false,
+  className = null,
 }) => {
   let childrenWithProps = children
   if (twoCols && children.length) {
@@ -39,7 +40,7 @@ const Form = ({
     })
   }
   return (
-    <>
+    <div className={className ?? ''}>
       <div className="flex flex-col gap-y-2">
         {title && (
           <div className="mx-6 text-lg font-semibold leading-5 text-center">
@@ -95,7 +96,7 @@ const Form = ({
           </li>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

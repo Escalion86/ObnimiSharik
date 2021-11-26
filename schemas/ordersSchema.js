@@ -33,6 +33,7 @@ const ordersSchema = {
   },
   status: {
     type: String,
+    required: [true, 'Введите статус'],
     default: 'created',
   },
   comment: {
@@ -54,9 +55,13 @@ const ordersSchema = {
   deliveryPrice: {
     type: Number,
     default: 0,
-    maxlength: [
-      8,
-      'Стоимость доставки не может превышать 999999,99 руб. Ты на другую планету чтоли доставляешь?',
+    min: [
+      0,
+      'Сумма не может быть меньше нуля. Или ты из своих карманных расплатился?',
+    ],
+    max: [
+      99999999,
+      'Сумма не может превышать 999999,99 руб. Ты на Сатурн доставляешь чтоли?',
     ],
   },
   deliveryAddress: {

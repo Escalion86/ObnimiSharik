@@ -5,7 +5,7 @@ const formatDeliveryAddress = (deliveryAddress) => {
     deliveryAddress.town +
       (deliveryAddress?.street ? ', ' + deliveryAddress.street : '')
   }${
-    (deliveryAddress?.house ? deliveryAddress.house : '') +
+    (deliveryAddress?.house ? ' ' + deliveryAddress.house : '') +
     (deliveryAddress.house && deliveryAddress.flat
       ? ' - ' + deliveryAddress.flat
       : '')
