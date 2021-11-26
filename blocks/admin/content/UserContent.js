@@ -12,7 +12,7 @@ import { setUsers } from '@state/actions'
 const UserContent = ({ data, modals, loggedUser }) => {
   const dispatch = useDispatch()
   return (
-    <div className="px-3">
+    <div className="relative w-full h-full px-3 mt-1 overflow-y-hidden">
       {/* <SubTitle title="Экспорт/Импорт" /> */}
       <UserContentForm
         loggedUser={loggedUser}
