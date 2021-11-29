@@ -23,7 +23,7 @@ export const PaymentCard = ({
       <div
         className={
           'flex justify-center items-center w-9 rounded-l-lg text-white bg-' +
-          (payType ? payType.color + '-400' : 'gray-400')
+          (payType ? payType.color : 'gray-400')
         }
       >
         <FontAwesomeIcon icon={payType?.icon ?? faQuestion} size="lg" />
