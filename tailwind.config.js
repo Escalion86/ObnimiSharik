@@ -3,7 +3,7 @@ module.exports = {
   mode: 'jit',
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
-    './blocks/**/*.{js,ts,jsx,tsx}',
+    './pagesContent/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './helpers/**/*.{js,ts,jsx,tsx}',
   ],
@@ -122,6 +122,7 @@ module.exports = {
         132: '33rem',
         140: '35rem',
         248: '62rem',
+        284: '71rem',
       },
       minHeight: {
         8: '2rem',
@@ -183,6 +184,13 @@ module.exports = {
         84: '21rem',
         88: '22rem',
         100: '25rem',
+        120: '30rem',
+        124: '31rem',
+        128: '32rem',
+        132: '33rem',
+        140: '35rem',
+        248: '62rem',
+        284: '71rem',
       },
       opacity: {
         15: '15%',

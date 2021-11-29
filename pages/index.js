@@ -13,10 +13,10 @@ import SpecialCard from '@components/SpecialCard'
 import InfoItem from '@components/InfoItem'
 import DeliveryPriceItem from '@components/DeliveryPriceItem'
 
-import TitleBlock2 from '@blocks/TitleBlock2'
-import SpecialBlock from '@blocks/SpecialBlock'
-import WhyWeBlock from '@blocks/WhyWeBlock'
-import DeliveryBlock from '@blocks/DeliveryBlock'
+import TitleBlock2 from '@general/TitleBlock2'
+import SpecialBlock from '@general/SpecialBlock'
+import WhyWeBlock from '@general/WhyWeBlock'
+import DeliveryBlock from '@general/DeliveryBlock'
 // let csvToJson = require('convert-csv-to-json')
 // const csvFilePath='tilda.csv'
 // const csv=require('csvtojson')
