@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { DEFAULT_SET_TYPE } from '@helpers/constants'
 
-import { Input } from './forForms'
+import { CheckBox, Input } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -24,11 +24,12 @@ const SetTypeForm = ({
   const [submiting, setSubmiting] = useState(false)
 
   const initialFormState = {
-    name: productType.name,
-    description: productType.description,
-    image: productType.image,
-    cardSize: productType.cardSize,
-    archive: productType.archive,
+    name: setType.name,
+    description: setType.description,
+    image: setType.image,
+    cardSizeOnSite: setType.cardSizeOnSite,
+    archive: setType.archive,
+    showOnSite: setType.showOnSite,
   }
 
   const [form, setForm] = useState(initialFormState)
@@ -117,6 +118,12 @@ const SetTypeForm = ({
         directory="set_types"
         imageName={setType._id}
         noEditButton
+        readOnly={readOnly}
+      />
+      <CheckBox
+        label="Показывать на сайте"
+        checked={form.showOnSite}
+        onChange={() => updateForm({ showOnSite: !form.showOnSite })}
         readOnly={readOnly}
       />
     </Form>

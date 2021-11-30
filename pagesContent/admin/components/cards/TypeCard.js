@@ -4,7 +4,9 @@ import {
   faShoppingCart,
   faTrash,
   faPlus,
+  faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Zoom from 'react-medium-image-zoom'
 import Card from './Card'
 import CardContainer from './CardContainer'
@@ -19,6 +21,19 @@ export const TypeCard = ({
   onEdit = null,
 }) => (
   <Card onClick={() => onClick(type)}>
+    {!type.showOnSite && (
+        <div
+          className={
+            'absolute top-2 cursor-default left-0 z-10 flex justify-center items-center w-9 rounded-tl-lg rounded-br-lg text-red-400'
+          }
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          }}
+        >
+          <FontAwesomeIcon icon={faEyeSlash} size="lg" />
+        </div>
+      )}
     <ZoomImage
       image={type.image}
       alt="product"

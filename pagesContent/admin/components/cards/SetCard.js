@@ -6,6 +6,8 @@ import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import { useSelector } from 'react-redux'
 import ZoomImage from '@admincomponents/ZoomImage'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 export const SetCard = ({
   set,
@@ -29,6 +31,19 @@ export const SetCard = ({
   const imageClassName = 'w-24'
   return (
     <Card onClick={() => onClick(set)}>
+      {!set.showOnSite && (
+        <div
+          className={
+            'absolute top-2 cursor-default left-0 z-10 flex justify-center items-center w-9 rounded-tl-lg rounded-br-lg text-red-400'
+          }
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          }}
+        >
+          <FontAwesomeIcon icon={faEyeSlash} size="lg" />
+        </div>
+      )}
       <CardContainer className="flex-col phoneH:flex-row">
         <ZoomImage image={set.images[0]} alt="set" />
         <div className="flex-1 ml-3">

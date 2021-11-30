@@ -11,6 +11,7 @@ import {
   SelectProductsList,
   FormColumn,
   RowContainer,
+  CheckBox,
 } from './forForms'
 
 import { sendImage, deleteImages } from '@helpers/cloudinary'
@@ -44,6 +45,7 @@ const SetForm = ({
     typesId: set.typesId,
     productsIdCount: set.productsIdCount,
     archive: set.archive,
+    showOnSite: set.showOnSite,
   }
 
   const [form, setForm] = useState(initialFormState)
@@ -194,6 +196,12 @@ const SetForm = ({
           onChange={(images) => updateForm({ images })}
           readOnly={readOnly}
           directory="sets"
+        />
+        <CheckBox
+          label="Показывать на сайте"
+          checked={form.showOnSite}
+          onChange={() => updateForm({ showOnSite: !form.showOnSite })}
+          readOnly={readOnly}
         />
       </FormColumn>
     </Form>

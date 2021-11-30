@@ -1,3 +1,5 @@
+import { faTemperatureLow } from '@fortawesome/free-solid-svg-icons'
+
 const setsSchema = {
   article: {
     type: String,
@@ -45,6 +47,10 @@ const setsSchema = {
     default: [],
   },
   archive: {
+    type: Boolean,
+    default: false,
+  },
+  showOnSite: {
     type: Boolean,
     default: false,
   },

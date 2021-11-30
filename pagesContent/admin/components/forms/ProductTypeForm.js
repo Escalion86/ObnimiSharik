@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { DEFAULT_PRODUCT_TYPE } from '@helpers/constants'
 
-import { Input } from './forForms'
+import { CheckBox, Input } from './forForms'
 
 import { postData, putData } from '@helpers/CRUD'
 
@@ -27,8 +27,9 @@ const ProductTypeForm = ({
     name: productType.name,
     description: productType.description,
     image: productType.image,
-    cardSize: productType.cardSize,
+    cardSizeOnSite: productType.cardSizeOnSite,
     archive: productType.archive,
+    showOnSite: productType.showOnSite,
   }
 
   const [form, setForm] = useState(initialFormState)
@@ -118,6 +119,12 @@ const ProductTypeForm = ({
         directory="product_types"
         imageName={productType._id}
         noEditButton
+        readOnly={readOnly}
+      />
+      <CheckBox
+        label="Показывать на сайте"
+        checked={form.showOnSite}
+        onChange={() => updateForm({ showOnSite: !form.showOnSite })}
         readOnly={readOnly}
       />
     </Form>

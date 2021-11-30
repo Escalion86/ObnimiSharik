@@ -4,7 +4,13 @@ import { DEFAULT_PRODUCT } from '@helpers/constants'
 
 import MultiselectCheckbox from '@admincomponents/MultiselectCheckbox'
 
-import { Input, PriceInput, InputImages, RowContainer } from './forForms'
+import {
+  Input,
+  PriceInput,
+  InputImages,
+  RowContainer,
+  CheckBox,
+} from './forForms'
 
 import { sendImage, deleteImages } from '@helpers/cloudinary'
 import { postData, putData } from '@helpers/CRUD'
@@ -37,6 +43,7 @@ const ProductForm = ({
     manufacturer: product.manufacturer,
     typesId: product.typesId,
     archive: product.archive,
+    showOnSite: product.showOnSite,
   }
 
   const [form, setForm] = useState(initialFormState)
@@ -189,6 +196,12 @@ const ProductForm = ({
           readOnly={readOnly}
           directory="products"
           className="col-span-2"
+        />
+        <CheckBox
+          label="Показывать на сайте"
+          checked={form.showOnSite}
+          onChange={() => updateForm({ showOnSite: !form.showOnSite })}
+          readOnly={readOnly}
         />
       </RowContainer>
     </Form>

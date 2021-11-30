@@ -88,6 +88,7 @@ export const DEFAULT_PRODUCT = {
   images: [],
   typesId: [],
   archive: false,
+  showOnSite: false,
 }
 
 export const DEFAULT_SET = {
@@ -99,22 +100,25 @@ export const DEFAULT_SET = {
   typesId: [],
   productsIdCount: [],
   archive: false,
+  showOnSite: false,
 }
 
 export const DEFAULT_PRODUCT_TYPE = {
   name: '',
   description: '',
   image: '',
-  cardSize: 'normal', // big, small
+  cardSizeOnSite: 'normal', // big, small
   archive: false,
+  showOnSite: false,
 }
 
 export const DEFAULT_SET_TYPE = {
   name: '',
   description: '',
   image: '',
-  cardSize: 'normal', // big, small
+  cardSizeOnSite: 'normal', // big, small
   archive: false,
+  showOnSite: false,
 }
 
 export const DEFAULT_INVITATION = {

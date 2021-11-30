@@ -6,6 +6,8 @@ import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import { useSelector } from 'react-redux'
 import ZoomImage from '@admincomponents/ZoomImage'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const ProductCard = ({
   product,
@@ -34,6 +36,19 @@ export const ProductCard = ({
       width={56}
       height={56}
     /> */}
+      {!product.showOnSite && (
+        <div
+          className={
+            'absolute top-2 cursor-default left-0 z-10 flex justify-center items-center w-9 rounded-tl-lg rounded-br-lg text-red-400'
+          }
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          }}
+        >
+          <FontAwesomeIcon icon={faEyeSlash} size="lg" />
+        </div>
+      )}
       <CardContainer className="flex-col phoneH:flex-row">
         <ZoomImage image={product.images[0]} alt="product" />
         <div className="flex-1 ml-3">
