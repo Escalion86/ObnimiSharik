@@ -21,6 +21,7 @@ const districtsSchema = {
     d: String,
     textX: Number,
     textY: Number,
+    // color: String,
   },
 }
 

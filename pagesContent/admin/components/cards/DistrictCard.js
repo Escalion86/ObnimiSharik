@@ -10,6 +10,17 @@ export const DistrictCard = ({
 }) => {
   return (
     <Card inLine onClick={() => onClick(district)}>
+      <div
+        className={
+          'flex justify-center items-center w-2 rounded-l-lg text-white'
+        }
+        style={{
+          backgroundColor: district.svg?.color
+            ? '#' + district.svg.color
+            : '#9ca3af',
+          opacity: 0.5,
+        }}
+      />
       <CardContainer>
         <div className="flex-1">
           <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
