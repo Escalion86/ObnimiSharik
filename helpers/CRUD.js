@@ -81,8 +81,8 @@ export const deleteData = async (
   callbackOnSuccess = null,
   toastOnSuccess = null,
   callbackOnError = null,
-  toastOnError = null
-  // params = {}
+  toastOnError = null,
+  params = {}
 ) => {
   try {
     const res = await fetch(url, {
@@ -91,7 +91,7 @@ export const deleteData = async (
         Accept: contentType,
         'Content-Type': contentType,
       },
-      // body: JSON.stringify({ params }),
+      body: JSON.stringify({ params }),
     })
 
     // Throw error with status code in case Fetch API req failed
