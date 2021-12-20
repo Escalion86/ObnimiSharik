@@ -12,12 +12,21 @@ export const ClientCard = ({
   onClick = () => {},
   onEdit = null,
   onDelete = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => {
   // const gender = GENDERS.find(
   //   (genderItem) => genderItem.value === client.gender
   // )
   return (
-    <Card inLine onClick={() => onClick(client)}>
+    <Card
+      inLine
+      onClick={() => onClick(client)}
+      onCheckClick={onCheckClick}
+      multiselectMode={multiselectMode}
+      checked={checked}
+    >
       <ZoomImage
         image={client.image}
         noImage={`/img/users/${client.gender ?? 'noGender'}.jpg`}

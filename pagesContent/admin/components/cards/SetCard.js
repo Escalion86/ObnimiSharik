@@ -19,6 +19,9 @@ export const SetCard = ({
   onClone = null,
   onDelete = null,
   onEdit = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => {
   const { setTypes } = useSelector((state) => state)
 
@@ -30,7 +33,12 @@ export const SetCard = ({
 
   const imageClassName = 'w-24'
   return (
-    <Card onClick={() => onClick(set)}>
+    <Card
+      onClick={() => onClick(set)}
+      onCheckClick={onCheckClick}
+      multiselectMode={multiselectMode}
+      checked={checked}
+    >
       {!set.showOnSite && (
         <div
           className={

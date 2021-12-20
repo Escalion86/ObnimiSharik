@@ -11,6 +11,8 @@ import formValidator from '@helpers/formValidator'
 import districtsSchema from '@schemas/districtsSchema'
 import compareObjects from '@helpers/compareObjects'
 
+// import { HuePicker } from 'react-color'
+
 const DistrictForm = ({
   loggedUser,
   district = DEFAULT_DISTRICT,
@@ -153,6 +155,45 @@ const DistrictForm = ({
               />
             </RowContainer>
           </div>
+          {/* <div className="flex items-center px-1 py-2 gap-x-2">
+            <div className="">Цвет</div>
+            <HuePicker
+              color={form.svg?.color}
+              onChangeComplete={(e) =>
+                updateForm({ svg: { ...form.svg, color: e.hex.slice(1) } })
+              }
+              pointer={() => (
+                <div
+                  style={{
+                    backgroundColor: form.svg?.color
+                      ? '#' + form.svg?.color
+                      : 'transparent',
+                    width: 22,
+                    height: 22,
+                    borderRadius: 10,
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    transform: `translateX(-50%) translateY(-3px)`,
+                  }}
+                ></div>
+              )}
+            />
+            <Input
+              key="hex"
+              label="hex"
+              type="text"
+              maxLength="6"
+              value={form.svg?.color}
+              onChange={(hex) =>
+                updateForm({ svg: { ...form.svg, color: hex } })
+              }
+              prefix="#"
+              inLine
+              labelStyle="w-auto"
+              inputStyle="ml-1 w-22"
+              maxLength={6}
+            />
+          </div> */}
         </div>
       )}
     </Form>

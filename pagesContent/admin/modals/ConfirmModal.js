@@ -6,6 +6,7 @@ const ConfirmModal = ({
   message = '',
   onClose = () => {},
   onConfirm = () => {},
+  children = null,
 }) => {
   return (
     <Modal onClose={onClose}>
@@ -17,6 +18,7 @@ const ConfirmModal = ({
         closeOnSubmit
       >
         {message}
+        {children}
       </Form>
     </Modal>
   )

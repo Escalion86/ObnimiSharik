@@ -19,26 +19,34 @@ export const TypeCard = ({
   onAdd = null,
   onDelete = null,
   onEdit = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => (
-  <Card onClick={() => onClick(type)}>
+  <Card
+    onClick={() => onClick(type)}
+    onCheckClick={onCheckClick}
+    multiselectMode={multiselectMode}
+    checked={checked}
+  >
     {!type.showOnSite && (
-        <div
-          className={
-            'absolute top-2 cursor-default left-0 z-10 flex justify-center items-center w-9 rounded-tl-lg rounded-br-lg text-red-400'
-          }
-          onClick={(e) => {
-            e.stopPropagation()
-            e.preventDefault()
-          }}
-        >
-          <FontAwesomeIcon icon={faEyeSlash} size="lg" />
-        </div>
-      )}
+      <div
+        className={
+          'absolute top-2 cursor-default left-0 z-10 flex justify-center items-center w-9 rounded-tl-lg rounded-br-lg text-red-400'
+        }
+        onClick={(e) => {
+          e.stopPropagation()
+          e.preventDefault()
+        }}
+      >
+        <FontAwesomeIcon icon={faEyeSlash} size="lg" />
+      </div>
+    )}
     <ZoomImage
       image={type.image}
       alt="product"
       imageClassName="w-24"
-      containerClassName="rounded-l-lg"
+      containerClassName={multiselectMode ? '' : 'rounded-l-lg'}
     />
     <CardContainer>
       <div className="flex-1">

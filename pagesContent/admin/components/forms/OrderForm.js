@@ -224,10 +224,10 @@ const ClientContent = ({
   // const deliver = ['deliver', 'dev', 'admin'].includes(role)
   const client = clients.find((client) => client._id === form.clientId)
 
-  const editClient = () => modals.openClientModal(client)
+  const editClient = () => modals.clients.open(client)
 
   const addClient = () =>
-    modals.openClientModal(undefined, (client) =>
+    modals.clients.open(undefined, (client) =>
       updateForm({
         clientId: client._id,
       })
@@ -708,7 +708,7 @@ const PaymentContent = ({
             paymentsId={paymentsId}
             onChange={setPaymentsId}
             onCreateNew={(index) =>
-              modals.openPaymentModal(
+              modals.payments.open(
                 {
                   ...DEFAULT_PAYMENT,
                   orderId: order._id,
@@ -723,7 +723,7 @@ const PaymentContent = ({
               )
             }
             // onEdit={(index, payment) =>
-            //   modals.openPaymentModal(payment, (data) => {
+            //   modals.payments.open(payment, (data) => {
             //     const tempPaymentsId = [...paymentsId]
             //     tempPaymentsId[index] = data._id
             //     setPaymentsId(tempPaymentsId)
@@ -731,11 +731,11 @@ const PaymentContent = ({
             // }
             // onDelete={(payment, onConfirm) => {
             //   payment
-            //     ? modals.openDeletePayment(payment, onConfirm)
+            //     ? modals.payments.delete(payment, onConfirm)
             //     : onConfirm()
             // }}
             onClick={(index, payment) =>
-              modals.openPaymentModal(
+              modals.payments.open(
                 payment,
                 (data) => {
                   const tempPaymentsId = [...paymentsId]

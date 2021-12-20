@@ -11,13 +11,22 @@ export const ProductCirculationCard = ({
   onDelete = null,
   onEdit = null,
   onClone = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => {
   const { count, purchase, productId } = productCirculation
   const { products } = useSelector((state) => state)
   const product = findDataWithId(products, productId)
 
   return (
-    <Card inLine onClick={() => onClick(productCirculation)}>
+    <Card
+      inLine
+      onClick={() => onClick(productCirculation)}
+      onCheckClick={onCheckClick}
+      multiselectMode={multiselectMode}
+      checked={checked}
+    >
       <CardContainer>
         <div className="flex flex-col flex-wrap flex-1 tablet:items-center gap-x-2 tablet:flex-row">
           <div>{formatDate(productCirculation.purchasedAt)}</div>

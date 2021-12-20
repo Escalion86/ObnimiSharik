@@ -126,8 +126,10 @@ export const SelectItemsList = ({
       const itemRows = []
       if (itemsId)
         itemsId.forEach((itemId) => {
-          if (itemId !== '?')
-            itemRows.push(items.find((item) => item._id === itemId))
+          if (itemId !== '?') {
+            const item = items.find((item) => item._id === itemId)
+            if (item) itemRows.push(item)
+          }
         })
 
       if (itemsIdCount)
@@ -135,24 +137,30 @@ export const SelectItemsList = ({
           if (id !== '?') itemRows.push(items.find((item) => item._id === id))
 
       return itemRows.map((item, index) => (
-        <div key={item._id} className="flex flex-col ml-2 italic gap-y-1">
+        <div
+          key={item?._id ? item._id : index}
+          className="flex flex-col ml-2 italic gap-y-1"
+        >
           <div
             className={
-              'flex gap-x-1' + (item[subItemsIdCountKey] ? ' text-primary' : '')
+              'flex gap-x-1' +
+              (subItemsIdCountKey && item[subItemsIdCountKey]
+                ? ' text-primary'
+                : '')
             }
           >
-            {item.article !== undefined && (
-              <div>({item.article ? item.article : 'без артикула'})</div>
+            {item?.article !== undefined && (
+              <div>({item?.article ? item.article : 'без артикула'})</div>
             )}
-            {item.name && <div>{item.name}</div>}
-            {itemsIdCount && (
+            {item?.name && <div>{item.name}</div>}
+            {itemsIdCount && item?._id && (
               <div className="whitespace-nowrap">
                 {' '}
                 - {itemsIdCount[item._id]} шт.
               </div>
             )}
           </div>
-          {item[subItemsIdCountKey] && (
+          {subItemsIdCountKey && item[subItemsIdCountKey] && (
             <ItemRows
               items={subItems}
               itemsIdCount={item[subItemsIdCountKey]}

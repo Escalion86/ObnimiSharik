@@ -21,6 +21,9 @@ export const OrderCard = ({
   onSetClick = () => {},
   onEdit = null,
   onDelete = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => {
   const { payments } = useSelector((state) => state)
   const productsIdCount = {}
@@ -49,7 +52,12 @@ export const OrderCard = ({
   const totalPrice = order.price - order.discount
 
   return (
-    <Card onClick={() => onClick(order)}>
+    <Card
+      onClick={() => onClick(order)}
+      onCheckClick={onCheckClick}
+      multiselectMode={multiselectMode}
+      checked={checked}
+    >
       <CardContainer className="flex-col">
         <div className="flex flex-1 gap-x-2">
           <div>{formatDateTime(order.deliveryDateFrom)}</div>

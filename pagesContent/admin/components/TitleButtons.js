@@ -2,36 +2,28 @@ import TitleButton from '@admincomponents/TitleButton'
 import { faBug, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export const BtnAddProduct = ({ key, modals }) => (
-  <TitleButton
-    onClick={() => modals.openProductModal()}
-    icon={faPlus}
-    key={key}
-  />
+  <TitleButton onClick={() => modals.products.open()} icon={faPlus} key={key} />
 )
 
 export const BtnAddSet = ({ key, modals }) => (
-  <TitleButton onClick={() => modals.openSetModal()} icon={faPlus} key={key} />
+  <TitleButton onClick={() => modals.sets.open()} icon={faPlus} key={key} />
 )
 
 export const BtnAddProductType = ({ key, modals }) => (
   <TitleButton
-    onClick={() => modals.openProductTypeModal()}
+    onClick={() => modals.productTypes.open()}
     icon={faPlus}
     key={key}
   />
 )
 
 export const BtnAddSetType = ({ key, modals }) => (
-  <TitleButton
-    onClick={() => modals.openSetTypeModal()}
-    icon={faPlus}
-    key={key}
-  />
+  <TitleButton onClick={() => modals.setTypes.open()} icon={faPlus} key={key} />
 )
 
 export const BtnAddInvitation = ({ key, modals }) => (
   <TitleButton
-    onClick={() => modals.openInvitationModal()}
+    onClick={() => modals.invitations.open()}
     icon={faPlus}
     key={key}
   />
@@ -39,7 +31,7 @@ export const BtnAddInvitation = ({ key, modals }) => (
 
 export const BtnAddProductCirculation = ({ key, modals }) => (
   <TitleButton
-    onClick={() => modals.openProductCirculationModal()}
+    onClick={() => modals.productCirculations.open()}
     icon={faPlus}
     key={key}
   />
@@ -58,40 +50,24 @@ export const BtnTest = ({ key, modals }) => (
 )
 
 export const BtnAddClient = ({ key, modals }) => (
-  <TitleButton
-    onClick={() => modals.openClientModal()}
-    icon={faPlus}
-    key={key}
-  />
+  <TitleButton onClick={() => modals.clients.open()} icon={faPlus} key={key} />
 )
 
 export const BtnAddOrder = ({ key, modals }) => (
-  <TitleButton
-    onClick={() => modals.openOrderModal()}
-    icon={faPlus}
-    key={key}
-  />
+  <TitleButton onClick={() => modals.orders.open()} icon={faPlus} key={key} />
 )
 
 export const BtnAddPayment = ({ key, modals }) => (
-  <TitleButton
-    onClick={() => modals.openPaymentModal()}
-    icon={faPlus}
-    key={key}
-  />
+  <TitleButton onClick={() => modals.payments.open()} icon={faPlus} key={key} />
 )
 
 export const BtnAddDevToDo = ({ key, modals }) => (
-  <TitleButton
-    onClick={() => modals.openDevToDoModal()}
-    icon={faPlus}
-    key={key}
-  />
+  <TitleButton onClick={() => modals.devToDo.open()} icon={faPlus} key={key} />
 )
 
 export const BtnAddDistrict = ({ key, modals }) => (
   <TitleButton
-    onClick={() => modals.openDistrictModal()}
+    onClick={() => modals.districts.open()}
     icon={faPlus}
     key={key}
   />

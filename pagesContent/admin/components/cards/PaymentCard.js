@@ -12,6 +12,9 @@ export const PaymentCard = ({
   onClick = () => {},
   onEdit = null,
   onDelete = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => {
   const { orders } = useSelector((state) => state)
   const order = orders.find((order) => order._id === payment.orderId)
@@ -19,11 +22,17 @@ export const PaymentCard = ({
     (payTypeItem) => payTypeItem.value === payment.payType
   )
   return (
-    <Card onClick={() => onClick(payment)}>
+    <Card
+      onClick={() => onClick(payment)}
+      onCheckClick={onCheckClick}
+      multiselectMode={multiselectMode}
+      checked={checked}
+    >
       <div
         className={
-          'flex justify-center items-center w-9 rounded-l-lg text-white bg-' +
-          (payType ? payType.color : 'gray-400')
+          'duration-500 flex justify-center items-center w-9 text-white bg-' +
+          (payType ? payType.color : 'gray-400') +
+          (multiselectMode ? '' : ' rounded-l-lg')
         }
       >
         <FontAwesomeIcon icon={payType?.icon ?? faQuestion} size="lg" />

@@ -17,6 +17,9 @@ export const ProductCard = ({
   onDelete = null,
   onEdit = null,
   onBuying = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => {
   const { productTypes } = useSelector((state) => state)
   const types = product.typesId.map((type_id) =>
@@ -28,7 +31,12 @@ export const ProductCard = ({
   const imageClassName = 'w-24'
 
   return (
-    <Card onClick={() => onClick(product)}>
+    <Card
+      onClick={() => onClick(product)}
+      onCheckClick={onCheckClick}
+      multiselectMode={multiselectMode}
+      checked={checked}
+    >
       {/* <img
       className="w-14 h-14"
       src={product.images[0]}

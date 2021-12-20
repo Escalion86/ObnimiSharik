@@ -50,7 +50,7 @@ const SearchBox = ({ modals }) => {
             item={product}
             onClick={() => {
               eraseSearchTextAndClose()
-              modals.openProductModal(product)
+              modals.products.open(product)
             }}
           />
         ))}
@@ -72,7 +72,7 @@ const SearchBox = ({ modals }) => {
             item={set}
             onClick={() => {
               eraseSearchTextAndClose()
-              modals.openSetModal(set)
+              modals.sets.open(set)
             }}
           />
         ))}
@@ -94,7 +94,7 @@ const SearchBox = ({ modals }) => {
             item={client}
             onClick={() => {
               eraseSearchTextAndClose()
-              modals.openClientModal(client)
+              modals.clients.open(client)
             }}
           />
         ))}

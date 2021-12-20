@@ -9,6 +9,9 @@ export const InvitationCard = ({
   onClick = () => {},
   onDelete = null,
   onEdit = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => {
   let status
   switch (invitation.status) {
@@ -24,7 +27,13 @@ export const InvitationCard = ({
   }
 
   return (
-    <Card inLine onClick={() => onClick(invitation)}>
+    <Card
+      inLine
+      onClick={() => onClick(invitation)}
+      onCheckClick={onCheckClick}
+      multiselectMode={multiselectMode}
+      checked={checked}
+    >
       <CardContainer>
         <div className="flex-1">
           <div className="flex flex-col flex-wrap justify-between gap-x-4 phoneH:flex-row">

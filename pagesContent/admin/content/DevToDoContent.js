@@ -12,20 +12,20 @@ const DevToDoContent = ({ data, modals, loggedUser }) => {
           key={devToDo._id}
           devToDo={devToDo}
           loggedUser={loggedUser}
-          onClick={() => modals.openDevToDoModal(devToDo)}
+          onClick={() => modals.devToDo.open(devToDo)}
           onEdit={
             accessToContent.edit(devToDo)
-              ? () => modals.openDevToDoModal(devToDo, null, null, true)
+              ? () => modals.devToDo.open(devToDo, null, null, true)
               : null
           }
           onDelete={
             accessToContent.delete(devToDo)
-              ? () => modals.openDeleteDevToDo(devToDo)
+              ? () => modals.devToDo.delete(devToDo)
               : null
           }
         />
       )}
-      onFabClick={accessToContent.add ? () => modals.openDevToDoModal() : null}
+      onFabClick={accessToContent.add ? () => modals.devToDo.open() : null}
       messageIfNoData="Заявок разработчику нет"
     />
   )

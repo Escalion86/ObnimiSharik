@@ -59,115 +59,727 @@ import addCountToSetTypes from '@helpers/addCountToSetTypes'
 import findDataWithId from '@helpers/findDataWithId'
 import formatDateTime from '@helpers/formatDateTime'
 import { DEFAULT_USER } from '@helpers/constants'
+import getNoun from '@helpers/getNoun'
+
+const deleteFunc = ({
+  variable = null,
+  data = [],
+  afterDelete = null,
+  onConfirm = null,
+  modals,
+  wordsSpelling = {
+    nominative: {
+      one: 'товар',
+      two: 'товара',
+      five: 'товаров',
+      many: 'товары',
+    },
+    genitive: {
+      one: 'товара',
+      many: 'товаров',
+    },
+    gender: 'male', // famale, neuter
+  },
+  nameTextFunc = (item) => {
+    return item?.name ? `"${item.name}"` : ''
+  },
+}) => {
+  if (!variable) return console.log('error delete: no variable')
+  const dataArray = data?._id ? [data] : Array.isArray(data) ? data : null
+  if (!dataArray || dataArray.length === 0)
+    return console.log('error delete' + variable)
+
+  const wordEnding =
+    wordsSpelling.gender === 'famale'
+      ? 'a'
+      : wordsSpelling.gender === 'neuter'
+      ? 'о'
+      : ''
+
+  const one = dataArray.length === 1
+  modals.openConfirmModal(
+    `Удаление ${
+      one ? wordsSpelling.genitive.one : wordsSpelling.genitive.many
+    }`,
+    `Вы уверены что хотите удалить ${getNoun(
+      dataArray.length,
+      wordsSpelling.nominative.one,
+      wordsSpelling.nominative.two,
+      wordsSpelling.nominative.five,
+      !one
+    )}${one ? ` ${nameTextFunc(dataArray[0])}` : ''}?`,
+    () => {
+      deleteData(
+        '/api/' + variable.toLowerCase(),
+        afterDelete,
+        one && !Array.isArray(dataArray)
+          ? `Удален${wordEnding} ${wordsSpelling.nominative.one}${
+              one ? ` ${nameTextFunc(dataArray[0])}` : ''
+            }`
+          : getNoun(
+              dataArray.length,
+              `${wordsSpelling.nominative.one} удален`,
+              `${wordsSpelling.nominative.two} удалены`,
+              `${wordsSpelling.nominative.five} удалены`,
+              true
+            ),
+        null,
+        `Ошибка при удалении ${
+          one
+            ? `${wordsSpelling.genitive.one}${
+                data?.name ? ` "${data.name}"` : ''
+              }`
+            : `${wordsSpelling.genitive.many}`
+        }`,
+        dataArray
+      )
+      if (onConfirm) onConfirm()
+    },
+    !one && (
+      <ol className="overflow-y-scroll list-decimal pl-11 max-h-60">
+        {dataArray.map((item, index) => (
+          <li key={'item' + index}>{nameTextFunc(item)}</li>
+        ))}
+      </ol>
+    )
+  )
+}
 
 const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
   const modals = {
-    openProductModal: (product, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <ProductModal
-            loggedUser={loggedUser}
-            product={product}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingProducts((result) =>
-                dispatch(
-                  setProducts(
-                    addCountToProducts(result, data.productCirculations, false)
+    products: {
+      open: (product, afterConfirm, afterDelete, edit) => {
+        dispatch(
+          addModal((modalId) => (
+            <ProductModal
+              loggedUser={loggedUser}
+              product={product}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingProducts((result) =>
+                  dispatch(
+                    setProducts(
+                      addCountToProducts(
+                        result,
+                        data.productCirculations,
+                        false
+                      )
+                    )
                   )
                 )
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.products.delete(product, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(product?._id)
+                })
+              }}
+            />
+          ))
+        )
+      },
+      delete: (products = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'products',
+          data: products,
+          afterDelete: () => {
+            fetchingProducts((result) =>
+              dispatch(
+                setProducts(
+                  addCountToProducts(result, data.productCirculations)
+                )
               )
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteProduct(product, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(product?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openSetModal: (set, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <SetModal
-            loggedUser={loggedUser}
-            set={set}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingSets((result) =>
-                dispatch(
-                  setSets(
-                    addCountToSets(result, data.productCirculations, false)
+            )
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'товар',
+              two: 'товара',
+              five: 'товаров',
+              many: 'товары',
+            },
+            genitive: {
+              one: 'товара',
+              many: 'товаров',
+            },
+            gender: 'male', // famale, neuter
+          },
+        }),
+    },
+    sets: {
+      open: (set, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <SetModal
+              loggedUser={loggedUser}
+              set={set}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingSets((result) =>
+                  dispatch(
+                    setSets(
+                      addCountToSets(result, data.productCirculations, false)
+                    )
                   )
                 )
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.sets.delete(set, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(set?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (sets = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'sets',
+          data: sets,
+          afterDelete: () => {
+            fetchingSets((result) =>
+              dispatch(
+                setSets(addCountToSets(result, data.productCirculations, false))
               )
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteSet(set, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(set?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openProductTypeModal: (productType, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <ProductTypeModal
-            loggedUser={loggedUser}
-            productType={productType}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingProductTypes((result) =>
-                dispatch(
-                  setProductTypes(addCountToProductTypes(result, data.products))
+            )
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'набор',
+              two: 'набора',
+              five: 'наборов',
+              many: 'наборы',
+            },
+            genitive: {
+              one: 'набора',
+              many: 'наборов',
+            },
+            gender: 'male', // famale, neuter
+          },
+        }),
+    },
+    productTypes: {
+      open: (productType, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <ProductTypeModal
+              loggedUser={loggedUser}
+              productType={productType}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingProductTypes((result) =>
+                  dispatch(
+                    setProductTypes(
+                      addCountToProductTypes(result, data.products)
+                    )
+                  )
                 )
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.productTypes.delete(productType, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(productType?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (productTypes = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'productTypes',
+          data: productTypes,
+          afterDelete: () => {
+            fetchingProductTypes((result) =>
+              dispatch(
+                setProductTypes(addCountToProductTypes(result, data.products))
               )
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteProductType(productType, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(productType?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openSetTypeModal: (setType, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <SetTypeModal
-            loggedUser={loggedUser}
-            setType={setType}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingSetTypes((result) =>
-                dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
-              )
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteSetType(setType, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(setType?._id)
-              })
-            }}
-          />
-        ))
-      ),
+            )
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'тип товара',
+              two: 'типа товара',
+              five: 'типов товара',
+              many: 'типы товара',
+            },
+            genitive: {
+              one: 'типа товара',
+              many: 'типов товара',
+            },
+            gender: 'male', // famale, neuter
+          },
+        }),
+    },
+    setTypes: {
+      open: (setType, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <SetTypeModal
+              loggedUser={loggedUser}
+              setType={setType}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingSetTypes((result) =>
+                  dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
+                )
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.setTypes.delete(setType, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(setType?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (setTypes = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'setTypes',
+          data: setTypes,
+          afterDelete: () => {
+            fetchingSetTypes((result) =>
+              dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
+            )
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'тип набора',
+              two: 'типа набора',
+              five: 'типов набора',
+              many: 'типы набора',
+            },
+            genitive: {
+              one: 'типа набора',
+              many: 'типов набора',
+            },
+            gender: 'male', // famale, neuter
+          },
+        }),
+    },
+    productCirculations: {
+      open: (productCirculation, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <ProductCirculationModal
+              loggedUser={loggedUser}
+              productCirculation={productCirculation}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingProductCirculations((result) =>
+                  dispatch(setProductCirculations(result, true))
+                )
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.productCirculations.delete(productCirculation, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(productCirculation?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (
+        productCirculations = [],
+        onConfirm = null,
+        afterDelete = null
+      ) =>
+        deleteFunc({
+          variable: 'productCirculations',
+          data: productCirculations,
+          afterDelete: () => {
+            fetchingProductCirculations((result) =>
+              dispatch(setProductCirculations(result, true))
+            )
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'движение товара',
+              two: 'движения товара',
+              five: 'движений товаров',
+              many: 'движения товаров',
+            },
+            genitive: {
+              one: 'движения товара',
+              many: 'движений товаров',
+            },
+            gender: 'neuter', // famale, neuter
+          },
+          nameTextFunc: (item) => {
+            const product = findDataWithId(data.products, item?.productId)
+            return `(${product.article}) "${product.name}" от ${formatDateTime(
+              item.purchasedAt
+            )}`
+          },
+        }),
+    },
+    payments: {
+      open: (payment, afterConfirm, afterDelete, edit = false) =>
+        dispatch(
+          addModal((modalId) => (
+            <PaymentModal
+              loggedUser={loggedUser}
+              payment={payment}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingPayments((result) => dispatch(setPayments(result)))
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.payments.delete(payment, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(payment?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (payments = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'payments',
+          data: payments,
+          afterDelete: () => {
+            fetchingPayments((result) => dispatch(setPayments(result)))
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'транзакцию',
+              two: 'транзакции',
+              five: 'транзакций',
+              many: 'транзакций',
+            },
+            genitive: {
+              one: 'транзакции',
+              many: 'транзакций',
+            },
+            gender: 'famale', // famale, neuter
+          },
+          nameTextFunc: (item) =>
+            `№${item.number} от ${formatDateTime(item.payAt)} на сумму ${
+              item.sum / 100
+            } ₽`,
+        }),
+    },
+    orders: {
+      open: (order, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <OrderModal
+              loggedUser={loggedUser}
+              order={order}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingOrders((result) => dispatch(setOrders(result)))
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.orders.delete(order, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(order?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (orders = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'orders',
+          data: orders,
+          afterDelete: () => {
+            fetchingOrders((result) => dispatch(setOrders(result)))
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'заказ',
+              two: 'заказа',
+              five: 'заказов',
+              many: 'заказов',
+            },
+            genitive: {
+              one: 'заказа',
+              many: 'заказов',
+            },
+            gender: 'male', // famale, neuter
+          },
+          nameTextFunc: (item) =>
+            `№${item.number} от ${formatDateTime(
+              item.deliveryDateFrom
+            )} на сумму ${(item.price - item.discount) / 100} ₽`,
+        }),
+    },
+    clients: {
+      open: (client, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <ClientModal
+              loggedUser={loggedUser}
+              client={client}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingClients((result) => dispatch(setClients(result)))
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.clients.delete(client, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(client?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (clients = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'clients',
+          data: clients,
+          afterDelete: () => {
+            fetchingClients((result) => dispatch(setClients(result)))
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'клиента',
+              two: 'клиента',
+              five: 'клиентов',
+              many: 'клиентов',
+            },
+            genitive: {
+              one: 'клиента',
+              many: 'клиентов',
+            },
+            gender: 'male', // famale, neuter
+          },
+        }),
+    },
+    users: {
+      open: (user, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <UserModal
+              loggedUser={loggedUser}
+              user={user}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingUsers((result) => dispatch(setUsers(result)))
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.users.delete(user, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(user?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (users = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'users',
+          data: users,
+          afterDelete: () => {
+            fetchingUsers((result) => dispatch(setUsers(result)))
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'сотрудника',
+              two: 'сотрудника',
+              five: 'сотрудников',
+              many: 'сотрудников',
+            },
+            genitive: {
+              one: 'сотрудника',
+              many: 'сотрудников',
+            },
+            gender: 'male', // famale, neuter
+          },
+        }),
+    },
+    invitations: {
+      open: (invitation, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <InvitationModal
+              loggedUser={loggedUser}
+              invitation={invitation}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingInvitations((result) =>
+                  dispatch(setInvitations(result))
+                )
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.invitations.delete(invitation, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(invitation?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (invitations = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'invitations',
+          data: invitations,
+          afterDelete: () => {
+            fetchingInvitations((result) => dispatch(setInvitations(result)))
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'приглашение',
+              two: 'приглашения',
+              five: 'приглашений',
+              many: 'приглашений',
+            },
+            genitive: {
+              one: 'приглашения',
+              many: 'приглашений',
+            },
+            gender: 'neuter', // famale, neuter
+          },
+          nameTextFunc: (item) => `для ${item.email}`,
+        }),
+    },
+    devToDo: {
+      open: (devToDo, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <DevToDoModal
+              loggedUser={loggedUser}
+              devToDo={devToDo}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingDevToDo((result) => dispatch(setDevToDo(result)))
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.devToDo.delete(devToDo, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(devToDo?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (devToDo, onConfirm = null) =>
+        modals.openConfirmModal(
+          'Удаление заявки',
+          'Вы уверены что хотите удалить заявку № ' + devToDo?.number + '?',
+          () => {
+            deleteData(
+              '/api/devtodo/' + devToDo?._id,
+              () => fetchingDevToDo((result) => dispatch(setDevToDo(result))),
+              'Заявка № ' + devToDo?.number + '" удалена',
+              null,
+              'Ошибка при удалении заявки № ' + devToDo?.number + '"'
+            )
+            if (onConfirm) onConfirm()
+          }
+        ),
+    },
+    districts: {
+      open: (district, afterConfirm, afterDelete, edit) =>
+        dispatch(
+          addModal((modalId) => (
+            <DistrictModal
+              loggedUser={loggedUser}
+              district={district}
+              modals={modals}
+              onClose={() => modals.closeModal(modalId)}
+              afterConfirm={(res) => {
+                afterConfirm && afterConfirm(res)
+                fetchingDistricts((result) => dispatch(setDistricts(result)))
+              }}
+              edit={edit}
+              onDelete={(onConfirm) => {
+                modals.districts.delete(district, () => {
+                  onConfirm && onConfirm()
+                  afterDelete && afterDelete(district?._id)
+                })
+              }}
+            />
+          ))
+        ),
+      delete: (districts = [], onConfirm = null, afterDelete = null) =>
+        deleteFunc({
+          variable: 'districts',
+          data: districts,
+          afterDelete: () => {
+            fetchingDistricts((result) => dispatch(setDistricts(result)))
+            if (afterDelete) afterDelete()
+          },
+          onConfirm,
+          modals,
+          wordsSpelling: {
+            nominative: {
+              one: 'район',
+              two: 'района',
+              five: 'районов',
+              many: 'районов',
+            },
+            genitive: {
+              one: 'района',
+              many: 'районов',
+            },
+            gender: 'male', // famale, neuter
+          },
+        }),
+    },
     openTildaImportModal: (afterConfirm) =>
       dispatch(
         addModal((modalId) => (
@@ -177,189 +789,6 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             afterConfirm={(res) => {
               afterConfirm && afterConfirm(res)
               fetchingAll((result) => dispatch(setAllData(result)))
-            }}
-          />
-        ))
-      ),
-    openUserModal: (user, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <UserModal
-            loggedUser={loggedUser}
-            user={user}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingUsers((result) => dispatch(setUsers(result)))
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteUser(user, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(user?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openInvitationModal: (invitation, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <InvitationModal
-            loggedUser={loggedUser}
-            invitation={invitation}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingInvitations((result) => dispatch(setInvitations(result)))
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteInvitation(invitation, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(invitation?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openProductCirculationModal: (
-      productCirculation,
-      afterConfirm,
-      afterDelete,
-      edit
-    ) =>
-      dispatch(
-        addModal((modalId) => (
-          <ProductCirculationModal
-            loggedUser={loggedUser}
-            productCirculation={productCirculation}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingProductCirculations((result) =>
-                dispatch(setProductCirculations(result, true))
-              )
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteProductCirculation(productCirculation, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(productCirculation?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openClientModal: (client, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <ClientModal
-            loggedUser={loggedUser}
-            client={client}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingClients((result) => dispatch(setClients(result)))
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteClient(client, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(client?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openDevToDoModal: (devToDo, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <DevToDoModal
-            loggedUser={loggedUser}
-            devToDo={devToDo}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingDevToDo((result) => dispatch(setDevToDo(result)))
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteDevToDo(devToDo, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(devToDo?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openDistrictModal: (district, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <DistrictModal
-            loggedUser={loggedUser}
-            district={district}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingDistricts((result) => dispatch(setDistricts(result)))
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteDistrict(district, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(district?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openOrderModal: (order, afterConfirm, afterDelete, edit) =>
-      dispatch(
-        addModal((modalId) => (
-          <OrderModal
-            loggedUser={loggedUser}
-            order={order}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingOrders((result) => dispatch(setOrders(result)))
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeleteOrder(order, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(order?._id)
-              })
-            }}
-          />
-        ))
-      ),
-    openPaymentModal: (payment, afterConfirm, afterDelete, edit = false) =>
-      dispatch(
-        addModal((modalId) => (
-          <PaymentModal
-            loggedUser={loggedUser}
-            payment={payment}
-            modals={modals}
-            onClose={() => modals.closeModal(modalId)}
-            afterConfirm={(res) => {
-              afterConfirm && afterConfirm(res)
-              fetchingPayments((result) => dispatch(setPayments(result)))
-            }}
-            edit={edit}
-            onDelete={(onConfirm) => {
-              modals.openDeletePayment(payment, () => {
-                onConfirm && onConfirm()
-                afterDelete && afterDelete(payment?._id)
-              })
             }}
           />
         ))
@@ -379,234 +808,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
           <VersionHistoryModal onClose={() => modals.closeModal(modalId)} />
         ))
       ),
-    openDeleteProduct: (product, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление товара',
-        'Вы уверены что хотите удалить товар "' + product?.name + '"?',
-        () => {
-          deleteData(
-            '/api/products/' + product?._id,
-            () =>
-              fetchingProducts((result) =>
-                dispatch(
-                  setProducts(
-                    addCountToProducts(result, data.productCirculations)
-                  )
-                )
-              ),
-            'Товар "' + product?.name + '" удален',
-            null,
-            'Ошибка при удалении товара "' + product?.name + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteSet: (set, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление набора',
-        'Вы уверены что хотите удалить набора "' + set?.name + '"?',
-        () => {
-          deleteData(
-            '/api/sets/' + set?._id,
-            () =>
-              fetchingSets((result) =>
-                dispatch(
-                  setSets(
-                    addCountToSets(result, data.productCirculations, false)
-                  )
-                )
-              ),
-            'Набор "' + set?.name + '" удален',
-            null,
-            'Ошибка при удалении набора "' + set?.name + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteProductType: (productType, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление типа товара',
-        'Вы уверены что хотите удалить тип товара "' + productType?.name + '"?',
-        () => {
-          deleteData(
-            '/api/producttypes/' + productType?._id,
-            () =>
-              fetchingProductTypes((result) =>
-                dispatch(
-                  setProductTypes(addCountToProductTypes(result, data.products))
-                )
-              ),
-            'Тип товара "' + productType?.name + '" удален',
-            null,
-            'Ошибка при удалении типа товара "' + productType?.name + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteSetType: (setType, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление типа набора',
-        'Вы уверены что хотите удалить тип набора "' + setType?.name + '"?',
-        () => {
-          deleteData(
-            '/api/settypes/' + setType?._id,
-            () =>
-              fetchingSetTypes((result) =>
-                dispatch(setSetTypes(addCountToSetTypes(result, data.sets)))
-              ),
-            'Тип набора "' + setType?.name + '" удален',
-            null,
-            'Ошибка при удалении типа набора "' + setType?.name + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteUser: (user, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление пользователя',
-        'Вы уверены что хотите удалить пользователя "' + user?.email + '"?',
-        () => {
-          deleteData(
-            '/api/users/' + user?._id,
-            () => fetchingUsers((result) => dispatch(setUsers(result))),
-            'Пользователь "' + user?.name + '" удален',
-            null,
-            'Ошибка при удалении пользователя "' + user?.name + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteInvitation: (invitation, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление приглашения',
-        'Вы уверены что хотите удалить приглашение для "' +
-          invitation?.email +
-          '"?',
-        () => {
-          deleteData(
-            '/api/invitations/' + invitation?._id,
-            () =>
-              fetchingInvitations((result) => dispatch(setInvitations(result))),
-            'Приглашение для "' + invitation?.email + '" удалено',
-            null,
-            'Ошибка при удалении приглаения для "' + invitation?.email + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteProductCirculation: (productCirculation, onConfirm = null) => {
-      const product = findDataWithId(
-        data.products,
-        productCirculation?.productId
-      )
-      modals.openConfirmModal(
-        'Удаление движения товара',
-        'Вы уверены что хотите удалить движение товара (' +
-          product?.article +
-          ') "' +
-          product?.name +
-          '" от ' +
-          formatDateTime(productCirculation?.purchasedAt) +
-          '?',
-        () => {
-          deleteData(
-            '/api/productcirculations/' + productCirculation?._id,
-            () =>
-              fetchingProductCirculations((result) =>
-                dispatch(setProductCirculations(result, true))
-              ),
-            'Движние товара (' +
-              product?.article +
-              ') "' +
-              product?.name +
-              '" удалено',
-            null,
-            'Ошибка при удалении движения товара (' +
-              product?.article +
-              ') "' +
-              product?.name +
-              '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      )
-    },
-    openDeleteClient: (client, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление клиента',
-        'Вы уверены что хотите удалить клиента "' + client?.name + '"?',
-        () => {
-          deleteData(
-            '/api/clients/' + client?._id,
-            () => fetchingClients((result) => dispatch(setClients(result))),
-            'Клиент "' + client?.name + '" удален',
-            null,
-            'Ошибка при удалении клиента "' + client?.name + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteDevToDo: (devToDo, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление заявки',
-        'Вы уверены что хотите удалить заявку № ' + devToDo?.number + '?',
-        () => {
-          deleteData(
-            '/api/devtodo/' + devToDo?._id,
-            () => fetchingDevToDo((result) => dispatch(setDevToDo(result))),
-            'Заявка № ' + devToDo?.number + '" удалена',
-            null,
-            'Ошибка при удалении заявки № ' + devToDo?.number + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteDistrict: (district, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление района',
-        'Вы уверены что хотите удалить район "' + district?.name + '"?',
-        () => {
-          deleteData(
-            '/api/districts/' + district?._id,
-            () => fetchingDistricts((result) => dispatch(setDistricts(result))),
-            'Район "' + district?.name + '" удален',
-            null,
-            'Ошибка при удалении района "' + district?.name + '"'
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeleteOrder: (order, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление заказа',
-        'Вы уверены что хотите удалить заказ №' + order?.number + '?',
-        () => {
-          deleteData(
-            '/api/orders/' + order?._id,
-            () => fetchingOrders((result) => dispatch(setOrders(result))),
-            'Заказ №' + order?.number + '" удален',
-            null,
-            'Ошибка при удалении заказа №' + order?.number
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openDeletePayment: (payment, onConfirm = null) =>
-      modals.openConfirmModal(
-        'Удаление транзакции',
-        'Вы уверены что хотите удалить транзакцию №' + payment?.number + '?',
-        () => {
-          deleteData(
-            '/api/payments/' + payment?._id,
-            () => fetchingPayments((result) => dispatch(setPayments(result))),
-            'Транзакция №' + payment?.number + '" удалена',
-            null,
-            'Ошибка при удалении транзакции №' + payment?.number
-          )
-          if (onConfirm) onConfirm()
-        }
-      ),
-    openConfirmModal: (title, message, onConfirm) =>
+    openConfirmModal: (title, message, onConfirm, children = null) =>
       dispatch(
         addModal((modalId) => (
           <ConfirmModal
@@ -614,6 +816,7 @@ const modals = (dispatch, data, loggedUser = DEFAULT_USER) => {
             message={message}
             onConfirm={onConfirm}
             onClose={() => modals.closeModal(modalId)}
+            children={children}
           />
         ))
       ),

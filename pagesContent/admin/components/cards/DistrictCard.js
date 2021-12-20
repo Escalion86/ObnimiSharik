@@ -7,12 +7,22 @@ export const DistrictCard = ({
   onClick = () => {},
   onEdit = null,
   onDelete = null,
+  multiselectMode = false,
+  checked = false,
+  onCheckClick = null,
 }) => {
   return (
-    <Card inLine onClick={() => onClick(district)}>
+    <Card
+      inLine
+      onClick={() => onClick(district)}
+      onCheckClick={onCheckClick}
+      multiselectMode={multiselectMode}
+      checked={checked}
+    >
       <div
         className={
-          'flex justify-center items-center w-2 rounded-l-lg text-white'
+          'duration-500 flex justify-center items-center w-2 text-white' +
+          (multiselectMode ? '' : ' rounded-l-lg')
         }
         style={{
           backgroundColor: district.svg?.color

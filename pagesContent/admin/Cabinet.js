@@ -7,12 +7,13 @@ import Title from '@admin/Title'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import TitleButton from '@admincomponents/TitleButton'
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faCheckSquare, faFilter } from '@fortawesome/free-solid-svg-icons'
 import compareObjects from '@helpers/compareObjects'
 import { initialState as filterInitialState } from '@state/reducers/filterReducer'
 import Filter from '@admincomponents/filter/Filter'
 
 import SortTitleButtonMenu from '@admincomponents/SortTitleButtonMenu'
+import MultiselectMenu from '@admincomponents/MultiselectMenu'
 
 const Cabinet = ({
   page,
@@ -27,7 +28,25 @@ const Cabinet = ({
 }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [filterShow, setFilterShow] = useState(false)
-  const toggleFilterShow = () => setFilterShow(!filterShow)
+  const [multiselectShow, setMultiselectShow] = useState(false)
+  const [selectedItems, setSelectedItems] = useState([])
+  const cleanupSelectedItems = () => setSelectedItems([])
+  const toggleFilterShow = () => {
+    // if (!filterShow) setMultiselectShow(false)
+    setFilterShow(!filterShow)
+  }
+
+  const closeMultiselect = () => {
+    setMultiselectShow(false)
+    setSelectedItems([])
+  }
+
+  const toggleMultiselectShow = () => {
+    if (!multiselectShow && filterShow) setFilterShow(false)
+    if (multiselectShow) closeMultiselect()
+    // if (filterShow) setFilterShow(false)
+    else setMultiselectShow(true)
+  }
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
@@ -67,6 +86,22 @@ const Cabinet = ({
     state.sorting[page.variable] &&
     Object.keys(state.sorting[page.variable]).length > 0
   )
+  const multiselectExists =
+    page.variable &&
+    [
+      'products',
+      'sets',
+      'productCirculations',
+      'orders',
+      'clients',
+      'productTypes',
+      'setTypes',
+      'districts',
+      'clients',
+      'invitations',
+      'users',
+      'payments',
+    ].includes(page.variable)
 
   // // // const pageButtons = []
   // let Filter
@@ -96,12 +131,23 @@ const Cabinet = ({
     />
   )
 
+  const BtnMultiselect = ({ key }) => (
+    <TitleButton
+      onClick={toggleMultiselectShow}
+      key={key}
+      icon={faCheckSquare}
+      // active={btnFilterActive}
+      // warning={data.filter.products.show}
+    />
+  )
+
   const BtnSort = ({ key }) => (
     <SortTitleButtonMenu state={state} key={key} variable={page.variable} />
   )
-
+  if (multiselectExists) pageButtons = [BtnMultiselect, ...pageButtons]
   if (filterExists) pageButtons = [BtnFilter, ...pageButtons]
   if (sortingExists) pageButtons = [BtnSort, ...pageButtons]
+
   // // if (page.pageButtons) pageButtons = [...pageButtons, ...buttons]
   // // pageButtons = page.pageButtons ? page.pageButtons : []
 
@@ -189,7 +235,10 @@ const Cabinet = ({
       <SidePanel
         menuCfg={menuCfg}
         menuOpen={menuOpen}
-        setPageId={setPageId}
+        setPageId={(id) => {
+          closeMultiselect()
+          setPageId(id)
+        }}
         activePageId={page.id}
         closeMenu={closeMenu}
         modals={modals}
@@ -230,6 +279,24 @@ const Cabinet = ({
                 setHideFilter={() => setFilterShow(false)}
               />
             )}
+            {multiselectExists && (
+              <MultiselectMenu
+                show={multiselectShow}
+                selectedIdsCount={selectedItems.length}
+                onClickSelectAll={() =>
+                  // setSelectedItems(filteredData.map((item) => item._id))
+                  setSelectedItems(filteredData)
+                }
+                onClickUnselectAll={cleanupSelectedItems}
+                onClickDelete={() => {
+                  modals[page.variable]?.delete(
+                    selectedItems,
+                    null,
+                    cleanupSelectedItems
+                  )
+                }}
+              />
+            )}
           </div>
 
           {/* <div className="relative flex flex-col flex-1 max-h-full px-3 pb-3 overflow-y-scroll">
@@ -237,6 +304,9 @@ const Cabinet = ({
           <div className="h-full overflow-y-auto">
             <PageContent
               data={filteredData}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+              multiselectMode={multiselectShow}
               // setModal={setModal}
               // updateData={updateData}
               modals={modals}
