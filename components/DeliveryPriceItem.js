@@ -5,7 +5,10 @@ const DeliveryPriceItem = ({ color, price, text, text2 }) => (
       <div className="text-base font-light text-black">{text}</div>
       {text2 && <div className="text-base font-light text-black">{text2}</div>}
       {color && (
-        <div className="w-full h-3 mt-2" style={{ backgroundColor: color }} />
+        <div
+          className="w-full h-3 mt-2"
+          style={{ backgroundColor: color, opacity: 0.35 }}
+        />
       )}
     </div>
   </div>

@@ -13,10 +13,10 @@ import SpecialCard from '@components/SpecialCard'
 import InfoItem from '@components/InfoItem'
 import DeliveryPriceItem from '@components/DeliveryPriceItem'
 
-import TitleBlock2 from '@blocks/TitleBlock2'
-import SpecialBlock from '@blocks/SpecialBlock'
-import WhyWeBlock from '@blocks/WhyWeBlock'
-import DeliveryBlock from '@blocks/DeliveryBlock'
+import TitleBlock2 from '@general/TitleBlock2'
+import SpecialBlock from '@general/SpecialBlock'
+import WhyWeBlock from '@general/WhyWeBlock'
+import DeliveryBlock from '@general/DeliveryBlock'
 // let csvToJson = require('convert-csv-to-json')
 // const csvFilePath='tilda.csv'
 // const csv=require('csvtojson')
@@ -24,11 +24,12 @@ import DeliveryBlock from '@blocks/DeliveryBlock'
 
 import { catalogData, setsData } from '@utils/temp_db'
 
-// import dbConnect from '@utils/dbConnect'
-// import Products from '@models/Products'
-// import ProductTypes from '@models/ProductTypes'
-// import SetTypes from '@models/SetTypes'
-// import Sets from '@models/Sets'
+import dbConnect from '@utils/dbConnect'
+import Products from '@models/Products'
+import ProductTypes from '@models/ProductTypes'
+import SetTypes from '@models/SetTypes'
+import Sets from '@models/Sets'
+import Districts from '@models/Districts'
 
 import { signIn, signOut, useSession, getSession } from 'next-auth/react'
 import prepareFetchProps from '@helpers/prepareFetchProps'
@@ -52,14 +53,18 @@ import prepareFetchProps from '@helpers/prepareFetchProps'
 //   // console.log(`json`, js`on)
 // }
 
-export default function Home({ products, sets, productTypes, setTypes }) {
-  const { height, width } = useWindowDimensions()
-  const { data: session, status } = useSession()
-  const loading = status === 'loading'
+export default function Home({
+  products,
+  sets,
+  productTypes,
+  setTypes,
+  districts,
+}) {
+  // const { height, width } = useWindowDimensions()
+  // const { data: session, status } = useSession()
+  // const loading = status === 'loading'
 
   // if (session) console.log(`session`, session)
-
-  // console.log(`products`, products)
 
   return (
     <MainLayout title="Обними шарик - Главная">
@@ -94,7 +99,7 @@ export default function Home({ products, sets, productTypes, setTypes }) {
             </Block>
           </div>
           <WhyWeBlock />
-          <DeliveryBlock />
+          <DeliveryBlock districts={districts} />
         </div>
       </div>
     </MainLayout>
@@ -102,16 +107,25 @@ export default function Home({ products, sets, productTypes, setTypes }) {
 }
 
 /* Retrieves pet(s) data from mongodb database */
-// export async function getServerSideProps() {
-//   await dbConnect()
+export async function getServerSideProps() {
+  await dbConnect()
 
-//   const productTypes = prepareFetchProps(await ProductTypes.find({}))
-//   const setTypes = prepareFetchProps(await SetTypes.find({}))
-//   const sets = prepareFetchProps(await Sets.find({}))
-//   const products = prepareFetchProps(await Products.find({}))
+  const productTypes = prepareFetchProps(await ProductTypes.find({}).lean())
+  const setTypes = prepareFetchProps(await SetTypes.find({}).lean())
+  const sets = prepareFetchProps(await Sets.find({}).lean())
+  const products = prepareFetchProps(await Products.find({}).lean())
+  const districts = prepareFetchProps(await Districts.find({}).lean())
 
-//   return { props: { products, productTypes, sets, setTypes } }
-// }
+  return {
+    props: {
+      products,
+      productTypes,
+      sets,
+      setTypes,
+      districts,
+    },
+  }
+}
 
 // export async function getServerSideProps(ctx) {
 //   return {

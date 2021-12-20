@@ -3,7 +3,7 @@ module.exports = {
   mode: 'jit',
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
-    './blocks/**/*.{js,ts,jsx,tsx}',
+    './pagesContent/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './helpers/**/*.{js,ts,jsx,tsx}',
   ],
@@ -14,6 +14,10 @@ module.exports = {
   },
   theme: {
     extend: {
+      transitionProperty: {
+        scale:
+          'width, height, background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter !important',
+      },
       flex: {
         2: '2 2 0%',
         3: '3 3 0%',
@@ -77,7 +81,7 @@ module.exports = {
       minWidth: {
         // 4: '1rem',
         6: '1.5rem',
-        // 8: '2rem',
+        8: '2rem',
         12: '3rem',
         16: '4rem',
         20: '5rem',
@@ -106,6 +110,7 @@ module.exports = {
       maxWidth: {
         // 4: '1rem',
         6: '1.5rem',
+        8: '2rem',
         // 12: '3rem',
         // 16: '4rem',
         20: '5rem',
@@ -122,6 +127,7 @@ module.exports = {
         132: '33rem',
         140: '35rem',
         248: '62rem',
+        284: '71rem',
       },
       minHeight: {
         8: '2rem',
@@ -131,6 +137,7 @@ module.exports = {
         192: '46rem',
       },
       maxHeight: {
+        15: '3.75rem',
         18: '4.5rem',
         22: '5.5rem',
         200: '50rem',
@@ -183,6 +190,13 @@ module.exports = {
         84: '21rem',
         88: '22rem',
         100: '25rem',
+        120: '30rem',
+        124: '31rem',
+        128: '32rem',
+        132: '33rem',
+        140: '35rem',
+        248: '62rem',
+        284: '71rem',
       },
       opacity: {
         15: '15%',

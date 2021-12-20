@@ -49,6 +49,10 @@ const productsSchema = {
     type: Boolean,
     default: false,
   },
+  showOnSite: {
+    type: Boolean,
+    default: false,
+  },
 }
 
 export default productsSchema

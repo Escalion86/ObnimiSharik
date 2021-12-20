@@ -8,7 +8,7 @@ import {
   // SET_USERS_FILTER,
   SET_PAGE,
 } from 'state/constants'
-import { pages } from '@adminblocks/pages'
+import { pages } from '@admin/pages'
 
 export const initialState = pages[0]
 

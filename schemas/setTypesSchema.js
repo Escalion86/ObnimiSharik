@@ -17,11 +17,15 @@ const setTypesSchema = {
     type: String,
     default: '',
   },
-  cardSize: {
+  cardSizeOnSite: {
     type: String,
     default: 'normal', // big, small
   },
   archive: {
+    type: Boolean,
+    default: false,
+  },
+  showOnSite: {
     type: Boolean,
     default: false,
   },

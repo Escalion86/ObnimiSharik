@@ -17,6 +17,12 @@ const districtsSchema = {
     ],
     default: 0,
   },
+  svg: {
+    d: String,
+    textX: Number,
+    textY: Number,
+    // color: String,
+  },
 }
 
 export default districtsSchema

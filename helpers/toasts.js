@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify'
-import IconButton from '@components/IconButton'
+import IconButton from '@admincomponents/IconButton'
 
 const toastContainer = (message, buttons) => (
   <div className="flex justify-between">

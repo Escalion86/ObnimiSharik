@@ -5,7 +5,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 
 import Button from '@components/Button'
 
-import Cabinet from '@adminblocks/Cabinet'
+import Cabinet from '@admin/Cabinet'
 
 import Spinner from '@admincomponents/Spinner'
 
@@ -19,9 +19,9 @@ import {
   removeAllModals,
   removeModal,
 } from '@state/actions/modalsActions'
-import modalsFunctions from '@adminblocks/modals/modalsFunctions'
+import modalsFunctions from '@admin/modals/modalsFunctions'
 import { setPage } from '@state/actions/pageActions'
-import { pages, pagesGroups } from '@adminblocks/pages'
+import { pages, pagesGroups } from '@admin/pages'
 import versionHistory from '@helpers/versionHistory'
 import accessTable from '@helpers/accessTable'
 

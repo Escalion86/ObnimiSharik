@@ -3,9 +3,10 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["components/*"],
-      "@admincomponents/*": ["blocks/admin/components/*"],
-      "@adminblocks/*": ["blocks/admin/*"],
-      "@blocks/*": ["blocks/*"],
+      "@admincomponents/*": ["pagesContent/admin/components/*"],
+      "@general/*": ["pagesContent/general/*"],
+      "@admin/*": ["pagesContent/admin/*"],
+      "@pagesContent/*": ["pagesContent/*"],
       "@helpers/*": ["helpers/*"],
       "@pages/*": ["pages/*"],
       "@models/*": ["models/*"],

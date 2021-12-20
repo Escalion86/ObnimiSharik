@@ -11,8 +11,8 @@ const NavItem = ({ name = '', href = '' }) => (
 function HeadPanel() {
   return (
     <div className="fixed top-0 z-50 w-full">
-      <Block
-        className="flex justify-between items-center space-x-3 shadow-md py-2.5 px-5 bg-header rounded-b-3xl"
+      <div
+        className="flex justify-between items-center space-x-3 shadow-md py-2.5 px-5 bg-header rounded-b-3xl flex-1 phoneV:mx-2 phoneH:mx-4 tablet:mx-6 laptop:mx-10 desktop:mx-14"
         // style={{ boxShadow: '0px 3px 10px 0px rgb(33 33 33)' }}
       >
         <a
@@ -27,7 +27,7 @@ function HeadPanel() {
           </div>
         </a>
         {/* <div className="flex flex-col flex-grow"> */}
-        <nav className="flex justify-between flex-grow max-w-xl">
+        <nav className="justify-between flex-grow hidden max-w-xl laptop:flex">
           <NavItem name="Главная" href="/" />
           <NavItem name="Каталог шаров" href="/catalog" />
           <NavItem name="Акции и скидки" href="/special" />
@@ -43,12 +43,12 @@ function HeadPanel() {
             <FiPhoneCall />
             <div>8 (391) 989-79-17</div>
           </a>
-          <div className="text-xs text-futura">
+          <div className="text-xxs text-futura">
             г.Красноярск, ул. Телевизорная 8
           </div>
           {/* <div className="text-xs">Режим работы с 9:00 до 21:00</div> */}
         </div>
-      </Block>
+      </div>
     </div>
   )
 }

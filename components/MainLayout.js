@@ -14,7 +14,7 @@ function MainLayout({ title = '', children = null }) {
         <title className="">{title}</title>
       </Head>
 
-      <main className="relative flex flex-col items-center justify-start w-full min-h-screen text-white text-futura">
+      <main className="relative flex flex-col items-start justify-center w-full min-h-screen text-white text-futura">
         <HeadPanel />
         <DeviceCheck />
         {children}
