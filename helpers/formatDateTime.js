@@ -35,7 +35,7 @@ function formatDateTime(dateTime, forComponent = false) {
       ' ' +
       months[month - 1] +
       ' ' +
-      year.toString().substr(2, 2) +
+      year.toString() + //.substr(2, 2) +
       ' ' +
       hours +
       ':' +
