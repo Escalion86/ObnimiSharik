@@ -14,6 +14,10 @@ module.exports = {
   },
   theme: {
     extend: {
+      transitionProperty: {
+        scale:
+          'width, height, background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter !important',
+      },
       flex: {
         2: '2 2 0%',
         3: '3 3 0%',
@@ -77,7 +81,7 @@ module.exports = {
       minWidth: {
         // 4: '1rem',
         6: '1.5rem',
-        // 8: '2rem',
+        8: '2rem',
         12: '3rem',
         16: '4rem',
         20: '5rem',
@@ -106,6 +110,7 @@ module.exports = {
       maxWidth: {
         // 4: '1rem',
         6: '1.5rem',
+        8: '2rem',
         // 12: '3rem',
         // 16: '4rem',
         20: '5rem',
@@ -132,6 +137,7 @@ module.exports = {
         192: '46rem',
       },
       maxHeight: {
+        15: '3.75rem',
         18: '4.5rem',
         22: '5.5rem',
         200: '50rem',
