@@ -8,6 +8,7 @@ import SetsInCard from './forCards/SetsInCard'
 import { ORDER_STATUSES } from '@helpers/constants'
 import formatDeliveryAddress from '@helpers/formatDeliveryAddress'
 import { useSelector } from 'react-redux'
+import cn from 'classnames'
 
 export const OrderCard = ({
   order,
@@ -24,6 +25,7 @@ export const OrderCard = ({
   multiselectMode = false,
   checked = false,
   onCheckClick = null,
+  hidden = false,
 }) => {
   const { payments } = useSelector((state) => state)
   const productsIdCount = {}
@@ -57,6 +59,7 @@ export const OrderCard = ({
       onCheckClick={onCheckClick}
       multiselectMode={multiselectMode}
       checked={checked}
+      hidden={hidden}
     >
       <CardContainer className="flex-col">
         <div className="flex flex-1 gap-x-2">
@@ -106,10 +109,10 @@ export const OrderCard = ({
             ' ₽'}
         </div>
         <div
-          className={
-            'flex items-center bg-white justify-center w-28 h-12 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg ' +
+          className={cn(
+            'flex items-center bg-white justify-center w-28 h-12 border-t border-l border-gray-200 rounded-tl-lg',
             `bg-${orderStatus.color}`
-          }
+          )}
         >
           <span className="text-sm text-center">{orderStatus.name}</span>
         </div>

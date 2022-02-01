@@ -1,5 +1,6 @@
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import cn from 'classnames'
 
 const {
   faWhatsapp,
@@ -12,10 +13,10 @@ const { faPhone } = require('@fortawesome/free-solid-svg-icons')
 
 const ContactIconBtn = ({ url, icon, size = 'lg', className = null }) => (
   <FontAwesomeIcon
-    className={
-      'cursor-pointer text-primary hover:text-toxic duration-300 hover:scale-125' +
-      (className ? ' ' + className : '')
-    }
+    className={cn(
+      'cursor-pointer text-primary hover:text-toxic duration-300 hover:scale-125',
+      className
+    )}
     icon={icon}
     onClick={(event) => {
       event.stopPropagation()

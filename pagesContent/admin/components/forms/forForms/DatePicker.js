@@ -1,5 +1,6 @@
 import formatDate from '@helpers/formatDate'
 import birthDateToAge from '@helpers/birthDateToAge'
+import cn from 'classnames'
 
 const DatePicker = ({
   label = '',
@@ -19,14 +20,11 @@ const DatePicker = ({
     return (
       <div className={'flex items-center' + (className ? ' ' + className : '')}>
         <label
-          className={
-            'border-b-1 border-primary max-w-min whitespace-nowrap' +
-            (labelStyle
-              ? ' ' + labelStyle
-              : inLine
-              ? ' min-w-24 max-w-40 w-1/4'
-              : '')
-          }
+          className={cn(
+            'border-b-1 border-primary max-w-min whitespace-nowrap',
+            labelStyle,
+            { 'min-w-24 max-w-40 w-1/4': !labelStyle & inLine }
+          )}
           htmlFor={name}
         >
           {label}:
@@ -43,11 +41,11 @@ const DatePicker = ({
 
   return (
     <div
-      className={
-        'flex' +
-        (inLine ? ' flex-row items-center' : ' flex-col') +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'text-text flex',
+        inLine ? ' flex-row items-center' : ' flex-col',
+        className
+      )}
     >
       <label className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''} htmlFor={name}>
         {label}
@@ -55,11 +53,11 @@ const DatePicker = ({
       </label>
       <div className="flex items-center">
         <input
-          className={
-            'px-2 py-1 border max-w-40 rounded-lg ' +
-            (required && !value ? 'border-red-700' : 'border-gray-700') +
-            (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
-          }
+          className={cn(
+            'text-input px-2 py-1 border max-w-40 rounded-lg outline-none focus:shadow-active',
+            required && !value ? ' border-red-700' : ' border-gray-400',
+            { 'bg-gray-200  text-disabled': disabled }
+          )}
           type="date"
           name={name}
           defaultValue={formatDate(value, true)}

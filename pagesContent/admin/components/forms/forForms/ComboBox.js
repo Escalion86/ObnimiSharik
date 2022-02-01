@@ -1,3 +1,5 @@
+import cn from 'classnames'
+
 const ComboBox = ({
   name,
   title,
@@ -26,17 +28,20 @@ const ComboBox = ({
 
   return (
     <div
-      className={'flex ' + (inLine ? 'flex-row items-center ' : 'flex-col ')}
+      className={cn('flex', inLine ? 'flex-row items-center ' : 'flex-col ')}
     >
-      <label className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''} htmlFor={name}>
+      <label
+        className={cn({ 'min-w-24 max-w-40 w-1/4': inLine })}
+        htmlFor={name}
+      >
         {title}
       </label>
       <select
         name={name}
-        className={
-          'px-2 py-1 bg-gray-200 border rounded-lg ' +
-          (required && !defaultValue ? 'border-red-700' : 'border-gray-700')
-        }
+        className={cn(
+          'px-2 py-1 bg-gray-200 border rounded-lg',
+          required && !defaultValue ? 'border-red-700' : 'border-gray-700'
+        )}
         onChange={(e) => onChange(e.target.value)}
         defaultValue={defaultValueExists ? defaultValue : ''}
       >

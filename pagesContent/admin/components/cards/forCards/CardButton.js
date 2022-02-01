@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { Tooltip } from '@material-ui/core'
+import cn from 'classnames'
 
 const CardButton = ({
   name = '',
@@ -17,10 +18,10 @@ const CardButton = ({
   >
     <button
       onClick={onClick}
-      className={
-        'h-full w-8 whitespace-nowrap shadow font-futuraDemi flex items-center justify-center hover:bg-toxic duration-300 group' +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'h-full w-8 whitespace-nowrap shadow font-futuraDemi flex items-center justify-center hover:bg-toxic duration-300 group',
+        className
+      )}
       disabled={disabled}
     >
       <FontAwesomeIcon

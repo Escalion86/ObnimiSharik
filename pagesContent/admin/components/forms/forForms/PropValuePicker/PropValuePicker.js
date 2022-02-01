@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import cn from 'classnames'
 
 const colors = [
   'border-blue-400',
@@ -23,23 +24,24 @@ const PropValueItem = ({
   icon = null,
   onClick = null,
 }) => (
-  <div
-    className={
-      `flex min-w-22 duration-300 items-center justify-center border px-2 py-1 rounded-lg cursor-pointer gap-x-2 flex-nowrap border-${color}` +
-      (active ? ` text-white bg-${color}` : ` text-${color} bg-white`)
-    }
+  <button
+    className={cn(
+      `flex min-w-22 duration-300 outline-none items-center justify-center border px-2 py-1 rounded-lg cursor-pointer gap-x-2 flex-nowrap`,
+      `border-${color}`,
+      active ? `text-white bg-${color}` : `text-${color} bg-white`
+    )}
     onClick={() => onClick(value)}
   >
     {icon && <FontAwesomeIcon icon={icon} size="lg" />}
     <div
-      className={
-        'whitespace-nowrap duration-300 text-sm' +
-        (active ? ' text-white' : ` text-gray-500`)
-      }
+      className={cn(
+        'whitespace-nowrap duration-300 text-sm select-none',
+        active ? 'text-white' : `text-input`
+      )}
     >
       {name}
     </div>
-  </div>
+  </button>
 )
 
 const PropValuePicker = ({
@@ -59,16 +61,14 @@ const PropValuePicker = ({
     if (!value && value !== 0) return null
     const itemInArray = valuesArray.find((item) => item.value === value)
     return (
-      <div
-        className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
-      >
+      <div className={cn('flex gap-x-1 flex-row', className)}>
         {label && (
           <div>
             <label
-              className={
-                'border-b-1 border-primary max-w-min whitespace-nowrap' +
-                (labelStyle ? ' ' + labelStyle : '')
-              }
+              className={cn(
+                'border-b-1 border-primary max-w-min whitespace-nowrap',
+                labelStyle
+              )}
               htmlFor={name}
             >
               {label}:
@@ -84,21 +84,17 @@ const PropValuePicker = ({
 
   return (
     <div
-      className={
-        'flex' +
-        (inLine ? ' flex-row items-center' : ' flex-col') +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'flex',
+        inLine ? ' flex-row items-center' : ' flex-col',
+        className
+      )}
     >
       {label && (
         <label
-          className={
-            labelStyle
-              ? ' ' + labelStyle
-              : inLine
-              ? 'min-w-24 max-w-40 w-1/4'
-              : ''
-          }
+          className={cn(labelStyle, {
+            'min-w-24 max-w-40 w-1/4': inLine && !labelStyle,
+          })}
           htmlFor={name}
         >
           {label}

@@ -6,6 +6,7 @@ import compareObjects from '@helpers/compareObjects'
 import { Input } from '@admincomponents/forms/forForms'
 import { setFilter as actionSetFilter } from '@state/actions/filterActions'
 import { useDispatch } from 'react-redux'
+import cn from 'classnames'
 
 const minMaxSet = (stateVariable, filterVariable, func = (num) => num) => {
   let max = 0
@@ -94,10 +95,10 @@ const Filter = ({
 
   return (
     <div
-      className={
-        'absolute z-20 w-full duration-500 top-0 flex flex-col p-2 transform bg-white border-b border-gray-200' +
-        (show ? '' : ' scale-y-0 -translate-y-1/2')
-      }
+      className={cn(
+        'absolute z-20 w-full duration-500 top-0 flex flex-col p-2 transform bg-white border-b border-gray-200',
+        { 'scale-y-0 -translate-y-1/2': !show }
+      )}
     >
       {nameFilterExists && (
         <Input

@@ -12,6 +12,7 @@ const ProductsContent = ({
   multiselectMode = false,
   selectedItems = [],
   setSelectedItems = null,
+  filterCfg = {},
 }) => {
   const { filter } = useSelector((state) => state)
 
@@ -21,12 +22,13 @@ const ProductsContent = ({
 
   return (
     <Content
-      data={data}
+      data={data.filter((item) => !item.hidden)}
       itemContent={(index, product) => {
         const checked = selectedItems.find((item) => item._id === product._id)
         return (
           <ProductCard
             key={product._id}
+            // hidden={product.hidden}
             product={product}
             multiselectMode={multiselectMode}
             checked={checked}

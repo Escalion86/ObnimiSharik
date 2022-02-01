@@ -35,6 +35,9 @@ module.exports = {
         bg: '#54889A',
         toxic: '#6ad424',
         hover: '#C8E3F4',
+        text: '#192129',
+        input: '#2A323B',
+        disabled: '#555555',
       },
       fontSize: {
         xxs: '.625rem',
@@ -152,7 +155,7 @@ module.exports = {
         large: '1px 3px 6px 0 rgba(0, 0, 0, 0.40)',
         // sm: '0 3px 15px 0 rgba(0, 0, 0, 0.10)',
         active:
-          '0 1px 3px 1px rgba(38, 163, 212, 0.5), 0 1px 2px 1px rgba(38, 163, 212, 0.3)',
+          '0 0 3px 1px rgba(38, 163, 212, 0.5), 0 0 3px 1px rgba(38, 163, 212, 0.3)',
         'medium-active': '0 1px 4px 5px rgba(38, 163, 212, 0.5)',
         primary: '0px 0px 8px 8px #26A3D4',
       },

@@ -165,6 +165,18 @@ const ProductForm = ({
           readOnly={readOnly}
           inLine={readOnly}
         />
+        <Input
+          className="flex-1 w-20"
+          key="size"
+          label="Размер"
+          type="number"
+          value={form.size}
+          onChange={(size) => updateForm({ size })}
+          inLine={readOnly}
+          postfix="см"
+          readOnly={readOnly}
+          maxLength={3}
+        />
         <PriceInput
           value={form.price}
           onChange={(price) => updateForm({ price })}
@@ -173,7 +185,6 @@ const ProductForm = ({
           readOnly={readOnly}
           inLine={readOnly}
         />
-
         <MultiselectCheckbox
           title="Типы"
           options={productTypes.map((type) => {
@@ -188,6 +199,7 @@ const ProductForm = ({
           }}
           readOnly={readOnly}
           className="col-span-2"
+          checkAllBtn
         />
         <InputImages
           images={form.images}

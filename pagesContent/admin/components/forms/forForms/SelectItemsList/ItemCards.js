@@ -1,14 +1,15 @@
 import formatDateTime from '@helpers/formatDateTime'
 import roleRus from '@helpers/roleRus'
 import { useSelector } from 'react-redux'
+import cn from 'classnames'
 
 const ItemContainer = ({ onClick, active, children }) => (
   <div
-    className={
-      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 last:border-0' +
-      (onClick ? ' hover:bg-blue-200 cursor-pointer' : '') +
-      (active ? ' bg-green-200' : '')
-    }
+    className={cn(
+      'w-full  max-w-full py-0.5 px-1 border-b border-gray-700 last:border-0',
+      { 'hover:bg-blue-200 cursor-pointer': onClick },
+      { 'bg-green-200': active }
+    )}
     onClick={
       onClick
         ? (e) => {

@@ -158,7 +158,7 @@ const ClientForm = ({
         <Input
           key="telegram"
           label="Telegram"
-          inputStyle="max-w-40"
+          wrapperStyle="max-w-40"
           type="text"
           maxLength="80"
           value={form.telegram}
@@ -171,7 +171,7 @@ const ClientForm = ({
         <Input
           key="instagram"
           label="Instagram"
-          inputStyle="max-w-40"
+          wrapperStyle="max-w-40"
           type="text"
           maxLength="80"
           value={form.instagram}
@@ -185,7 +185,7 @@ const ClientForm = ({
         <Input
           key="vk"
           label="ВКонтакте"
-          inputStyle="max-w-40"
+          wrapperStyle="max-w-40"
           type="text"
           maxLength="80"
           value={form.vk}

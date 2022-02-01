@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import IconButton from './IconButton'
+import cn from 'classnames'
 
 const MultiselectMenu = ({
   show = false,
@@ -20,10 +21,10 @@ const MultiselectMenu = ({
 }) => {
   return (
     <div
-      className={
-        'bg-white overflow-hidden gap-x-1 px-1 z-20 w-full transition-scale duration-500 ease-in-out top-0 flex items-center p-0 border-b border-gray-200' +
-        (show ? ' h-10' : ' h-0 scale-y-0 -translate-y-1/2')
-      }
+      className={cn(
+        'bg-white overflow-hidden gap-x-1 px-1 z-20 w-full transition-scale duration-500 ease-in-out top-0 flex items-center p-0 border-b border-gray-200',
+        show ? 'h-10' : 'h-0 scale-y-0 -translate-y-1/2'
+      )}
       // className={"duration-500 ease-in-out bg-green-500 transition-height"+(show ? ' h-15 hover:h-40' : ' h-0 '))
     >
       <IconButton

@@ -3,12 +3,14 @@ import CardButtons from './forCards/CardButtons'
 import CardContainer from './CardContainer'
 import { DEVTODO_STATUSES, PRIORITIES } from '@helpers/constants'
 import { useSelector } from 'react-redux'
+import cn from 'classnames'
 
 export const DevToDoCard = ({
   devToDo,
   onClick = () => {},
   onEdit = null,
   onDelete = null,
+  hidden = false,
 }) => {
   const { users } = useSelector((state) => state)
 
@@ -21,10 +23,8 @@ export const DevToDoCard = ({
     (priorityItem) => priorityItem.value === devToDo.priority
   )
   return (
-    <Card onClick={() => onClick(devToDo)}>
-      <div
-        className={'w-2 rounded-l-lg bg-' + (priority.color ?? 'gray-400')}
-      />
+    <Card onClick={() => onClick(devToDo)} hidden={hidden}>
+      <div className={cn('w-2', 'bg-' + (priority.color ?? 'gray-400'))} />
       <CardContainer className="items-center">
         <div className="items-center flex-1">
           <div className="flex flex-col gap-y-1">
@@ -43,10 +43,10 @@ export const DevToDoCard = ({
 
       <div className="flex flex-col-reverse items-end justify-between gap-y-1">
         <div
-          className={
-            'flex justify-center rounded-tl-lg py-0.5 items-center w-24 bg-' +
-            devStatus.color
-          }
+          className={cn(
+            'flex justify-center rounded-tl-lg py-0.5 items-center w-24',
+            'bg-' + devStatus.color
+          )}
         >
           <span>
             <span className="text-sm text-gray-800">{devStatus.name}</span>

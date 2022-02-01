@@ -14,6 +14,7 @@ export const UserCard = ({
   multiselectMode = false,
   checked = false,
   onCheckClick = null,
+  hidden = false,
 }) => {
   // const gender = GENDERS.find((genderItem) => genderItem.value === user.gender)
   return (
@@ -24,6 +25,7 @@ export const UserCard = ({
       onCheckClick={onCheckClick}
       multiselectMode={multiselectMode}
       checked={checked}
+      hidden={hidden}
     >
       <div className="h-full min-w-24 laptop:min-w-0">
         <ZoomImage
@@ -31,9 +33,7 @@ export const UserCard = ({
           noImage={`/img/users/${user?.gender ?? 'noGender'}.jpg`}
           alt="user"
           imageClassName="h-full w-24 max-h-24 laptop:w-10"
-          containerClassName={
-            'duration-500 h-full' + (multiselectMode ? '' : ' rounded-l-lg')
-          }
+          containerClassName="duration-500 h-full"
         />
       </div>
       <CardContainer className="items-center">

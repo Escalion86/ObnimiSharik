@@ -22,6 +22,7 @@ export const SetCard = ({
   multiselectMode = false,
   checked = false,
   onCheckClick = null,
+  hidden = false,
 }) => {
   const { setTypes } = useSelector((state) => state)
 
@@ -38,6 +39,7 @@ export const SetCard = ({
       onCheckClick={onCheckClick}
       multiselectMode={multiselectMode}
       checked={checked}
+      hidden={hidden}
     >
       {!set.showOnSite && (
         <div

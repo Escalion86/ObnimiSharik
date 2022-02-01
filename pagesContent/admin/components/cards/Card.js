@@ -1,4 +1,16 @@
 import { CheckBox } from '@admincomponents/forms/forForms'
+import { motion } from 'framer-motion'
+import cn from 'classnames'
+
+// const variants = {
+//   visible: { opacity: 1, height: 'auto' },
+//   hidden: { opacity: 0, height: 0 },
+// }
+
+const variants = {
+  visible: {},
+  hidden: { transition: { type: 'spring', stiffness: 100 } },
+}
 
 const Card = ({
   className,
@@ -8,13 +20,23 @@ const Card = ({
   multiselectMode = false,
   checked = false,
   onCheckClick = null,
+  hidden = false,
 }) => (
-  <div
-    className={
-      'flex justify-between mx-1 my-1.5 bg-white rounded-lg shadow-large hover:shadow-medium-active' +
-      (className ? ' ' + className : '') +
-      (inLine ? ' laptop:h-10' : '')
-    }
+  <motion.div
+    className={cn(
+      'flex justify-between my-1.5 bg-white shadow border-t border-b border-gray-300 hover:shadow-medium-active',
+      className,
+      { 'laptop:h-10': inLine }
+    )}
+    // variants={variants}
+    // animate="visible"
+    // initial="hidden"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{
+      delay: 1000,
+      default: { duration: 0.3 },
+    }}
   >
     <div
       className={
@@ -35,7 +57,7 @@ const Card = ({
     >
       {children}
     </div>
-  </div>
+  </motion.div>
 )
 
 export default Card

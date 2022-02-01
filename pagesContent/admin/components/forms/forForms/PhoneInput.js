@@ -1,4 +1,5 @@
 import InputMask from 'react-input-mask'
+import cn from 'classnames'
 
 const PhoneInput = ({
   value,
@@ -15,9 +16,7 @@ const PhoneInput = ({
   if (readOnly) {
     if (!value && value !== 0) return null
     return (
-      <div
-        className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
-      >
+      <div className={cn('flex gap-x-1 flex-row', className)}>
         {label && (
           <div>
             <label
@@ -31,10 +30,9 @@ const PhoneInput = ({
           </div>
         )}
         <div
-          className={
-            'flex flex-nowrap gap-x-1' +
-            (link ? ' cursor-pointer text-primary hover:text-toxic' : '')
-          }
+          className={cn('flex flex-nowrap gap-x-1', {
+            'cursor-pointer text-primary hover:text-toxic': link,
+          })}
           onClick={
             link
               ? (event) => {
@@ -51,11 +49,11 @@ const PhoneInput = ({
   }
   return (
     <div
-      className={
-        'flex' +
-        (inLine ? ' flex-row items-center' : ' flex-col') +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'text-text flex',
+        inLine ? ' flex-row items-center' : ' flex-col',
+        className
+      )}
     >
       <label className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''} htmlFor={name}>
         {label}
@@ -63,13 +61,13 @@ const PhoneInput = ({
       </label>
 
       <InputMask
-        className={
-          'w-36 px-2 py-1 border rounded-lg ' +
-          (required && (!value || value.toString().length !== 11)
+        className={cn(
+          'text-input w-36 px-2 py-1 border rounded-lg outline-none focus:shadow-active',
+          required && (!value || value.toString().length !== 11)
             ? 'border-red-700'
-            : 'border-gray-700') +
-          (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
-        }
+            : 'border-gray-400',
+          { 'bg-gray-300  text-disabled': disabled }
+        )}
         name={name}
         mask="+7 999-999-9999"
         maskChar="_"

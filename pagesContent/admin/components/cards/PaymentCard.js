@@ -15,6 +15,7 @@ export const PaymentCard = ({
   multiselectMode = false,
   checked = false,
   onCheckClick = null,
+  hidden = false,
 }) => {
   const { orders } = useSelector((state) => state)
   const order = orders.find((order) => order._id === payment.orderId)
@@ -27,12 +28,12 @@ export const PaymentCard = ({
       onCheckClick={onCheckClick}
       multiselectMode={multiselectMode}
       checked={checked}
+      hidden={hidden}
     >
       <div
         className={
           'duration-500 flex justify-center items-center w-9 text-white bg-' +
-          (payType ? payType.color : 'gray-400') +
-          (multiselectMode ? '' : ' rounded-l-lg')
+          (payType ? payType.color : 'gray-400')
         }
       >
         <FontAwesomeIcon icon={payType?.icon ?? faQuestion} size="lg" />

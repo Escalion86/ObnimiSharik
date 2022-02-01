@@ -1,4 +1,5 @@
 import Zoom from 'react-medium-image-zoom'
+import cn from 'classnames'
 
 const ZoomImage = ({
   image,
@@ -9,17 +10,16 @@ const ZoomImage = ({
 }) =>
   image ? (
     <div
-      className={
-        'overflow-hidden flex items-center' +
-        (containerClassName ? ' ' + containerClassName : ' h-24')
-      }
+      className={cn('overflow-hidden flex items-center', containerClassName, {
+        'h-24': !containerClassName,
+      })}
       onClick={(event) => event.stopPropagation()}
     >
       <Zoom zoomMargin={20}>
         <img
-          className={
-            'object-cover' + (imageClassName ? ' ' + imageClassName : ' h-24')
-          }
+          className={cn('object-cover', imageClassName, {
+            'h-24': !imageClassName,
+          })}
           src={image}
           alt={alt}
         />
@@ -27,16 +27,15 @@ const ZoomImage = ({
     </div>
   ) : (
     <div
-      className={
-        'overflow-hidden' +
-        (containerClassName ? ' ' + containerClassName : ' h-24')
-      }
+      className={cn('overflow-hidden', containerClassName, {
+        'h-24': !containerClassName,
+      })}
       // onClick={(event) => event.stopPropagation()}
     >
       <img
-        className={
-          'object-cover' + (imageClassName ? ' ' + imageClassName : ' h-24')
-        }
+        className={cn('object-cover', imageClassName, {
+          'h-24': !imageClassName,
+        })}
         src={noImage ?? '/img/no_image.png'}
         alt={alt}
       />

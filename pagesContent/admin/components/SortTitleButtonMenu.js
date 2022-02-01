@@ -16,6 +16,7 @@ import IconButton from '@admincomponents/IconButton'
 import { sortingVariables } from '@state/reducers/sortingReducer'
 import { setSorting } from '@state/actions/sortingActions'
 import { useDispatch } from 'react-redux'
+import cn from 'classnames'
 
 const SortItem = ({
   name,
@@ -33,19 +34,19 @@ const SortItem = ({
           className="absolute top-0 bottom-0 left-0 z-50 w-26 group-scope hover:z-40"
         >
           <div
-            className={
-              'flex items-center w-10 h-full px-2 rounded-l-lg group-scope-hover:bg-primary group-scope-hover:text-white ' +
-              (active === 'DESC' ? 'text-white bg-toxic' : 'text-primary')
-            }
+            className={cn(
+              'flex items-center w-10 h-full px-2 rounded-l-lg group-scope-hover:bg-primary group-scope-hover:text-white',
+              active === 'DESC' ? 'text-white bg-toxic' : 'text-primary'
+            )}
           >
             <FontAwesomeIcon className="w-5 h-5" icon={iconUp} />
           </div>
         </div>
         <div
-          className={
-            'absolute top-0 bottom-0 z-10 flex items-center justify-center rounded-lg left-8 right-8 group-hover:bg-primary group-hover:text-white ' +
-            (active ? ' text-white bg-toxic' : '')
-          }
+          className={cn(
+            'absolute top-0 bottom-0 z-10 flex items-center justify-center rounded-lg left-8 right-8 group-hover:bg-primary group-hover:text-white',
+            { 'text-white bg-toxic': active }
+          )}
         >
           {name}
         </div>
@@ -54,10 +55,10 @@ const SortItem = ({
           className="absolute top-0 bottom-0 right-0 z-50 flex justify-end w-26 group-scope hover:z-40"
         >
           <div
-            className={
-              'flex items-center justify-end w-10 h-full px-2 rounded-r-lg group-scope-hover:bg-primary group-scope-hover:text-white ' +
-              (active === 'ASC' ? 'text-white bg-toxic' : 'text-primary')
-            }
+            className={cn(
+              'flex items-center justify-end w-10 h-full px-2 rounded-r-lg group-scope-hover:bg-primary group-scope-hover:text-white',
+              active === 'ASC' ? 'text-white bg-toxic' : 'text-primary'
+            )}
           >
             <FontAwesomeIcon className="w-5 h-5" icon={iconDown} />
           </div>

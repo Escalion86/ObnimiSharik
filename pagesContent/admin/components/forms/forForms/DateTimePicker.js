@@ -1,4 +1,5 @@
 import formatDateTime from '@helpers/formatDateTime'
+import cn from 'classnames'
 
 const DateTimePicker = ({
   label = '',
@@ -14,17 +15,17 @@ const DateTimePicker = ({
   if (readOnly)
     return (
       <div
-        className={
-          'flex' +
-          (inLine || readOnly ? ' flex-row items-center' : ' flex-col') +
-          (className ? ' ' + className : '')
-        }
+        className={cn(
+          'flex',
+          inLine || readOnly ? 'flex-row items-center' : 'flex-col',
+          className
+        )}
       >
         <label
-          className={
-            'border-b-1 border-primary max-w-min whitespace-nowrap' +
-            (inLine ? ' min-w-24 max-w-40 w-1/4' : '')
-          }
+          className={cn(
+            'border-b-1 border-primary max-w-min whitespace-nowrap',
+            { 'min-w-24 max-w-40 w-1/4': inLine }
+          )}
           htmlFor={name}
         >
           {label}
@@ -44,22 +45,25 @@ const DateTimePicker = ({
 
   return (
     <div
-      className={
-        'flex' +
-        (inLine ? ' flex-row items-center' : ' flex-col') +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'text-text flex',
+        inLine ? 'flex-row items-center' : 'flex-col',
+        className
+      )}
     >
-      <label className={inLine ? 'min-w-24 max-w-40 w-1/4' : ''} htmlFor={name}>
+      <label
+        className={cn({ 'min-w-24 max-w-40 w-1/4': inLine })}
+        htmlFor={name}
+      >
         {label}
         {required && <span className="text-red-700">*</span>}
       </label>
       <input
-        className={
-          'px-2 py-1 border rounded-lg w-50' +
-          (required && !value ? ' border-red-700' : ' border-gray-700') +
-          (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ')
-        }
+        className={cn(
+          'text-input px-2 py-1 border rounded-lg w-50 outline-none focus:shadow-active',
+          required && !value ? ' border-red-700' : ' border-gray-400',
+          { 'bg-gray-200  text-disabled': disabled }
+        )}
         type="datetime-local"
         step="600"
         name={name}

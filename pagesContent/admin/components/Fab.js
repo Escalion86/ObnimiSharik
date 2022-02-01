@@ -1,14 +1,15 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import cn from 'classnames'
 
 const Fab = ({ onClick, show = true, icon = faPlus }) => {
   return (
     <div
       onClick={onClick}
-      className={
-        'duration-300 absolute flex items-center justify-center w-12 text-white rounded-full cursor-pointer h-14 hover:bg-toxic group tablet:w-14 tablet:h-14 bg-primary right-6 tablet:right-8' +
-        (show ? ' tablet:bottom-8 bottom-6' : ' -bottom-20')
-      }
+      className={cn(
+        'duration-300 absolute flex items-center justify-center w-12 text-white rounded-full cursor-pointer h-14 hover:bg-toxic group tablet:w-14 tablet:h-14 bg-primary right-6 tablet:right-8',
+        show ? 'tablet:bottom-8 bottom-6' : '-bottom-20'
+      )}
     >
       <div
         style={{

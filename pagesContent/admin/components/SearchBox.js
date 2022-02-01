@@ -6,6 +6,7 @@ import {
   ProductItem,
   PersonaItem,
 } from './forms/forForms/SelectItemsList/ItemCards'
+import cn from 'classnames'
 
 const SearchBox = ({ modals }) => {
   // const inputRef = useRef()
@@ -124,10 +125,10 @@ const SearchBox = ({ modals }) => {
         onClick={inputText ? () => eraseSearchTextAndClose() : null}
       />
       <div
-        className={
-          'absolute overflow-hidden max-h-64 transform duration-300 ease-out flex flex-col top-full left-0 right-0 bg-white shadow-sm border border-gray-700 z-50 ' +
-          (openList ? 'scale-100' : 'scale-y-0 -translate-y-1/2 opacity-0')
-        }
+        className={cn(
+          'absolute overflow-hidden max-h-64 transform duration-300 ease-out flex flex-col top-full left-0 right-0 bg-white shadow-sm border border-gray-700 z-50',
+          openList ? 'scale-100' : 'scale-y-0 -translate-y-1/2 opacity-0'
+        )}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative overflow-x-hidden overflow-y-auto">

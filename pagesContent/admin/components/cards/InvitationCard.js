@@ -12,6 +12,7 @@ export const InvitationCard = ({
   multiselectMode = false,
   checked = false,
   onCheckClick = null,
+  hidden = false,
 }) => {
   let status
   switch (invitation.status) {
@@ -33,6 +34,7 @@ export const InvitationCard = ({
       onCheckClick={onCheckClick}
       multiselectMode={multiselectMode}
       checked={checked}
+      hidden={hidden}
     >
       <CardContainer>
         <div className="flex-1">

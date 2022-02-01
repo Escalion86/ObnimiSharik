@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { SelectItem, SelectProduct } from './SelectItem'
 import { useSelector } from 'react-redux'
+import cn from 'classnames'
 
 // const СomboList = ({ onChange, selectedId, products }) => (
 //   <select
@@ -142,12 +143,9 @@ export const SelectItemsList = ({
           className="flex flex-col ml-2 italic gap-y-1"
         >
           <div
-            className={
-              'flex gap-x-1' +
-              (subItemsIdCountKey && item[subItemsIdCountKey]
-                ? ' text-primary'
-                : '')
-            }
+            className={cn('flex gap-x-1', {
+              'text-primary': subItemsIdCountKey && item[subItemsIdCountKey],
+            })}
           >
             {item?.article !== undefined && (
               <div>({item?.article ? item.article : 'без артикула'})</div>
@@ -266,14 +264,14 @@ export const SelectItemsList = ({
       </label>
       <div
         name="itemsIds"
-        className={
-          'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg ' +
-          (required &&
-          required !== 'star' &&
-          (selectedItemsIds.length === 0 || selectedItemsIds[0] === '?')
+        className={cn(
+          'flex flex-col flex-wrap-reverse bg-gray-200 border rounded-lg',
+          required &&
+            required !== 'star' &&
+            (selectedItemsIds.length === 0 || selectedItemsIds[0] === '?')
             ? 'border-red-700'
-            : 'border-gray-700')
-        }
+            : 'border-gray-700'
+        )}
       >
         {itemRows.map((Item, index) => (
           <Item key={'ItemRow' + index} index={index} />
@@ -281,16 +279,16 @@ export const SelectItemsList = ({
         {itemsIdCount && (
           <div
             onClick={addButtonIsActive ? addRow : null}
-            className={
-              'group flex items-center justify-center h-6 bg-white rounded-lg' +
-              (addButtonIsActive ? ' cursor-pointer' : '')
-            }
+            className={cn(
+              'group flex items-center justify-center h-6 bg-white rounded-lg',
+              { 'cursor-pointer': addButtonIsActive }
+            )}
           >
             <div
-              className={
-                'flex items-center justify-center flex-1 transparent' +
-                (addButtonIsActive ? ' duration-200 group-hover:scale-125' : '')
-              }
+              className={cn(
+                'flex items-center justify-center flex-1 transparent',
+                { 'duration-200 group-hover:scale-125': addButtonIsActive }
+              )}
             >
               <FontAwesomeIcon
                 className={

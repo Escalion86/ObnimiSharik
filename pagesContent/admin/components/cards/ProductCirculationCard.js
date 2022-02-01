@@ -14,6 +14,7 @@ export const ProductCirculationCard = ({
   multiselectMode = false,
   checked = false,
   onCheckClick = null,
+  hidden = false,
 }) => {
   const { count, purchase, productId } = productCirculation
   const { products } = useSelector((state) => state)
@@ -26,6 +27,7 @@ export const ProductCirculationCard = ({
       onCheckClick={onCheckClick}
       multiselectMode={multiselectMode}
       checked={checked}
+      hidden={hidden}
     >
       <CardContainer>
         <div className="flex flex-col flex-wrap flex-1 tablet:items-center gap-x-2 tablet:flex-row">
@@ -44,7 +46,7 @@ export const ProductCirculationCard = ({
       <div className="flex flex-col-reverse items-end justify-between gap-y-1 laptop:flex-row laptop:items-center">
         <div
           className={
-            'flex justify-center rounded-tl-lg laptop:rounded-none laptop:h-full px-1 py-0.5 items-center min-w-24 ' +
+            'flex justify-center laptop:h-full px-1 py-0.5 items-center min-w-24 ' +
             (purchase ? 'bg-green-200' : 'bg-red-200')
           }
         >

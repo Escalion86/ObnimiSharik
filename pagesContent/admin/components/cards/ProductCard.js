@@ -20,6 +20,7 @@ export const ProductCard = ({
   multiselectMode = false,
   checked = false,
   onCheckClick = null,
+  hidden = false,
 }) => {
   const { productTypes } = useSelector((state) => state)
   const types = product.typesId.map((type_id) =>
@@ -36,6 +37,7 @@ export const ProductCard = ({
       onCheckClick={onCheckClick}
       multiselectMode={multiselectMode}
       checked={checked}
+      hidden={hidden}
     >
       {/* <img
       className="w-14 h-14"
@@ -47,7 +49,7 @@ export const ProductCard = ({
       {!product.showOnSite && (
         <div
           className={
-            'absolute top-2 cursor-default left-0 z-10 flex justify-center items-center w-9 rounded-tl-lg rounded-br-lg text-red-400'
+            'absolute top-2 cursor-default left-0 z-10 flex justify-center items-center w-9 text-red-400'
           }
           onClick={(e) => {
             e.stopPropagation()
@@ -60,14 +62,27 @@ export const ProductCard = ({
       <CardContainer className="flex-col phoneH:flex-row">
         <ZoomImage image={product.images[0]} alt="product" />
         <div className="flex-1 ml-3">
-          <div className="flex flex-col justify-between gap-x-2 tablet:flex-row">
-            <div className="w-5/12 font-semibold min-w-40">{product.name}</div>
-            <div className="flex-1 text-sm italic whitespace-pre-line min-w-40">
-              {product.description}
-            </div>
+          <div className="">
+            <div className="font-semibold min-w-40">{product.name}</div>
+            {product.description && (
+              <div className="ml-1.5 pl-2 mt-1 mb-2 text-sm italic whitespace-pre-line border-l border-gray-300">
+                {product.description}
+              </div>
+            )}
           </div>
           <div className="flex-1 text-sm">
-            Артикул: <span className="italic">{product.article}</span>
+            <span>Размер: </span>
+            <span className="italic">{product.size || '[не указан]'}</span>
+          </div>
+          <div className="flex-1 text-sm">
+            <span>Производитель: </span>
+            <span className="italic">
+              {product.manufacturer || '[не указан]'}
+            </span>
+          </div>
+          <div className="flex-1 text-sm">
+            <span>Артикул: </span>
+            <span className="italic">{product.article || '[не указан]'}</span>
           </div>
           <div className="mr-12">
             <TypesInCard types={types} onClick={onTypeClick} />
@@ -87,7 +102,7 @@ export const ProductCard = ({
         </div>
         <div
           className={
-            'flex items-center justify-center w-20 h-8 border-t border-l border-gray-200 rounded-tl-lg rounded-br-lg ' +
+            'flex items-center justify-center w-20 h-8 border-t border-l border-gray-200 ' +
             (product.count > 3
               ? 'bg-green-400'
               : product.count > 0

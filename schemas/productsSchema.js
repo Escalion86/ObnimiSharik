@@ -45,6 +45,14 @@ const productsSchema = {
     maxlength: [100, 'Название производителя не может превышать 100 символов'],
     default: '',
   },
+  size: {
+    type: Number,
+    max: [
+      99999999,
+      'Размер не может превышать 99999999 см. Ты в курсе, что диаметр планеты Земля меньше?',
+    ],
+    default: null,
+  },
   archive: {
     type: Boolean,
     default: false,

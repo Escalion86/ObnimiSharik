@@ -4,6 +4,7 @@ import Zoom from 'react-medium-image-zoom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { sendImage } from '@helpers/cloudinary'
+import cn from 'classnames'
 
 const InputImages = ({
   images = [],
@@ -47,36 +48,33 @@ const InputImages = ({
     >
       {label && (
         <label
-          className={
-            readOnly
-              ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
-              : ''
-          }
+          className={cn({
+            'border-b-1 border-primary max-w-min whitespace-nowrap': readOnly,
+          })}
         >
           {label}
           {readOnly ? ':' : required && <span className="text-red-700">*</span>}
         </label>
       )}
       <div
-        className={
-          'flex flex-wrap w-full gap-1 p-0.5 rounded-lg ' +
-          (images.length > 0 ? ' py-1' : '') +
-          (readOnly
-            ? ''
-            : ' bg-gray-200 border' +
-              (required && !images?.length
-                ? ' border-red-700'
-                : ' border-gray-700'))
-        }
+        className={cn(
+          'flex flex-wrap w-full gap-1 p-0.5 rounded-lg',
+          { 'py-1': images.length > 0 },
+          {
+            [required && !images?.length
+              ? 'border border-red-700'
+              : 'border border-gray-400']: !readOnly,
+          }
+        )}
       >
         {!readOnly || images.length > 0 ? (
           images.map((image, index) => (
             <div
               key={index}
-              className={
-                'relative h-20 overflow-hidden group' +
-                (readOnly ? ' border border-gray-400 hover:border-primary' : '')
-              }
+              className={cn(
+                'relative h-20 overflow-hidden group border border-gray-300',
+                { 'hover:border-primary': readOnly }
+              )}
             >
               <Zoom zoomMargin={20}>
                 <img

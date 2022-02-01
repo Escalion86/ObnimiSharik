@@ -4,6 +4,7 @@ import Zoom from 'react-medium-image-zoom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { deleteImages, sendImage } from '@helpers/cloudinary'
+import cn from 'classnames'
 
 const InputImage = ({
   label = 'Картинка',
@@ -43,11 +44,12 @@ const InputImage = ({
     <div className={inLine ? 'flex' : ''}>
       {label && (
         <label
-          className={
-            (readOnly
-              ? 'border-b-1 border-primary max-w-min whitespace-nowrap'
-              : '') + (inLine ? ' min-w-24 max-w-40 w-1/4' : '')
-          }
+          className={cn(
+            {
+              'border-b-1 border-primary max-w-min whitespace-nowrap': readOnly,
+            },
+            { 'min-w-24 max-w-40 w-1/4': inLine }
+          )}
         >
           {label}
           {readOnly ? ':' : required && <span className="text-red-700">*</span>}
@@ -57,14 +59,14 @@ const InputImage = ({
         <div className="ml-2">-</div>
       ) : (
         <div
-          className={
-            'relative border rounded-lg h-20 w-20 overflow-hidden group ' +
-            (readOnly
-              ? ' border-gray-400 hover:border-primary'
-              : required && !image
-              ? ' border-red-700'
-              : ' border-gray-400')
-          }
+          className={cn(
+            'relative border rounded-lg h-20 w-20 overflow-hidden group',
+            { 'border-gray-400 hover:border-primary': readOnly },
+            {
+              [required && !image ? ' border-red-700' : ' border-gray-400']:
+                !readOnly,
+            }
+          )}
         >
           {image ? (
             <Zoom zoomMargin={20}>

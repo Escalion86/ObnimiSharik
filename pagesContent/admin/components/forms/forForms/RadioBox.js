@@ -1,3 +1,5 @@
+import cn from 'classnames'
+
 const RadioBox = ({
   checked = false,
   onClick = null,
@@ -18,20 +20,17 @@ const RadioBox = ({
 
   return (
     <label
-      className={
-        'flex items-center cursor-pointer space-x-2' +
-        (className ? ' ' + className : '')
-      }
+      className={cn('flex items-center cursor-pointer space-x-2', className)}
     >
       {label && labelPos === 'left' && <Label />}
       <input
         readOnly
         checked={checked}
         type="radio"
-        className={
-          'bg-white border cursor-pointer rounded-full border-gray-300 appearance-none form-tick bg-radio checked:bg-primary checked:border-transparent focus:outline-none ' +
-          (small ? 'w-4 h-4' : 'w-5 h-5')
-        }
+        className={cn(
+          'bg-white border cursor-pointer rounded-full border-gray-300 appearance-none form-tick bg-radio checked:bg-primary checked:border-transparent focus:outline-none',
+          small ? 'w-4 h-4' : 'w-5 h-5'
+        )}
         onChange={onChange}
         onClick={onClick}
       />

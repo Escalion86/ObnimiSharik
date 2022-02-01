@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import CheckBox from './forms/forForms/CheckBox'
+import cn from 'classnames'
 
 const MultiselectCheckbox = ({
   title = '',
@@ -44,11 +44,7 @@ const MultiselectCheckbox = ({
   if (readOnly) {
     const types = data.filter((item) => item.checked)
     return (
-      <div
-        className={
-          (types.length > 0 ? '' : 'flex') + (className ? ' ' + className : '')
-        }
-      >
+      <div className={cn({ flex: types.length === 0 }, className)}>
         <div className="border-b-1 border-primary max-w-min whitespace-nowrap">
           {title}:
         </div>
@@ -63,16 +59,17 @@ const MultiselectCheckbox = ({
 
   return (
     <div
-      className={
-        'flex' +
-        (inLine ? ' flex-row' : ' flex-col') +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'text-text flex',
+        inLine ? 'flex-row' : 'flex-col',
+        className
+      )}
     >
       <div
-        className={
-          (inLine ? 'min-w-24 max-w-40 w-1/4 ' : '') + 'flex justify-between'
-        }
+        className={cn(
+          { 'min-w-24 max-w-40 w-1/4': inLine },
+          'flex justify-between'
+        )}
       >
         <div>
           {title}
@@ -111,20 +108,21 @@ const MultiselectCheckbox = ({
         )}
       </div>
       <div
-        className={
-          'flex-1 bg-gray-200 border border-gray-700 rounded-lg overflow-hidden' +
-          (listClassName ? ' ' + listClassName : '')
-        }
+        className={cn(
+          'focus-within:shadow-active flex-1 border border-gray-400 rounded-lg overflow-hidden',
+          listClassName
+        )}
         style={{ maxHeight: (data.length >= 8 ? 216 : data.length * 25) + 7 }}
       >
         <div
           className={!noScroll ? ' overflow-y-scroll' : ''}
           style={{ maxHeight: (data.length >= 8 ? 208 : data.length * 25) + 7 }}
         >
-          <div className={'px-2 py-1 rounded-lg'}>
+          <div className="px-2 py-1 rounded-lg">
             {data.map((item, index) => (
               <div key={item.name} className="flex items-center">
                 <CheckBox
+                  className="text-input"
                   checked={item.checked || false}
                   onClick={() => toggle(index)}
                   small

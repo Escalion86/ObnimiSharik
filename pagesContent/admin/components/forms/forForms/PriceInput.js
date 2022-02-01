@@ -1,4 +1,5 @@
 import Input from './Input'
+import cn from 'classnames'
 
 const PriceInput = ({
   value,
@@ -22,10 +23,10 @@ const PriceInput = ({
         {label && (
           <div>
             <label
-              className={
-                'border-b-1 border-primary max-w-min whitespace-nowrap' +
-                (labelStyle ? ' ' + labelStyle : '')
-              }
+              className={cn(
+                'border-b-1 border-primary max-w-min whitespace-nowrap',
+                labelStyle
+              )}
               htmlFor={name}
             >
               {label}:
@@ -47,21 +48,17 @@ const PriceInput = ({
   }
   return (
     <div
-      className={
-        'flex w-min' +
-        (inLine ? ' flex-row items-center' : ' flex-col') +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'text-text flex w-min',
+        inLine ? 'flex-row items-center' : 'flex-col',
+        className
+      )}
     >
       {label && (
         <label
-          className={
-            labelStyle
-              ? ' ' + labelStyle
-              : inLine
-              ? 'min-w-24 max-w-40 w-1/4'
-              : ''
-          }
+          className={cn(labelStyle, {
+            'min-w-24 max-w-40 w-1/4': !labelStyle && inLine,
+          })}
           htmlFor={name}
         >
           {label}
@@ -69,17 +66,18 @@ const PriceInput = ({
         </label>
       )}
       <div
-        className={
-          'flex border rounded-lg' +
-          (required && (!value || value == '0')
+        className={cn(
+          'flex border rounded-lg',
+          required && (!value || value == '0')
             ? ' border-red-700'
-            : ' border-gray-700')
-        }
+            : ' border-gray-400'
+        )}
       >
         <Input
           // label={label}
           className="gap-x-0"
-          inputStyle="border-0 rounded-r-none w-22"
+          wrapperStyle="border-0 rounded-none w-22"
+          postfixStyle="rounded-r-none"
           labelStyle={labelStyle}
           type="number"
           name={name + '₽'}
@@ -94,7 +92,8 @@ const PriceInput = ({
         <Input
           // label={label}
           className={className}
-          inputStyle="w-16 border-0 border-l rounded-l-none"
+          wrapperStyle="w-16 border-0 border-l rounded-none"
+          inputStyle="rounded-l-none"
           labelStyle={labelStyle}
           type="number"
           name={name + 'коп'}

@@ -165,8 +165,8 @@ const Cabinet = ({
     else
       filteredData = state[page.variable]
         .filter((item) => accessToContent.read(item))
-        .filter(
-          (item) =>
+        .map((item) => {
+          if (
             (!state.filter[page.variable].name ||
               item.name
                 ?.toString()
@@ -214,8 +214,12 @@ const Cabinet = ({
               state.filter[page.variable].payType.find(
                 (prior) => prior.value === item.payType
               )?.checked)
-        )
+          )
+            return item
+          else return { ...item, hidden: true }
+        })
   }
+
   if (state.sorting[page.variable]) {
     const sortKey = state.sorting[page.variable][0]
     const sortValue = state.sorting[page.variable][1]

@@ -1,3 +1,5 @@
+import cn from 'classnames'
+
 const TypesInCard = ({ types = [], onClick = null }) => {
   if (types[0] === undefined) types.length = 0
   return (
@@ -8,11 +10,17 @@ const TypesInCard = ({ types = [], onClick = null }) => {
           {types.map((type, index) => (
             <div className="flex" key={'type' + index}>
               <div
-                className={onClick ? "cursor-pointer text-primary hover:text-toxic" : ""}
-                onClick={onClick ? (event) => {
-                  event.stopPropagation()
-                  onClick(type)
-                } : null}
+                className={cn({
+                  'cursor-pointer text-primary hover:text-toxic': onClick,
+                })}
+                onClick={
+                  onClick
+                    ? (event) => {
+                        event.stopPropagation()
+                        onClick(type)
+                      }
+                    : null
+                }
               >
                 {type.name}
               </div>

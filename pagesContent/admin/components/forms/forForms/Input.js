@@ -1,3 +1,5 @@
+import cn from 'classnames'
+
 const InputComponent = (props) => {
   const newProps = { ...props }
   delete newProps['textarea']
@@ -22,9 +24,12 @@ const Input = ({
   disabled = false,
   inLine = false,
   labelStyle = null,
+  wrapperStyle = null,
   inputStyle = null,
   postfix = null,
   prefix = null,
+  prefixStyle = null,
+  postfixStyle = null,
   readOnly = false,
   hidden = false,
   defaultValue,
@@ -36,16 +41,14 @@ const Input = ({
   if (readOnly) {
     if (!value && value !== 0) return null
     return (
-      <div
-        className={'flex gap-x-1 flex-row' + (className ? ' ' + className : '')}
-      >
+      <div className={cn('flex gap-x-1 flex-row', className)}>
         {label && (
           <div>
             <label
-              className={
-                'border-b-1 border-primary max-w-min whitespace-nowrap' +
-                (labelStyle ? ' ' + labelStyle : '')
-              }
+              className={cn(
+                'border-b-1 border-primary max-w-min whitespace-nowrap',
+                labelStyle
+              )}
               htmlFor={name}
             >
               {label}:
@@ -53,10 +56,9 @@ const Input = ({
           </div>
         )}
         <div
-          className={
-            'flex flex-nowrap gap-x-1 ml-2' +
-            (link ? ' cursor-pointer text-primary hover:text-toxic' : '')
-          }
+          className={cn('flex flex-nowrap gap-x-1 ml-2', {
+            'cursor-pointer text-primary hover:text-toxic': link,
+          })}
           onClick={
             link
               ? (event) => {
@@ -90,21 +92,17 @@ const Input = ({
 
   return (
     <div
-      className={
-        'flex' +
-        (inLine ? ' flex-row items-center' : ' flex-col') +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'text-text flex',
+        inLine ? ' flex-row items-center' : ' flex-col',
+        className
+      )}
     >
       {label && (
         <label
-          className={
-            labelStyle
-              ? ' ' + labelStyle
-              : inLine
-              ? 'min-w-24 max-w-40 w-1/4'
-              : ''
-          }
+          className={cn(labelStyle, {
+            'min-w-24 max-w-40 w-1/4': !labelStyle && inLine,
+          })}
           htmlFor={name}
         >
           {label}
@@ -112,23 +110,35 @@ const Input = ({
         </label>
       )}
       <div
-        className={
-          'flex flex-1 border rounded-lg flex-nowrap overflow-hidden ' +
-          (required && (!value || value == '0')
+        className={cn(
+          'text-input flex flex-1 border rounded-lg flex-nowrap',
+          required && (!value || value == '0')
             ? 'border-red-700'
-            : 'border-gray-700') +
-          (disabled ? ' bg-gray-300  text-gray-600' : ' bg-gray-200 ') +
-          (inputStyle ? ' ' + inputStyle : '')
-        }
+            : 'border-gray-400',
+          { 'bg-gray-200  text-disabled': disabled },
+          wrapperStyle
+        )}
       >
         {prefix && (
-          <div className="flex items-center justify-center bg-gray-300 border-r border-gray-700 min-w-6 px-0.5">
+          <div
+            className={cn(
+              'select-none flex rounded-l-lg items-center justify-center bg-gray-200 min-w-6 px-0.5',
+              prefixStyle
+            )}
+          >
             {prefix}
           </div>
         )}
-        <div className="flex-1 overflow-hidden">
+        <div
+          className={cn(
+            'z-10 select-none flex-1 border-gray-400 overflow-hidden focus-within:shadow-active',
+            prefix ? ' border-l' : ' rounded-l-lg',
+            postfix ? ' border-r' : ' rounded-r-lg',
+            inputStyle
+          )}
+        >
           <InputComponent
-            className="flex-grow-0 w-full max-w-full px-1.5 py-1 bg-gray-200 outline-none"
+            className="flex-grow-0 w-full max-w-full px-1.5 py-1 outline-none"
             type={type === 'number' ? 'text' : type}
             maxLength={maxLength}
             name={name}
@@ -158,7 +168,12 @@ const Input = ({
           />
         </div>
         {postfix && (
-          <div className="flex items-center justify-center bg-gray-300 border-l border-gray-700 min-w-6 px-0.5">
+          <div
+            className={cn(
+              'select-none flex rounded-r-lg items-center justify-center bg-gray-200 min-w-6 px-0.5',
+              postfixStyle
+            )}
+          >
             {postfix}
           </div>
         )}

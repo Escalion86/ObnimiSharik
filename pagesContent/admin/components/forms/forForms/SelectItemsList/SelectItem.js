@@ -17,6 +17,8 @@ import {
   PaymentItem,
   DistrictItem,
 } from './ItemCards'
+
+import cn from 'classnames'
 // import useClickOutside from '@helpers/hooks/21-useClickOutside/useClickOutside'
 
 const filteredItems = (
@@ -157,11 +159,11 @@ export const SelectItem = ({
 
   return (
     <div
-      className={
-        (className ? className + ' ' : '') +
-        'relative bg-gray-200 flex justify-center items-center' +
-        (readOnly ? ' cursor-default' : ' cursor-pointer')
-      }
+      className={cn(
+        className,
+        'relative bg-gray-200 flex justify-center items-center',
+        readOnly ? 'cursor-default' : 'cursor-pointer'
+      )}
       style={{ height: itemHeight, width: itemWidth }}
       onClick={() => {
         if (dropDownList && !readOnly) toggleIsMenuOpen()
@@ -172,18 +174,20 @@ export const SelectItem = ({
       {dropDownList && (
         <div
           className={
-            'absolute overflow-hidden max-h-64 transform duration-300 ease-out flex flex-col top-full left-0 right-0 bg-white shadow-sm border border-gray-700 z-50 ' +
-            (isMenuOpen ? '' : 'opacity-0') // scale-y-0 -translate-y-1/2
+            cn(
+              'absolute overflow-hidden max-h-64 transform duration-300 ease-out flex flex-col top-full left-0 right-0 bg-white shadow-sm border border-gray-700 z-50',
+              { 'opacity-0': !isMenuOpen }
+            ) // scale-y-0 -translate-y-1/2
           }
           // style={{ width: itemWidth }}
           onClick={(e) => e.stopPropagation()}
         >
           {!noSearch && (
             <div
-              className={
-                'flex gap-1 items-center border-gray-700 border-b p-1 ' +
-                (isMenuOpen ? '' : 'hidden')
-              }
+              className={cn(
+                'flex gap-1 items-center border-gray-700 border-b p-1',
+                { hidden: !isMenuOpen }
+              )}
             >
               <input
                 ref={inputRef}
@@ -203,10 +207,10 @@ export const SelectItem = ({
               />
               {moreOneFilterTurnOnExists ? (
                 <div
-                  className={
-                    (moreOneFilter ? 'bg-yellow-400' : 'bg-primary') +
-                    ' hover:bg-toxic text-white flex items-center justify-center font-bold rounded-lg cursor-pointer w-7 h-7'
-                  }
+                  className={cn(
+                    moreOneFilter ? 'bg-yellow-400' : 'bg-primary',
+                    'hover:bg-toxic text-white flex items-center justify-center font-bold rounded-lg cursor-pointer w-7 h-7'
+                  )}
                   onClick={() => setMoreOneFilter(!moreOneFilter)}
                 >
                   {'>0'}
@@ -228,7 +232,7 @@ export const SelectItem = ({
                 height: filteredItemsArray.length * itemHeight,
               }}
               // style={{ flex: 1 }}
-              className={isMenuOpen ? '' : 'hidden'}
+              className={cn({ hidden: !isMenuOpen })}
               // useWindowScroll
               data={filteredItemsArray}
               totalCount={filteredItemsArray.length}

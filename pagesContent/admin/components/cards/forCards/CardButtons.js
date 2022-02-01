@@ -5,6 +5,7 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import CardButton from './CardButton'
+import cn from 'classnames'
 
 const CardButtons = ({
   className = null,
@@ -17,15 +18,16 @@ const CardButtons = ({
 }) => {
   return (
     <div
-      className={
-        'flex max-w-min items-center justify-end overflow-hidden border-l border-gray-200' +
-        (topRight ? ' min-h-8 rounded-tr-lg rounded-bl-lg' : '') +
-        (stretch ? ' top-0 bottom-0 rounded-r-lg ' : '') +
-        (!topRight && !stretch
-          ? ' laptop:h-full laptop:rounded-br-lg h-8 laptop:rounded-l-none rounded-tr-lg rounded-bl-lg '
-          : '') +
-        (className ? ' ' + className : '')
-      }
+      className={cn(
+        'flex max-w-min items-center justify-end overflow-hidden border-l border-gray-200',
+        { 'min-h-8 rounded-bl-lg': topRight },
+        { 'top-0 bottom-0': stretch },
+        {
+          'laptop:h-full h-8 laptop:rounded-l-none rounded-bl-lg':
+            !topRight && !stretch,
+        },
+        className
+      )}
     >
       {onBuying && (
         <CardButton
