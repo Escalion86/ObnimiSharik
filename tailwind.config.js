@@ -85,6 +85,7 @@ module.exports = {
         // 4: '1rem',
         6: '1.5rem',
         8: '2rem',
+        10: '2.5rem',
         12: '3rem',
         16: '4rem',
         20: '5rem',
@@ -140,6 +141,7 @@ module.exports = {
         192: '46rem',
       },
       maxHeight: {
+        8: '2rem',
         15: '3.75rem',
         18: '4.5rem',
         22: '5.5rem',
@@ -206,6 +208,9 @@ module.exports = {
       },
       borderWidth: {
         1: '1px',
+      },
+      transitionDuration: {
+        400: '400ms',
       },
     },
   },

@@ -13,6 +13,17 @@
 //   BtnAddDistrict,
 // } from '@admincomponents/TitleButtons'
 import {
+  faBug,
+  faChartBar,
+  faCog,
+  faCubes,
+  faFilter,
+  faFire,
+  faHome,
+  faMoneyBill,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons'
+import {
   InvitationsContent,
   ProductCirculationsContent,
   ProductsContent,
@@ -88,7 +99,7 @@ export const pages = [
   },
   {
     id: 6,
-    group: 5,
+    group: 6,
     name: 'Сотрудники',
     pageContent: UsersContent,
     // addButton: null,
@@ -97,25 +108,16 @@ export const pages = [
   },
   {
     id: 7,
-    group: 5,
-    name: 'Приглашения',
+    group: 6,
+    name: 'Приглашения сотрудников',
     pageContent: InvitationsContent,
     // addButton: BtnAddInvitation,
     backToPageId: null,
     variable: 'invitations',
   },
   {
-    id: 8,
-    group: 6,
-    name: 'Настройки',
-    pageContent: SettingsContent,
-    // addButton: null,
-    backToPageId: 0,
-    variable: null,
-  },
-  {
     id: 9,
-    group: 2,
+    group: 1,
     name: 'Движение товаров',
     pageContent: ProductCirculationsContent,
     // addButton: BtnAddProductCirculation,
@@ -133,7 +135,7 @@ export const pages = [
   },
   {
     id: 11,
-    group: 3,
+    group: 2,
     name: 'Заказы',
     pageContent: OrdersContent,
     // addButton: BtnAddOrder,
@@ -142,7 +144,7 @@ export const pages = [
   },
   {
     id: 12,
-    group: 3,
+    group: 4,
     name: 'Транзакции',
     pageContent: PaymentsContent,
     // addButton: BtnAddPayment,
@@ -189,22 +191,30 @@ export const pages = [
   },
   {
     id: 16,
-    group: 4,
+    group: 6,
     name: 'Районы доставки',
     pageContent: DistrictsContent,
     // addButton: BtnAddDistrict,
     backToPageId: 0,
     variable: 'districts',
   },
+  {
+    id: 8,
+    group: 6,
+    name: 'Настройки CRM',
+    pageContent: SettingsContent,
+    // addButton: null,
+    backToPageId: 0,
+    variable: null,
+  },
 ]
 
 export const pagesGroups = [
-  { id: 0, name: '' },
-  { id: 1, name: 'Продукция' },
-  { id: 2, name: 'Склад' },
-  { id: 3, name: 'Воронка' },
-  { id: 4, name: 'Прочее' },
-  { id: 5, name: 'Пользователи' },
-  { id: 6, name: 'Настройки' },
-  { id: 10, name: 'Разработка' },
+  { id: 0, name: 'Обзор', icon: faHome },
+  { id: 2, name: 'Заказы', icon: faFire },
+  { id: 1, name: 'Склад', icon: faCubes },
+  { id: 3, name: 'Клиенты', icon: faUser },
+  { id: 4, name: 'Оплата', icon: faMoneyBill },
+  { id: 6, name: 'Настройки', icon: faCog, bottom: true },
+  { id: 10, name: 'Разработка', icon: faBug, bottom: true },
 ]

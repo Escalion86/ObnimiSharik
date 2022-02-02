@@ -131,24 +131,24 @@ const UserMenu = ({
   )
 }
 
-const Burger = ({
-  menuOpen = () => {},
-  onClick = () => {},
-  className = '',
-}) => {
-  return (
-    <div
-      className={
-        'menu-btn' +
-        (menuOpen ? ' open' : '') +
-        (className ? ' ' + className : '')
-      }
-      onClick={onClick}
-    >
-      <div className="menu-btn__burger" />
-    </div>
-  )
-}
+// const Burger = ({
+//   menuOpen = () => {},
+//   onClick = () => {},
+//   className = '',
+// }) => {
+//   return (
+//     <div
+//       className={
+//         'menu-btn' +
+//         (menuOpen ? ' open' : '') +
+//         (className ? ' ' + className : '')
+//       }
+//       onClick={onClick}
+//     >
+//       <div className="menu-btn__burger" />
+//     </div>
+//   )
+// }
 
 const itemName = {
   products: { name: 'продукта', modalFuncName: 'openProductModal' },
@@ -303,7 +303,7 @@ const Header = ({
   return (
     <div
       className={
-        'top-0 z-40 border-b' +
+        'header top-0 z-40 border-b' +
         (isDevMode
           ? ' border-red-400 bg-red-400'
           : ' border-primary bg-primary')
@@ -312,11 +312,11 @@ const Header = ({
       <header className="px-2 phoneH:px-3">
         <div className="flex items-center justify-between gap-1 py-3 border-gray-200 phoneH:gap-2">
           <div className="flex items-center flex-1 gap-1 phoneH:gap-2">
-            <Burger
+            {/* <Burger
               className="z-20 flex laptop:hidden"
               menuOpen={menuOpen}
               onClick={onClickBurger}
-            />
+            /> */}
             <SearchBox modals={modals} />
             {/* {loggedUser.role === 'dev' && (
               <DeviceCheck className="text-white text-bold" />

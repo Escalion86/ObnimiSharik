@@ -235,7 +235,16 @@ const Cabinet = ({
   }
 
   return (
-    <div className="flex h-screen max-h-screen overflow-y-hidden">
+    <div className="h-screen max-h-screen overflow-y-hidden wrapper">
+      <Header
+        loggedUser={loggedUser}
+        menuOpen={menuOpen}
+        setPageId={setPageId}
+        onClickBurger={toggleMenu}
+        closeMenu={closeMenu}
+        onSignOut={onSignOut}
+        modals={modals}
+      />
       <SidePanel
         menuCfg={menuCfg}
         menuOpen={menuOpen}
@@ -247,80 +256,64 @@ const Cabinet = ({
         closeMenu={closeMenu}
         modals={modals}
       />
-      <div
-        className="relative grid flex-1 max-h-screen min-w-0 "
-        style={{ gridTemplateRows: '3.8rem 1fr' }}
-      >
-        <Header
-          loggedUser={loggedUser}
-          menuOpen={menuOpen}
-          setPageId={setPageId}
-          onClickBurger={toggleMenu}
-          closeMenu={closeMenu}
-          onSignOut={onSignOut}
-          modals={modals}
-        />
-        <main className="flex flex-col flex-1 overflow-y-auto">
-          <Title
-            title={page?.name ?? ''}
-            subTitle={
-              filterExists &&
-              (loggedUser.role === 'admin' || loggedUser.role === 'dev')
-                ? ' ' +
-                  filteredData.length +
-                  ' / ' +
-                  state[page.variable].length
-                : null
-            }
-            buttons={buttons}
-          />
-          <div className="relative">
-            {filterExists && (
-              <Filter
-                state={state}
-                variable={page.variable}
-                show={filterShow}
-                setHideFilter={() => setFilterShow(false)}
-              />
-            )}
-            {multiselectExists && (
-              <MultiselectMenu
-                show={multiselectShow}
-                selectedIdsCount={selectedItems.length}
-                onClickSelectAll={() =>
-                  // setSelectedItems(filteredData.map((item) => item._id))
-                  setSelectedItems(filteredData)
-                }
-                onClickUnselectAll={cleanupSelectedItems}
-                onClickDelete={() => {
-                  modals[page.variable]?.delete(
-                    selectedItems,
-                    null,
-                    cleanupSelectedItems
-                  )
-                }}
-              />
-            )}
-          </div>
 
-          {/* <div className="relative flex flex-col flex-1 max-h-full px-3 pb-3 overflow-y-scroll">
-            <div className="relative flex flex-col flex-1 h-full"> */}
-          <div className="h-full overflow-y-auto">
-            <PageContent
-              data={filteredData}
-              selectedItems={selectedItems}
-              setSelectedItems={setSelectedItems}
-              multiselectMode={multiselectShow}
-              // setModal={setModal}
-              // updateData={updateData}
-              modals={modals}
-              loggedUser={loggedUser}
+      <main className="flex flex-col flex-1 overflow-y-auto main">
+        <Title
+          title={page?.name ?? ''}
+          subTitle={
+            filterExists &&
+            (loggedUser.role === 'admin' || loggedUser.role === 'dev')
+              ? ' ' + filteredData.length + ' / ' + state[page.variable].length
+              : null
+          }
+          buttons={buttons}
+        />
+        <div className="relative">
+          {filterExists && (
+            <Filter
+              state={state}
+              variable={page.variable}
+              show={filterShow}
+              setHideFilter={() => setFilterShow(false)}
             />
-          </div>
-          {/* </div>
+          )}
+          {multiselectExists && (
+            <MultiselectMenu
+              show={multiselectShow}
+              selectedIdsCount={selectedItems.length}
+              onClickSelectAll={() =>
+                // setSelectedItems(filteredData.map((item) => item._id))
+                setSelectedItems(filteredData)
+              }
+              onClickUnselectAll={cleanupSelectedItems}
+              onClickDelete={() => {
+                modals[page.variable]?.delete(
+                  selectedItems,
+                  null,
+                  cleanupSelectedItems
+                )
+              }}
+            />
+          )}
+        </div>
+
+        {/* <div className="relative flex flex-col flex-1 max-h-full px-3 pb-3 overflow-y-scroll">
+            <div className="relative flex flex-col flex-1 h-full"> */}
+        <div className="h-full overflow-y-auto">
+          <PageContent
+            data={filteredData}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+            multiselectMode={multiselectShow}
+            // setModal={setModal}
+            // updateData={updateData}
+            modals={modals}
+            loggedUser={loggedUser}
+          />
+        </div>
+        {/* </div>
           </div> */}
-        </main>
-      </div>
+      </main>
       <ToastContainer />
     </div>
   )

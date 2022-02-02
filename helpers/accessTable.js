@@ -44,17 +44,15 @@ const accessTable = (user) => {
       add: ['admin', 'dev'].includes(user.role),
     },
     productTypes: {
-      page: ['admin', 'dev', 'operator', 'aerodesigner'].includes(user.role),
-      read: (item) =>
-        ['admin', 'dev', 'operator', 'aerodesigner'].includes(user.role),
+      page: ['admin', 'dev'].includes(user.role),
+      read: (item) => ['admin', 'dev'].includes(user.role),
       edit: (item) => ['admin', 'dev'].includes(user.role),
       delete: (item) => ['admin', 'dev'].includes(user.role),
       add: ['admin', 'dev'].includes(user.role),
     },
     setTypes: {
-      page: ['admin', 'dev', 'operator', 'aerodesigner'].includes(user.role),
-      read: (item) =>
-        ['admin', 'dev', 'operator', 'aerodesigner'].includes(user.role),
+      page: ['admin', 'dev'].includes(user.role),
+      read: (item) => ['admin', 'dev'].includes(user.role),
       edit: (item) => ['admin', 'dev'].includes(user.role),
       delete: (item) => ['admin', 'dev'].includes(user.role),
       add: ['admin', 'dev'].includes(user.role),

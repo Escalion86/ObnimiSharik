@@ -40,7 +40,12 @@ const menuCfg = (pages, pagesGroups, user) => {
       return totalPages
     }, [])
     if (pagesItems.length > 0)
-      totalGroups.push({ name: group.name, items: pagesItems })
+      totalGroups.push({
+        name: group.name,
+        icon: group.icon,
+        items: pagesItems,
+        bottom: group.bottom,
+      })
     return totalGroups
   }, [])
 }
